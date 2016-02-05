@@ -25,13 +25,19 @@ SECRET_KEY = 'b7m8*9*xx9h52om=9z9de%=w#8=_xws(=dwbqc1uzc9e(4hhiw'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SERVER_EMAIL='kim@grotas.fr'
 
-ALLOWED_HOSTS = []
+ADMINS = (
+    ('Maxime Harazi', 'harazi@phare.normalesup.org'),
+)
+
+ALLOWED_HOSTS = [u"connect.iptnet.info",]
 
 
 # Application definition
 
 INSTALLED_APPS = (
+    # 'autocomplete_light',
     'grappelli',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -108,5 +114,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join('', 'static')
-MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
+MEDIA_ROOT = '/var/www/kim/media/'
 MEDIA_URL = '/media/'

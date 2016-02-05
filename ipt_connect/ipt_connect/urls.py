@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^$','ipt_connect.views.home'),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^IPT2016/', include('IPT2016.urls')),
+    url(r'^autocomplete/', include('autocomplete_light.urls')),
 ]
 
 
