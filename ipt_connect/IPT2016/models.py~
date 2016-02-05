@@ -1,0 +1,174 @@
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+
+from config import *
+
+class PhysicsFight(models.Model):
+
+
+	round_number = models.IntegerField(
+			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(maxrounds))),
+			default=None
+			)
+
+	fight_number = models.IntegerField(
+			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(maxfights))),
+			default=None
+			)
+
+	room_number = models.IntegerField(
+			choices=(((ind+1, 'Room '+str(ind+1)) for ind in range(maxrooms))),
+			default=None
+			)
+
+	reporter = models.CharField(max_length=25,
+			choices=(((country, country) for country in countries)),
+			default=None									)
+
+	opponent = models.CharField(max_length=25,
+			choices=(((country, country) for country in countries)),
+			default=None										)
+
+	reviewer = models.CharField(max_length=25,
+			choices=(((country, country) for country in countries)),
+			default=None										)
+
+	name_reporter = models.CharField(max_length=100, choices=(((str(name), str(name)) for name in allparticipants)),
+			default=None)
+	name_opponent = models.CharField(max_length=100, choices=(((str(name), str(name)) for name in allparticipants)),
+			default=None)
+	name_reviewer = models.CharField(max_length=100, choices=(((str(name), str(name)) for name in allparticipants)),
+			default=None)
+
+
+	problem_presented = models.IntegerField(choices=(((ind+1, str(problem)) for ind, problem in enumerate(problems))), default=None)
+
+
+	submitted_date = models.DateTimeField(default=timezone.now)
+
+	def __str__(self):
+		return "Round %i | Fight %i | Room %i" % (self.round_number, self.fight_number, self.room_number)
+
+
+class JuryGrade(models.Model):
+
+	physics_fight = models.ForeignKey(PhysicsFight)
+
+	name = models.CharField(max_length=25,
+			choices=((member, member) for member in jury),
+			default=str(jury[0])
+			)
+
+	grade_reporter = models.IntegerField(
+			choices=(((ind, ind) for ind in range(maxgrade+1))),
+			default=None
+			)
+
+	grade_opponent = models.IntegerField(
+			choices=(((ind, ind) for ind in range(maxgrade+1))),
+			default=None
+			)
+
+	grade_reviewer = models.IntegerField(
+			choices=(((ind, ind) for ind in range(maxgrade+1))),
+			default=None
+			)
+
+	def __str__(self):
+		return "Grade of %s" % self.name
+
+	def info(self):
+		print "=" * 36
+		print "Grade of %s" % self.name
+		print self.physics_fight
+		print "Reporter %s from %s : %i" % (self.physics_fight.name_reporter, self.physics_fight.reporter, self.grade_reporter)
+		print "Opponent %s from %s : %i" % (self.physics_fight.name_opponent, self.physics_fight.opponent, self.grade_opponent)
+		print "Reviewer %s from %s : %i" % (self.physics_fight.name_reviewer, self.physics_fight.reviewer, self.grade_reviewer)
+
+
+class TacticalRejection(models.Model):
+
+	physics_fight = models.ForeignKey(PhysicsFight)
+
+	tactical_rejection = models.IntegerField(choices=(((ind+1, str(problem)) for ind, problem in enumerate(problems))),
+			default=None)
+
+	def __str__(self):
+		return "Problem rejected : %s" % self.tactical_rejection
+
+class EternalRejection(models.Model):
+
+	physics_fight = models.ForeignKey(PhysicsFight)
+
+	eternal_rejection = models.IntegerField(choices=(((ind+1, str(problem)) for ind, problem in enumerate(problems))),
+			default=None)
+
+	def __str__(self):
+		return "Problem rejected : %s" % self.eternal_rejection
+
+
+class Team(models.Model):
+    name = models.CharField(max_length=50)
+    IOC = models.OneToOneField(User, on_delete=models.SET_NULL,null=True,blank=True)
+    def __str__(self):
+
+        return self.name
+
+class Participant(models.Model):
+
+    GENDER_CHOICES = ( ('M','Male'), ('F','Female'))
+
+    ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('IOC','IOC'), ('ACC','Accompanying') )
+
+    DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
+
+    TOURISM_CHOICES = ( ('TOURISM_0','No') , ('TOURISM_1','Yes, one night'), ('TOURISM_2','Yes, two nights') )
+
+    SHIRT_SIZES = (
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+    )
+
+    
+    name = models.CharField(max_length=50,default='Richard')
+    surname = models.CharField(max_length=50,default='Feynman')
+    gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
+    email = models.EmailField(default='email@email.com',help_text='This address will be used to send you every important infos about the tournament.')
+    birthdate = models.DateField(default='1900-12-01')
+    photo = models.ImageField(upload_to='kim/id_photo',blank=True,help_text='Used for badges and transportation cards.')
+    team = models.ForeignKey('Team')
+    role = models.CharField(max_length=20,choices=ROLE_CHOICES)
+    passport_number = models.CharField(max_length=20)
+    affiliation = models.CharField(max_length=20,default='Paris University')
+    veteran = models.BooleanField(default=False,help_text='Have you already participated in the IPT?')
+    diet = models.CharField(max_length=20,choices=DIET_CHOICES)
+    tourism=models.CharField(max_length=20,choices=TOURISM_CHOICES,help_text='Would you like to stay some more days in Paris after the tournament?')
+    shirt_size = models.CharField(max_length=1,choices=SHIRT_SIZES)
+    remark = models.TextField(blank=True)
+    hotel_room = models.CharField(max_length=20,blank=True)
+    check_in = models.BooleanField(default=False,help_text='Has the participant arrived?')
+
+    # def colored_name(self):
+    #     if self.name == 'Vivien':
+    #         color = "green"
+    #     else:
+    #         color = "red"
+    #     return "<span style=color:%s>%s</span>" % (color,self.name)
+    # colored_name.allow_tags = True
+
+
+    def __str__(self):
+
+        """ 
+
+        Cette methode que nous definirons dans tous les modeles
+
+        nous permettra de reconnaitre facilement les differents objets que 
+
+        nous traiterons plus tard et dans l'administration
+
+        """
+
+        return self.surname
