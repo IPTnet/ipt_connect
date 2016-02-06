@@ -23,7 +23,7 @@ class PFadmin(admin.ModelAdmin):
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
 	#TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
 
-	#HOHOHOHO
+
 
 class TeamAdmin(admin.ModelAdmin):
 

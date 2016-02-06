@@ -2,6 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
+from numpy import sort, mean
+import sys
+
 from config import *
 
 
@@ -50,24 +53,84 @@ class Participant(models.Model):
 
 	def __str__(self):
 
-		"""
-
-		Cette methode que nous definirons dans tous les modeles
-
-		nous permettra de reconnaitre facilement les differents objets que
-
-		nous traiterons plus tard et dans l'administration
-
-		"""
-
 		return self.surname
 
 	def compute_average_grades(self, verbose=True):
 		"""
-		I collect all the grades from the Jury members and compute the average grade for the current Participant.
-		WARNING : Note that there is certainly a way to do it in a more djangoist way (using the relation between JuryGrade associated Participants and the current Participant) but I don't know it, and I don't have muche time yet...to be inverstigated later.
-		"""
+		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each fight
 
+		"""
+		#TODO: find a way to credit the points to the second reporter as well, without adding them to the total amount of team points (maybe this issue should be in the Team class ????)
+
+		average_grades=[]
+
+		# get all the grades that concerns me
+		if verbose:
+			print "="*50
+			print "My name is", self.name, self.surname
+		jurygrades = JuryGrade.objects.filter(physics_fight__reporter__name=self.name) | JuryGrade.objects.filter(physics_fight__opponent__name=self.name) | JuryGrade.objects.filter(physics_fight__reviewer__name=self.name)
+
+		# get all the physics fights I'm in
+		pfs = list(set([jurygrade.physics_fight for jurygrade in jurygrades]))
+
+		if verbose:
+			print "I played in %i Physics Fights" % len(pfs)
+
+		for pf in pfs:
+
+			# get my role in this physics fight:
+			if pf.reporter.name == self.name and pf.reporter.surname == self.surname:
+				role = 'reporter'
+				pfgrades = list(sort([jurygrade.grade_reporter for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
+
+			elif pf.opponent.name == self.name and pf.opponent.surname == self.surname:
+				role = 'opponent'
+				pfgrades = list(sort([jurygrade.grade_opponent for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
+			elif pf.reviewer.name == self.name and pf.reviewer.surname == self.surname:
+				role = 'reviewer'
+				pfgrades = list(sort([jurygrade.grade_reviewer for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
+			else:
+				print "Something wrong here...I must have a defined role !"
+				sys.exit()
+
+
+			if verbose:
+				print "In %s, I was the %s" % (pf, role)
+
+			# Rule for grade rejection: divide the number of jury by 4.
+			# Round the result (if result is X.5, round up to X+1)
+			# If the result is even, reject result/2 lowest and result/2 highest marks
+			# If the result is odd, reject result/2 + 0.5 lowest and result/2 - 0.5 highest marks.
+			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
+
+			nreject = round(len(pfgrades) / 4.0)
+
+			if round(nreject / 2.0) == nreject / 2.0:
+				nlow = int(nreject / 2.0)
+				nhigh = int(nlow)
+			else:
+				nlow = int(nreject / 2.0 + 0.5)
+				nhigh = int(nreject / 2.0 - 0.5)
+
+			if verbose:
+				print "\t%i Jury Members graded me" % len(pfgrades)
+				print "\t%i lowest mark(s) and %i highest mark(s) are discarded"  % (nlow, nhigh)
+
+			i = 0
+			while i < nhigh:
+				pfgrades.pop(-1)
+				i += 1
+
+			i = 0
+			while i < nlow:
+				pfgrades.pop(0)
+				i += 1
+
+			average_grades.append({"value": mean(pfgrades), "pf":pf, "role":role})
+			if verbose:
+				print '\tI scored %.2f points' % mean(pfgrades)
+
+		return average_grades
 
 class Problem(models.Model):
 	name = models.CharField(max_length=50, default=None)
@@ -84,13 +147,38 @@ class Team(models.Model):
 
 		return self.name
 
-	def compute_teampoints(self, participants):
-		"""
-		:param participants: list of Participant instance
 
-		I browse through the list of participants and add the mean grades to all of them who belongs to me
+
+	def compute_teampoints(self, verbose=True):
+		"""
+		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
+
+		:return: Return the total number of points
 		"""
 
+		participants = Participant.objects.filter(team__name=self.name)
+
+		if verbose:
+			print "="*50
+			print "There are %i participants in %s" % (len(participants), self.name)
+
+		#TODO: add a verbose option here
+		points = 0
+		for participant in participants:
+			average_grades = participant.compute_average_grades()
+			for grade in average_grades:
+				if grade["role"] == "reporter":
+					points += grade["value"]*3.0
+				elif grade["role"] == "opponent":
+					points += grade["value"]*2.0
+				elif grade["role"] == "reviewer":
+					points += grade["value"]
+				else:
+					print "Something wrong here...my role is not defined !"
+					sys.exit()
+
+		print "Team %s has %.2f points so far !"  % (self.name, points)
+		return points
 
 
 class Room(models.Model):
