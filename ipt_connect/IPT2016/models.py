@@ -5,9 +5,6 @@ from django.utils import timezone
 from numpy import sort, mean
 import sys
 
-from config import *
-
-
 class Participant(models.Model):
 
 	GENDER_CHOICES = ( ('M','Male'), ('F','Female'))
@@ -165,7 +162,7 @@ class Team(models.Model):
 		#TODO: add a verbose option here
 		points = 0
 		for participant in participants:
-			average_grades = participant.compute_average_grades()
+			average_grades = participant.compute_average_grades(verbose=verbose)
 			for grade in average_grades:
 				if grade["role"] == "reporter":
 					points += grade["value"]*3.0
@@ -196,14 +193,13 @@ class Jury(models.Model):
 		
 class PhysicsFight(models.Model):
 
-
 	round_number = models.IntegerField(
-			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(maxrounds))),
+			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(4))),
 			default=None
 			)
 
 	fight_number = models.IntegerField(
-			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(maxfights))),
+			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(4))),
 			default=None
 			)
 
@@ -231,17 +227,17 @@ class JuryGrade(models.Model):
 	jury = models.ForeignKey(Jury)
 
 	grade_reporter = models.IntegerField(
-			choices=(((ind, ind) for ind in range(maxgrade+1))),
+			choices=(((ind, ind) for ind in range(10+1))),
 			default=None
 			)
 
 	grade_opponent = models.IntegerField(
-			choices=(((ind, ind) for ind in range(maxgrade+1))),
+			choices=(((ind, ind) for ind in range(10+1))),
 			default=None
 			)
 
 	grade_reviewer = models.IntegerField(
-			choices=(((ind, ind) for ind in range(maxgrade+1))),
+			choices=(((ind, ind) for ind in range(10+1))),
 			default=None
 			)
 
