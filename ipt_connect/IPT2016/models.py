@@ -171,8 +171,9 @@ class Participant(models.Model):
 		participants = sorted(participants, key=lambda x : x.points(verbose=verbose))[::-1]
 
 		if verbose:
-			for participant in participants:
-				print participant.fullname(), participant.points(verbose=False)
+			print "="*20, "Ranking", "="*20
+			for ind, participant in enumerate(participants):
+				print ind+1,")",  participant.fullname()," - ", participant.points(verbose=False), " points"
 
 		return participants, participants.index(self)+1
 
@@ -221,9 +222,22 @@ class Team(models.Model):
 				else:
 					print "Something wrong here...my role is not defined !"
 					sys.exit()
-
-		print "Team %s has %.2f points so far !"  % (self.name, points)
+		if verbose:
+			print "Team %s has %.2f points so far !"  % (self.name, points)
 		return points
+
+	def ranking(self, verbose=True):
+
+		teams = Team.objects.all()
+
+		teams = sorted(teams, key=lambda x : x.compute_teampoints(verbose=verbose))[::-1]
+		if verbose:
+			print "="*20, "Team Ranking", "="*20
+			for ind, team in enumerate(teams):
+				print ind+1,")", team.name," - ", team.compute_teampoints(verbose=False), " points"
+
+		return teams, teams.index(self)+1
+
 
 
 class Room(models.Model):
