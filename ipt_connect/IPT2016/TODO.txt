@@ -1,0 +1,13 @@
+TODO list:
+----------
+
+-Add automatic problems rejection when a new physics fight is initialised
+-Add points to team when a PF has been won/second/third (3/2/1 or ex-aequo=similar distrib)
+-Take care properly of the second reporter : his name must appear, but he gets no points.
+-Create a nice html/css display for the physics fights.
+-Create nice pages per participant, per country, ...
+-Add a license on github
+-Document the code for further use
+
+
+

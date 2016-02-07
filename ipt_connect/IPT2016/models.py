@@ -47,15 +47,18 @@ class Participant(models.Model):
 	#     return "<span style=color:%s>%s</span>" % (color,self.name)
 	# colored_name.allow_tags = True
 
+	def fullname(self):
+		return self.name+' '+self.surname
 
 	def __str__(self):
-
-		return self.surname
+		return self.fullname()
 
 	def compute_average_grades(self, verbose=True):
 		"""
 		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each fight
 
+		:param verbose: verbosity of the function
+		:return: I return a list of dictionaries, each of them with the following fields: {"value", "pf", "role"}
 		"""
 		#TODO: find a way to credit the points to the second reporter as well, without adding them to the total amount of team points (maybe this issue should be in the Team class ????)
 
@@ -129,6 +132,52 @@ class Participant(models.Model):
 
 		return average_grades
 
+	def points(self, verbose=True):
+		"""
+
+		:param verbose: verbosity of the function
+		:return: Return the number of points gathered by a single participant. The multiplicative coefficient associated to his/her role is not taken into account here.
+		"""
+		points = 0.0
+		average_grades = self.compute_average_grades(verbose=verbose)
+		for grade in average_grades:
+			points += grade["value"]
+			if verbose:
+				print "\tIn %s, I gathered %.2f points as a %s" % (grade["pf"], grade["value"], grade["role"])
+		if verbose:
+			print "In total, I gathered %.2f points" % points
+		return points
+
+
+	def ranking(self, pool='all', verbose=True):
+		"""
+
+		:param pool: can be "team", "gender" or "all". Select the participant you want to be ranked with
+		:param verbose: verbosity of the function
+		:return: return a tuple whose first element is an ordered list of participants according to the number of points they gathered, and second element is the current participant's ranking in this list
+		"""
+
+
+		if pool == 'team':
+			participants = Participant.objects.filter(team=self.team)
+		elif pool == 'gender':
+			participants = Participant.objects.filter(gender=self.gender)
+		elif pool == 'all':
+			participants = Participant.objects.all()
+		else:
+			print "pool value does not compute"
+			sys.exit()
+
+		participants = sorted(participants, key=lambda x : x.points(verbose=verbose))[::-1]
+
+		if verbose:
+			for participant in participants:
+				print participant.fullname(), participant.points(verbose=False)
+
+		return participants, participants.index(self)+1
+
+
+
 class Problem(models.Model):
 	name = models.CharField(max_length=50, default=None)
 	description = models.CharField(max_length=500, default=None)
@@ -143,7 +192,6 @@ class Team(models.Model):
 	def __str__(self):
 
 		return self.name
-
 
 
 	def compute_teampoints(self, verbose=True):
