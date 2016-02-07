@@ -195,7 +195,7 @@ class Team(models.Model):
 		return self.name
 
 
-	def compute_teampoints(self, verbose=True):
+	def points(self, verbose=True):
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
 
@@ -208,7 +208,6 @@ class Team(models.Model):
 			print "="*20, "Compute Team Points", "="*20
 			print "There are %i participants in %s" % (len(participants), self.name)
 
-		#TODO: add a verbose option here
 		allpoints = 0
 		for participant in participants:
 			points = 0
@@ -246,11 +245,11 @@ class Team(models.Model):
 
 		teams = Team.objects.all()
 
-		teams = sorted(teams, key=lambda x : x.compute_teampoints(verbose=verbose))[::-1]
+		teams = sorted(teams, key=lambda x : x.points(verbose=verbose))[::-1]
 		if verbose:
 			print "="*20, "Team Ranking", "="*20
 			for ind, team in enumerate(teams):
-				print ind+1,")", team.name," - ", team.compute_teampoints(verbose=False), " points"
+				print ind+1,")", team.name," - ", team.points(verbose=False), " points"
 
 		return teams, teams.index(self)+1
 
