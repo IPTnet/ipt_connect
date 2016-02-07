@@ -205,25 +205,41 @@ class Team(models.Model):
 		participants = Participant.objects.filter(team__name=self.name)
 
 		if verbose:
-			print "="*50
+			print "="*20, "Compute Team Points", "="*20
 			print "There are %i participants in %s" % (len(participants), self.name)
 
 		#TODO: add a verbose option here
-		points = 0
+		allpoints = 0
 		for participant in participants:
+			points = 0
+			if verbose:
+				msg='In overall, I scored '
 			average_grades = participant.compute_average_grades(verbose=verbose)
 			for grade in average_grades:
 				if grade["role"] == "reporter":
 					points += grade["value"]*3.0
+					if verbose:
+						msg+='%.2f*3 = %.2f points as a reporter, ' % (grade["value"], grade["value"]*3)
 				elif grade["role"] == "opponent":
 					points += grade["value"]*2.0
+					if verbose:
+						msg+='%.2f*2 = %.2f points as an opponent, ' % (grade["value"], grade["value"]*2)
 				elif grade["role"] == "reviewer":
 					points += grade["value"]
+					if verbose:
+						msg+='%.2f points as a reviewer, ' % (grade["value"])
+
 				else:
 					print "Something wrong here...my role is not defined !"
 					sys.exit()
+
+			if verbose:
+				msg+='for a total of %.2f points' % points
+				print msg
+			allpoints += points
+
 		if verbose:
-			print "Team %s has %.2f points so far !"  % (self.name, points)
+			print "Team %s has %.2f points so far !"  % (self.name, allpoints)
 		return points
 
 	def ranking(self, verbose=True):
