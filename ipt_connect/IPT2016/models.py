@@ -2,8 +2,12 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 
-from numpy import sort, mean
 import sys
+
+
+def mean(vec):
+	return float(sum(vec)) / len(vec)
+
 
 class Participant(models.Model):
 
@@ -66,7 +70,7 @@ class Participant(models.Model):
 
 		# get all the grades that concerns me
 		if verbose:
-			print "="*50
+			print "="*20,"Personal History","="*20
 			print "My name is", self.name, self.surname
 		jurygrades = JuryGrade.objects.filter(physics_fight__reporter__name=self.name) | JuryGrade.objects.filter(physics_fight__opponent__name=self.name) | JuryGrade.objects.filter(physics_fight__reviewer__name=self.name)
 
@@ -81,14 +85,14 @@ class Participant(models.Model):
 			# get my role in this physics fight:
 			if pf.reporter.name == self.name and pf.reporter.surname == self.surname:
 				role = 'reporter'
-				pfgrades = list(sort([jurygrade.grade_reporter for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
+				pfgrades = list(sorted([jurygrade.grade_reporter for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
 
 			elif pf.opponent.name == self.name and pf.opponent.surname == self.surname:
 				role = 'opponent'
-				pfgrades = list(sort([jurygrade.grade_opponent for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
+				pfgrades = list(sorted([jurygrade.grade_opponent for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
 			elif pf.reviewer.name == self.name and pf.reviewer.surname == self.surname:
 				role = 'reviewer'
-				pfgrades = list(sort([jurygrade.grade_reviewer for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
+				pfgrades = list(sorted([jurygrade.grade_reviewer for jurygrade in jurygrades if jurygrade.physics_fight == pf]))
 			else:
 				print "Something wrong here...I must have a defined role !"
 				sys.exit()
@@ -173,7 +177,13 @@ class Participant(models.Model):
 		if verbose:
 			print "="*20, "Ranking", "="*20
 			for ind, participant in enumerate(participants):
-				print ind+1,")",  participant.fullname()," - ", participant.points(verbose=False), " points"
+
+				if participant==self and sys.stdout.isatty():
+					msg = str(ind+1)+") "+str(participant.fullname())+" - "+str(participant.points(verbose=False))+" points"
+					print '\x1b[32m%s\x1b[0m' % msg
+				else:
+					msg = str(ind+1)+") "+str(participant.fullname())+" - "+str(participant.points(verbose=False))+" points"
+					print msg
 
 		return participants, participants.index(self)+1
 
@@ -195,6 +205,18 @@ class Team(models.Model):
 		return self.name
 
 
+	def round_points(self, verbose=True, maxpf=3):
+		"""
+		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, or 1.5 each in case of ex-aequo)
+
+		:param verbose: verbosity of the function
+		:param maxpf: maximum number of physics fight per round
+		:return: Return the number of bonus points
+		"""
+
+		teams = Team.objects.filter()
+
+
 	def points(self, verbose=True):
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
@@ -202,7 +224,7 @@ class Team(models.Model):
 		:return: Return the total number of points
 		"""
 
-		participants = Participant.objects.filter(team__name=self.name)
+		participants = Participant.objects.filter(team=self)
 
 		if verbose:
 			print "="*20, "Compute Team Points", "="*20
@@ -249,7 +271,12 @@ class Team(models.Model):
 		if verbose:
 			print "="*20, "Team Ranking", "="*20
 			for ind, team in enumerate(teams):
-				print ind+1,")", team.name," - ", team.points(verbose=False), " points"
+				if team==self and sys.stdout.isatty():
+					msg = str(ind+1)+") "+str(team.name)+" - "+str(team.points(verbose=False))+" points"
+					print '\x1b[32m%s\x1b[0m' % msg
+				else:
+					msg = str(ind+1)+") "+str(team.name)+" - "+str(team.points(verbose=False))+" points"
+					print msg
 
 		return teams, teams.index(self)+1
 
