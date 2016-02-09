@@ -243,11 +243,9 @@ class Team(models.Model):
 					print "Round %i opposes teams from %s, %s and %s" % (int(roundnumber), teams[0].name, teams[1].name, teams[2].name)
 				results = []
 				for team in teams:
-					if verbose:
-						print "Team %s:" % team.name
 					teamroundpoints = 0
 					for participant in Participant.objects.filter(team=team):
-						average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=verbose)
+						average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=False)
 						for grade in average_grades:
 							if grade["role"] == "reporter":
 								teamroundpoints += grade["value"] * 3.0
@@ -266,7 +264,7 @@ class Team(models.Model):
 
 				# Now finally give the bonus point
 				if verbose:
-					print "Round %i ranking:"
+					print "Round %i ranking:" % roundnumber
 				for ind, result in enumerate(results):
 					if result["name"] == self.name:
 						# If everyone is ex-aequo
@@ -352,6 +350,10 @@ class Team(models.Model):
 				print msg
 			allpoints += points
 
+		# add bonus points for winning rounds, etc...
+		allpoints += sum(self.bonuspoints(verbose=verbose))
+
+
 		if verbose:
 			print "Team %s has %.2f points so far !"  % (self.name, allpoints)
 		return allpoints
@@ -360,7 +362,7 @@ class Team(models.Model):
 
 		teams = Team.objects.all()
 
-		teams = sorted(teams, key=lambda x : x.points(verbose=verbose))[::-1]
+		teams = sorted(teams, key=lambda x : x.points(verbose=True))[::-1]
 		if verbose:
 			print "="*20, "Team Ranking", "="*20
 			for ind, team in enumerate(teams):

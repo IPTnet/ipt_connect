@@ -9,6 +9,6 @@ TODO list:
 -Add a license on github
 -Document the code for further use
 -Remove all the unecessary else statements
-
+-Rethink all the verbosity flags so that nested functions are not too much redundant
 
 
