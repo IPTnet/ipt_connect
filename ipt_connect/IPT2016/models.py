@@ -57,12 +57,12 @@ class Participant(models.Model):
 	def __str__(self):
 		return self.fullname()
 
-	def compute_average_grades(self, round=None, verbose=True):
+	def compute_average_grades(self, roundnumber=None, verbose=True):
 		"""
 		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each fight
 
 		:param verbose: verbosity of the function
-		:param round: round to consider. If None, I consider all the rounds.
+		:param roundnumber: round to consider. If None, I consider all the rounds.
 		:return: I return a list of dictionaries, each of them with the following fields: {"value", "pf", "role"}
 		"""
 		#TODO: find a way to credit the points to the second reporter as well, without adding them to the total amount of team points (maybe this issue should be in the Team class ????)
@@ -76,15 +76,15 @@ class Participant(models.Model):
 		jurygrades = JuryGrade.objects.filter(physics_fight__reporter__name=self.name) | JuryGrade.objects.filter(physics_fight__opponent__name=self.name) | JuryGrade.objects.filter(physics_fight__reviewer__name=self.name)
 
 		# get all the physics fights I'm in
-		if round == None:
+		if roundnumber == None:
 			pfs = list(set([jurygrade.physics_fight for jurygrade in jurygrades]))
 			if verbose:
 				print "I consider all the Physics Fights played so far."
 		else:
-			assert round in [1, 2, 3, 4]
-			pfs = list(set([jurygrade.physics_fight for jurygrade in jurygrades if jurygrade.physics_fight.round == round]))
+			assert roundnumber in [1, 2, 3, 4]
+			pfs = list(set([jurygrade.physics_fight for jurygrade in jurygrades if jurygrade.physics_fight.round_number == roundnumber]))
 			if verbose:
-				print "I consider only the Physics Fights from Round %i" % int(round)
+				print "I consider only the Physics Fights from Round %i" % int(roundnumber)
 
 
 		if verbose:
@@ -117,6 +117,8 @@ class Participant(models.Model):
 			# If the result is odd, reject result/2 + 0.5 lowest and result/2 - 0.5 highest marks.
 			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
 
+
+
 			nreject = round(len(pfgrades) / 4.0)
 
 			if round(nreject / 2.0) == nreject / 2.0:
@@ -146,15 +148,15 @@ class Participant(models.Model):
 
 		return average_grades
 
-	def points(self, round=None, verbose=True):
+	def points(self, roundnumber=None, verbose=True):
 		"""
 
 		:param verbose: verbosity of the function
-		:param round: rounds to consider. If None, I consider all the rounds
+		:param roundnumber: round to consider. If None, I consider all the rounds
 		:return: Return the number of points gathered by a single participant. The multiplicative coefficient associated to his/her role is not taken into account here.
 		"""
 		points = 0.0
-		average_grades = self.compute_average_grades(verbose=verbose, round=round)
+		average_grades = self.compute_average_grades(verbose=verbose, roundnumber=roundnumber)
 		for grade in average_grades:
 			points += grade["value"]
 			if verbose:
@@ -164,11 +166,11 @@ class Participant(models.Model):
 		return points
 
 
-	def ranking(self, pool='all', round=None, verbose=True):
+	def ranking(self, pool='all', roundnumber=None, verbose=True):
 		"""
 
 		:param pool: can be "team", "gender" or "all". Select the participant you want to be ranked with
-		:param round: rounds to consider. If None, I consider all the PFs played so far.
+		:param roundnumber: rounds to consider. If None, I consider all the PFs played so far.
 		:param verbose: verbosity of the function
 		:return: return a tuple whose first element is an ordered list of participants according to the number of points they gathered, and second element is the current participant's ranking in this list
 		"""
@@ -184,7 +186,7 @@ class Participant(models.Model):
 			print "pool value does not compute"
 			sys.exit()
 
-		participants = sorted(participants, key=lambda x : x.points(round=round, verbose=verbose))[::-1]
+		participants = sorted(participants, key=lambda x : x.points(roundnumber=roundnumber, verbose=verbose))[::-1]
 
 		if verbose:
 			print "="*20, "Ranking", "="*20
@@ -217,17 +219,7 @@ class Team(models.Model):
 		return self.name
 
 
-	def roundpoints(self, round, verbose=True):
-		"""
-		Compute how many points the current team won in a given round
-
-		:param round: round to consider
-		:param verbose: verbosity option
-		:return: number of points actually gathered during the given round
-		"""
-
-
-	def round_results(self, verbose=True, maxpf=3):
+	def bonuspoints(self, verbose=True, maxpf=2):
 		"""
 		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, or 1.5 each in case of ex-aequo)
 
@@ -239,26 +231,83 @@ class Team(models.Model):
 
 		# get all the Physics Fights where my participants are involved in
 		pfs = PhysicsFight.objects.filter(reporter__team=self) | PhysicsFight.objects.filter(opponent__team=self) | PhysicsFight.objects.filter(reviewer__team=self)
-		myrooms = [room for room in pfs.room]
-		rounds = [1, 2, 3, 4]
+		#myrooms = [room for room in pfs.room]
+		roundnumbers = [1, 2, 3, 4]
 
-		for round in rounds:
-			roundpfs = pfs.filter(round=round) # for a given round, I am always in the same room
+		bonuspoints = []
+		for roundnumber in roundnumbers:
+			roundpfs = pfs.filter(round_number=roundnumber) # for a given round, I am always in the same room
 			if len(roundpfs) == maxpf: # then all the fights are played
-				pass
-			# ASDFASDFSADFSAFD
-			# Participant methods can now be run on a given round.
-			# I must use this to compute the total points per rounds
-			# WATCH OUT, participant.points() does not multiply the points by the role coefficients. Maybe change that in the points function ? If so, adapt the team.point function as well
+				teams = [roundpfs[0].reporter.team, roundpfs[0].opponent.team, roundpfs[0].reviewer.team]
+				if verbose:
+					print "Round %i opposes teams from %s, %s and %s" % (int(roundnumber), teams[0].name, teams[1].name, teams[2].name)
+				results = []
+				for team in teams:
+					if verbose:
+						print "Team %s:" % team.name
+					teamroundpoints = 0
+					for participant in Participant.objects.filter(team=team):
+						average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=verbose)
+						for grade in average_grades:
+							if grade["role"] == "reporter":
+								teamroundpoints += grade["value"] * 3.0
+							elif grade["role"] == "opponent":
+								teamroundpoints += grade["value"] * 2.0
+							elif grade["role"] == "reviewer":
+								teamroundpoints += grade["value"]
+							else:
+								print "Role undefined : %s" % grade["role"]
+								sys.exit()
+					if verbose:
+						print "Team %s gathered %.2f points in Round %i" % (team.name, teamroundpoints, int(roundnumber))
+					results.append({"name": team.name, "points": teamroundpoints})
+
+				results = sorted(results, key=lambda x: x["points"])[::-1]
+
+				# Now finally give the bonus point
+				if verbose:
+					print "Round %i ranking:"
+				for ind, result in enumerate(results):
+					if result["name"] == self.name:
+						# If everyone is ex-aequo
+						if results[0]["points"] == results[1]["points"] and results[1]["points"] == results[2]["points"]:
+							bonuspoint=1.0
+						# If 1 and 2 are ex-aequo
+						elif ind in [0,1] and results[0]["points"] == results[1]["points"]:
+							bonuspoint=1.5
+						# If I win the round
+						elif ind==0 and results[1]["points"] < results[0]["points"]:
+							bonuspoint=2.0
+						# If 2 and 3 are ex-aequo
+						elif ind in [1,2] and results[1]["points"] == results[2]["points"]:
+							bonuspoint=0.5
+						# If I am second
+						elif ind==1 and results[1]["points"] > results[2]["points"]:
+							bonuspoint=1.0
+						# all the rest got nothing
+						else:
+							bonuspoint=0.0
+
+					if verbose:
+						msg = "\t%i) Team %s -- %.2f points" % (ind+1, result["name"], result["points"])
+						if result["name"] == self.name:
+							print '\x1b[32m%s\x1b[0m' % msg
+
+						else:
+							print msg
+				if verbose:
+					print "On top of that, team %s win %.1f additional bonus points" % (self.name, bonuspoint)
+				bonuspoints.append(bonuspoint)
+
+			else:  # Not all the fights are played, I skip
+				if verbose:
+					print "Not all physics fights in Round %i have been played yet!" % int(roundnumber)
+				bonuspoints.append(0.0)
+
+		return bonuspoints
 
 
-			else:
-				pass
-
-
-
-
-	def points(self, round=None, verbose=True):
+	def points(self, roundnumber=None, verbose=True):
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
 
@@ -275,11 +324,11 @@ class Team(models.Model):
 		for participant in participants:
 			points = 0
 			if verbose:
-				if round==None:
+				if roundnumber==None:
 					msg = 'In overall, I scored '
 				else:
-					msg = 'In Round %i, I scored' % int(round)
-			average_grades = participant.compute_average_grades(round=round, verbose=verbose)
+					msg = 'In Round %i, I scored' % int(roundnumber)
+			average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=verbose)
 			for grade in average_grades:
 				if grade["role"] == "reporter":
 					points += grade["value"]*3.0
