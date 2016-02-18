@@ -4,27 +4,30 @@ from django.utils import timezone
 
 import sys
 
-
 def mean(vec):
 	return float(sum(vec)) / len(vec)
 
 
 class Participant(models.Model):
 
+	"""
+	This class represent the basic model of our program, a participant.
+	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament.
+
+	"""
+
+	# choices
 	GENDER_CHOICES = ( ('M','Male'), ('F','Female'))
-
 	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('IOC','IOC'), ('ACC','Accompanying') )
-
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
-
 	TOURISM_CHOICES = ( ('TOURISM_0','No') , ('TOURISM_1','Yes, one night'), ('TOURISM_2','Yes, two nights') )
-
 	SHIRT_SIZES = (
 		('S', 'Small'),
 		('M', 'Medium'),
 		('L', 'Large'),
 	)
 
+	# parameters
 	name = models.CharField(max_length=50,default='Richard')
 	surname = models.CharField(max_length=50,default='Feynman')
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
@@ -43,23 +46,22 @@ class Participant(models.Model):
 	hotel_room = models.CharField(max_length=20,blank=True)
 	check_in = models.BooleanField(default=False,help_text='Has the participant arrived?')
 
-	# def colored_name(self):
-	#     if self.name == 'Vivien':
-	#         color = "green"
-	#     else:
-	#         color = "red"
-	#     return "<span style=color:%s>%s</span>" % (color,self.name)
-	# colored_name.allow_tags = True
-
+	# functions
 	def fullname(self):
+		"""
+		:return: return the full name of the participant
+		"""
 		return self.name+' '+self.surname
 
 	def __str__(self):
+		"""
+		:return: return the full name of the participant
+		"""
 		return self.fullname()
 
 	def compute_average_grades(self, roundnumber=None, verbose=True):
 		"""
-		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each fight
+		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each physic fight
 
 		:param verbose: verbosity of the function
 		:param roundnumber: round to consider. If None, I consider all the rounds.
@@ -90,6 +92,7 @@ class Participant(models.Model):
 		if verbose:
 			print "I played in %i Physics Fights" % len(pfs)
 
+
 		for pf in pfs:
 
 			# get my role in this physics fight:
@@ -116,7 +119,6 @@ class Participant(models.Model):
 			# If the result is even, reject result/2 lowest and result/2 highest marks
 			# If the result is odd, reject result/2 + 0.5 lowest and result/2 - 0.5 highest marks.
 			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
-
 
 
 			nreject = round(len(pfgrades) / 4.0)
@@ -146,11 +148,11 @@ class Participant(models.Model):
 			if verbose:
 				print '\tI scored %.2f points' % mean(pfgrades)
 
+		# return the average grade for all physics fight
 		return average_grades
 
 	def points(self, roundnumber=None, verbose=True):
 		"""
-
 		:param verbose: verbosity of the function
 		:param roundnumber: round to consider. If None, I consider all the rounds
 		:return: Return the number of points gathered by a single participant. The multiplicative coefficient associated to his/her role is not taken into account here.
@@ -168,7 +170,6 @@ class Participant(models.Model):
 
 	def ranking(self, pool='all', roundnumber=None, verbose=True):
 		"""
-
 		:param pool: can be "team", "gender" or "all". Select the participant you want to be ranked with
 		:param roundnumber: rounds to consider. If None, I consider all the PFs played so far.
 		:param verbose: verbosity of the function
@@ -204,13 +205,20 @@ class Participant(models.Model):
 
 
 class Problem(models.Model):
+	"""
+	This model represents one of the 17 problems
+	"""
+
 	name = models.CharField(max_length=50, default=None)
 	description = models.CharField(max_length=500, default=None)
 	def __str__(self):
-
 		return self.name
 		
 class Team(models.Model):
+	"""
+	This model represent a team, to which all the participants belong to
+	"""
+
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
 	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
@@ -219,19 +227,18 @@ class Team(models.Model):
 		return self.name
 
 
-	def bonuspoints(self, verbose=True, maxpf=2):
+	# functions
+	def bonuspoints(self, verbose=True, maxpf=3):
 		"""
-		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, or 1.5 each in case of ex-aequo)
+		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, split equally if ex-aequo)
 
 		:param verbose: verbosity of the function
 		:param maxpf: maximum number of physics fight per round
 		:return: Return the number of bonus points
 		"""
 
-
 		# get all the Physics Fights where my participants are involved in
 		pfs = PhysicsFight.objects.filter(reporter__team=self) | PhysicsFight.objects.filter(opponent__team=self) | PhysicsFight.objects.filter(reviewer__team=self)
-		#myrooms = [room for room in pfs.room]
 		roundnumbers = [1, 2, 3, 4]
 
 		bonuspoints = []
@@ -308,8 +315,9 @@ class Team(models.Model):
 	def points(self, roundnumber=None, verbose=True):
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
+		If all the fights from a round are played, I add the corresponding bonus points
 
-		:return: Return the total number of points
+		:return: Return the total number of points of self
 		"""
 
 		participants = Participant.objects.filter(team=self)
@@ -359,6 +367,10 @@ class Team(models.Model):
 		return allpoints
 
 	def ranking(self, verbose=True):
+		"""
+		:param verbose:  If True, print all the
+		:return: (teams, position of self). Return all the teams, ranked by points and return my position amongst the rank.
+		"""
 
 		teams = Team.objects.all()
 
@@ -374,6 +386,44 @@ class Team(models.Model):
 					print msg
 
 		return teams, teams.index(self)+1
+
+	def problems(self, verbose=True):
+		"""
+		Get all the problems that I cannot present(already presented or eternal rejection) and cannot oppose(already opposed)
+
+		:return: tuple of three lists. each list contains the problems that are eternally rejected, already presented and already opposed
+		"""
+
+		noproblems=[]
+
+		# the eternal rejection
+		eternal_rejections = EternalRejection.objects.filter(physics_fight__reporter__team=self)
+		assert len(eternal_rejections) < 2
+		for rejection in eternal_rejections:
+			if verbose:
+				print "Team %s rejected eternally problem %s" %(self.name, rejection.problem.name)
+			noproblems.append([rejection.problem])
+
+		# now all the problems already presented
+		physics_fights = PhysicsFight.objects.filter(reporter__team=self)
+		presented = []
+		for physics_fight in physics_fights:
+			if verbose:
+				print "In %s, I presented problem %s" % (physics_fight, physics_fight.problem_presented)
+			presented.append(physics_fight.problem_presented)
+		noproblems.append(presented)
+
+		# and problems already opposed
+		physics_fights = PhysicsFight.objects.filter(opponent__team=self)
+		opposed = []
+		for physics_fight in physics_fights:
+			if verbose:
+				print "In %s, I opposed problem %s" % (physics_fight, physics_fight.problem_presented)
+			opposed.append(physics_fight.problem_presented)
+		noproblems.append(opposed)
+
+		return noproblems
+
 
 
 
@@ -396,27 +446,65 @@ class PhysicsFight(models.Model):
 			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(4))),
 			default=None
 			)
-
 	fight_number = models.IntegerField(
 			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(4))),
 			default=None
 			)
-
 	room = models.ForeignKey(Room)
-
 	reporter = models.ForeignKey(Participant, related_name='reporter_team_1')
 	reporter_2 = models.ForeignKey(Participant, blank=True, null=True, related_name='reporter_team_2')
-
 	opponent = models.ForeignKey(Participant, related_name='opponent_team')
-
 	reviewer = models.ForeignKey(Participant, related_name='reviewer_team')
-
 	problem_presented = models.ForeignKey(Problem)
-
 	submitted_date = models.DateTimeField(default=timezone.now)
 
 	def __str__(self):
 		return "Round %i | Fight %i | Room %s" % (self.round_number, self.fight_number, self.room.name)
+
+
+	def unavailable_problems(self, verbose=True):
+		"""
+		From the rules:
+
+		The Opponent may challenge the Reporter on any problem with the exception of a problem that:
+		a) was permanently rejected by the Reporter earlier;
+		b) was presented by the Reporter earlier;
+		c) was opposed by the Opponent earlier;
+		d) was presented by the Opponent earlier.
+		If there are no problems left to challenge, the bans d), c), b), a) are successively removed, in that order.
+
+		:param verbose: verbosity flag
+		:return: return a tuple with four lists : ([a], [b], [c], [d])
+		"""
+
+
+		# remind that these below are ([eternal rejection], [presented], [opposed])
+		reporter_problems = self.reporter.team.problems(verbose=False)
+		opponent_problems = self.opponent.team.problems(verbose=False)
+
+		eternal_rejection = reporter_problems[0]
+		if verbose:
+			print "Team %s eternally rejected problem %s" % (self.reporter.team, eternal_rejection[0])
+		presented_by_reporter = reporter_problems[1]
+		if verbose:
+			msg = "Team % already presented the following problems:"
+			for problem in presented_by_reporter:
+				msg += "\t%s" % problem
+			print msg
+		opposed_by_opponent = opponent_problems[2]
+		if verbose:
+			msg = "Team % already opposed the following problems:"
+			for problem in opposed_by_opponent:
+				msg += "\t%s" % problem
+			print msg
+		presented_by_opponent = opponent_problems[1]
+		if verbose:
+			msg = "Team % already presented the following problems:"
+			for problem in presented_by_opponent:
+				msg += "\t%s" % problem
+			print msg
+
+		return (eternal_rejection, presented_by_reporter, opposed_by_opponent, presented_by_opponent)
 
 
 class JuryGrade(models.Model):

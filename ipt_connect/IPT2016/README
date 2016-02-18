@@ -22,6 +22,11 @@ One of the numerous contestants
 :param hotel_room : associated room in the hotel
 :param check_in : is the participant registered on-site ?
 
+:function fullname: return the full name of the participant
+:function compute_average_grade: return the average grade per physics fight
+:function points: return the total number of points, without the multiplicative factor
+:function ranking: return a ranked list of participants according to their points
+
 
 Problem
 -------
@@ -35,6 +40,7 @@ A collection of participants with possibly an associated IOC
 :param name : name of the team (country, I guess)
 :param surname : funny name that teams like to use
 :param IOC : associated IOC, if exists
+
 
 Room
 ----
