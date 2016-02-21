@@ -1,47 +1,74 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-
+import os
+from uuid import uuid4
+from django.utils.encoding import iri_to_uri
+from string import replace
 import sys
+from django.utils.deconstruct import deconstructible
+
 
 def mean(vec):
 	return float(sum(vec)) / len(vec)
 
 
+@deconstructible
+class UploadToPathAndRename(object):
+
+	def __init__(self, path):
+		self.sub_path = path
+
+	def __call__(self, instance, filename):
+		ext = filename.split('.')[-1]
+		# get filename
+		if instance.pk:
+			filename = iri_to_uri(replace((u'{}_{}_{}.{}').format(instance.team,instance.surname,instance.name, ext),' ','_'))
+		else:
+			# set filename as random string
+			filename = '{}.{}'.format(uuid4().hex, ext)
+		# return the whole path to the file
+		return os.path.join(self.sub_path, filename)
+
+	
 class Participant(models.Model):
 
 	"""
 	This class represent the basic model of our program, a participant.
-	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament.
+	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
 
-	"""
+	
+	GENDER_CHOICES = ( ('M','Male'), ('F','Female'),  ('D','Decline to report'))
 
-	# choices
-	GENDER_CHOICES = ( ('M','Male'), ('F','Female'))
-	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('IOC','IOC'), ('ACC','Accompanying') )
+	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompanying') )
+
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
+
 	TOURISM_CHOICES = ( ('TOURISM_0','No') , ('TOURISM_1','Yes, one night'), ('TOURISM_2','Yes, two nights') )
+
 	SHIRT_SIZES = (
 		('S', 'Small'),
 		('M', 'Medium'),
 		('L', 'Large'),
+		('XL', 'Extra Large'),
 	)
 
 	# parameters
 	name = models.CharField(max_length=50,default='Richard')
 	surname = models.CharField(max_length=50,default='Feynman')
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
-	email = models.EmailField(help_text='This address will be used to send you every important infos about the tournament.')
+	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.')
 	birthdate = models.DateField(default='1900-01-31')
-	photo = models.ImageField(upload_to='id_photo',help_text='Used for badges and transportation cards.', blank=True, null=True)
+	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.',null=True)
 	team = models.ForeignKey('Team')
-	role = models.CharField(max_length=20,choices=ROLE_CHOICES)
+	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).')
 	passport_number = models.CharField(max_length=20)
 	affiliation = models.CharField(max_length=20,default='XXX University')
-	veteran = models.BooleanField(default=False,help_text='Have you already participated in the IPT?')
-	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Do you have a specific diet?')
-	tourism=models.CharField(max_length=20,choices=TOURISM_CHOICES,help_text='Would you like to stay some more days in Paris after the tournament? Please note the LOC would only book the rooms, not pay for it!')
-	shirt_size = models.CharField(max_length=1,choices=SHIRT_SIZES)
+	veteran = models.BooleanField(default=False,help_text='Has the participant already participated in the IPT?')
+	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
+	tourism=models.CharField(max_length=20,choices=TOURISM_CHOICES,help_text='Would the participant like to stay some more days in Paris after the tournament? Please note the LOC would only book the rooms, but would not pay for it!')
+	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
+	mixed_dormitory = models.BooleanField(default=True,help_text='Is it ok for the participant to be in mixed dorm?')
 	remark = models.TextField(blank=True)
 	hotel_room = models.CharField(max_length=20,blank=True)
 	check_in = models.BooleanField(default=False,help_text='Has the participant arrived?')
