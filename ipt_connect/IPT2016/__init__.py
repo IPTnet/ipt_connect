@@ -1,5 +1,5 @@
 """
-This is the IPT 2016 Magic Machine, a django/python toolbox to estimate time delays between COSMOGRAIL light curves.
+This is the IPT 2016 Magic Machine, a django/python toolbox that organises a tournament and compute the grades
 
 :Authors: Vivien Bonvin and Maxime Harazi
 :License: GPLv3 or later 
