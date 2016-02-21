@@ -13,15 +13,17 @@ class TacticalRejectionInline(admin.TabularInline):
 class EternalRejectionInline(admin.TabularInline):
 	model = EternalRejection
 	extra = 0
-	max_num = 1
 
 class PFadmin(admin.ModelAdmin):
 
 	fieldsets = [
 	('General Information', {'fields': [('round_number', "fight_number", "room")]}),
-	(None, {'fields': [("reporter", "name_reporter"), ('opponent', 'name_opponent'), ('reviewer', 'name_reviewer'), 'problem_presented']})
+	(None, {'fields': [("reporter"), ('opponent'), ('reviewer'), 'problem_presented']})
     ]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
+	#TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
+
+
 
 class TeamAdmin(admin.ModelAdmin):
 
@@ -30,7 +32,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','email','role','gender','birthdate','veteran','diet','tourism')
+	list_display = ('surname','name','team','email','role','gender','birthdate','mixed_dormitory','veteran','diet','tourism')
 	search_fields = ('surname','name','role','diet','tourism')
 	list_filter = ('team','gender','role','diet','tourism')
 	exclude = ('hotel_room','check_in',)
