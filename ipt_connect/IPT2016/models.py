@@ -53,7 +53,7 @@ class Participant(models.Model):
 		"""
 		return self.name+' '+self.surname
 
-	def __str__(self):
+	def __unicode__(self):
 		"""
 		:return: return the full name of the participant
 		"""
@@ -208,11 +208,11 @@ class Problem(models.Model):
 	"""
 	This model represents one of the 17 problems
 	"""
-
 	name = models.CharField(max_length=50, default=None)
 	description = models.CharField(max_length=500, default=None)
-	def __str__(self):
+	def __unicode__(self):
 		return self.name
+
 		
 class Team(models.Model):
 	"""
@@ -222,13 +222,43 @@ class Team(models.Model):
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
 	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
-	def __str__(self):
+	def __unicode__(self):
 
 		return self.name
 
+	def presentation_coefficients(self, verbose=True):
+		"""
+		Modify the presentation coefficient from a given round up to the end of the physics fights if more than three problems are tactically rejected.
+
+		The coefficient loses 0.2 points for every additional rejection. This penality is carried over all the subsequents rounds, but disappear for the Final
+
+		:param verbose: Verbosity flag
+		:return: Return a list with the coefficient for every round
+		"""
+
+		# get all the tactical rejections
+		rejections = TacticalRejection.objects.filter(physics_fight__reporter__team=self)
+		rounds = [1, 2, 3, 4]
+
+		prescoeffs = []
+		npenalities = 0
+		for round in rounds:
+			roundrejections = [rejection for rejection in rejections if rejection.physics_fight.round_number == round]
+			if verbose:
+				print "%i tactical rejections by Team %s in Round %i" % (len(roundrejections), self, round)
+			if len(roundrejections) > 3:
+				npenalities += len(roundrejections) - 3
+			if verbose:
+				if npenalities > 0:
+					print "Penality of %.1f points on the Reporter Coefficient" %  float(0.2*npenalities)
+				else:
+					print "No penality"
+			prescoeffs.append(3.0 - 0.2 * npenalities)
+
+		return prescoeffs
 
 	# functions
-	def bonuspoints(self, verbose=True, maxpf=3):
+	def bonuspoints(self, verbose=True, maxpf=2):
 		"""
 		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, split equally if ex-aequo)
 
@@ -241,21 +271,24 @@ class Team(models.Model):
 		pfs = PhysicsFight.objects.filter(reporter__team=self) | PhysicsFight.objects.filter(opponent__team=self) | PhysicsFight.objects.filter(reviewer__team=self)
 		roundnumbers = [1, 2, 3, 4]
 
+
 		bonuspoints = []
 		for roundnumber in roundnumbers:
 			roundpfs = pfs.filter(round_number=roundnumber) # for a given round, I am always in the same room
 			if len(roundpfs) == maxpf: # then all the fights are played
 				teams = [roundpfs[0].reporter.team, roundpfs[0].opponent.team, roundpfs[0].reviewer.team]
 				if verbose:
+					print "="*20, "Bonus Points", "="*20
 					print "Round %i opposes teams from %s, %s and %s" % (int(roundnumber), teams[0].name, teams[1].name, teams[2].name)
 				results = []
 				for team in teams:
+					prescoeff = team.presentation_coefficients(verbose=False)
 					teamroundpoints = 0
 					for participant in Participant.objects.filter(team=team):
 						average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=False)
 						for grade in average_grades:
 							if grade["role"] == "reporter":
-								teamroundpoints += grade["value"] * 3.0
+								teamroundpoints += grade["value"] * prescoeff[grade["pf"].round_number - 1]
 							elif grade["role"] == "opponent":
 								teamroundpoints += grade["value"] * 2.0
 							elif grade["role"] == "reviewer":
@@ -321,7 +354,6 @@ class Team(models.Model):
 		"""
 
 		participants = Participant.objects.filter(team=self)
-
 		if verbose:
 			print "="*20, "Compute Team Points", "="*20
 			print "There are %i participants in %s" % (len(participants), self.name)
@@ -331,30 +363,32 @@ class Team(models.Model):
 			points = 0
 			if verbose:
 				if roundnumber==None:
-					msg = 'In overall, I scored '
+					msg = 'In overall, I scored'
 				else:
 					msg = 'In Round %i, I scored' % int(roundnumber)
 			average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=verbose)
+			prescoeff = self.presentation_coefficients(verbose=False)
 			for grade in average_grades:
 				if grade["role"] == "reporter":
-					points += grade["value"]*3.0
+					roundprescoeff = prescoeff[grade["pf"].round_number - 1]
+					points += grade["value"]*roundprescoeff
 					if verbose:
-						msg+='%.2f*3 = %.2f points as a reporter, ' % (grade["value"], grade["value"]*3)
+						msg+='\n\t%.2f*%.1f = %.2f points as a reporter,' % (grade["value"], roundprescoeff, grade["value"]*roundprescoeff)
 				elif grade["role"] == "opponent":
 					points += grade["value"]*2.0
 					if verbose:
-						msg+='%.2f*2 = %.2f points as an opponent, ' % (grade["value"], grade["value"]*2)
+						msg+='\n\t%.2f*2 = %.2f points as an opponent,' % (grade["value"], grade["value"]*2)
 				elif grade["role"] == "reviewer":
 					points += grade["value"]
 					if verbose:
-						msg+='%.2f points as a reviewer, ' % (grade["value"])
+						msg+='\n\t%.2f points as a reviewer,' % (grade["value"])
 
 				else:
 					print "Something wrong here...my role is not defined !"
 					sys.exit()
 
 			if verbose:
-				msg+='for a total of %.2f points' % points
+				msg+='\nfor a total of %.2f points' % points
 				print msg
 			allpoints += points
 
@@ -387,25 +421,38 @@ class Team(models.Model):
 
 		return teams, teams.index(self)+1
 
-	def problems(self, verbose=True):
+	def problems(self, verbose=True, currentpf=None):
 		"""
 		Get all the problems that I cannot present(already presented or eternal rejection) and cannot oppose(already opposed)
+
+		:param verbose: verbosity Flag
+		:param currentpf: A PhysicsFight instance. Return all the unpresentable problems before the current physics fight. If none, return on all the physics fights. This sentence is terribly unclear. Rephrase.
 
 		:return: tuple of three lists. each list contains the problems that are eternally rejected, already presented and already opposed
 		"""
 
+		if verbose:
+			print "="*20, "Problems of Team %s" % self.name, "="*20
 		noproblems=[]
+
+		if currentpf !=None:
+			round_number = currentpf.round_number
+		else: #TODO: remove these stupid 999 values and implement the pf rejection properly
+			round_number = 999
 
 		# the eternal rejection
 		eternal_rejections = EternalRejection.objects.filter(physics_fight__reporter__team=self)
 		assert len(eternal_rejections) < 2
-		for rejection in eternal_rejections:
+		reject = []
+		if len(eternal_rejections) > 0 and eternal_rejections[0].physics_fight.round_number < round_number:
 			if verbose:
-				print "Team %s rejected eternally problem %s" %(self.name, rejection.problem.name)
-			noproblems.append([rejection.problem])
+				print "Team %s rejected eternally problem %s" %(self.name, eternal_rejections[0].problem.name)
+			reject.append(eternal_rejections[0].problem)
+		noproblems.append(reject)
 
 		# now all the problems already presented
 		physics_fights = PhysicsFight.objects.filter(reporter__team=self)
+		physics_fights = [pf for pf in physics_fights if pf.round_number < round_number]
 		presented = []
 		for physics_fight in physics_fights:
 			if verbose:
@@ -415,6 +462,7 @@ class Team(models.Model):
 
 		# and problems already opposed
 		physics_fights = PhysicsFight.objects.filter(opponent__team=self)
+		physics_fights = [pf for pf in physics_fights if pf.round_number < round_number]
 		opposed = []
 		for physics_fight in physics_fights:
 			if verbose:
@@ -422,6 +470,7 @@ class Team(models.Model):
 			opposed.append(physics_fight.problem_presented)
 		noproblems.append(opposed)
 
+		assert len(noproblems) == 3
 		return noproblems
 
 
@@ -429,14 +478,14 @@ class Team(models.Model):
 
 class Room(models.Model):
 	name = models.CharField(max_length=50)
-	def __str__(self):
+	def __unicode__(self):
 
 		return self.name
 
 class Jury(models.Model):
 	name = models.CharField(max_length=50)
 	team = models.ForeignKey('Team', null=True, blank=True)
-	def __str__(self):
+	def __unicode__(self):
 
 		return self.name
 		
@@ -458,7 +507,7 @@ class PhysicsFight(models.Model):
 	problem_presented = models.ForeignKey(Problem)
 	submitted_date = models.DateTimeField(default=timezone.now)
 
-	def __str__(self):
+	def __unicode__(self):
 		return "Round %i | Fight %i | Room %s" % (self.round_number, self.fight_number, self.room.name)
 
 
@@ -474,37 +523,47 @@ class PhysicsFight(models.Model):
 		If there are no problems left to challenge, the bans d), c), b), a) are successively removed, in that order.
 
 		:param verbose: verbosity flag
-		:return: return a tuple with four lists : ([a], [b], [c], [d])
+		:return: return a tuple with five lists : ([already_presented_this_round], [a], [b], [c], [d])
 		"""
 
-
 		# remind that these below are ([eternal rejection], [presented], [opposed])
-		reporter_problems = self.reporter.team.problems(verbose=False)
-		opponent_problems = self.opponent.team.problems(verbose=False)
-
+		reporter_problems = self.reporter.team.problems(verbose=False, currentpf=self)
+		opponent_problems = self.opponent.team.problems(verbose=False, currentpf=self)
 		eternal_rejection = reporter_problems[0]
+
 		if verbose:
-			print "Team %s eternally rejected problem %s" % (self.reporter.team, eternal_rejection[0])
+			print "="*10, "Problem rejection for %s" % self, "="*10
+			if len(eternal_rejection) != 0:
+				print "Team %s eternally rejected problem \n\t%s" % (self.reporter.team, eternal_rejection[0])
 		presented_by_reporter = reporter_problems[1]
 		if verbose:
-			msg = "Team % already presented the following problems:"
+			msg = "Team %s already presented the following problems:" % self.reporter.team
 			for problem in presented_by_reporter:
-				msg += "\t%s" % problem
+				msg += "\n\t%s" % problem
 			print msg
 		opposed_by_opponent = opponent_problems[2]
 		if verbose:
-			msg = "Team % already opposed the following problems:"
+			msg = "Team %s already opposed the following problems:" % self.opponent.team
 			for problem in opposed_by_opponent:
-				msg += "\t%s" % problem
+				msg += "\n\t%s" % problem
 			print msg
 		presented_by_opponent = opponent_problems[1]
 		if verbose:
-			msg = "Team % already presented the following problems:"
+			msg = "Team %s already presented the following problems:" % self.opponent.team
 			for problem in presented_by_opponent:
-				msg += "\t%s" % problem
+				msg += "\n\t%s" % problem
 			print msg
 
-		return (eternal_rejection, presented_by_reporter, opposed_by_opponent, presented_by_opponent)
+		# Finally, problems already presented in this Round, in the current room
+		thisroundpfs = PhysicsFight.objects.filter(round_number=self.round_number).filter(room=self.room)
+		presented_this_round = [pf.problem_presented for pf in thisroundpfs if pf.fight_number < self.fight_number]
+		if verbose:
+			msg = "In this round, problems already presented are:"
+			for problem in presented_this_round:
+				msg += "\n\t%s" % problem
+			print msg
+
+		return (presented_this_round, eternal_rejection, presented_by_reporter, opposed_by_opponent, presented_by_opponent)
 
 
 class JuryGrade(models.Model):
@@ -528,7 +587,7 @@ class JuryGrade(models.Model):
 			default=None
 			)
 
-	def __str__(self):
+	def __unicode__(self):
 		return "Grade of %s" % self.jury
 
 	def info(self):
@@ -546,7 +605,7 @@ class TacticalRejection(models.Model):
 
 	problem = models.ForeignKey(Problem)
 
-	def __str__(self):
+	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem
 
 class EternalRejection(models.Model):
@@ -555,6 +614,6 @@ class EternalRejection(models.Model):
 
 	problem = models.ForeignKey(Problem)
 
-	def __str__(self):
+	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem
 
