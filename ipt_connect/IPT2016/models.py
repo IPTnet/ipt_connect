@@ -73,6 +73,7 @@ class Participant(models.Model):
 	hotel_room = models.CharField(max_length=20,blank=True)
 	check_in = models.BooleanField(default=False,help_text='Has the participant arrived?')
 
+
 	# functions
 	def fullname(self):
 		"""
@@ -186,10 +187,15 @@ class Participant(models.Model):
 		"""
 		points = 0.0
 		average_grades = self.compute_average_grades(verbose=verbose, roundnumber=roundnumber)
+		if verbose:
+			if roundnumber == None:
+				print "="*20, "Overall Summary", "="*20
+			else:
+				print "="*20, "Summary of Round %s" % roundnumber, "="*20
 		for grade in average_grades:
 			points += grade["value"]
 			if verbose:
-				print "\tIn %s, I gathered %.2f points as a %s" % (grade["pf"], grade["value"], grade["role"])
+				print "In %s, I gathered %.2f points as a %s" % (grade["pf"], grade["value"], grade["role"])
 		if verbose:
 			print "In total, I gathered %.2f points" % points
 		return points
@@ -221,10 +227,10 @@ class Participant(models.Model):
 			for ind, participant in enumerate(participants):
 
 				if participant==self and sys.stdout.isatty():
-					msg = str(ind+1)+") "+str(participant.fullname())+" - "+str(participant.points(verbose=False))+" points"
+					msg = str(ind+1)+") "+unicode(participant.fullname())+" - "+str(participant.points(roundnumber=roundnumber, verbose=False))+" points"
 					print '\x1b[32m%s\x1b[0m' % msg
 				else:
-					msg = str(ind+1)+") "+str(participant.fullname())+" - "+str(participant.points(verbose=False))+" points"
+					msg = str(ind+1)+") "+unicode(participant.fullname())+" - "+str(participant.points(roundnumber=roundnumber, verbose=False))+" points"
 					print msg
 
 		return participants, participants.index(self)+1
@@ -285,7 +291,7 @@ class Team(models.Model):
 		return prescoeffs
 
 	# functions
-	def bonuspoints(self, verbose=True, maxpf=2):
+	def bonuspoints(self, verbose=True, maxpf=3):
 		"""
 		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, split equally if ex-aequo)
 
@@ -302,6 +308,7 @@ class Team(models.Model):
 		bonuspoints = []
 		for roundnumber in roundnumbers:
 			roundpfs = pfs.filter(round_number=roundnumber) # for a given round, I am always in the same room
+			assert len(roundpfs) <= maxpf
 			if len(roundpfs) == maxpf: # then all the fights are played
 				teams = [roundpfs[0].reporter.team, roundpfs[0].opponent.team, roundpfs[0].reviewer.team]
 				if verbose:
