@@ -30,23 +30,16 @@ class UploadToPathAndRename(object):
 		# return the whole path to the file
 		return os.path.join(self.sub_path, filename)
 
-	
+
 class Participant(models.Model):
 
-<<<<<<< HEAD
-
-	
-	GENDER_CHOICES = ( ('M','Male'), ('F','Female'),  ('D','Decline to report'))
-
-=======
 	"""
 	This class represent the basic model of our program, a participant.
 	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
 
-	
+
 	GENDER_CHOICES = ( ('M','Male'), ('F','Female'),  ('D','Decline to report'))
 
->>>>>>> compute_grades
 	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompanying') )
 
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
@@ -81,18 +74,6 @@ class Participant(models.Model):
 	check_in = models.BooleanField(default=False,help_text='Has the participant arrived?')
 
 
-<<<<<<< HEAD
-	def fullname(self):
-		return self.name+' '+self.surname
-
-	def __unicode__(self):
-		return self.fullname()
-		
-
-	def compute_average_grades(self, roundnumber=None, verbose=True):
-		"""
-		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each fight
-=======
 	# functions
 	def fullname(self):
 		"""
@@ -109,7 +90,6 @@ class Participant(models.Model):
 	def compute_average_grades(self, roundnumber=None, verbose=True):
 		"""
 		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each physic fight
->>>>>>> compute_grades
 
 		:param verbose: verbosity of the function
 		:param roundnumber: round to consider. If None, I consider all the rounds.
@@ -140,10 +120,7 @@ class Participant(models.Model):
 		if verbose:
 			print "I played in %i Physics Fights" % len(pfs)
 
-<<<<<<< HEAD
-=======
 
->>>>>>> compute_grades
 		for pf in pfs:
 
 			# get my role in this physics fight:
@@ -164,44 +141,6 @@ class Participant(models.Model):
 
 			if verbose:
 				print "In %s, I was the %s" % (pf, role)
-<<<<<<< HEAD
-
-			# Rule for grade rejection: divide the number of jury by 4.
-			# Round the result (if result is X.5, round up to X+1)
-			# If the result is even, reject result/2 lowest and result/2 highest marks
-			# If the result is odd, reject result/2 + 0.5 lowest and result/2 - 0.5 highest marks.
-			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
-
-
-
-			nreject = round(len(pfgrades) / 4.0)
-
-			if round(nreject / 2.0) == nreject / 2.0:
-				nlow = int(nreject / 2.0)
-				nhigh = int(nlow)
-			else:
-				nlow = int(nreject / 2.0 + 0.5)
-				nhigh = int(nreject / 2.0 - 0.5)
-
-			if verbose:
-				print "\t%i Jury Members graded me" % len(pfgrades)
-				print "\t%i lowest mark(s) and %i highest mark(s) are discarded"  % (nlow, nhigh)
-
-			i = 0
-			while i < nhigh:
-				pfgrades.pop(-1)
-				i += 1
-
-			i = 0
-			while i < nlow:
-				pfgrades.pop(0)
-				i += 1
-
-			average_grades.append({"value": mean(pfgrades), "pf":pf, "role":role})
-			if verbose:
-				print '\tI scored %.2f points' % mean(pfgrades)
-
-=======
 
 			# Rule for grade rejection: divide the number of jury by 4.
 			# Round the result (if result is X.5, round up to X+1)
@@ -238,30 +177,10 @@ class Participant(models.Model):
 				print '\tI scored %.2f points' % mean(pfgrades)
 
 		# return the average grade for all physics fight
->>>>>>> compute_grades
 		return average_grades
 
 	def points(self, roundnumber=None, verbose=True):
 		"""
-<<<<<<< HEAD
-
-		:param verbose: verbosity of the function
-		:param roundnumber: round to consider. If None, I consider all the rounds
-		:return: Return the number of points gathered by a single participant. The multiplicative coefficient associated to his/her role is not taken into account here.
-		"""
-		points = 0.0
-		average_grades = self.compute_average_grades(verbose=verbose, roundnumber=roundnumber)
-		for grade in average_grades:
-			points += grade["value"]
-			if verbose:
-				print "\tIn %s, I gathered %.2f points as a %s" % (grade["pf"], grade["value"], grade["role"])
-		if verbose:
-			print "In total, I gathered %.2f points" % points
-		return points
-
-
-	def ranking(self, pool='all', roundnumber=None, verbose=True):
-=======
 		:param verbose: verbosity of the function
 		:param roundnumber: round to consider. If None, I consider all the rounds
 		:return: Return the number of points gathered by a single participant. The multiplicative coefficient associated to his/her role is not taken into account here.
@@ -288,41 +207,7 @@ class Participant(models.Model):
 		:param roundnumber: rounds to consider. If None, I consider all the PFs played so far.
 		:param verbose: verbosity of the function
 		:return: return a tuple whose first element is an ordered list of participants according to the number of points they gathered, and second element is the current participant's ranking in this list
->>>>>>> compute_grades
 		"""
-
-		:param pool: can be "team", "gender" or "all". Select the participant you want to be ranked with
-		:param roundnumber: rounds to consider. If None, I consider all the PFs played so far.
-		:param verbose: verbosity of the function
-		:return: return a tuple whose first element is an ordered list of participants according to the number of points they gathered, and second element is the current participant's ranking in this list
-		"""
-
-
-		if pool == 'team':
-			participants = Participant.objects.filter(team=self.team)
-		elif pool == 'gender':
-			participants = Participant.objects.filter(gender=self.gender)
-		elif pool == 'all':
-			participants = Participant.objects.all()
-		else:
-			print "pool value does not compute"
-			sys.exit()
-
-		participants = sorted(participants, key=lambda x : x.points(roundnumber=roundnumber, verbose=verbose))[::-1]
-
-		if verbose:
-			print "="*20, "Ranking", "="*20
-			for ind, participant in enumerate(participants):
-
-				if participant==self and sys.stdout.isatty():
-					msg = str(ind+1)+") "+str(participant.fullname())+" - "+str(participant.points(verbose=False))+" points"
-					print '\x1b[32m%s\x1b[0m' % msg
-				else:
-					msg = str(ind+1)+") "+str(participant.fullname())+" - "+str(participant.points(verbose=False))+" points"
-					print msg
-
-		return participants, participants.index(self)+1
-
 
 
 		if pool == 'team':
@@ -361,7 +246,7 @@ class Problem(models.Model):
 	def __unicode__(self):
 		return self.name
 
-		
+
 class Team(models.Model):
 	"""
 	This model represent a team, to which all the participants belong to
@@ -374,12 +259,6 @@ class Team(models.Model):
 
 		return self.name
 
-<<<<<<< HEAD
-
-	def bonuspoints(self, verbose=True, maxpf=2):
-		"""
-		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, or 1.5 each in case of ex-aequo)
-=======
 	def presentation_coefficients(self, verbose=True):
 		"""
 		Modify the presentation coefficient from a given round up to the end of the physics fights if more than three problems are tactically rejected.
@@ -417,30 +296,12 @@ class Team(models.Model):
 	def bonuspoints(self, verbose=True, maxpf=3):
 		"""
 		Check if the rounds where I played are complete, and return the according number of bonus points (2 if first, 1 if second, split equally if ex-aequo)
->>>>>>> compute_grades
 
 		:param verbose: verbosity of the function
 		:param maxpf: maximum number of physics fight per round
 		:return: Return the number of bonus points
 		"""
 
-<<<<<<< HEAD
-
-		# get all the Physics Fights where my participants are involved in
-		pfs = PhysicsFight.objects.filter(reporter__team=self) | PhysicsFight.objects.filter(opponent__team=self) | PhysicsFight.objects.filter(reviewer__team=self)
-		#myrooms = [room for room in pfs.room]
-		roundnumbers = [1, 2, 3, 4]
-
-		bonuspoints = []
-		for roundnumber in roundnumbers:
-			roundpfs = pfs.filter(round_number=roundnumber) # for a given round, I am always in the same room
-			if len(roundpfs) == maxpf: # then all the fights are played
-				teams = [roundpfs[0].reporter.team, roundpfs[0].opponent.team, roundpfs[0].reviewer.team]
-				if verbose:
-					print "Round %i opposes teams from %s, %s and %s" % (int(roundnumber), teams[0].name, teams[1].name, teams[2].name)
-				results = []
-				for team in teams:
-=======
 		# get all the Physics Fights where my participants are involved in
 		pfs = PhysicsFight.objects.filter(reporter__team=self) | PhysicsFight.objects.filter(opponent__team=self) | PhysicsFight.objects.filter(reviewer__team=self)
 		roundnumbers = [1, 2, 3, 4]
@@ -458,17 +319,12 @@ class Team(models.Model):
 				results = []
 				for team in teams:
 					prescoeff = team.presentation_coefficients(verbose=False)
->>>>>>> compute_grades
 					teamroundpoints = 0
 					for participant in Participant.objects.filter(team=team):
 						average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=False)
 						for grade in average_grades:
 							if grade["role"] == "reporter":
-<<<<<<< HEAD
-								teamroundpoints += grade["value"] * 3.0
-=======
 								teamroundpoints += grade["value"] * prescoeff[grade["pf"].round_number - 1]
->>>>>>> compute_grades
 							elif grade["role"] == "opponent":
 								teamroundpoints += grade["value"] * 2.0
 							elif grade["role"] == "reviewer":
@@ -514,11 +370,7 @@ class Team(models.Model):
 						else:
 							print msg
 				if verbose:
-<<<<<<< HEAD
-					print "On top of that, team %s win %.1f additional bonus points" % (self.name, bonuspoint)
-=======
 					print "On top of that, team %s wins %.1f additional bonus point(s)" % (self.name, bonuspoint)
->>>>>>> compute_grades
 				bonuspoints.append(bonuspoint)
 
 			else:  # Not all the fights are played, I skip
@@ -530,76 +382,6 @@ class Team(models.Model):
 
 
 	def points(self, roundnumber=None, verbose=True):
-<<<<<<< HEAD
-		"""
-		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
-
-		:return: Return the total number of points
-		"""
-
-		participants = Participant.objects.filter(team=self)
-
-		if verbose:
-			print "="*20, "Compute Team Points", "="*20
-			print "There are %i participants in %s" % (len(participants), self.name)
-
-		allpoints = 0
-		for participant in participants:
-			points = 0
-			if verbose:
-				if roundnumber==None:
-					msg = 'In overall, I scored '
-				else:
-					msg = 'In Round %i, I scored' % int(roundnumber)
-			average_grades = participant.compute_average_grades(roundnumber=roundnumber, verbose=verbose)
-			for grade in average_grades:
-				if grade["role"] == "reporter":
-					points += grade["value"]*3.0
-					if verbose:
-						msg+='%.2f*3 = %.2f points as a reporter, ' % (grade["value"], grade["value"]*3)
-				elif grade["role"] == "opponent":
-					points += grade["value"]*2.0
-					if verbose:
-						msg+='%.2f*2 = %.2f points as an opponent, ' % (grade["value"], grade["value"]*2)
-				elif grade["role"] == "reviewer":
-					points += grade["value"]
-					if verbose:
-						msg+='%.2f points as a reviewer, ' % (grade["value"])
-
-				else:
-					print "Something wrong here...my role is not defined !"
-					sys.exit()
-
-			if verbose:
-				msg+='for a total of %.2f points' % points
-				print msg
-			allpoints += points
-
-		# add bonus points for winning rounds, etc...
-		allpoints += sum(self.bonuspoints(verbose=verbose))
-
-
-		if verbose:
-			print "Team %s has %.2f points so far !"  % (self.name, allpoints)
-		return allpoints
-
-	def ranking(self, verbose=True):
-
-		teams = Team.objects.all()
-
-		teams = sorted(teams, key=lambda x : x.points(verbose=True))[::-1]
-		if verbose:
-			print "="*20, "Team Ranking", "="*20
-			for ind, team in enumerate(teams):
-				if team==self and sys.stdout.isatty():
-					msg = str(ind+1)+") "+str(team.name)+" - "+str(team.points(verbose=False))+" points"
-					print '\x1b[32m%s\x1b[0m' % msg
-				else:
-					msg = str(ind+1)+") "+str(team.name)+" - "+str(team.points(verbose=False))+" points"
-					print msg
-
-		return teams, teams.index(self)+1
-=======
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
 		If all the fights from a round are played, I add the corresponding bonus points
@@ -727,7 +509,6 @@ class Team(models.Model):
 		assert len(noproblems) == 3
 		return noproblems
 
->>>>>>> compute_grades
 
 
 
@@ -743,7 +524,7 @@ class Jury(models.Model):
 	def __unicode__(self):
 
 		return self.name
-		
+
 class PhysicsFight(models.Model):
 
 	round_number = models.IntegerField(
@@ -871,3 +652,4 @@ class EternalRejection(models.Model):
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem
+
