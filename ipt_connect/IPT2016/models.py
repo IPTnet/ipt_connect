@@ -63,7 +63,7 @@ class Participant(models.Model):
 	team = models.ForeignKey('Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).')
 	passport_number = models.CharField(max_length=20)
-	affiliation = models.CharField(max_length=20,default='XXX University')
+	affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text='Has the participant already participated in the IPT?')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	tourism=models.CharField(max_length=20,choices=TOURISM_CHOICES,help_text='Would the participant like to stay some more days in Paris after the tournament? Please note the LOC would only book the rooms, but would not pay for it!')

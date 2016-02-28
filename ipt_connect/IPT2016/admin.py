@@ -32,9 +32,9 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','email','role','gender','birthdate','mixed_dormitory','veteran','diet','tourism')
-	search_fields = ('surname','name','role','diet','tourism')
-	list_filter = ('team','gender','role','diet','tourism')
+	list_display = ('surname','name','team','email','role','gender','birthdate','passport_number','affiliation','veteran','diet','tourism','shirt_size','remark')
+	search_fields = ('surname','name')
+	list_filter = ('team','gender','role','diet','tourism','veteran','shirt_size')
 	exclude = ('hotel_room','check_in',)
 
 	def save_model(self, request, obj, form, change):
