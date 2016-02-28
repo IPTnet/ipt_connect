@@ -275,6 +275,8 @@ class Team(models.Model):
 
 		prescoeffs = []
 		npenalities = 0
+		if verbose:
+			print "="*20, "Tactical Rejection Penalites for Team %s" % self.name, "="*20
 		for round in rounds:
 			roundrejections = [rejection for rejection in rejections if rejection.physics_fight.round_number == round]
 			if verbose:
@@ -368,7 +370,7 @@ class Team(models.Model):
 						else:
 							print msg
 				if verbose:
-					print "On top of that, team %s win %.1f additional bonus points" % (self.name, bonuspoint)
+					print "On top of that, team %s wins %.1f additional bonus point(s)" % (self.name, bonuspoint)
 				bonuspoints.append(bonuspoint)
 
 			else:  # Not all the fights are played, I skip
@@ -389,8 +391,8 @@ class Team(models.Model):
 
 		participants = Participant.objects.filter(team=self)
 		if verbose:
-			print "="*20, "Compute Team Points", "="*20
-			print "There are %i participants in %s" % (len(participants), self.name)
+			print "="*20, "Points of Team %s" % self.name, "="*20
+			print "There are %i participants" % (len(participants))
 
 		allpoints = 0
 		for participant in participants:
@@ -436,13 +438,13 @@ class Team(models.Model):
 
 	def ranking(self, verbose=True):
 		"""
-		:param verbose:  If True, print all the
+		:param verbose:  Verbosity flag
 		:return: (teams, position of self). Return all the teams, ranked by points and return my position amongst the rank.
 		"""
 
 		teams = Team.objects.all()
 
-		teams = sorted(teams, key=lambda x : x.points(verbose=True))[::-1]
+		teams = sorted(teams, key=lambda x : x.points(verbose=verbose))[::-1]
 		if verbose:
 			print "="*20, "Team Ranking", "="*20
 			for ind, team in enumerate(teams):

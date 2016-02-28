@@ -2,7 +2,7 @@ TODO list:
 ----------
 
 -Add a way to differenciate between France-1 and France-2 (already done ? Check server db)
--Extensive testing with more teams (OK: Participant, Problem)
+-Extensive testing with more teams (OK: Participant, Problem, Team)
 -Take care properly of the second reporter : his name must appear, but he gets no points.
 -Create a nice html/css display for the physics fights.
 -Create nice pages per participant, per country, ...
