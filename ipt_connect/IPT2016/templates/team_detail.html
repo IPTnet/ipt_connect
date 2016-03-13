@@ -1,0 +1,18 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="page-header">
+        {% for team in team %} <!-- This is stupid. Is there another template tag I can use to avoid looping ?-->
+        <h1>{{team.name}}</h1>
+        {% endfor %}
+    </div>
+
+    <div class="content container">
+        {% for participant in participants %}
+            <div>
+                <p><a href="">{{participant.fullname}}</a></p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

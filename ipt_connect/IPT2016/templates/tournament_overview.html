@@ -1,0 +1,31 @@
+{% extends 'head.html' %}
+
+{% block content %}
+    <div class="page-header">
+        <h1>Tournament Overview</h1>
+    </div>
+
+    <div class="section">
+        <h1><a href="">Physics Fights </a></h1>
+    </div>
+
+    <div class="content container">
+        {% for pf in pfs %}
+            <div>
+                <p><a href="">{{pf}}</a> | {{pf.status}}</p>
+            </div>
+        {% endfor %}
+    </div>
+
+    <div class="section">
+        <h1><a href="{% url 'teams' %}">Teams</a></h1>
+    </div>
+
+    <div class="content container">
+        {% for team in teams %}
+            <div>
+                <p><a href="{% url 'team_detail' team_name=team.name %}">{{team.name}}</a> | {{team.points}}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

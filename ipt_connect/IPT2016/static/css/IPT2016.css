@@ -1,0 +1,53 @@
+h1, h2, h3, h4 {
+    font-family: 'Josefin Sans', cursive;
+}
+
+
+body {
+    padding-left: 20px;
+}
+
+
+.page-header {
+    background-color: #4EAFD0;
+    margin-top: 20px;
+    padding: 20px 20px 20px 40px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+
+}
+
+.section {
+    background-color: #C9E8F2;
+    margin-top: 0;
+    padding: 10px 10px 10px 20px;
+
+}
+
+.section h1, .section h1 a, .section h1 a:visited, .section h1 a:active{
+    color: #000000;
+    font-size: 24pt;
+}
+
+
+.content * {
+	color: #000000;
+    margin-top: 10px;
+    margin-bottom: 10px
+    margin-left: 40px;
+}
+
+
+
+
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 20px;
+}
