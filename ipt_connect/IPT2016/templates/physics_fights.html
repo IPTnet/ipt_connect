@@ -1,0 +1,16 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Physics Fights Overview</h1>
+    </div>
+
+    <div class="content container">
+        {% for pf in pfs %}
+            <div>
+                <p><a href="{% url 'physics_fight_detail' pk=pf.pk %}">{{pf}}</a> | {{pf.status}}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

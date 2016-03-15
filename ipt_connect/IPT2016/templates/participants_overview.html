@@ -1,0 +1,16 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Participants Overview</h1>
+    </div>
+
+    <div class="content container">
+        {% for participant in participants %}
+            <div>
+                <li><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></li>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

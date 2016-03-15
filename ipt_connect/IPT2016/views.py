@@ -4,17 +4,22 @@ from models import *
 
 def home(request):
 
-    text = """<h1>IPT 2016</h1>
+	text = """<h1>IPT 2016</h1>
 
-              <p>It's coming...</p>"""
+			  <p>It's coming...</p>"""
 
-    return HttpResponse(text)
+	return HttpResponse(text)
 
 
-def all_participants(request):
-    participants_objects = Participant.objects.all()
+def participants_overview(request):
+	participants = Participant.objects.all()
+	participants = sorted(participants, key=lambda participant: participant.name)
+	return render(request,'participants_overview.html', {'participants' : participants})
 
-    return render(request,'all_participants.html',{'participants' : participants_objects})
+def participant_detail(request, pk):
+	participant = Participant.objects.filter(pk=pk)
+	return render(request, 'participant_detail.html', {'participant': participant})
+
 
 def test(request,name=None):
 	if name:
@@ -39,6 +44,24 @@ def team_detail(request, team_name):
 	participants = Participant.objects.filter(team__name=team_name)
 	return render(request, 'team_detail.html', {'team': team, 'participants': participants})
 
+
+def physics_fights(request):
+	pfs = PhysicsFight.objects.all()
+	return render(request, 'physics_fights.html', {'pfs': pfs})
+
+def physics_fight_detail(request, pk):
+	pf = PhysicsFight.objects.filter(pk=pk)
+	jurygrades = JuryGrade.objects.filter(physics_fight=pf)
+	meangrades = []
+	# participants mean grades
+
+	meangrades.append(pf[0].reporter.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
+	meangrades.append(pf[0].opponent.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
+	meangrades.append(pf[0].reviewer.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
+	return render(request, 'physics_fight_detail.html', {'pf': pf, 'jurygrades': jurygrades, 'meangrades': meangrades})
+
+def blah(request):
+	return render(request, 'blah.html')
 
 
 def ranking(request):

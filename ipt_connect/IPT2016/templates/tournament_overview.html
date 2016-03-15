@@ -6,13 +6,13 @@
     </div>
 
     <div class="section">
-        <h1><a href="">Physics Fights </a></h1>
+        <h1><a href="{% url 'physics_fights' %}">Physics Fights </a></h1>
     </div>
 
     <div class="content container">
         {% for pf in pfs %}
             <div>
-                <p><a href="">{{pf}}</a> | {{pf.status}}</p>
+                <p><a href="{% url 'physics_fight_detail' pk=pf.pk %}">{{pf}}</a> | {{pf.status}}</p>
             </div>
         {% endfor %}
     </div>

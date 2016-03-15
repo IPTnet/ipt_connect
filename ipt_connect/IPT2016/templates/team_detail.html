@@ -11,7 +11,7 @@
     <div class="content container">
         {% for participant in participants %}
             <div>
-                <p><a href="">{{participant.fullname}}</a></p>
+                <p><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></p>
             </div>
         {% endfor %}
     </div>

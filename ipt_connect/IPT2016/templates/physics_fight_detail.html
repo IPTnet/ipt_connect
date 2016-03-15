@@ -1,0 +1,59 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="page-header">
+        {% for pf in pf %}
+        <h1>{{pf}}</h1>
+        {% endfor %}
+    </div>
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th>Reporter</th>
+                <th>Opponent</th>
+                <th>Reviewer</th>
+            </tr>
+
+            {% for pf in pf %}
+            <tr>
+                <td><a href="{% url 'team_detail' team_name=pf.reporter.team.name %}">{{pf.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.reporter.pk %}">{{pf.reporter.fullname}}</a></td>
+                <td><a href="{% url 'team_detail' team_name=pf.opponent.team.name %}">{{pf.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.opponent.pk %}">{{pf.opponent.fullname}}</a></td>
+                <td><a href="{% url 'team_detail' team_name=pf.reviewer.team.name %}">{{pf.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.reviewer.pk %}">{{pf.reviewer.fullname}}</a></td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th>Jury member</th>
+                <th>Grade Reporter</th>
+                <th>Grade Opponent</th>
+                <th>Grade Reviewer</th>
+            </tr>
+
+            {% for jurygrade in jurygrades %}
+                <tr>
+                    <td><a href="">{{jurygrade.jury.name}}</a></td>
+                    <td>{{jurygrade.grade_reporter}}</td>
+                    <td>{{jurygrade.grade_opponent}}</td>
+                    <td>{{jurygrade.grade_reviewer}}</td>
+                </tr>
+            {% endfor %}
+
+            <tr>
+                <td>TOTAL</td>
+                {% for meangrade in meangrades %}
+                <td>{{meangrade}}</td>
+                {% endfor %}
+            </tr>
+
+        </table>
+    </div>
+
+{% endblock content %}

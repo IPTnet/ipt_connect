@@ -11,6 +11,7 @@ body {
 .page-header {
     background-color: #4EAFD0;
     margin-top: 20px;
+    margin-right: 20px;
     padding: 20px 20px 20px 40px;
 }
 
@@ -42,12 +43,28 @@ body {
 }
 
 
-
-
-
 .top-menu, .top-menu:hover, .top-menu:visited {
     color: #ffffff;
     float: right;
     font-size: 26pt;
     margin-right: 20px;
+}
+
+
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th, td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even){background-color: #C9E8F2}
+
+th {
+    background-color: #4CAF50;
+    color: white;
 }
