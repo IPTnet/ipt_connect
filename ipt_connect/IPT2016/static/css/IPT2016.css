@@ -5,6 +5,7 @@ h1, h2, h3, h4 {
 
 body {
     padding-left: 20px;
+
 }
 
 
@@ -25,6 +26,7 @@ body {
 .section {
     background-color: #C9E8F2;
     margin-top: 0;
+    margin-right: 20px;
     padding: 10px 10px 10px 20px;
 
 }
@@ -34,6 +36,14 @@ body {
     font-size: 24pt;
 }
 
+
+.comment {
+	font-size: 80%
+}
+
+.emphase {
+	font-size: 125%
+}
 
 .content * {
 	color: #000000;

@@ -14,18 +14,23 @@ def home(request):
 def participants_overview(request):
 	participants = Participant.objects.all()
 	participants = sorted(participants, key=lambda participant: participant.name)
-	return render(request,'participants_overview.html', {'participants' : participants})
+	return render(request, 'participants_overview.html', {'participants' : participants})
 
 def participant_detail(request, pk):
 	participant = Participant.objects.filter(pk=pk)
 	return render(request, 'participant_detail.html', {'participant': participant})
 
 
-def test(request,name=None):
-	if name:
-		return HttpResponse("Hello %s!" % name)
-	else:
-		return HttpResponse("Hello world!")
+def jurys_overview(request):
+	jurys = Jury.objects.all()
+	jurys = sorted(jurys, key=lambda participant: participant.name)
+	return render(request, 'jurys_overview.html', {'jurys': jurys})
+
+def jury_detail(request, pk):
+	jury = Jury.objects.filter(pk=pk)
+	return render(request, 'jury_detail.html', {'jury': jury})
+
+
 
 def tournament_overview(request):
 	pfs = PhysicsFight.objects.all()
@@ -44,6 +49,17 @@ def team_detail(request, team_name):
 	participants = Participant.objects.filter(team__name=team_name)
 	return render(request, 'team_detail.html', {'team': team, 'participants': participants})
 
+def problems_overview(request):
+	problems = Problem.objects.all()
+	problems = sorted(problems, key=lambda problem: problem.name)
+	return render(request, 'problems_overview.html', {'problems': problems})
+
+def problem_detail(request, pk):
+	problem = Problem.objects.filter(pk=pk)
+	(reporters, opponents, reviewers) = problem[0].status(verbose=False)
+
+	return render(request, 'problem_detail.html', {'problem': problem, "reporters": reporters})
+
 
 def physics_fights(request):
 	pfs = PhysicsFight.objects.all()
@@ -54,11 +70,14 @@ def physics_fight_detail(request, pk):
 	jurygrades = JuryGrade.objects.filter(physics_fight=pf)
 	meangrades = []
 	# participants mean grades
-
 	meangrades.append(pf[0].reporter.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
 	meangrades.append(pf[0].opponent.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
 	meangrades.append(pf[0].reviewer.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
-	return render(request, 'physics_fight_detail.html', {'pf': pf, 'jurygrades': jurygrades, 'meangrades': meangrades})
+
+	tacticalrejections = TacticalRejection.objects.filter(physics_fight=pf)
+	eternalrejection = EternalRejection.objects.filter(physics_fight=pf)
+
+	return render(request, 'physics_fight_detail.html', {'pf': pf, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection})
 
 def blah(request):
 	return render(request, 'blah.html')

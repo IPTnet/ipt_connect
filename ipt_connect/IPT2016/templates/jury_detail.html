@@ -1,0 +1,11 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="page-header">
+        {% for jury in jury %} <!-- This is stupid. Is there another template tag I can use to avoid looping ?-->
+        <h1>{{jury.name}}</h1>
+        {% endfor %}
+    </div>
+
+{% endblock content %}

@@ -1,12 +1,16 @@
 {% extends 'head.html' %}
 
 {% block content %}
+{% for pf in pf %}
 
     <div class="page-header">
-        {% for pf in pf %}
         <h1>{{pf}}</h1>
-        {% endfor %}
     </div>
+
+    <div class="content container">
+        <p class="emphase">Problem presented : <a href="{% url 'problem_detail' pk=pf.problem_presented.pk %}">{{pf.problem_presented.name}}</a></p>
+    </div>
+
 
     <div class="content container">
         <table>
@@ -16,13 +20,11 @@
                 <th>Reviewer</th>
             </tr>
 
-            {% for pf in pf %}
             <tr>
                 <td><a href="{% url 'team_detail' team_name=pf.reporter.team.name %}">{{pf.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.reporter.pk %}">{{pf.reporter.fullname}}</a></td>
                 <td><a href="{% url 'team_detail' team_name=pf.opponent.team.name %}">{{pf.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.opponent.pk %}">{{pf.opponent.fullname}}</a></td>
                 <td><a href="{% url 'team_detail' team_name=pf.reviewer.team.name %}">{{pf.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.reviewer.pk %}">{{pf.reviewer.fullname}}</a></td>
             </tr>
-            {% endfor %}
 
         </table>
     </div>
@@ -39,7 +41,7 @@
 
             {% for jurygrade in jurygrades %}
                 <tr>
-                    <td><a href="">{{jurygrade.jury.name}}</a></td>
+                    <td><a href="{% url 'jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}}</a></td>
                     <td>{{jurygrade.grade_reporter}}</td>
                     <td>{{jurygrade.grade_opponent}}</td>
                     <td>{{jurygrade.grade_reviewer}}</td>
@@ -47,13 +49,39 @@
             {% endfor %}
 
             <tr>
-                <td>TOTAL</td>
+                <td><p class="emphase">MEAN*</p></td>
                 {% for meangrade in meangrades %}
-                <td>{{meangrade}}</td>
+                <td><p class="emphase">{{meangrade}}</p></td>
                 {% endfor %}
             </tr>
 
         </table>
     </div>
 
+    <div class="content container">
+        <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members.</p>
+    </div>
+
+
+
+    <div class="content container">
+
+        <p>Tactical rejections:</p>
+        {% for tacticalrejection in tacticalrejections %}
+        <li><a href="{% url 'problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+        {% empty %}
+        <p>None</p>
+        {% endfor %}
+    </div>
+
+    {% for eternalrejection in eternalrejection %}
+    <div class="content container">
+        <p>Eternal rejection:</p>
+        <li><a href="{% url 'problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
+    </div>
+    {% endfor %}
+
+
+
+{% endfor %}
 {% endblock content %}

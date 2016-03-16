@@ -1,0 +1,29 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+{% for problem in problem %}
+    <div class="page-header">
+
+        <h1>{{problem.name}}</h1>
+
+    </div>
+
+
+    <div class="section">
+        <h1>Description</h1>
+    </div>
+
+    <div class="content container">
+        <div>
+            <p>{{problem.description}}</p>
+        </div>
+    </div>
+{% endfor %}
+
+
+{% for reporter in reporters %}
+    <p>{{reporter.name}}</p>
+{% endfor %}
+
+{% endblock content %}

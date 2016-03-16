@@ -255,6 +255,25 @@ class Problem(models.Model):
 	def __unicode__(self):
 		return self.name
 
+	def status(self, verbose=True):
+		"""
+
+		:return: Return a list. Each element is a list (reporter, opponent, reviewer) that contains 2-elements lists (which team presented, average grade)
+		"""
+
+		pfs = PhysicsFight.objects.filter(problem_presented=self)
+		reporters = []
+		opponents = []
+		reviewers = []
+		for pf in pfs:
+			reporterinfo = pf.reporter.compute_average_grades(physicsfights=[pf], verbose=verbose)[0]
+			opponentinfo = pf.opponent.compute_average_grades(physicsfights=[pf], verbose=verbose)[0]
+			reviewerinfo = pf.reviewer.compute_average_grades(physicsfights=[pf], verbose=verbose)[0]
+			reporters.append({"name": pf.reporter.team.name, "pf": reporterinfo["pf"], "value": reporterinfo["value"]})
+			opponents.append({"name": pf.opponent.team.name, "pf": opponentinfo["pf"], "value": opponentinfo["value"]})
+			reviewers.append({"name": pf.reviewer.team.name, "pf": reviewerinfo["pf"], "value": reviewerinfo["value"]})
+
+		return (reporters, opponents, reviewers)
 
 class Team(models.Model):
 	"""
@@ -662,7 +681,6 @@ class JuryGrade(models.Model):
 class TacticalRejection(models.Model):
 
 	physics_fight = models.ForeignKey(PhysicsFight)
-
 	problem = models.ForeignKey(Problem)
 
 	def __unicode__(self):
@@ -671,7 +689,6 @@ class TacticalRejection(models.Model):
 class EternalRejection(models.Model):
 
 	physics_fight = models.ForeignKey(PhysicsFight)
-
 	problem = models.ForeignKey(Problem)
 
 	def __unicode__(self):
