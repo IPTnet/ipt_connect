@@ -6,15 +6,35 @@
     </div>
 
     <div class="section">
-        <h1><a href="{% url 'physics_fights' %}">Physics Fights </a></h1>
+        <h1><a href="{% url 'physics_fights' %}">Rounds summary </a></h1>
     </div>
 
     <div class="content container">
-        {% for pf in pfs %}
-            <div>
-                <p><a href="{% url 'physics_fight_detail' pk=pf.pk %}">{{pf}}</a> | {{pf.status}}</p>
-            </div>
-        {% endfor %}
+        <table class="table-borders">
+            <tr>
+                <th></th>
+                <th  class="th-center">Round 1</th>
+                <th  class="th-center">Round 2</th>
+                <th  class="th-center">Round 3</th>
+                <th  class="th-center">Round 4</th>
+            </tr>
+
+            {% for thisroom in orderedpfsperroom %}
+            <tr>
+                <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
+                {% for thisround in thisroom %}
+                <td class="td-border">
+                    <table>
+                        {% for pf in thisround%}
+                        <td class="td-center"><a href="{% url 'physics_fight_detail' pk=pf.pk %}">PF{{pf.fight_number}}</a></td>
+                        {% endfor %}
+                    </table>
+                </td>
+                {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 
     <div class="section">

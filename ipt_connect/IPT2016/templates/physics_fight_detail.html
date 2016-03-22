@@ -7,8 +7,14 @@
         <h1>{{pf}}</h1>
     </div>
 
+
+
+    <div class="section">
+        <h1>Results</h1>
+    </div>
+
     <div class="content container">
-        <p class="emphase">Problem presented : <a href="{% url 'problem_detail' pk=pf.problem_presented.pk %}">{{pf.problem_presented.name}}</a></p>
+        <p class="emphase">Problem presented: <a href="{% url 'problem_detail' pk=pf.problem_presented.pk %}">{{pf.problem_presented.name}}</a></p>
     </div>
 
 
@@ -66,11 +72,13 @@
 
     <div class="content container">
 
+        {% if tacticalrejections.count > 0 %}
         <p>Tactical rejections:</p>
+        {% endif %}
         {% for tacticalrejection in tacticalrejections %}
         <li><a href="{% url 'problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
         {% empty %}
-        <p>None</p>
+        <p>No Tactical Rejections</p>
         {% endfor %}
     </div>
 
@@ -79,8 +87,53 @@
         <p>Eternal rejection:</p>
         <li><a href="{% url 'problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
     </div>
+    {% empty %}
+    <div class="content container">
+        <p>No Eternal Rejection</p>
+    </div>
     {% endfor %}
 
+    <div class="section">
+        <h1>Pre-fight informations</h1>
+    </div>
+
+    <div class="content container">
+        {% if pf.unavailable_problems %}
+            <p class="emphase">Unavailable problems:</p>
+
+            {% if pf.unavailable_problems.presented_this_round %}
+                {% for problem in pf.unavailable_problems.presented_this_round %}
+                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this round</li>
+                {% endfor %}
+            {% endif %}
+
+            {% if pf.unavailable_problems.eternal_rejection %}
+                {% for problem in pf.unavailable_problems.eternal_rejection %}
+                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been eternally rejected</li>
+                {% endfor %}
+            {% endif %}
+
+            {% if pf.unavailable_problems.presented_by_reporter %}
+                {% for problem in pf.unavailable_problems.presented_by_reporter %}
+                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
+                {% endfor %}
+            {% endif %}
+
+            {% if pf.unavailable_problems.opposed_by_opponent %}
+                {% for problem in pf.unavailable_problems.opposed_by_opponent %}
+                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
+                {% endfor %}
+            {% endif %}
+
+            {% if pf.unavailable_problems.presented_by_opponent %}
+                {% for problem in pf.unavailable_problems.presented_by_opponent %}
+                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
+                {% endfor %}
+            {% endif %}
+
+
+        {% endif %}
+    </div>
 
 
 {% endfor %}

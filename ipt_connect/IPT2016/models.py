@@ -258,9 +258,10 @@ class Problem(models.Model):
 	def status(self, verbose=True):
 		"""
 
-		:return: Return a list. Each element is a list (reporter, opponent, reviewer) that contains 2-elements lists (which team presented, average grade)
+		:return:
 		"""
 
+		# first, get a list of who presented what
 		pfs = PhysicsFight.objects.filter(problem_presented=self)
 		reporters = []
 		opponents = []
@@ -273,7 +274,47 @@ class Problem(models.Model):
 			opponents.append({"name": pf.opponent.team.name, "pf": opponentinfo["pf"], "value": opponentinfo["value"]})
 			reviewers.append({"name": pf.reviewer.team.name, "pf": reviewerinfo["pf"], "value": reviewerinfo["value"]})
 
-		return (reporters, opponents, reviewers)
+		# use this to compute the mean grades
+		meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
+
+
+		# then, reorder that list per teams
+		myteamsnames = list(sorted([elt["name"] for elt in reporters+opponents+reviewers]))
+
+		teamresults = []
+		for name in myteamsnames:
+			if not name in [teamresult["name"] for teamresult in teamresults]:
+				teamresult = {}
+				teamresult["name"] = name
+
+				# They can be multiple report/oppos/review on the same problem by the same team !!!
+				reports=[]
+				oppositions=[]
+				reviews=[]
+				# get the scores from presentations
+				for reporter in reporters:
+					if reporter["name"] == name:
+						reports.append({"pf": reporter["pf"], "value": reporter["value"]})
+				# get the scores from oppositions
+				for opponent in opponents:
+					if opponent["name"] == name:
+						oppositions.append({"pf": opponent["pf"], "value": opponent["value"]})
+				# get the scores from reviews
+				for reviewer in reviewers:
+					if reviewer["name"] == name:
+						reviews.append({"pf": reviewer["pf"], "value": reviewer["value"]})
+
+				teamresult["reports"] = reports
+				teamresult["oppositions"] = oppositions
+				teamresult["reviews"] = reviews
+
+				teamresults.append(teamresult)
+			else:
+				pass
+
+		return (meangrades, teamresults)
+
+
 
 class Team(models.Model):
 	"""
@@ -642,7 +683,14 @@ class PhysicsFight(models.Model):
 				msg += "\n\t%s" % problem
 			print msg
 
-		return (presented_this_round, eternal_rejection, presented_by_reporter, opposed_by_opponent, presented_by_opponent)
+		unavailable_problems = {}
+		unavailable_problems["presented_this_round"] = presented_this_round
+		unavailable_problems["eternal_rejection"] = eternal_rejection
+		unavailable_problems["presented_by_reporter"] = presented_by_reporter
+		unavailable_problems["opposed_by_opponent"] = opposed_by_opponent
+		unavailable_problems["presented_by_opponent"] = presented_by_opponent
+
+		return unavailable_problems
 
 
 class JuryGrade(models.Model):

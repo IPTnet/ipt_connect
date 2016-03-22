@@ -19,11 +19,54 @@
             <p>{{problem.description}}</p>
         </div>
     </div>
+
+    <div class="section">
+        <h1>Statistics</h1>
+    </div>
+
+
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th></th>
+                <th>Report</th>
+                <th>Opposition</th>
+                <th>Review</th>
+            </tr>
+
+            {% for teamresult in teamresults %}
+                <tr>
+                    <td><a href="{% url 'team_detail' team_name=teamresult.name %}">{{teamresult.name}}</a></td>
+                    <td>
+                    {% for report in teamresult.reports%}
+                        <p><a href="{% url 'physics_fight_detail' pk=report.pf.pk %}">{{report.value}}</a></p>
+                    {% endfor %}
+                    </td>
+                    <td>
+                    {% for opposition in teamresult.oppositions%}
+                        <p><a href="{% url 'physics_fight_detail' pk=opposition.pf.pk %}">{{opposition.value}}</a></p>
+                    {% endfor %}
+                    </td>
+                    <td>
+                    {% for review in teamresult.reviews%}
+                        <p><a href="{% url 'physics_fight_detail' pk=review.pf.pk %}">{{review.value}}</a></p>
+                    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {% if meangrades %}
+            <tr>
+                <td><p class="emphase">MEAN</p></td>
+                <td><p class="emphase">{{meangrades.report}}</p></td>
+                <td><p class="emphase">{{meangrades.opposition}}</p></td>
+                <td><p class="emphase">{{meangrades.review}}</p></td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </div>
+
 {% endfor %}
-
-
-{% for reporter in reporters %}
-    <p>{{reporter.name}}</p>
-{% endfor %}
-
 {% endblock content %}

@@ -63,11 +63,38 @@ body {
 
 
 table {
-    border-collapse: collapse;
     width: 100%;
 }
 
-th, td {
+.table-borders {
+	border-width: 5px;
+	border-style: solid;
+	border-color: black;
+}
+
+.th-center{
+	text-align: center;
+	padding: 8px;
+}
+
+.td-center{
+    text-align: center;
+    padding: 8px;
+}
+
+.td-border{
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+}
+
+
+th {
+    text-align: left;
+    padding: 8px;
+}
+
+td {
     text-align: left;
     padding: 8px;
 }

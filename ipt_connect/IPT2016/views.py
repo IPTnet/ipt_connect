@@ -31,12 +31,27 @@ def jury_detail(request, pk):
 	return render(request, 'jury_detail.html', {'jury': jury})
 
 
-
 def tournament_overview(request):
 	pfs = PhysicsFight.objects.all()
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
-	return render(request, 'tournament_overview.html', {'teams': teams, 'pfs': pfs})
+	rounds = [1, 2, 3, 4]
+	rooms = Room.objects.all()
+	rooms = sorted(rooms, key=lambda room: room.name)
+	roomnumbers = [ind +1 for ind, room in enumerate(rooms)]
+	orderedpfsperroom=[]
+	for room in rooms:
+		thisroom = []
+		for round in rounds:
+			thisround = []
+			mypfs = PhysicsFight.objects.filter(round_number=round).filter(room=room)
+			mypfs = sorted(mypfs, key=lambda pf: pf.fight_number)
+			print len(mypfs)
+			for ind2, pf in enumerate(mypfs):
+				thisround.append(pf)
+			thisroom.append(thisround)
+		orderedpfsperroom.append(thisroom)
+	return render(request, 'tournament_overview.html', {'teams': teams, 'pfs': pfs, 'rounds': rounds, 'roomnumbers':roomnumbers, 'orderedpfsperroom': orderedpfsperroom})
 
 def teams_overview(request):
 	teams = Team.objects.all()
@@ -56,9 +71,9 @@ def problems_overview(request):
 
 def problem_detail(request, pk):
 	problem = Problem.objects.filter(pk=pk)
-	(reporters, opponents, reviewers) = problem[0].status(verbose=False)
+	(meangrades, teamresults) = problem[0].status(verbose=False)
 
-	return render(request, 'problem_detail.html', {'problem': problem, "reporters": reporters})
+	return render(request, 'problem_detail.html', {'problem': problem, "meangrades": meangrades, "teamresults": teamresults})
 
 
 def physics_fights(request):
