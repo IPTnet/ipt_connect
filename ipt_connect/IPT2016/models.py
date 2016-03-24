@@ -142,7 +142,7 @@ class Participant(models.Model):
 				role = 'reviewer'
 				roundgrades = list(sorted([jurygrade.grade_reviewer for jurygrade in jurygrades if jurygrade.round == myround]))
 			else:
-				print self.name
+
 				print "Something wrong here...I must have a defined role !"
 				sys.exit()
 
@@ -400,7 +400,7 @@ class Team(models.Model):
 					teampfpoints = 0
 					for participant in Participant.objects.filter(team=team):
 						print "HAAAA"
-						average_grades = participant.compute_average_grades(pfnumber=mypfnumber, rounds=rounds, verbose=False)
+						average_grades = participant.compute_average_grades(pfnumber=mypfnumber, rounds=rounds, verbose=True)
 						for grade in average_grades:
 							if grade["role"] == "reporter":
 								teampfpoints += grade["value"] * prescoeff[grade["pf"].pf_number - 1]
