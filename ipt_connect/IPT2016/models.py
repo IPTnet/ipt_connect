@@ -399,11 +399,10 @@ class Team(models.Model):
 					prescoeff = team.presentation_coefficients(verbose=False)
 					teampfpoints = 0
 					for participant in Participant.objects.filter(team=team):
-						print "HAAAA"
-						average_grades = participant.compute_average_grades(pfnumber=mypfnumber, rounds=rounds, verbose=True)
+						average_grades = participant.compute_average_grades(pfnumber=mypfnumber, rounds=rounds, verbose=False)
 						for grade in average_grades:
 							if grade["role"] == "reporter":
-								teampfpoints += grade["value"] * prescoeff[grade["pf"].pf_number - 1]
+								teampfpoints += grade["value"] * prescoeff[grade["round"].pf_number - 1]
 							elif grade["role"] == "opponent":
 								teampfpoints += grade["value"] * 2.0
 							elif grade["role"] == "reviewer":
@@ -628,7 +627,7 @@ class Round(models.Model):
 	submitted_date = models.DateTimeField(default=timezone.now)
 
 	def __unicode__(self):
-		return "Fight %i | Round %i | Room %s" % (self.round_number, self.pf_number, self.room.name)
+		return "Round %i | Fight %i | Room %s" % (self.round_number, self.pf_number, self.room.name)
 
 	def ident(self):
 		return "%s%s%s" %(self.pf_number, self.round_number, self.room.ident())

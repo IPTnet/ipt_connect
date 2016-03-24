@@ -6,27 +6,27 @@
     </div>
 
     <div class="section">
-        <h1><a href="{% url 'rounds' %}">Rounds summary </a></h1>
+        <h1><a href="{% url 'rounds' %}">Physics Fights summary </a></h1>
     </div>
 
     <div class="content container">
         <table class="table-borders">
             <tr>
                 <th></th>
-                <th  class="th-center">Round 1</th>
-                <th  class="th-center">Round 2</th>
-                <th  class="th-center">Round 3</th>
-                <th  class="th-center">Round 4</th>
+                <th  class="th-center">PF 1</th>
+                <th  class="th-center">PF 2</th>
+                <th  class="th-center">PF 3</th>
+                <th  class="th-center">PF 4</th>
             </tr>
 
-            {% for thisroom in orderedpfsperroom %}
+            {% for thisroom in orderedroundsperroom %}
             <tr>
                 <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
                 {% for thispf in thisroom %}
                 <td class="td-border">
                     <table>
                         {% for round in thispf%}
-                        <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">Round{{round.round_number}}</a></td>
+                        <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
                         {% endfor %}
                     </table>
                 </td>
