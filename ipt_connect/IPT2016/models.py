@@ -106,29 +106,29 @@ class Participant(models.Model):
 			print "My name is", self.name, self.surname
 		jurygrades = JuryGrade.objects.filter(round__reporter__name=self.name) | JuryGrade.objects.filter(round__opponent__name=self.name) | JuryGrade.objects.filter(round__reviewer__name=self.name)
 
-		# get all the physics fights I'm in
+		# get all the rounds I'm in
 		if rounds != None:
-			pfs = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round in rounds]))
+			myrounds = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round in rounds]))
 			if verbose:
 				print "I consider only the Rounds in the given subset that I've played on:"
 
 		else:
 			if pfnumber == None:
-				rounds = list(set([jurygrade.round for jurygrade in jurygrades]))
+				myrounds = list(set([jurygrade.round for jurygrade in jurygrades]))
 				if verbose:
 					print "I consider all the Rounds played so far."
 			else:
 				assert pfnumber in [1, 2, 3, 4]
-				rounds = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round.pf_number == pfnumber]))
+				myrounds = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round.pf_number == pfnumber]))
 				if verbose:
 					print "I consider only the Rounds from Physics Fight %i" % int(pfnumber)
 
 
 		if verbose:
-			print "I played in %i Rounds" % len(rounds)
+			print "I played in %i Rounds" % len(myrounds)
 
 
-		for myround in rounds:
+		for myround in myrounds:
 
 			# get my role in this round:
 			if myround.reporter.name == self.name and myround.reporter.surname == self.surname:
