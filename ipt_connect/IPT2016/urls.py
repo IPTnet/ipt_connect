@@ -10,8 +10,8 @@ urlpatterns = patterns('',
     url(r'^jurys/(?P<pk>[0-9]+)/$', jury_detail, name='jury_detail'),
 	url(r'^problems$', problems_overview, name="problems_overview"),
 	url(r'^problems/(?P<pk>[0-9]+)/$', problem_detail, name="problem_detail"),
-	url(r'^physics_fights$', physics_fights, name="physics_fights"),
-	url(r'^physics_fights/(?P<pk>[0-9]+)/$', physics_fight_detail, name="physics_fight_detail"),
+	url(r'^rounds$', rounds, name="rounds"),
+	url(r'^rounds/(?P<pk>[0-9]+)/$', round_detail, name="round_detail"),
 	url(r'^teams$', teams_overview, name="teams"),
 	url(r'^teams/(?P<team_name>[A-Za-z]+)/$', team_detail, name='team_detail')
 

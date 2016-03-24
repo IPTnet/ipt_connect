@@ -32,26 +32,26 @@ def jury_detail(request, pk):
 
 
 def tournament_overview(request):
-	pfs = PhysicsFight.objects.all()
+	rounds = Round.objects.all()
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
-	rounds = [1, 2, 3, 4]
+	pfs = [1, 2, 3, 4]
 	rooms = Room.objects.all()
 	rooms = sorted(rooms, key=lambda room: room.name)
 	roomnumbers = [ind +1 for ind, room in enumerate(rooms)]
-	orderedpfsperroom=[]
+	orderedroundsperroom=[]
 	for room in rooms:
 		thisroom = []
-		for round in rounds:
-			thisround = []
-			mypfs = PhysicsFight.objects.filter(round_number=round).filter(room=room)
-			mypfs = sorted(mypfs, key=lambda pf: pf.fight_number)
-			print len(mypfs)
-			for ind2, pf in enumerate(mypfs):
-				thisround.append(pf)
-			thisroom.append(thisround)
-		orderedpfsperroom.append(thisroom)
-	return render(request, 'tournament_overview.html', {'teams': teams, 'pfs': pfs, 'rounds': rounds, 'roomnumbers':roomnumbers, 'orderedpfsperroom': orderedpfsperroom})
+		for pf in pfs:
+			thispf = []
+			myrounds = Round.objects.filter(pf_number=pf).filter(room=room)
+			myrounds = sorted(myrounds, key=lambda round: round.round_number)
+			print len(myrounds)
+			for ind2, round in enumerate(myrounds):
+				thispf.append(round)
+			thisroom.append(thispf)
+		orderedroundsperroom.append(thisroom)
+	return render(request, 'tournament_overview.html', {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom})
 
 def teams_overview(request):
 	teams = Team.objects.all()
@@ -76,23 +76,23 @@ def problem_detail(request, pk):
 	return render(request, 'problem_detail.html', {'problem': problem, "meangrades": meangrades, "teamresults": teamresults})
 
 
-def physics_fights(request):
-	pfs = PhysicsFight.objects.all()
-	return render(request, 'physics_fights.html', {'pfs': pfs})
+def rounds(request):
+	rounds = Round.objects.all()
+	return render(request, 'rounds.html', {'rounds': rounds})
 
-def physics_fight_detail(request, pk):
-	pf = PhysicsFight.objects.filter(pk=pk)
-	jurygrades = JuryGrade.objects.filter(physics_fight=pf)
+def round_detail(request, pk):
+	round = Round.objects.filter(pk=pk)
+	jurygrades = JuryGrade.objects.filter(round=round)
 	meangrades = []
 	# participants mean grades
-	meangrades.append(pf[0].reporter.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
-	meangrades.append(pf[0].opponent.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
-	meangrades.append(pf[0].reviewer.compute_average_grades(physicsfights=[pf[0]], verbose=False)[0]["value"])
+	meangrades.append(round[0].reporter.compute_average_grades(rounds=[round[0]], verbose=False)[0]["value"])
+	meangrades.append(round[0].opponent.compute_average_grades(rounds=[round[0]], verbose=False)[0]["value"])
+	meangrades.append(round[0].reviewer.compute_average_grades(rounds=[round[0]], verbose=False)[0]["value"])
 
-	tacticalrejections = TacticalRejection.objects.filter(physics_fight=pf)
-	eternalrejection = EternalRejection.objects.filter(physics_fight=pf)
+	tacticalrejections = TacticalRejection.objects.filter(round=round)
+	eternalrejection = EternalRejection.objects.filter(round=round)
 
-	return render(request, 'physics_fight_detail.html', {'pf': pf, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection})
+	return render(request, 'round_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection})
 
 def blah(request):
 	return render(request, 'blah.html')

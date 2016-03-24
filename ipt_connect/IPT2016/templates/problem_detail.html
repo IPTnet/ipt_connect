@@ -40,17 +40,17 @@
                     <td><a href="{% url 'team_detail' team_name=teamresult.name %}">{{teamresult.name}}</a></td>
                     <td>
                     {% for report in teamresult.reports%}
-                        <p><a href="{% url 'physics_fight_detail' pk=report.pf.pk %}">{{report.value}}</a></p>
+                        <p><a href="{% url 'round_detail' pk=report.round.pk %}">{{report.value}}</a></p>
                     {% endfor %}
                     </td>
                     <td>
                     {% for opposition in teamresult.oppositions%}
-                        <p><a href="{% url 'physics_fight_detail' pk=opposition.pf.pk %}">{{opposition.value}}</a></p>
+                        <p><a href="{% url 'round_detail' pk=opposition.round.pk %}">{{opposition.value}}</a></p>
                     {% endfor %}
                     </td>
                     <td>
                     {% for review in teamresult.reviews%}
-                        <p><a href="{% url 'physics_fight_detail' pk=review.pf.pk %}">{{review.value}}</a></p>
+                        <p><a href="{% url 'round_detail' pk=review.round.pk %}">{{review.value}}</a></p>
                     {% endfor %}
                     </td>
                 </tr>

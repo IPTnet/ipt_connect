@@ -6,7 +6,7 @@
     </div>
 
     <div class="section">
-        <h1><a href="{% url 'physics_fights' %}">Rounds summary </a></h1>
+        <h1><a href="{% url 'rounds' %}">Rounds summary </a></h1>
     </div>
 
     <div class="content container">
@@ -22,11 +22,11 @@
             {% for thisroom in orderedpfsperroom %}
             <tr>
                 <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
-                {% for thisround in thisroom %}
+                {% for thispf in thisroom %}
                 <td class="td-border">
                     <table>
-                        {% for pf in thisround%}
-                        <td class="td-center"><a href="{% url 'physics_fight_detail' pk=pf.pk %}">PF{{pf.fight_number}}</a></td>
+                        {% for round in thispf%}
+                        <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">Round{{round.round_number}}</a></td>
                         {% endfor %}
                     </table>
                 </td>

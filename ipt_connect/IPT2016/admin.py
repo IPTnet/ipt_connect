@@ -14,10 +14,10 @@ class EternalRejectionInline(admin.TabularInline):
 	model = EternalRejection
 	extra = 0
 
-class PFadmin(admin.ModelAdmin):
+class Roundadmin(admin.ModelAdmin):
 
 	fieldsets = [
-	('General Information', {'fields': [('round_number', "fight_number", "room")]}),
+	('General Information', {'fields': [('pf_number', "round_number", "room")]}),
 	(None, {'fields': [("reporter"), ('opponent'), ('reviewer'), 'problem_presented']})
     ]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
@@ -55,7 +55,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 # Register your models here.
 admin.site.register(Team,TeamAdmin)
 admin.site.register(Participant,ParticipantAdmin)
-admin.site.register(PhysicsFight, PFadmin)
+admin.site.register(Round, Roundadmin)
 admin.site.register(Problem)
 admin.site.register(Room)
 admin.site.register(Jury)

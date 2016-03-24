@@ -14,7 +14,7 @@
     </div>
 
     <div class="content container">
-        <p class="emphase">Problem presented: <a href="{% url 'problem_detail' pk=pf.problem_presented.pk %}">{{pf.problem_presented.name}}</a></p>
+        <p class="emphase">Problem presented: <a href="{% url 'problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
     </div>
 
 
@@ -27,9 +27,9 @@
             </tr>
 
             <tr>
-                <td><a href="{% url 'team_detail' team_name=pf.reporter.team.name %}">{{pf.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.reporter.pk %}">{{pf.reporter.fullname}}</a></td>
-                <td><a href="{% url 'team_detail' team_name=pf.opponent.team.name %}">{{pf.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.opponent.pk %}">{{pf.opponent.fullname}}</a></td>
-                <td><a href="{% url 'team_detail' team_name=pf.reviewer.team.name %}">{{pf.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=pf.reviewer.pk %}">{{pf.reviewer.fullname}}</a></td>
+                <td><a href="{% url 'team_detail' team_name=round.reporter.team.name %}">{{round.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+                <td><a href="{% url 'team_detail' team_name=round.opponent.team.name %}">{{round.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+                <td><a href="{% url 'team_detail' team_name=round.reviewer.team.name %}">{{round.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
             </tr>
 
         </table>
@@ -98,35 +98,35 @@
     </div>
 
     <div class="content container">
-        {% if pf.unavailable_problems %}
+        {% if round.unavailable_problems %}
             <p class="emphase">Unavailable problems:</p>
 
-            {% if pf.unavailable_problems.presented_this_round %}
-                {% for problem in pf.unavailable_problems.presented_this_round %}
+            {% if round.unavailable_problems.presented_this_round %}
+                {% for problem in round.unavailable_problems.presented_this_round %}
                     <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this round</li>
                 {% endfor %}
             {% endif %}
 
-            {% if pf.unavailable_problems.eternal_rejection %}
-                {% for problem in pf.unavailable_problems.eternal_rejection %}
+            {% if round.unavailable_problems.eternal_rejection %}
+                {% for problem in round.unavailable_problems.eternal_rejection %}
                     <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been eternally rejected</li>
                 {% endfor %}
             {% endif %}
 
-            {% if pf.unavailable_problems.presented_by_reporter %}
-                {% for problem in pf.unavailable_problems.presented_by_reporter %}
+            {% if round.unavailable_problems.presented_by_reporter %}
+                {% for problem in round.unavailable_problems.presented_by_reporter %}
                     <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
                 {% endfor %}
             {% endif %}
 
-            {% if pf.unavailable_problems.opposed_by_opponent %}
-                {% for problem in pf.unavailable_problems.opposed_by_opponent %}
+            {% if round.unavailable_problems.opposed_by_opponent %}
+                {% for problem in round.unavailable_problems.opposed_by_opponent %}
                     <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
                 {% endfor %}
             {% endif %}
 
-            {% if pf.unavailable_problems.presented_by_opponent %}
-                {% for problem in pf.unavailable_problems.presented_by_opponent %}
+            {% if round.unavailable_problems.presented_by_opponent %}
+                {% for problem in round.unavailable_problems.presented_by_opponent %}
                     <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
                 {% endfor %}
             {% endif %}

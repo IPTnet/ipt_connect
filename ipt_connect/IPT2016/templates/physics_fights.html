@@ -7,9 +7,9 @@
     </div>
 
     <div class="content container">
-        {% for pf in pfs %}
+        {% for round in rounds %}
             <div>
-                <p><a href="{% url 'physics_fight_detail' pk=pf.pk %}">{{pf}}</a> | {{pf.status}}</p>
+                <p><a href="{% url 'round_detail' pk=round.pk %}">{{round}}</a> | {{round.status}}</p>
             </div>
         {% endfor %}
     </div>
