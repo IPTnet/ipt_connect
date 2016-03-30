@@ -329,7 +329,7 @@ class Team(models.Model):
 
 		return self.name
 
-	def presentation_coefficients(self, verbose=True):
+	def presentation_coefficients(self, verbose=False):
 		"""
 		Modify the presentation coefficient from a given round up to the end of the physics fights if more than three problems are tactically rejected.
 
@@ -363,7 +363,7 @@ class Team(models.Model):
 		return prescoeffs
 
 	# functions
-	def bonuspoints(self, pfnumber=None, rounds=None, verbose=True, maxround=3):
+	def bonuspoints(self, pfnumber=None, rounds=None, verbose=False, maxround=3):
 		"""
 		Check if the pfs where I played are complete, and return the according number of bonus points (2 if first, 1 if second, split equally if ex-aequo)
 
@@ -514,7 +514,7 @@ class Team(models.Model):
 			print "Team %s has %.2f points so far !"  % (self.name, allpoints)
 		return allpoints
 
-	def ranking(self, pfnumber=None, rounds=None, verbose=True):
+	def ranking(self, pfnumber=None, rounds=None, verbose=False):
 		"""
 		:param verbose:  Verbosity flag
 		:return: (teams, position of self). Return all the teams, ranked by points and return my position amongst the rank.
@@ -535,7 +535,7 @@ class Team(models.Model):
 
 		return teams, teams.index(self)+1
 
-	def problems(self, verbose=True, currentround=None):
+	def problems(self, verbose=False, currentround=None):
 		"""
 		Get all the problems that I cannot present(already presented or eternal rejection) and cannot oppose(already opposed)
 
@@ -619,12 +619,15 @@ class Round(models.Model):
 			default=None
 			)
 	room = models.ForeignKey(Room)
-	reporter = models.ForeignKey(Participant, related_name='reporter_team_1')
-	reporter_2 = models.ForeignKey(Participant, blank=True, null=True, related_name='reporter_team_2')
-	opponent = models.ForeignKey(Participant, related_name='opponent_team')
-	reviewer = models.ForeignKey(Participant, related_name='reviewer_team')
-	problem_presented = models.ForeignKey(Problem)
-	submitted_date = models.DateTimeField(default=timezone.now)
+	reporter_team = models.ForeignKey(Team, related_name='reporterteam', blank=True, null=True)
+	opponent_team = models.ForeignKey(Team, related_name='opponentteam', blank=True, null=True)
+	reviewer_team = models.ForeignKey(Team, related_name='reviewerteam', blank=True, null=True)
+	reporter = models.ForeignKey(Participant, related_name='reporter_name_1', blank=True, null=True)
+	reporter_2 = models.ForeignKey(Participant, blank=True, null=True, related_name='reporter_name_2')
+	opponent = models.ForeignKey(Participant, related_name='opponent_name', blank=True, null=True)
+	reviewer = models.ForeignKey(Participant, related_name='reviewer_name', blank=True, null=True)
+	problem_presented = models.ForeignKey(Problem, blank=True, null=True)
+	submitted_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
 
 	def __unicode__(self):
 		return "Round %i | Fight %i | Room %s" % (self.round_number, self.pf_number, self.room.name)
@@ -632,7 +635,7 @@ class Round(models.Model):
 	def ident(self):
 		return "%s%s%s" %(self.pf_number, self.round_number, self.room.ident())
 
-	def unavailable_problems(self, verbose=True):
+	def unavailable_problems(self, verbose=False):
 		"""
 		From the rules:
 
@@ -648,29 +651,29 @@ class Round(models.Model):
 		"""
 
 		# remind that these below are ([eternal rejection], [presented], [opposed])
-		reporter_problems = self.reporter.team.problems(verbose=False, currentround=self)
-		opponent_problems = self.opponent.team.problems(verbose=False, currentround=self)
+		reporter_problems = self.reporter_team.problems(verbose=False, currentround=self)
+		opponent_problems = self.opponent_team.problems(verbose=False, currentround=self)
 		eternal_rejection = reporter_problems[0]
 
 		if verbose:
 			print "="*10, "Problem rejection for %s" % self, "="*10
 			if len(eternal_rejection) != 0:
-				print "Team %s eternally rejected problem \n\t%s" % (self.reporter.team, eternal_rejection[0])
+				print "Team %s eternally rejected problem \n\t%s" % (self.reporter_team, eternal_rejection[0])
 		presented_by_reporter = reporter_problems[1]
 		if verbose:
-			msg = "Team %s already presented the following problems:" % self.reporter.team
+			msg = "Team %s already presented the following problems:" % self.reporter_team
 			for problem in presented_by_reporter:
 				msg += "\n\t%s" % problem
 			print msg
 		opposed_by_opponent = opponent_problems[2]
 		if verbose:
-			msg = "Team %s already opposed the following problems:" % self.opponent.team
+			msg = "Team %s already opposed the following problems:" % self.opponent_team
 			for problem in opposed_by_opponent:
 				msg += "\n\t%s" % problem
 			print msg
 		presented_by_opponent = opponent_problems[1]
 		if verbose:
-			msg = "Team %s already presented the following problems:" % self.opponent.team
+			msg = "Team %s already presented the following problems:" % self.opponent_team
 			for problem in presented_by_opponent:
 				msg += "\n\t%s" % problem
 			print msg

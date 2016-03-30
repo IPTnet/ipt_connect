@@ -1,139 +1,167 @@
 {% extends 'head.html' %}
+{% load humanize %}
 
 {% block content %}
 {% for round in round %}
 
-    <div class="page-header">
-        <h1>{{round}}</h1>
-    </div>
+
+    {% if finished %}
+        <div class="section">
+            <h1>{{round}}</h1>
+        </div>
+
+        <div class="content container">
+            <p class="emphase">Problem presented: <a href="{% url 'problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
+        </div>
 
 
-
-    <div class="section">
-        <h1>Results</h1>
-    </div>
-
-    <div class="content container">
-        <p class="emphase">Problem presented: <a href="{% url 'problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
-    </div>
-
-
-    <div class="content container">
-        <table>
-            <tr>
-                <th>Reporter</th>
-                <th>Opponent</th>
-                <th>Reviewer</th>
-            </tr>
-
-            <tr>
-                <td><a href="{% url 'team_detail' team_name=round.reporter.team.name %}">{{round.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
-                <td><a href="{% url 'team_detail' team_name=round.opponent.team.name %}">{{round.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
-                <td><a href="{% url 'team_detail' team_name=round.reviewer.team.name %}">{{round.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
-            </tr>
-
-        </table>
-    </div>
-
-
-    <div class="content container">
-        <table>
-            <tr>
-                <th>Jury member</th>
-                <th>Grade Reporter</th>
-                <th>Grade Opponent</th>
-                <th>Grade Reviewer</th>
-            </tr>
-
-            {% for jurygrade in jurygrades %}
+        <div class="content container">
+            <table>
                 <tr>
-                    <td><a href="{% url 'jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}}</a></td>
-                    <td>{{jurygrade.grade_reporter}}</td>
-                    <td>{{jurygrade.grade_opponent}}</td>
-                    <td>{{jurygrade.grade_reviewer}}</td>
+                    <th class="td-center">Reporter</th>
+                    <th class="td-center">Opponent</th>
+                    <th class="td-center">Reviewer</th>
                 </tr>
+
+                <tr>
+                    <td class="td-center"><a href="{% url 'team_detail' team_name=round.reporter.team.name %}">{{round.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+                    <td class="td-center"><a href="{% url 'team_detail' team_name=round.opponent.team.name %}">{{round.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+                    <td class="td-center"><a href="{% url 'team_detail' team_name=round.reviewer.team.name %}">{{round.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
+                </tr>
+
+            </table>
+        </div>
+
+
+        <div class="content container">
+            <table>
+                <tr>
+                    <th>Jury member</th>
+                    <th class="td-center">Grade Reporter</th>
+                    <th class="td-center">Grade Opponent</th>
+                    <th class="td-center">Grade Reviewer</th>
+                </tr>
+
+                {% for jurygrade in jurygrades %}
+                    <tr>
+                        <td><a href="{% url 'jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}}</a></td>
+                        <td class="td-center">{{jurygrade.grade_reporter}}</td>
+                        <td class="td-center">{{jurygrade.grade_opponent}}</td>
+                        <td class="td-center">{{jurygrade.grade_reviewer}}</td>
+                    </tr>
+                {% endfor %}
+
+                <tr>
+                    <td><p class="emphase">MEAN*</p></td>
+                    {% for meangrade in meangrades %}
+                    <td class="td-center"><p class="emphase">{{meangrade|floatformat:2}}</p></td>
+                    {% endfor %}
+                </tr>
+
+            </table>
+        </div>
+
+        <div class="content container">
+            <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members.</p>
+        </div>
+
+
+
+        <div class="content container">
+
+            {% if tacticalrejections.count > 0 %}
+            <p>Tactical rejections:</p>
+            {% endif %}
+            {% for tacticalrejection in tacticalrejections %}
+            <li><a href="{% url 'problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+            {% empty %}
+            <p>No Tactical Rejections</p>
             {% endfor %}
+        </div>
 
-            <tr>
-                <td><p class="emphase">MEAN*</p></td>
-                {% for meangrade in meangrades %}
-                <td><p class="emphase">{{meangrade}}</p></td>
-                {% endfor %}
-            </tr>
-
-        </table>
-    </div>
-
-    <div class="content container">
-        <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members.</p>
-    </div>
-
-
-
-    <div class="content container">
-
-        {% if tacticalrejections.count > 0 %}
-        <p>Tactical rejections:</p>
-        {% endif %}
-        {% for tacticalrejection in tacticalrejections %}
-        <li><a href="{% url 'problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+        {% for eternalrejection in eternalrejection %}
+        <div class="content container">
+            <p>Eternal rejection:</p>
+            <li><a href="{% url 'problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
+        </div>
         {% empty %}
-        <p>No Tactical Rejections</p>
+        <div class="content container">
+            <p>No Eternal Rejection</p>
+        </div>
         {% endfor %}
-    </div>
 
-    {% for eternalrejection in eternalrejection %}
-    <div class="content container">
-        <p>Eternal rejection:</p>
-        <li><a href="{% url 'problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
-    </div>
-    {% empty %}
-    <div class="content container">
-        <p>No Eternal Rejection</p>
-    </div>
-    {% endfor %}
+    {% endif %}
 
-    <div class="section">
-        <h1>Pre-fight informations</h1>
-    </div>
+    {% if started %}
 
-    <div class="content container">
-        {% if round.unavailable_problems %}
-            <p class="emphase">Unavailable problems:</p>
+        {% if not finished %}
+            <div class="section">
+                <h1>{{round}}</h1>
+            </div>
+            <div class="content container">
+                <table>
+                    <tr>
+                         <th class="td-center">Reporter</th>
+                         <th class="td-center">Opponent</th>
+                         <th class="td-center">Reviewer</th>
+                    </tr>
 
-            {% if round.unavailable_problems.presented_this_round %}
-                {% for problem in round.unavailable_problems.presented_this_round %}
-                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this round</li>
-                {% endfor %}
-            {% endif %}
+                    <tr>
+                         <td class="td-center"><a href="{% url 'team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
+                         <td class="td-center"><a href="{% url 'team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
+                         <td class="td-center"><a href="{% url 'team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
+                     </tr>
 
-            {% if round.unavailable_problems.eternal_rejection %}
-                {% for problem in round.unavailable_problems.eternal_rejection %}
-                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been eternally rejected</li>
-                {% endfor %}
-            {% endif %}
-
-            {% if round.unavailable_problems.presented_by_reporter %}
-                {% for problem in round.unavailable_problems.presented_by_reporter %}
-                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
-                {% endfor %}
-            {% endif %}
-
-            {% if round.unavailable_problems.opposed_by_opponent %}
-                {% for problem in round.unavailable_problems.opposed_by_opponent %}
-                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
-                {% endfor %}
-            {% endif %}
-
-            {% if round.unavailable_problems.presented_by_opponent %}
-                {% for problem in round.unavailable_problems.presented_by_opponent %}
-                    <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
-                {% endfor %}
-            {% endif %}
-
-
+                 </table>
+           </div>
         {% endif %}
-    </div>
+
+        <div class="content container">
+            {% if round.unavailable_problems %}
+                <p class="emphase">Unavailable problems:</p>
+
+                {% if round.unavailable_problems.presented_this_pf %}
+                    {% for problem in round.unavailable_problems.presented_this_pf %}
+                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this round</li>
+                    {% endfor %}
+                {% endif %}
+
+                {% if round.unavailable_problems.eternal_rejection %}
+                    {% for problem in round.unavailable_problems.eternal_rejection %}
+                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been eternally rejected</li>
+                    {% endfor %}
+                {% endif %}
+
+                {% if round.unavailable_problems.presented_by_reporter %}
+                    {% for problem in round.unavailable_problems.presented_by_reporter %}
+                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
+                    {% endfor %}
+                {% endif %}
+
+                {% if round.unavailable_problems.opposed_by_opponent %}
+                    {% for problem in round.unavailable_problems.opposed_by_opponent %}
+                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
+                    {% endfor %}
+                {% endif %}
+
+                {% if round.unavailable_problems.presented_by_opponent %}
+                    {% for problem in round.unavailable_problems.presented_by_opponent %}
+                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
+                    {% endfor %}
+                {% endif %}
+
+
+            {% endif %}
+        </div>
+    {% else %}
+        <div class="section">
+            <h1>{{round}}</h1>
+        </div>
+
+        <div class="content container">
+            <p>This round has not started yet !</p>
+        </div>
+    {% endif %}
 
 
 {% endfor %}

@@ -2,15 +2,35 @@
 
 {% block content %}
 
-    <div class="page-header">
-        <h1>Physics Fights Overview</h1>
+    <div class="section">
+        <h1>Rounds Overview</h1>
     </div>
 
     <div class="content container">
-        {% for round in rounds %}
-            <div>
-                <p><a href="{% url 'round_detail' pk=round.pk %}">{{round}}</a> | {{round.status}}</p>
-            </div>
-        {% endfor %}
+        <table class="table-borders">
+            <tr>
+                <th></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=1 %}">PF 1</a></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=2 %}">PF 2</a></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=3 %}">PF 3</a></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=4 %}">PF 4</a></th>
+            </tr>
+
+            {% for thisroom in orderedroundsperroom %}
+            <tr>
+                <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
+                {% for thispf in thisroom %}
+                <td class="td-border">
+                    <table>
+                        {% for round in thispf%}
+                        <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
+                        {% endfor %}
+                    </table>
+                </td>
+                {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
 {% endblock content %}

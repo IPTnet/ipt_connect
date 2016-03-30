@@ -1,9 +1,21 @@
 {% extends 'head.html' %}
 
 {% block content %}
-    <div class="page-header">
-        <h1>Tournament Overview</h1>
+
+    <div class="section">
+        <h1>Welcome !</h1>
     </div>
+
+    <div class="content container">
+        <p class="emphase"><b>This site regroups all the informations relative to the IPT2016 scores: grading, points distribution, statistics and many more ! This is currently a beta version, not fully functional, and likely with a few bugs here and there. If you see anything suspicious, if you want to comment the relevance of some elements, or if you would like to see something added to this site, please email me at president@iptnet.info.</b></p>
+
+        <p class="emphase"><b>The current page "Home" regroups the main informations about the tournament. Use the top-menu to navigate through the various sections. A lot of small elements are clickable (e.g. team names, problem names, some grades, the physics fights, etc...), do not miss them ! The page "Physics Fight" displays a summary of all the physics fights. The page "Ranking" ranks the teams from best to worst. The page "Problem" displays all the problems of this edition, and the page "Participants" displays the participants ranked by the number of points they gathered (not multiplied by the multiplicative coefficients). Each of this page has (of will have in a near future) some sub-pages that you can discover using your mouse by clicking everywhere.</b></p>
+
+        <p class="emphase"><b>Known bugs : The ranking, participants and individual team pages are slow to load (up to 3-4 sec. on my machine), and repeateadly loading the page may crash the server. Clicking of participant and jury members name return a nearly empty page.  </b></p>
+
+    </div>
+
+
 
     <div class="section">
         <h1><a href="{% url 'rounds' %}">Physics Fights summary </a></h1>
@@ -13,10 +25,10 @@
         <table class="table-borders">
             <tr>
                 <th></th>
-                <th  class="th-center">PF 1</th>
-                <th  class="th-center">PF 2</th>
-                <th  class="th-center">PF 3</th>
-                <th  class="th-center">PF 4</th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=1 %}">PF 1</a></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=2 %}">PF 2</a></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=3 %}">PF 3</a></th>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=4 %}">PF 4</a></th>
             </tr>
 
             {% for thisroom in orderedroundsperroom %}
@@ -44,7 +56,7 @@
     <div class="content container">
         {% for team in teams %}
             <div>
-                <p><a href="{% url 'team_detail' team_name=team.name %}">{{team.name}}</a> | {{team.points}}</p>
+                <p><a href="{% url 'team_detail' team_name=team.name %}">{{team.name}}</a></p>
             </div>
         {% endfor %}
     </div>

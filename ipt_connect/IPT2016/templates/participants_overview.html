@@ -2,15 +2,24 @@
 
 {% block content %}
 
-    <div class="page-header">
+    <div class="section">
         <h1>Participants Overview</h1>
     </div>
 
     <div class="content container">
+        <table>
+            <tr>
+                <th class="td-center">Name</th>
+                <th class="td-center">Team</th>
+                <th class="td-center">Points</th>
+            </tr>
         {% for participant in participants %}
-            <div>
-                <li><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></li>
-            </div>
+            <tr>
+                <td class="td-center"><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
+                <td class="td-center">{{participant.points}}</td>
+            </tr>
         {% endfor %}
+        </table>
     </div>
 {% endblock content %}

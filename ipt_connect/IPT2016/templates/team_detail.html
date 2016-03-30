@@ -1,18 +1,64 @@
 {% extends 'head.html' %}
+{% load humanize %}
 
 {% block content %}
 
-    <div class="page-header">
-        {% for team in team %} <!-- This is stupid. Is there another template tag I can use to avoid looping ?-->
+    <div class="section">
         <h1>{{team.name}}</h1>
-        {% endfor %}
     </div>
 
     <div class="content container">
+        <h1> {{team.ranking.1|ordinal}} place, with {{team.points}} points.</h1>
+    </div>
+
+
+    <div class="content container">
+        <p class="emphase"><b>Participants:
+            </b></p>
         {% for participant in participants %}
             <div>
-                <p><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></p>
+                <li><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}} gathered {{participant.points}} points.</a></li>
             </div>
         {% endfor %}
+
+
+        <p class="emphase"><b>Team-Leaders:</b></p>
+        {% for teamleader in teamleaders %}
+            <div>
+                <li><a href="{% url 'jury_detail' pk=teamleader.pk %}">{{teamleader.name}}</a></li>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="td-center">Problems presented</th>
+                <th class="td-center">Grade</th>
+                <th class="td-center">Role</th>
+            </tr>
+            {% for round in allrounds %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">{{round.mygrade}}</a></td>
+                    <td class="td-center">{{round.myrole}}</td>
+
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    <div class="content container">
+        {% if penalties %}
+        <p class="emphase"><b>Penalties:</b></p>
+            {% for p in penalties %}
+
+            <li>Multiplicative coefficient of {{p.1}} for the Report in {{p.0|ordinal}} Round.</li>
+
+            {% endfor %}
+        {% endif %}
+
     </div>
 {% endblock content %}

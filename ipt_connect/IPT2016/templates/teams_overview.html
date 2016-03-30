@@ -2,14 +2,14 @@
 
 {% block content %}
 
-    <div class="page-header">
+    <div class="section">
         <h1>Teams Overview</h1>
     </div>
 
     <div class="content container">
         {% for team in teams %}
             <div>
-                <p><a href="{% url 'team_detail' team_name=team.name %}">{{team.name}}</a> | {{team.points}}</p>
+                <p><a href="{% url 'team_detail' team_name=team.name %}">{{team.name}}</a></p>
             </div>
         {% endfor %}
     </div>

@@ -1,17 +1,13 @@
 {% extends 'head.html' %}
+{% load humanize %}
 
 {% block content %}
 
 {% for problem in problem %}
-    <div class="page-header">
-
-        <h1>{{problem.name}}</h1>
-
-    </div>
 
 
     <div class="section">
-        <h1>Description</h1>
+        <h1>{{problem.name}}</h1>
     </div>
 
     <div class="content container">
@@ -19,11 +15,6 @@
             <p>{{problem.description}}</p>
         </div>
     </div>
-
-    <div class="section">
-        <h1>Statistics</h1>
-    </div>
-
 
 
     <div class="content container">
@@ -59,9 +50,9 @@
             {% if meangrades %}
             <tr>
                 <td><p class="emphase">MEAN</p></td>
-                <td><p class="emphase">{{meangrades.report}}</p></td>
-                <td><p class="emphase">{{meangrades.opposition}}</p></td>
-                <td><p class="emphase">{{meangrades.review}}</p></td>
+                <td><p class="emphase">{{meangrades.report|floatformat:2}}</p></td>
+                <td><p class="emphase">{{meangrades.opposition|floatformat:2}}</p></td>
+                <td><p class="emphase">{{meangrades.review|floatformat:2}}</p></td>
             </tr>
             {% endif %}
 

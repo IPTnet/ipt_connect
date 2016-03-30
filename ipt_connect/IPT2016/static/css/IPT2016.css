@@ -8,12 +8,26 @@ body {
 
 }
 
+.topmenu {
+    background-color: #4EAFD0;
+    margin-top: 0px;
+    margin-right: 20px;
+    padding: 0px 0px 0px 0px;
+}
+
+.topmenu h1, .topmenu h1 a, .topmenu h1 a:visited, .topmenu h1 a:active {
+    color: #ffffff;
+    font-size: 18pt;
+    text-decoration: none;
+
+}
 
 .page-header {
     background-color: #4EAFD0;
-    margin-top: 20px;
+    margin-top: 0px;
+    margin-bottom: 0px;
     margin-right: 20px;
-    padding: 20px 20px 20px 40px;
+    padding: 5px 5px 5px 40px;
 }
 
 .page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
@@ -25,9 +39,10 @@ body {
 
 .section {
     background-color: #C9E8F2;
-    margin-top: 0;
+    margin-top: 10px;
     margin-right: 20px;
-    padding: 10px 10px 10px 20px;
+
+    padding: 5px 5px 5px 20px;
 
 }
 
@@ -64,6 +79,7 @@ body {
 
 table {
     width: 100%;
+    table-layout: fixed;
 }
 
 .table-borders {
