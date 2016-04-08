@@ -18,12 +18,14 @@
         <div class="content container">
             <table>
                 <tr>
+                    <th class="td-center"></th>
                     <th class="td-center">Reporter</th>
                     <th class="td-center">Opponent</th>
                     <th class="td-center">Reviewer</th>
                 </tr>
 
                 <tr>
+                    <td class="td-center"></td>
                     <td class="td-center"><a href="{% url 'team_detail' team_name=round.reporter.team.name %}">{{round.reporter.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
                     <td class="td-center"><a href="{% url 'team_detail' team_name=round.opponent.team.name %}">{{round.opponent.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
                     <td class="td-center"><a href="{% url 'team_detail' team_name=round.reviewer.team.name %}">{{round.reviewer.team.name}}</a> -- <a href="{% url 'participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
@@ -62,7 +64,7 @@
         </div>
 
         <div class="content container">
-            <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members.</p>
+            <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members. The multiplicative role coefficient is not taken into account here.</p>
         </div>
 
 
@@ -101,12 +103,14 @@
             <div class="content container">
                 <table>
                     <tr>
+                         <th class="td-center">couille</th>
                          <th class="td-center">Reporter</th>
                          <th class="td-center">Opponent</th>
                          <th class="td-center">Reviewer</th>
                     </tr>
 
                     <tr>
+
                          <td class="td-center"><a href="{% url 'team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
                          <td class="td-center"><a href="{% url 'team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
                          <td class="td-center"><a href="{% url 'team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>

@@ -1,3 +1,4 @@
+# coding: utf8
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -604,8 +605,8 @@ class Room(models.Model):
 class Jury(models.Model):
 	name = models.CharField(max_length=50)
 	team = models.ForeignKey('Team', null=True, blank=True)
-	def __unicode__(self):
 
+	def __unicode__(self):
 		return self.name
 
 class Round(models.Model):
@@ -630,7 +631,7 @@ class Round(models.Model):
 	submitted_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
 
 	def __unicode__(self):
-		return "Round %i | Fight %i | Room %s" % (self.round_number, self.pf_number, self.room.name)
+		return "Fight %i | Round %i | Room %s" % (self.pf_number, self.round_number, self.room.name)
 
 	def ident(self):
 		return "%s%s%s" %(self.pf_number, self.round_number, self.room.ident())
@@ -700,7 +701,6 @@ class Round(models.Model):
 class JuryGrade(models.Model):
 
 	round = models.ForeignKey(Round, null=True)
-
 	jury = models.ForeignKey(Jury)
 
 	grade_reporter = models.IntegerField(
@@ -719,11 +719,11 @@ class JuryGrade(models.Model):
 			)
 
 	def __unicode__(self):
-		return "Grade of %s" % self.jury
+		return "Grade of %s" % self.jury.name
 
 	def info(self):
 		print "=" * 36
-		print "Grade of %s" % self.jury
+		print u"Grade of %s" % self.jury.name
 		print self.round
 		print "Reporter %s from %s : %i" % (self.round.name_reporter, self.round.reporter, self.grade_reporter)
 		print "Opponent %s from %s : %i" % (self.round.name_opponent, self.round.opponent, self.grade_opponent)

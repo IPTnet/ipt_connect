@@ -1,7 +1,8 @@
-# coding=utf-8
+# coding=utf8
 import django
 import os, sys
 os.environ['DJANGO_SETTINGS_MODULE'] = "ipt_connect.settings"
+
 django.setup()
 
 
