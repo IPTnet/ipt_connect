@@ -1,0 +1,16 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Problems Overview</h1>
+    </div>
+
+    <div class="content container">
+        {% for problem in problems %}
+            <div>
+                <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a></li>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

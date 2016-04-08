@@ -1,0 +1,16 @@
+{% extends 'head.html' %}
+
+{% block content %}
+
+    <div class="page-header">
+        <h1>Jury Members Overview</h1>
+    </div>
+
+    <div class="content container">
+        {% for jury in jurys %}
+            <div>
+                <li><a href="{% url 'jury_detail' pk=jury.pk %}">{{jury.name}}</a></li>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}
