@@ -7,7 +7,7 @@
     </div>
 
     <div class="content container">
-        <table>
+        <table class="sortable">
             <tr>
                 <th class="td-center">Name</th>
                 <th class="td-center">Team</th>
@@ -17,7 +17,7 @@
             <tr>
                 <td class="td-center"><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
                 <td class="td-center"><a href="{% url 'team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
-                <td class="td-center">{{participant.points}}</td>
+                <td class="td-center">{{participant.points|floatformat:2}}</td>
             </tr>
         {% endfor %}
         </table>

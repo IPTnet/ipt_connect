@@ -47,9 +47,9 @@
                 {% for jurygrade in jurygrades %}
                     <tr>
                         <td><a href="{% url 'jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}}</a></td>
-                        <td class="td-center">{{jurygrade.grade_reporter|floatformat:2}}</td>
-                        <td class="td-center">{{jurygrade.grade_opponent|floatformat:2}}</td>
-                        <td class="td-center">{{jurygrade.grade_reviewer|floatformat:2}}</td>
+                        <td class="td-center">{{jurygrade.grade_reporter}}</td>
+                        <td class="td-center">{{jurygrade.grade_opponent}}</td>
+                        <td class="td-center">{{jurygrade.grade_reviewer}}</td>
                     </tr>
                 {% endfor %}
 
@@ -126,7 +126,7 @@
 
                 {% if round.unavailable_problems.presented_this_pf %}
                     {% for problem in round.unavailable_problems.presented_this_pf %}
-                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this fight</li>
+                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this round</li>
                     {% endfor %}
                 {% endif %}
 

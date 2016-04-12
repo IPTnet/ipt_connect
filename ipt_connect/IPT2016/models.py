@@ -60,8 +60,8 @@ class Participant(models.Model):
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.')
 	birthdate = models.DateField(default='1900-01-31')
-	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.',null=True)
-	team = models.ForeignKey('Team')
+	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.', null=True)
+	team = models.ForeignKey('Team', null=True)
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).')
 	passport_number = models.CharField(max_length=20)
 	affiliation = models.CharField(max_length=50,default='XXX University')
@@ -88,7 +88,7 @@ class Participant(models.Model):
 		"""
 		return self.fullname()
 
-	def compute_average_grades(self, pfnumber=None, rounds=None, verbose=True):
+	def compute_average_grades(self, pfnumber=None, rounds=None, verbose=False):
 		"""
 		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each physic fight
 
@@ -105,7 +105,7 @@ class Participant(models.Model):
 		if verbose:
 			print "="*20,"Personal History","="*20
 			print "My name is", self.name, self.surname
-		jurygrades = JuryGrade.objects.filter(round__reporter__name=self.name) | JuryGrade.objects.filter(round__opponent__name=self.name) | JuryGrade.objects.filter(round__reviewer__name=self.name)
+		jurygrades = JuryGrade.objects.filter(round__reporter=self) | JuryGrade.objects.filter(round__opponent=self) | JuryGrade.objects.filter(round__reviewer=self)
 
 		# get all the rounds I'm in
 		if rounds != None:
@@ -130,20 +130,23 @@ class Participant(models.Model):
 
 
 		for myround in myrounds:
-
 			# get my role in this round:
-			if myround.reporter.name == self.name and myround.reporter.surname == self.surname:
+			if myround.reporter == self:
 				role = 'reporter'
 				roundgrades = list(sorted([jurygrade.grade_reporter for jurygrade in jurygrades if jurygrade.round == myround]))
 
-			elif myround.opponent.name == self.name and myround.opponent.surname == self.surname:
+			elif myround.opponent == self:
 				role = 'opponent'
 				roundgrades = list(sorted([jurygrade.grade_opponent for jurygrade in jurygrades if jurygrade.round == myround]))
-			elif myround.reviewer.name == self.name and myround.reviewer.surname == self.surname:
+			elif myround.reviewer == self:
 				role = 'reviewer'
 				roundgrades = list(sorted([jurygrade.grade_reviewer for jurygrade in jurygrades if jurygrade.round == myround]))
 			else:
-
+				print myround
+				print myround.reporter.fullname()
+				print myround.opponent.fullname()
+				print myround.reviewer.fullname()
+				print self.fullname
 				print "Something wrong here...I must have a defined role !"
 				sys.exit()
 
@@ -158,7 +161,12 @@ class Participant(models.Model):
 			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
 
 
-			nreject = round(len(roundgrades) / 4.0)
+			if len(roundgrades) in [5, 6]:
+				nreject = 1
+			elif len(roundgrades) in [7, 8]:
+				nreject = 2
+			else:
+				nreject = round(len(roundgrades) / 4.0)
 
 			if round(nreject / 2.0) == nreject / 2.0:
 				nlow = int(nreject / 2.0)
@@ -188,7 +196,7 @@ class Participant(models.Model):
 		# return the average grade for all physics fight
 		return average_grades
 
-	def points(self, pfnumber=None, rounds=None, verbose=True):
+	def points(self, pfnumber=None, rounds=None, verbose=False):
 		"""
 		:param verbose: verbosity of the function
 		:param pfnumber: physics fights to consider. If None, I consider all the physics fights
@@ -220,13 +228,15 @@ class Participant(models.Model):
 		:return: return a tuple whose first element is an ordered list of participants according to the number of points they gathered, and second element is the current participant's ranking in this list
 		"""
 
+		# select only the real participants, not the accompanying persons, IOC, team-leader, etc...
+		participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
 
 		if pool == 'team':
-			participants = Participant.objects.filter(team=self.team)
+			participants = participants.filter(team=self.team)
 		elif pool == 'gender':
-			participants = Participant.objects.filter(gender=self.gender)
+			participants = participants.filter(gender=self.gender)
 		elif pool == 'all':
-			participants = Participant.objects.all()
+			participants = participants
 		else:
 			print "pool value does not compute"
 			sys.exit()
@@ -277,7 +287,10 @@ class Problem(models.Model):
 			reviewers.append({"name": round.reviewer.team.name, "round": reviewerinfo["round"], "value": reviewerinfo["value"]})
 
 		# use this to compute the mean grades
-		meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
+                if 0 in [len(reporters), len(opponents), len(reviewers)]:
+                        meangrades = {"report": 0, "opposition": 0, "review": 0}		        
+                else: 
+                        meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
 
 
 		# then, reorder that list per teams
@@ -522,6 +535,8 @@ class Team(models.Model):
 		"""
 
 		teams = Team.objects.all()
+
+		# exclude the IOC team
 
 		teams = sorted(teams, key=lambda x : x.points(pfnumber=pfnumber, rounds=rounds, verbose=verbose))[::-1]
 		if verbose:

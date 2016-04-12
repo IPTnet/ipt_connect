@@ -2,6 +2,8 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from models import *
+from django import forms
+from django.forms import widgets
 
 class JuryGradeInline(admin.TabularInline):
 	model = JuryGrade
@@ -20,10 +22,12 @@ class Roundadmin(admin.ModelAdmin):
 	fieldsets = [
 	('General Information', {'fields': [('pf_number', "round_number", "room"), ("reporter_team", "opponent_team", "reviewer_team")]}),
 	(None, {'fields': [("reporter"), ('opponent'), ('reviewer'), 'problem_presented']})
-    ]
+	]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
+	
+	class Media:
+		js = ('admin/js/jquery.js','admin/js/participant_fill.js',)
 	#TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
-
 
 
 class TeamAdmin(admin.ModelAdmin):
@@ -41,7 +45,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	def save_model(self, request, obj, form, change):
 		if not(request.user.is_superuser):
 			u = User.objects.get(username = request.user.username)
-			obj.team = u.team
+			obj.team = u.Team_IPT2016
 			obj.save()
 		obj.save()
 
@@ -50,7 +54,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 		u = User.objects.get(username = request.user.username)
 		if request.user.is_superuser:
 			return qs
-		return qs.filter(team = u.team)
+		return qs.filter(team = u.Team_IPT2016)
 
 
 # Register your models here.

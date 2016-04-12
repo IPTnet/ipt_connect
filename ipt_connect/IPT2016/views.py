@@ -1,6 +1,7 @@
 # coding: utf8
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 from models import *
 
 def home(request):
@@ -11,28 +12,31 @@ def home(request):
 
 	return HttpResponse(text)
 
-
+@cache_page(60 * 2)
 def participants_overview(request):
-	participants = Participant.objects.all()
+	participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
 	rankedparticipants = participants[0].ranking(verbose=False)[0]
 
 	return render(request, 'participants_overview.html', {'participants' : rankedparticipants})
 
+@cache_page(60 * 2)	
 def participant_detail(request, pk):
 	participant = Participant.objects.filter(pk=pk)
 	return render(request, 'participant_detail.html', {'participant': participant})
 
-
+@cache_page(60 * 2)
 def jurys_overview(request):
 	jurys = Jury.objects.all()
 	jurys = sorted(jurys, key=lambda participant: participant.name)
 	return render(request, 'jurys_overview.html', {'jurys': jurys})
 
+
+@cache_page(60 * 2)
 def jury_detail(request, pk):
 	jury = Jury.objects.filter(pk=pk)
 	return render(request, 'jury_detail.html', {'jury': jury})
 
-
+@cache_page(60 * 2)
 def tournament_overview(request):
 	rounds = Round.objects.all()
 	teams = Team.objects.all()
@@ -55,15 +59,16 @@ def tournament_overview(request):
 		orderedroundsperroom.append(thisroom)
 	return render(request, 'tournament_overview.html', {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom})
 
+@cache_page(60 * 2)
 def teams_overview(request):
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
 	return render(request, 'teams_overview.html', {'teams': teams})
 
-
+@cache_page(60 * 2)
 def team_detail(request, team_name):
 	team = Team.objects.filter(name=team_name)
-	participants = Participant.objects.filter(team=team)
+	participants = Participant.objects.filter(team=team).filter(role='TM') | Participant.objects.filter(team=team).filter(role='TC')
 	rankedparticipants = participants[0].ranking(pool="team", verbose=False)[0]
 	teamleaders = Jury.objects.filter(team=team)
 	myreprounds = Round.objects.filter(reporter_team=team)
@@ -72,17 +77,18 @@ def team_detail(request, team_name):
 	allrounds = []
 	for rounds in [myreprounds, myopprounds, myrevrounds]:
 		for round in rounds:
-			if round.reporter_team == team[0]:
-				round.myrole = "reporter"
-				round.mygrade = round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
-			if round.opponent_team == team[0]:
-				round.myrole = "opponent"
-				round.mygrade = round.opponent.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
-			if round.reviewer_team == team[0]:
-				round.myrole = 'reviewer'
-				round.mygrade = round.reviewer.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+			if len(JuryGrade.objects.filter(round=round)) > 0:
+				if round.reporter_team == team[0]:
+					round.myrole = "reporter"
+					round.mygrade = round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+				if round.opponent_team == team[0]:
+					round.myrole = "opponent"
+					round.mygrade = round.opponent.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+				if round.reviewer_team == team[0]:
+					round.myrole = 'reviewer'
+					round.mygrade = round.reviewer.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
 
-			allrounds.append(round)
+				allrounds.append(round)
 
 	penalties=[]
 	for ind, p in enumerate([penalty for penalty in team[0].presentation_coefficients(verbose=False)]):
@@ -90,19 +96,20 @@ def team_detail(request, team_name):
 			penalties.append([ind+1, p])
 	return render(request, 'team_detail.html', {'team': team[0], 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties})
 
-
+@cache_page(60 * 2)
 def problems_overview(request):
 	problems = Problem.objects.all()
-	problems = sorted(problems, key=lambda problem: problem.name)
+	problems = sorted(problems, key=lambda problem: int(problem.name.split('.')[0]))
 	return render(request, 'problems_overview.html', {'problems': problems})
 
+@cache_page(60 * 2)
 def problem_detail(request, pk):
 	problem = Problem.objects.filter(pk=pk)
 	(meangrades, teamresults) = problem[0].status(verbose=False)
 
 	return render(request, 'problem_detail.html', {'problem': problem, "meangrades": meangrades, "teamresults": teamresults})
 
-
+@cache_page(60 * 2)
 def rounds(request):
 	rounds = Round.objects.all()
 	pfs = [1, 2, 3, 4]
@@ -122,7 +129,7 @@ def rounds(request):
 		orderedroundsperroom.append(thisroom)
 	return render(request, 'rounds.html', {'orderedroundsperroom': orderedroundsperroom})
 
-
+@cache_page(60 * 2)
 def round_detail(request, pk):
 	round = Round.objects.filter(pk=pk)
 	thisround=round[0]
@@ -150,6 +157,7 @@ def round_detail(request, pk):
 
 	return render(request, 'round_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
 
+@cache_page(60 * 2)
 def physics_fights(request):
 	rounds = Round.objects.all()
 	pf1 = rounds.filter(pf_number=1)
@@ -158,10 +166,11 @@ def physics_fights(request):
 	pf4 = rounds.filter(pf_number=4)
 	return render(request, 'physics_fights.html', {'pf1': pf1, 'pf2': pf2, 'pf3': pf3, 'pf4': pf4})
 
-
+@cache_page(60 * 2)
 def physics_fight_detail(request, pfid):
 	rounds = Round.objects.filter(pf_number=pfid)
 	rooms = list(set([round.room for round in rounds]))
+	rooms = sorted(rooms, key=lambda room: room.name)
 	roomgrades = []
 
 	for room in rooms:
@@ -206,11 +215,7 @@ def physics_fight_detail(request, pfid):
 
 	return render(request, 'physics_fight_detail.html', {"roomgrades": roomgrades})
 
-
-def blah(request):
-	return render(request, 'blah.html')
-
-
+@cache_page(60 * 2)
 def ranking(request):
 
 	teams = Team.objects.all()

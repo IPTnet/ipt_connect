@@ -17,7 +17,7 @@
             </b></p>
         {% for participant in participants %}
             <div>
-                <li><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}} gathered {{participant.points}} points.</a></li>
+                <li><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}} gathered {{participant.points|floatformat:2}} points.</a></li>
             </div>
         {% endfor %}
 
@@ -41,7 +41,7 @@
             {% for round in allrounds %}
                 <tr>
                     <td class="td-center"><a href="{% url 'problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
-                    <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">{{round.mygrade}}</a></td>
+                    <td class="td-center"><a href="{% url 'round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
                     <td class="td-center">{{round.myrole}}</td>
 
                 </tr>
