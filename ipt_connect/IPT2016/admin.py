@@ -16,9 +16,12 @@ class TacticalRejectionInline(admin.TabularInline):
 class EternalRejectionInline(admin.TabularInline):
 	model = EternalRejection
 	extra = 0
+	max_num = 1
 
 class Roundadmin(admin.ModelAdmin):
 
+	list_display = ('pf_number','round_number','room')
+	list_filter = ('pf_number','round_number','room')
 	fieldsets = [
 	('General Information', {'fields': [('pf_number', "round_number", "room"), ("reporter_team", "opponent_team", "reviewer_team")]}),
 	(None, {'fields': [("reporter"), ('opponent'), ('reviewer'), 'problem_presented']})
@@ -34,6 +37,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 	list_display = ('name','IOC')
 	search_fields = ('name','IOC')
+
 
 class ParticipantAdmin(admin.ModelAdmin):
 
@@ -56,6 +60,10 @@ class ParticipantAdmin(admin.ModelAdmin):
 			return qs
 		return qs.filter(team = u.Team_IPT2016)
 
+class JuryAdmin(admin.ModelAdmin):
+
+	list_display = ('name',)
+
 
 # Register your models here.
 admin.site.register(Team,TeamAdmin)
@@ -63,4 +71,4 @@ admin.site.register(Participant,ParticipantAdmin)
 admin.site.register(Round, Roundadmin)
 admin.site.register(Problem)
 admin.site.register(Room)
-admin.site.register(Jury)
+admin.site.register(Jury,JuryAdmin)

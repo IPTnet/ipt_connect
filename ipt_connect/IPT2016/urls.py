@@ -20,5 +20,6 @@ urlpatterns = patterns('',
 	url(r'^physics_fights$', physics_fights, name='physics_fights'),
 	url(r'^physics_fights/(?P<pfid>[0-9]+)/$', physics_fight_detail, name='physics_fight_detail'),
     url(r'^ranking$', ranking, name='ranking'),
+    url(r'^listing_participants$', listing_participants),
 
 )

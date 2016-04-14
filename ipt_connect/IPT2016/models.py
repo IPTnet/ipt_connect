@@ -95,7 +95,7 @@ class Participant(models.Model):
 		:param verbose: verbosity of the function
 		:param pfnumber: Physics Fight to consider. If None, I consider all the physics fights.
 		:param rounds: rounds to consider. Has to priority over the pfnumber param. If None, I consider pfnumber.
-		:return: I return a list of dictionaries, each of them with the following fields: {"value", "pf", "role"}
+		:return: I return a list of dictionaries, each of them with the following fields: {"value", "round", "role"}
 		"""
 		#TODO: find a way to credit the points to the second reporter as well, without adding them to the total amount of team points (maybe this issue should be in the Team class ????)
 
@@ -267,7 +267,7 @@ class Problem(models.Model):
 	def __unicode__(self):
 		return self.name
 
-	def status(self, verbose=True):
+	def status(self, verbose=True, meangradesonly=False):
 		"""
 
 		:return:
@@ -279,12 +279,13 @@ class Problem(models.Model):
 		opponents = []
 		reviewers = []
 		for round in rounds:
-			reporterinfo = round.reporter.compute_average_grades(rounds=[round], verbose=verbose)[0]
-			opponentinfo = round.opponent.compute_average_grades(rounds=[round], verbose=verbose)[0]
-			reviewerinfo = round.reviewer.compute_average_grades(rounds=[round], verbose=verbose)[0]
-			reporters.append({"name": round.reporter.team.name, "round": reporterinfo["round"], "value": reporterinfo["value"]})
-			opponents.append({"name": round.opponent.team.name, "round": opponentinfo["round"], "value": opponentinfo["value"]})
-			reviewers.append({"name": round.reviewer.team.name, "round": reviewerinfo["round"], "value": reviewerinfo["value"]})
+			if len(JuryGrade.objects.filter(round=round)) > 0:
+				reporterinfo = round.reporter.compute_average_grades(rounds=[round], verbose=verbose)[0]
+				opponentinfo = round.opponent.compute_average_grades(rounds=[round], verbose=verbose)[0]
+				reviewerinfo = round.reviewer.compute_average_grades(rounds=[round], verbose=verbose)[0]
+				reporters.append({"name": round.reporter.team.name, "round": reporterinfo["round"], "value": reporterinfo["value"]})
+				opponents.append({"name": round.opponent.team.name, "round": opponentinfo["round"], "value": opponentinfo["value"]})
+				reviewers.append({"name": round.reviewer.team.name, "round": reviewerinfo["round"], "value": reviewerinfo["value"]})
 
 		# use this to compute the mean grades
                 if 0 in [len(reporters), len(opponents), len(reviewers)]:
@@ -293,42 +294,44 @@ class Problem(models.Model):
                         meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
 
 
-		# then, reorder that list per teams
-		myteamsnames = list(sorted([elt["name"] for elt in reporters+opponents+reviewers]))
+		if meangradesonly==False:
+			# then, reorder that list per teams
+			myteamsnames = list(sorted([elt["name"] for elt in reporters+opponents+reviewers]))
 
-		teamresults = []
-		for name in myteamsnames:
-			if not name in [teamresult["name"] for teamresult in teamresults]:
-				teamresult = {}
-				teamresult["name"] = name
+			teamresults = []
+			for name in myteamsnames:
+				if not name in [teamresult["name"] for teamresult in teamresults]:
+					teamresult = {}
+					teamresult["name"] = name
 
-				# They can be multiple report/oppos/review on the same problem by the same team !!!
-				reports=[]
-				oppositions=[]
-				reviews=[]
-				# get the scores from presentations
-				for reporter in reporters:
-					if reporter["name"] == name:
-						reports.append({"round": reporter["round"], "value": reporter["value"]})
-				# get the scores from oppositions
-				for opponent in opponents:
-					if opponent["name"] == name:
-						oppositions.append({"round": opponent["round"], "value": opponent["value"]})
-				# get the scores from reviews
-				for reviewer in reviewers:
-					if reviewer["name"] == name:
-						reviews.append({"round": reviewer["round"], "value": reviewer["value"]})
+					# They can be multiple report/oppos/review on the same problem by the same team !!!
+					reports=[]
+					oppositions=[]
+					reviews=[]
+					# get the scores from presentations
+					for reporter in reporters:
+						if reporter["name"] == name:
+							reports.append({"round": reporter["round"], "value": reporter["value"]})
+					# get the scores from oppositions
+					for opponent in opponents:
+						if opponent["name"] == name:
+							oppositions.append({"round": opponent["round"], "value": opponent["value"]})
+					# get the scores from reviews
+					for reviewer in reviewers:
+						if reviewer["name"] == name:
+							reviews.append({"round": reviewer["round"], "value": reviewer["value"]})
 
-				teamresult["reports"] = reports
-				teamresult["oppositions"] = oppositions
-				teamresult["reviews"] = reviews
+					teamresult["reports"] = reports
+					teamresult["oppositions"] = oppositions
+					teamresult["reviews"] = reviews
 
-				teamresults.append(teamresult)
-			else:
-				pass
+					teamresults.append(teamresult)
+				else:
+					pass
 
-		return (meangrades, teamresults)
-
+			return (meangrades, teamresults)
+		else:
+			return meangrades
 
 
 class Team(models.Model):
@@ -338,7 +341,7 @@ class Team(models.Model):
 
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
-	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
+	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT2016')
 	def __unicode__(self):
 
 		return self.name
