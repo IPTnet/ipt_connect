@@ -52,13 +52,15 @@
                 <tr>
                     <td><p class="emphase">MEAN*</p></td>
                     {% for meanroundsgrade in roundsgrades.1 %}
+                        {% if meanroundsgrade %}
                         <td>
                             <table>
-                                {% for meangrade in meanroundsgrade%}
+                                {% for meangrade in meanroundsgrade %}
                                 <td class="td-center"><p class="emphase">{{meangrade|floatformat:2}}</p></td>
                                 {% endfor %}
                             </table>
                         </td>
+                        {% endif %}
                     {% endfor %}
                 </tr>
 

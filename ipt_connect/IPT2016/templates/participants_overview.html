@@ -15,13 +15,15 @@
             <tr>
                 <th class="td-center">Name</th>
                 <th class="td-center">Team</th>
-                <th class="td-center">Points</th>
+                <th class="td-center">Points (sum)</th>
+                <th class="td-center">Grade (average)</th>
             </tr>
         {% for participant in participants %}
             <tr>
                 <td class="td-center"><a href="{% url 'participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
                 <td class="td-center"><a href="{% url 'team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
-                <td class="td-center">{{participant.points|floatformat:2}}</td>
+                <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
+                <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
             </tr>
         {% endfor %}
         </table>

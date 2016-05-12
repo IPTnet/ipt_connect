@@ -1,4 +1,5 @@
 {% extends 'head.html' %}
+{% load humanize %}
 
 {% block content %}
 
@@ -37,4 +38,40 @@
             {% endfor %}
         </table>
     </div>
+
+
+    <div class="content container">
+        <table class="table-borders">
+            <tr>
+                <th class="th-center"><a href="{% url 'physics_fight_detail' pfid=5 %}">Final</a></th>
+            </tr>
+
+            <tr>
+                <td class="td-border">
+                    <table>
+                        {% for round in finalrounds %}
+                        <td class="td-center"><a href="{% url 'finalround_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
+                        {% endfor %}
+                    </table>
+                </td>
+
+            </tr>
+
+        </table>
+
+        <table class="table-borders">
+            <tr>
+                {% for ranking in finalranking%}
+                <th class="th-center">{{ranking.0}}</th>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                {% for ranking in finalranking%}
+                <td class="th-center">{{ranking.1|floatformat:2}}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+
 {% endblock content %}
