@@ -7,7 +7,7 @@
 
     {% if finished %}
         <div class="section">
-            <h1>{{round}}</h1>
+            <h1>IPT2016 Final | Round {{round.round_number}}</h1>
         </div>
 
         <div class="content container">
@@ -69,28 +69,8 @@
 
 
 
-        <div class="content container">
 
-            {% if tacticalrejections.count > 0 %}
-            <p>Tactical rejections:</p>
-            {% endif %}
-            {% for tacticalrejection in tacticalrejections %}
-            <li><a href="{% url 'problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
-            {% empty %}
-            <p>No Tactical Rejections</p>
-            {% endfor %}
-        </div>
 
-        {% for eternalrejection in eternalrejection %}
-        <div class="content container">
-            <p>Eternal rejection:</p>
-            <li><a href="{% url 'problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
-        </div>
-        {% empty %}
-        <div class="content container">
-            <p>No Eternal Rejection</p>
-        </div>
-        {% endfor %}
 
     {% endif %}
 
@@ -98,7 +78,7 @@
 
         {% if not finished %}
             <div class="section">
-                <h1>{{round}}</h1>
+                <h1>IPT2016 Final | Round {{round.round_number}}</h1>
             </div>
             <div class="content container">
                 <table>
@@ -120,46 +100,10 @@
            </div>
         {% endif %}
 
-        <div class="content container">
-            {% if round.unavailable_problems %}
-                <p class="emphase">Unavailable problems:</p>
 
-                {% if round.unavailable_problems.presented_this_pf %}
-                    {% for problem in round.unavailable_problems.presented_this_pf %}
-                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this fight</li>
-                    {% endfor %}
-                {% endif %}
-
-                {% if round.unavailable_problems.eternal_rejection %}
-                    {% for problem in round.unavailable_problems.eternal_rejection %}
-                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been eternally rejected</li>
-                    {% endfor %}
-                {% endif %}
-
-                {% if round.unavailable_problems.presented_by_reporter %}
-                    {% for problem in round.unavailable_problems.presented_by_reporter %}
-                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
-                    {% endfor %}
-                {% endif %}
-
-                {% if round.unavailable_problems.opposed_by_opponent %}
-                    {% for problem in round.unavailable_problems.opposed_by_opponent %}
-                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
-                    {% endfor %}
-                {% endif %}
-
-                {% if round.unavailable_problems.presented_by_opponent %}
-                    {% for problem in round.unavailable_problems.presented_by_opponent %}
-                        <li><a href="{% url 'problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
-                    {% endfor %}
-                {% endif %}
-
-
-            {% endif %}
-        </div>
     {% else %}
         <div class="section">
-            <h1>{{round}}</h1>
+            <h1>IPT2016 Final | Round {{round.round_number}}</h1>
         </div>
 
         <div class="content container">

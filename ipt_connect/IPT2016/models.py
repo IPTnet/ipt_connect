@@ -55,14 +55,14 @@ class Participant(models.Model):
 	)
 
 	# parameters
-	name = models.CharField(max_length=50,default='Richard')
-	surname = models.CharField(max_length=50,default='Feynman')
+	name = models.CharField(max_length=50,default=None)
+	surname = models.CharField(max_length=50,default=None)
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.')
 	birthdate = models.DateField(default='1900-01-31')
-	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.',null=True)
-	team = models.ForeignKey('Team')
-	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).')
+	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.', null=True)
+	team = models.ForeignKey('Team', null=True)
+	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).', default="TM")
 	passport_number = models.CharField(max_length=20)
 	affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text='Has the participant already participated in the IPT?')
@@ -88,14 +88,14 @@ class Participant(models.Model):
 		"""
 		return self.fullname()
 
-	def compute_average_grades(self, pfnumber=None, rounds=None, verbose=True):
+	def compute_average_grades(self, pfnumber=None, rounds=None, verbose=False):
 		"""
 		I collect all the grades from the Jury members that are addressed to me and compute the average grade for each physic fight
 
 		:param verbose: verbosity of the function
 		:param pfnumber: Physics Fight to consider. If None, I consider all the physics fights.
 		:param rounds: rounds to consider. Has to priority over the pfnumber param. If None, I consider pfnumber.
-		:return: I return a list of dictionaries, each of them with the following fields: {"value", "pf", "role"}
+		:return: I return a list of dictionaries, each of them with the following fields: {"value", "round", "role"}
 		"""
 		#TODO: find a way to credit the points to the second reporter as well, without adding them to the total amount of team points (maybe this issue should be in the Team class ????)
 
@@ -105,7 +105,7 @@ class Participant(models.Model):
 		if verbose:
 			print "="*20,"Personal History","="*20
 			print "My name is", self.name, self.surname
-		jurygrades = JuryGrade.objects.filter(round__reporter__name=self.name) | JuryGrade.objects.filter(round__opponent__name=self.name) | JuryGrade.objects.filter(round__reviewer__name=self.name)
+		jurygrades = JuryGrade.objects.filter(round__reporter=self) | JuryGrade.objects.filter(round__opponent=self) | JuryGrade.objects.filter(round__reviewer=self)
 
 		# get all the rounds I'm in
 		if rounds != None:
@@ -119,7 +119,7 @@ class Participant(models.Model):
 				if verbose:
 					print "I consider all the Rounds played so far."
 			else:
-				assert pfnumber in [1, 2, 3, 4]
+				assert pfnumber in [1, 2, 3, 4, 5], "Your pfnumber is %i. This is odd." % (pfnumber)
 				myrounds = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round.pf_number == pfnumber]))
 				if verbose:
 					print "I consider only the Rounds from Physics Fight %i" % int(pfnumber)
@@ -130,20 +130,23 @@ class Participant(models.Model):
 
 
 		for myround in myrounds:
-
 			# get my role in this round:
-			if myround.reporter.name == self.name and myround.reporter.surname == self.surname:
+			if myround.reporter == self:
 				role = 'reporter'
 				roundgrades = list(sorted([jurygrade.grade_reporter for jurygrade in jurygrades if jurygrade.round == myround]))
 
-			elif myround.opponent.name == self.name and myround.opponent.surname == self.surname:
+			elif myround.opponent == self:
 				role = 'opponent'
 				roundgrades = list(sorted([jurygrade.grade_opponent for jurygrade in jurygrades if jurygrade.round == myround]))
-			elif myround.reviewer.name == self.name and myround.reviewer.surname == self.surname:
+			elif myround.reviewer == self:
 				role = 'reviewer'
 				roundgrades = list(sorted([jurygrade.grade_reviewer for jurygrade in jurygrades if jurygrade.round == myround]))
 			else:
-
+				print myround
+				print myround.reporter.fullname()
+				print myround.opponent.fullname()
+				print myround.reviewer.fullname()
+				print self.fullname
 				print "Something wrong here...I must have a defined role !"
 				sys.exit()
 
@@ -158,7 +161,12 @@ class Participant(models.Model):
 			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
 
 
-			nreject = round(len(roundgrades) / 4.0)
+			if len(roundgrades) in [5, 6]:
+				nreject = 1
+			elif len(roundgrades) in [7, 8]:
+				nreject = 2
+			else:
+				nreject = round(len(roundgrades) / 4.0)
 
 			if round(nreject / 2.0) == nreject / 2.0:
 				nlow = int(nreject / 2.0)
@@ -188,7 +196,7 @@ class Participant(models.Model):
 		# return the average grade for all physics fight
 		return average_grades
 
-	def points(self, pfnumber=None, rounds=None, verbose=True):
+	def points(self, pfnumber=None, rounds=None, verbose=False):
 		"""
 		:param verbose: verbosity of the function
 		:param pfnumber: physics fights to consider. If None, I consider all the physics fights
@@ -220,13 +228,15 @@ class Participant(models.Model):
 		:return: return a tuple whose first element is an ordered list of participants according to the number of points they gathered, and second element is the current participant's ranking in this list
 		"""
 
+		# select only the real participants, not the accompanying persons, IOC, team-leader, etc...
+		participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
 
 		if pool == 'team':
-			participants = Participant.objects.filter(team=self.team)
+			participants = participants.filter(team=self.team)
 		elif pool == 'gender':
-			participants = Participant.objects.filter(gender=self.gender)
+			participants = participants.filter(gender=self.gender)
 		elif pool == 'all':
-			participants = Participant.objects.all()
+			participants = participants
 		else:
 			print "pool value does not compute"
 			sys.exit()
@@ -257,7 +267,7 @@ class Problem(models.Model):
 	def __unicode__(self):
 		return self.name
 
-	def status(self, verbose=True):
+	def status(self, verbose=True, meangradesonly=False):
 		"""
 
 		:return:
@@ -269,53 +279,59 @@ class Problem(models.Model):
 		opponents = []
 		reviewers = []
 		for round in rounds:
-			reporterinfo = round.reporter.compute_average_grades(rounds=[round], verbose=verbose)[0]
-			opponentinfo = round.opponent.compute_average_grades(rounds=[round], verbose=verbose)[0]
-			reviewerinfo = round.reviewer.compute_average_grades(rounds=[round], verbose=verbose)[0]
-			reporters.append({"name": round.reporter.team.name, "round": reporterinfo["round"], "value": reporterinfo["value"]})
-			opponents.append({"name": round.opponent.team.name, "round": opponentinfo["round"], "value": opponentinfo["value"]})
-			reviewers.append({"name": round.reviewer.team.name, "round": reviewerinfo["round"], "value": reviewerinfo["value"]})
+			if len(JuryGrade.objects.filter(round=round)) > 0:
+				reporterinfo = round.reporter.compute_average_grades(rounds=[round], verbose=verbose)[0]
+				opponentinfo = round.opponent.compute_average_grades(rounds=[round], verbose=verbose)[0]
+				reviewerinfo = round.reviewer.compute_average_grades(rounds=[round], verbose=verbose)[0]
+				reporters.append({"name": round.reporter.team.name, "round": reporterinfo["round"], "value": reporterinfo["value"]})
+				opponents.append({"name": round.opponent.team.name, "round": opponentinfo["round"], "value": opponentinfo["value"]})
+				reviewers.append({"name": round.reviewer.team.name, "round": reviewerinfo["round"], "value": reviewerinfo["value"]})
 
 		# use this to compute the mean grades
-		meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
+                if 0 in [len(reporters), len(opponents), len(reviewers)]:
+                        meangrades = {"report": 0, "opposition": 0, "review": 0}		        
+                else: 
+                        meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
 
 
-		# then, reorder that list per teams
-		myteamsnames = list(sorted([elt["name"] for elt in reporters+opponents+reviewers]))
+		if meangradesonly==False:
+			# then, reorder that list per teams
+			myteamsnames = list(sorted([elt["name"] for elt in reporters+opponents+reviewers]))
 
-		teamresults = []
-		for name in myteamsnames:
-			if not name in [teamresult["name"] for teamresult in teamresults]:
-				teamresult = {}
-				teamresult["name"] = name
+			teamresults = []
+			for name in myteamsnames:
+				if not name in [teamresult["name"] for teamresult in teamresults]:
+					teamresult = {}
+					teamresult["name"] = name
 
-				# They can be multiple report/oppos/review on the same problem by the same team !!!
-				reports=[]
-				oppositions=[]
-				reviews=[]
-				# get the scores from presentations
-				for reporter in reporters:
-					if reporter["name"] == name:
-						reports.append({"round": reporter["round"], "value": reporter["value"]})
-				# get the scores from oppositions
-				for opponent in opponents:
-					if opponent["name"] == name:
-						oppositions.append({"round": opponent["round"], "value": opponent["value"]})
-				# get the scores from reviews
-				for reviewer in reviewers:
-					if reviewer["name"] == name:
-						reviews.append({"round": reviewer["round"], "value": reviewer["value"]})
+					# They can be multiple report/oppos/review on the same problem by the same team !!!
+					reports=[]
+					oppositions=[]
+					reviews=[]
+					# get the scores from presentations
+					for reporter in reporters:
+						if reporter["name"] == name:
+							reports.append({"round": reporter["round"], "value": reporter["value"]})
+					# get the scores from oppositions
+					for opponent in opponents:
+						if opponent["name"] == name:
+							oppositions.append({"round": opponent["round"], "value": opponent["value"]})
+					# get the scores from reviews
+					for reviewer in reviewers:
+						if reviewer["name"] == name:
+							reviews.append({"round": reviewer["round"], "value": reviewer["value"]})
 
-				teamresult["reports"] = reports
-				teamresult["oppositions"] = oppositions
-				teamresult["reviews"] = reviews
+					teamresult["reports"] = reports
+					teamresult["oppositions"] = oppositions
+					teamresult["reviews"] = reviews
 
-				teamresults.append(teamresult)
-			else:
-				pass
+					teamresults.append(teamresult)
+				else:
+					pass
 
-		return (meangrades, teamresults)
-
+			return (meangrades, teamresults)
+		else:
+			return meangrades
 
 
 class Team(models.Model):
@@ -325,7 +341,7 @@ class Team(models.Model):
 
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
-	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True)
+	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT2016')
 	def __unicode__(self):
 
 		return self.name
@@ -340,15 +356,26 @@ class Team(models.Model):
 		:return: Return a list with the coefficient for every round
 		"""
 
+		pfs = [1, 2, 3, 4]
+		eternalrejections = EternalRejection.objects.filter(round__reporter__team=self)
+
+		beforetactical = []
+		netrej = 0
+		for pf in pfs:
+			netrej += len(eternalrejections.filter(round__pf_number=pf))
+			beforetactical.append(3.0 - 0.2*max(0, (netrej-1)))
+
+
 		# get all the tactical rejections
 		rejections = TacticalRejection.objects.filter(round__reporter__team=self)
-		pfs = [1, 2, 3, 4]
+
+
 
 		prescoeffs = []
 		npenalities = 0
 		if verbose:
 			print "="*20, "Tactical Rejection Penalites for Team %s" % self.name, "="*20
-		for pf in pfs:
+		for ind, pf in enumerate(pfs):
 			pfrejections = [rejection for rejection in rejections if rejection.round.pf_number == pf]
 			if verbose:
 				print "%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)
@@ -359,8 +386,10 @@ class Team(models.Model):
 					print "Penality of %.1f points on the Reporter Coefficient" %  float(0.2*npenalities)
 				else:
 					print "No penality"
-			prescoeffs.append(3.0 - 0.2 * npenalities)
+			prescoeffs.append(beforetactical[ind] - 0.2 * npenalities)
 
+		# add the coeff for the final, 3.0 by default
+		prescoeffs.append(3.0)
 		return prescoeffs
 
 	# functions
@@ -389,7 +418,7 @@ class Team(models.Model):
 			else:
 				pass
 
-			assert len(pfrounds) <= maxround
+			assert len(pfrounds) <= maxround, "Team %s played %s rounds in Physics Fight %s. Check your database!" % (self.name, str(len(pfrounds)), str(mypfnumber))
 			if len(pfrounds) == maxround: # then all the fights are played
 				teams = [pfrounds[0].reporter.team, pfrounds[0].opponent.team, pfrounds[0].reviewer.team]
 				if verbose:
@@ -400,7 +429,7 @@ class Team(models.Model):
 					prescoeff = team.presentation_coefficients(verbose=False)
 					teampfpoints = 0
 					for participant in Participant.objects.filter(team=team):
-						average_grades = participant.compute_average_grades(pfnumber=mypfnumber, rounds=rounds, verbose=False)
+						average_grades = participant.compute_average_grades(pfnumber=mypfnumber, rounds=pfrounds, verbose=False)
 						for grade in average_grades:
 							if grade["role"] == "reporter":
 								teampfpoints += grade["value"] * prescoeff[grade["round"].pf_number - 1]
@@ -460,7 +489,7 @@ class Team(models.Model):
 		return bonuspoints
 
 
-	def points(self, pfnumber=None, rounds=None, verbose=False):
+	def points(self, pfnumber=None, rounds=None, verbose=False, bonuspoints=True):
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
 		If all the fights from a round are played, I add the corresponding bonus points
@@ -508,20 +537,30 @@ class Team(models.Model):
 			allpoints += points
 
 		# add bonus points for winning rounds, etc...
-		allpoints += sum(self.bonuspoints(pfnumber=pfnumber, rounds=rounds, verbose=verbose))
+		if bonuspoints:
+			allpoints += sum(self.bonuspoints(pfnumber=pfnumber, rounds=rounds, verbose=verbose))
 
 
 		if verbose:
 			print "Team %s has %.2f points so far !"  % (self.name, allpoints)
 		return allpoints
 
-	def ranking(self, pfnumber=None, rounds=None, verbose=False):
+	def ranking(self, pfnumber=None, rounds=None, verbose=False, selectedteams=None):
 		"""
 		:param verbose:  Verbosity flag
 		:return: (teams, position of self). Return all the teams, ranked by points and return my position amongst the rank.
 		"""
 
-		teams = Team.objects.all()
+		if selectedteams:
+			teams = [team for team in Team.objects.all() if team.name in selectedteams]
+			if verbose:
+				print "I select only %i teams:" % len(selectedteams)
+				for team in selectedteams:
+					print team.name
+		else:
+			teams = Team.objects.all()
+
+		# exclude the IOC team
 
 		teams = sorted(teams, key=lambda x : x.points(pfnumber=pfnumber, rounds=rounds, verbose=verbose))[::-1]
 		if verbose:
@@ -557,7 +596,8 @@ class Team(models.Model):
 
 		# the eternal rejection
 		eternal_rejections = EternalRejection.objects.filter(round__reporter__team=self)
-		assert len(eternal_rejections) < 2
+		# assert len(eternal_rejections) < 2, "Team %s has more than one eternal rejection. This is forbidden!" % self.name
+		# Well, apparently it is...
 		reject = []
 		if len(eternal_rejections) > 0 and eternal_rejections[0].round.pf_number < pf_number:
 			if verbose:
@@ -585,7 +625,7 @@ class Team(models.Model):
 			opposed.append(round.problem_presented)
 		noproblems.append(opposed)
 
-		assert len(noproblems) == 3
+		assert len(noproblems) == 3, "Something wrong with your rejected problem..."
 		return noproblems
 
 
@@ -612,7 +652,7 @@ class Jury(models.Model):
 class Round(models.Model):
 
 	pf_number = models.IntegerField(
-			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(4))),
+			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(5))),
 			default=None
 			)
 	round_number = models.IntegerField(
@@ -689,11 +729,11 @@ class Round(models.Model):
 			print msg
 
 		unavailable_problems = {}
-		unavailable_problems["presented_this_pf"] = presented_this_pf
-		unavailable_problems["eternal_rejection"] = eternal_rejection
-		unavailable_problems["presented_by_reporter"] = presented_by_reporter
-		unavailable_problems["opposed_by_opponent"] = opposed_by_opponent
-		unavailable_problems["presented_by_opponent"] = presented_by_opponent
+		unavailable_problems["presented_this_pf"] = [p for p in presented_this_pf if p != None]
+		unavailable_problems["eternal_rejection"] = [p for p in eternal_rejection if p != None]
+		unavailable_problems["presented_by_reporter"] = [p for p in presented_by_reporter if p != None]
+		unavailable_problems["opposed_by_opponent"] = [p for p in opposed_by_opponent if p != None]
+		unavailable_problems["presented_by_opponent"] = [p for p in presented_by_opponent if p != None]
 
 		return unavailable_problems
 

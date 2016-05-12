@@ -2,10 +2,39 @@
 
 {% block content %}
 
-    <div class="page-header">
-        {% for jury in jury %} <!-- This is stupid. Is there another template tag I can use to avoid looping ?-->
+    <div class="section">
         <h1>{{jury.name}}</h1>
-        {% endfor %}
     </div>
+
+    <div class="content container">
+        {% if jury.team %}
+            <li class="emphase">Jury member affiliated with {{jury.team.name}}</li>
+        {% else %}
+            <li class="emphase">External jury member</li>
+        {% endif %}
+
+    </div>
+
+    <div class="content container">
+
+        <table class="sortable">
+            <tr>
+                <th class="td-center">Problems judged</th>
+                <th class="td-center">Grade Reporter</th>
+                <th class="td-center">Grade Opponent</th>
+                <th class="td-center">Grade Reviewer</th>
+            </tr>
+            {% for grade in grades %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'problem_detail' pk=grade.round.problem_presented.pk %}">{{grade.round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'round_detail' pk=grade.round.pk %}">{{grade.grade_reporter|floatformat:2}} ({{grade.round.reporter.team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'round_detail' pk=grade.round.pk %}">{{grade.grade_opponent|floatformat:2}} ({{grade.round.opponent.team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'round_detail' pk=grade.round.pk %}">{{grade.grade_reviewer|floatformat:2}} ({{grade.round.reviewer.team.name}})</a></td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
 
 {% endblock content %}
