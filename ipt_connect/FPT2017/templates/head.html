@@ -1,0 +1,30 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="{% static 'css/IPT2016.css' %}">
+    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+    <script src="/static/js/sorttable.js"></script>
+    <title>IPT2016</title>
+</head>
+<body>
+        <div class="topmenu">
+            <h1>
+                <table><tr>
+                    <td class="td-center"><a href="{% url 'tournament_overview' %}">Home</a></td>
+                    <td class="td-center"><a href="{% url 'rounds' %}">Physics Fights</a></td>
+                    <td class="td-center"><a href="{% url 'ranking' %}">Ranking</a></td>
+                    <td class="td-center"><a href="{% url 'problems_overview' %}">Problems</a></td>
+                    <td class="td-center"><a href="{% url 'participants_overview' %}">Participants</a></td>
+                    <td class="td-center"><a href="{% url 'jurys_overview' %}">Jurys</a></td>
+
+                </tr></table>
+            </h1>
+        </div>
+{% block content %}
+{% endblock %}
+</body>
+</html>
