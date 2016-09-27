@@ -45,8 +45,6 @@ class Participant(models.Model):
 
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
 
-	TOURISM_CHOICES = ( ('TOURISM_0','No') , ('TOURISM_1','Yes, one night'), ('TOURISM_2','Yes, two nights') )
-
 	SHIRT_SIZES = (
 		('S', 'Small'),
 		('M', 'Medium'),
@@ -63,16 +61,11 @@ class Participant(models.Model):
 	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.', null=True)
 	team = models.ForeignKey('Team', null=True)
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).', default="TM")
-	passport_number = models.CharField(max_length=20)
 	affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text='Has the participant already participated in the IPT?')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
-	tourism=models.CharField(max_length=20,choices=TOURISM_CHOICES,help_text='Would the participant like to stay some more days in Paris after the tournament? Please note the LOC would only book the rooms, but would not pay for it!')
 	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
-	mixed_dormitory = models.BooleanField(default=True,help_text='Is it ok for the participant to be in mixed dorm?')
 	remark = models.TextField(blank=True)
-	hotel_room = models.CharField(max_length=20,blank=True)
-	check_in = models.BooleanField(default=False,help_text='Has the participant arrived?')
 
 
 	# functions
