@@ -1,5 +1,6 @@
 *.pyc
-
+*TODO.txt
+*migrations*
 
 # General Ignore Rules
 

@@ -41,7 +41,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'IPT2016',
-
+    'FPT2017'
 )
 
 MIDDLEWARE_CLASSES = (

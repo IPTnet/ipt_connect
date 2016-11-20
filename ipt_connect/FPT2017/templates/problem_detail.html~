@@ -1,0 +1,63 @@
+{% extends 'head.html' %}
+{% load humanize %}
+
+{% block content %}
+
+{% for problem in problem %}
+
+
+    <div class="section">
+        <h1>{{problem.name}}</h1>
+    </div>
+
+    <div class="content container">
+        <div>
+            <p>{{problem.description}}</p>
+        </div>
+    </div>
+
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th></th>
+                <th>Report</th>
+                <th>Opposition</th>
+                <th>Review</th>
+            </tr>
+
+            {% for teamresult in teamresults %}
+                <tr>
+                    <td><a href="{% url 'team_detail' team_name=teamresult.name %}">{{teamresult.name}}</a></td>
+                    <td>
+                    {% for report in teamresult.reports%}
+                        <p><a href="{% url 'round_detail' pk=report.round.pk %}">{{report.value}}</a></p>
+                    {% endfor %}
+                    </td>
+                    <td>
+                    {% for opposition in teamresult.oppositions%}
+                        <p><a href="{% url 'round_detail' pk=opposition.round.pk %}">{{opposition.value}}</a></p>
+                    {% endfor %}
+                    </td>
+                    <td>
+                    {% for review in teamresult.reviews%}
+                        <p><a href="{% url 'round_detail' pk=review.round.pk %}">{{review.value}}</a></p>
+                    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+            {% if meangrades %}
+            <tr>
+                <td><p class="emphase">MEAN</p></td>
+                <td><p class="emphase">{{meangrades.report|floatformat:2}}</p></td>
+                <td><p class="emphase">{{meangrades.opposition|floatformat:2}}</p></td>
+                <td><p class="emphase">{{meangrades.review|floatformat:2}}</p></td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </div>
+
+{% endfor %}
+{% endblock content %}
