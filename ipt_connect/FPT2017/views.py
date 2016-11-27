@@ -300,23 +300,25 @@ def physics_fight_detail(request, pfid):
 def ranking(request):
 
 	teams = Team.objects.all()
-	ranking = teams[0].ranking(verbose=False)
 	rankteams = []
+	
+	if len(teams) > 0 :
+		ranking = teams[0].ranking(verbose=False)
 
-	for ind, team in enumerate(ranking[0]):
-		myreprounds = Round.objects.filter(reporter_team=team)
-		myopprounds = Round.objects.filter(opponent_team=team)
-		myrevrounds = Round.objects.filter(reviewer_team=team)
-		pfsplayed = min(len(myreprounds), len(myopprounds), len(myrevrounds))
-		team.pfsplayed = pfsplayed
-		team.ongoingpf = False
-		if max(len(myreprounds), len(myopprounds), len(myrevrounds)) > pfsplayed:
-			team.ongoingpf = True
-			team.currentpf = pfsplayed+1
-		team.rank = ind+1
-		if team.rank < 4:
-			team.emphase=True
-		rankteams.append(team)
+		for ind, team in enumerate(ranking[0]):
+			myreprounds = Round.objects.filter(reporter_team=team)
+			myopprounds = Round.objects.filter(opponent_team=team)
+			myrevrounds = Round.objects.filter(reviewer_team=team)
+			pfsplayed = min(len(myreprounds), len(myopprounds), len(myrevrounds))
+			team.pfsplayed = pfsplayed
+			team.ongoingpf = False
+			if max(len(myreprounds), len(myopprounds), len(myrevrounds)) > pfsplayed:
+				team.ongoingpf = True
+				team.currentpf = pfsplayed+1
+			team.rank = ind+1
+			if team.rank < 4:
+				team.emphase=True
+			rankteams.append(team)
 
 	return render(request, 'ranking.html', {'rankteams': rankteams})
 
