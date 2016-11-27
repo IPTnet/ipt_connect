@@ -3,7 +3,7 @@ from django.conf.urls import patterns, url
 from views import *
 from forms import member_for_team
 
-urlpatterns = patterns('',
+urlpatterns = [
     url(r'^$', tournament_overview),
 	url(r'^tournament$', tournament_overview, name='tournament_overview'),
     url(r'^participants$', participants_overview, name='participants_overview'),
@@ -22,5 +22,4 @@ urlpatterns = patterns('',
 	url(r'^physics_fights/(?P<pfid>[0-9]+)/$', physics_fight_detail, name='physics_fight_detail'),
     url(r'^ranking$', ranking, name='ranking'),
     url(r'^listing_participants$', listing_participants),
-
-)
+]

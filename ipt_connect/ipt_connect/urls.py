@@ -1,6 +1,7 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 
+from views import home
 
 urlpatterns = [
     # Examples:
@@ -8,7 +9,7 @@ urlpatterns = [
     # url(r'^blog/', include('blog.urls')),
 
 	url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
-    url(r'^$','ipt_connect.views.home'),
+    url(r'^$', home),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^IPT2016/', include('IPT2016.urls')),
     url(r'^FPT2017/', include('FPT2017.urls')),

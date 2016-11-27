@@ -75,10 +75,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'ipt_connect.wsgi.application'
 
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.core.context_processors.request",
-    "django.contrib.auth.context_processors.auth",
-)
+# TEMPLATE_CONTEXT_PROCESSORS = (
+#     "django.core.context_processors.request",
+#     "django.contrib.auth.context_processors.auth",
+# )
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
