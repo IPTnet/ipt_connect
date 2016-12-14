@@ -6,15 +6,16 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="{% static 'css/FPT2017.css' %}">
-    <link href='https://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
-    <script src="/static/js/sorttable.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans" rel="stylesheet">    <script src="/static/js/sorttable.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IPT_logo.png' %}" />
     <title>FPT 2017</title>
 </head>
 <body>
         <div class="topmenu">
             <h1>
                 <table><tr>
-                    <td class="td-center"><a href="{% url 'FPT2017:tournament_overview' %}">Home</a></td>
+                    <td style="width:75px"><img src="{% static 'IPT_logo.png' %}" alt="FPT 2017" style="width:50px;height:50px;"></td>
+                    <td class="td-center" style="width:250px"><a href="{% url 'FPT2017:tournament_overview' %}">IPT connect | FPT 2017</a></td>
                     <td class="td-center"><a href="{% url 'FPT2017:rounds' %}">Physics Fights</a></td>
                     <td class="td-center"><a href="{% url 'FPT2017:ranking' %}">Ranking</a></td>
                     <td class="td-center"><a href="{% url 'FPT2017:problems_overview' %}">Problems</a></td>
