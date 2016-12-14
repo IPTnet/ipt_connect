@@ -1,0 +1,31 @@
+{% extends 'FPT2017/head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Participants Overview</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">Click on the names to access to more detailed statistics. Click on the headers to sort the tables.</p>
+    </div>
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Name</th>
+                <th class="th-center">Team</th>
+                <th class="th-center">Points (sum)</th>
+                <th class="th-center">Grade (average)</th>
+            </tr>
+        {% for participant in participants %}
+            <tr>
+                <td class="td-center"><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
+                <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
+                <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock content %}
