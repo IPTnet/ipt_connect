@@ -58,7 +58,7 @@ class Participant(models.Model):
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.')
 	birthdate = models.DateField(default='1900-01-31')
-	photo = models.ImageField(upload_to=UploadToPathAndRename('id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.', null=True)
+	photo = models.ImageField(upload_to=UploadToPathAndRename('FPT2017/id_photo'),help_text='Please use a clear ID photo. This will be used for badges and transportation cards.', null=True)
 	team = models.ForeignKey('Team', null=True)
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).', default="TM")
 	affiliation = models.CharField(max_length=50,default='XXX University')
