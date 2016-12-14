@@ -63,8 +63,8 @@ class Participant(models.Model):
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).', default="TM")
 	affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text='Has the participant already participated in the IPT?')
-	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
-	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
+	#diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
+	#shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
 	remark = models.TextField(blank=True)
 
 
