@@ -1,0 +1,16 @@
+{% extends 'IPT2016/head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Teams Overview</h1>
+    </div>
+
+    <div class="content container">
+        {% for team in teams %}
+            <div>
+                <p><a href="{% url 'IPT2016:team_detail' team_name=team.name %}">{{team.name}}</a></p>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -3,6 +3,8 @@ from django.conf.urls import patterns, url
 from views import *
 from forms import member_for_team
 
+app_name = 'IPT2016'
+
 urlpatterns = [
     url(r'^$', tournament_overview),
 	url(r'^tournament$', tournament_overview, name='tournament_overview'),

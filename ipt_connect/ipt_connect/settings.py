@@ -40,8 +40,9 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'FPT2017',
     'IPT2016',
-    'FPT2017'
+    # 'simple_cache_admin'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -52,6 +53,9 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'django.middleware.cache.UpdateCacheMiddleware',
+    # 'django.middleware.common.CommonMiddleware',
+    # 'django.middleware.cache.FetchFromCacheMiddleware',
 #    'django.middleware.security.SecurityMiddleware',
 )
 
@@ -70,8 +74,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        # 'LOADERS': [
+        #     'django.template.loaders.filesystem.Loader',
+        #     'django.template.loaders.app_directories.Loader',
+        # ]
     },
 ]
+
 
 WSGI_APPLICATION = 'ipt_connect.wsgi.application'
 
@@ -112,3 +121,12 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join('', 'static')
 MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
 MEDIA_URL = '/media/'
+
+
+# Cahce
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': './var/tmp/django_cache',
+    }
+}

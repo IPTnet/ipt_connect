@@ -11,8 +11,8 @@ urlpatterns = [
 	url(r'^grappelli/', include('grappelli.urls')), # grappelli URLS
     url(r'^$', home),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^IPT2016/', include('IPT2016.urls')),
-    url(r'^FPT2017/', include('FPT2017.urls')),
+    url(r'^IPT2016/', include('IPT2016.urls', namespace='IPT2016')),
+    url(r'^FPT2017/', include('FPT2017.urls', namespace='FPT2017')),
 ]
 
 

@@ -1,0 +1,77 @@
+{% extends 'FPT2017/head.html' %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Rounds Overview</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">Click on each round for a detailed summary. Click on the Physics Fights for an summarized view of all rounds.</p>
+    </div>
+
+    <div class="content container">
+        <table class="table-borders">
+            <tr>
+                <th></th>
+                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=1 %}">Physics Fight 1</a></th>
+                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=2 %}">Physics Fight 2</a></th>
+                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=3 %}">Physics Fight 3</a></th>
+                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=4 %}">Physics Fight 4</a></th>
+            </tr>
+
+            {% for thisroom in orderedroundsperroom %}
+            <tr>
+                <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
+                {% for thispf in thisroom %}
+                <td class="td-border">
+                    <table>
+                        {% for round in thispf%}
+                        <td class="td-center"><a href="{% url 'FPT2017:round_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
+                        {% endfor %}
+                    </table>
+                </td>
+                {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    <div class="content container">
+        <table class="table-borders">
+            <tr>
+                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=5 %}">Final</a></th>
+            </tr>
+
+            <tr>
+                <td class="td-border">
+                    <table>
+                        {% for round in finalrounds %}
+                        <td class="td-center"><a href="{% url 'FPT2017:finalround_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
+                        {% endfor %}
+                    </table>
+                </td>
+
+            </tr>
+
+        </table>
+
+        <table class="table-borders">
+            <tr>
+                {% for ranking in finalranking%}
+                <th class="th-center">{{ranking.0}}</th>
+                {% endfor %}
+            </tr>
+
+            <tr>
+                {% for ranking in finalranking%}
+                <td class="th-center">{{ranking.1|floatformat:2}}</td>
+                {% endfor %}
+            </tr>
+        </table>
+    </div>
+
+{% endblock content %}
