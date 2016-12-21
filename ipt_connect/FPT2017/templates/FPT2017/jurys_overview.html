@@ -1,0 +1,34 @@
+{% extends 'FPT2017/head.html' %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Jury Members Overview</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">Click on the names to access to more detailed statistics. Click on the headers to sort the tables.</p>
+    </div>
+
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Name</th>
+                <th class="th-center">Average report grade</th>
+                <th class="th-center">Average opposition grade</th>
+                <th class="th-center">Average review grade</th>
+            </tr>
+        {% for jury in jurys %}
+            <tr>
+                <td class="td-center"><a href="{% url 'FPT2017:jury_detail' pk=jury.pk %}">{{jury.name}}</a></td>
+                <td class="td-center">{{jury.meanrepgrade|floatformat:2}}</td>
+                <td class="td-center">{{jury.meanoppgrade|floatformat:2}}</td>
+                <td class="td-center">{{jury.meanrevgrade|floatformat:2}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+{% endblock content %}

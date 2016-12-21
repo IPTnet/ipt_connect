@@ -21,7 +21,7 @@ class UploadToPathAndRename(object):
 		self.sub_path = path
 
 	def __call__(self, instance, filename):
-		ext = filename.split('.')[-1]
+		ext = filename.split('-')[-1]
 		# get filename
 		if instance.pk:
 			filename = iri_to_uri(replace((u'{}_{}_{}.{}').format(instance.team,instance.surname,instance.name, ext),' ','_'))
@@ -63,8 +63,8 @@ class Participant(models.Model):
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text='The Team Captain is one of the students (only one).The Team Leaders are the supervisors (up to two).', default="TM")
 	affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text='Has the participant already participated in the IPT?')
-	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
-	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
+	#diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
+	#shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
 	remark = models.TextField(blank=True)
 
 
@@ -282,8 +282,8 @@ class Problem(models.Model):
 
 		# use this to compute the mean grades
                 if 0 in [len(reporters), len(opponents), len(reviewers)]:
-                        meangrades = {"report": 0, "opposition": 0, "review": 0}		        
-                else: 
+                        meangrades = {"report": 0, "opposition": 0, "review": 0}
+                else:
                         meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
 
 
@@ -778,4 +778,3 @@ class EternalRejection(models.Model):
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem
-

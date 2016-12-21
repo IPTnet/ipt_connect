@@ -26,7 +26,7 @@ class Roundadmin(admin.ModelAdmin):
 	(None, {'fields': [("reporter"), ('opponent'), ('reviewer'), 'problem_presented']})
 	]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
-	
+
 	class Media:
 		js = ('admin/js/jquery.js','admin/js/participant_fill.js',)
 	#TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
@@ -40,14 +40,14 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','email','role','gender','birthdate','affiliation','veteran','diet','shirt_size','remark')
+	list_display = ('surname','name','team','email','role','gender','birthdate','affiliation','veteran','remark')
 	search_fields = ('surname','name')
-	list_filter = ('team','gender','role','diet','veteran','shirt_size')
+	list_filter = ('team','gender','role','veteran')
 
 	def save_model(self, request, obj, form, change):
 		if not(request.user.is_superuser):
 			u = User.objects.get(username = request.user.username)
-			obj.team = u.Team_IPT2016
+			obj.team = u.Team_FPT2017
 			obj.save()
 		obj.save()
 
@@ -56,7 +56,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 		u = User.objects.get(username = request.user.username)
 		if request.user.is_superuser:
 			return qs
-		return qs.filter(team = u.Team_IPT2016)
+		return qs.filter(team = u.Team_FPT2017)
 
 class JuryAdmin(admin.ModelAdmin):
 
