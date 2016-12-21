@@ -53,7 +53,7 @@ class Participant(models.Model):
 	)
 
 	# parameters
-	name = models.CharField(max_length=50,default=None, verbose_name='Nom')
+	name = models.CharField(max_length=50,default=None)
 	surname = models.CharField(max_length=50,default=None)
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES)
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.')
