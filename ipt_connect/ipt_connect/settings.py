@@ -20,13 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b7m8*9*xx9h52om=9z9de%=w#8=_xws(=dwbqc1uzc9e(4hhiw'
+SECRET_KEY = '****'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+SERVER_EMAIL='****'
 
-ALLOWED_HOSTS = []
+ADMINS = (('****'),)
+
+ALLOWED_HOSTS = [u"****",]
 
 
 # Application definition
@@ -40,9 +43,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'FPT2017',
     'IPT2016',
-    # 'simple_cache_admin'
+	'FPT2017',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -53,9 +55,6 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'django.middleware.cache.UpdateCacheMiddleware',
-    # 'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
 #    'django.middleware.security.SecurityMiddleware',
 )
 
@@ -74,20 +73,30 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
-        # 'LOADERS': [
-        #     'django.template.loaders.filesystem.Loader',
-        #     'django.template.loaders.app_directories.Loader',
-        # ]
     },
 ]
+
+TEMPLATE_DIRS = (
+    # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    os.path.join(BASE_DIR, 'templates').replace('\\','/'),
+)
+
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
 
 
 WSGI_APPLICATION = 'ipt_connect.wsgi.application'
 
-# TEMPLATE_CONTEXT_PROCESSORS = (
-#     "django.core.context_processors.request",
-#     "django.contrib.auth.context_processors.auth",
-# )
+TEMPLATE_CONTEXT_PROCESSORS = (
+    "django.core.context_processors.request",
+    "django.contrib.auth.context_processors.auth",
+)
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -122,11 +131,8 @@ STATIC_ROOT = os.path.join('', 'static')
 MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
 MEDIA_URL = '/media/'
 
-
-# Cahce
 CACHES = {
     'default': {
-        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
-        'LOCATION': './var/tmp/django_cache',
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
