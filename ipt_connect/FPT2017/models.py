@@ -60,7 +60,7 @@ class Participant(models.Model):
 	birthdate = models.DateField(default='1900-01-31',verbose_name='Date de naissance')
 	photo = models.ImageField(upload_to=UploadToPathAndRename('FPT2017/id_photo'),help_text="Merci d'utiliser une photo d'identité.", null=True)
 	team = models.ForeignKey('Team', null=True,verbose_name='Équipe')
-	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="L'équipe doit comporter exactement un Team Captain (étudiant), entre deux et cinq Team Members (étudiants) et entre un et deux Team Leaders (encadrants).", default="TM",verbose_name='Rôle')
+	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="L'équipe doit comporter exactement un Team Captain (étudiant), entre deux et cinq Team Members (étudiants) et entre un et deux Team Leaders (encadrants). N'oubliez pas de vous ajouter vous-même !", default="TM",verbose_name='Rôle')
 	#affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text="Est-ce que cette personne a déjà pris part au FPT ou à l'IPT ? (indicatif)",verbose_name='Vétéran')
 	#diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
