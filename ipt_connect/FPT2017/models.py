@@ -39,9 +39,9 @@ class Participant(models.Model):
 	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
 
 
-	GENDER_CHOICES = ( ('M','Male'), ('F','Female'),  ('D','Decline to report'))
+	GENDER_CHOICES = ( ('M','Garçon'), ('F','Fille'),  ('D','Ne souhaite pas préciser'))
 
-	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompanying') )
+	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompagnant') )
 
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
 
