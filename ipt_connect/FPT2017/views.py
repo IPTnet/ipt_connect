@@ -13,8 +13,8 @@ def home(request):
 
 	return HttpResponse(text)
 
-cache_duration_short = 0 # 60 * 1
-cache_duration = 0 #60 * 60 * 60
+cache_duration_short = 60 * 1
+cache_duration = 60 * 1# 60 * 60
 
 
 @cache_page(cache_duration)
@@ -127,7 +127,7 @@ def team_detail(request, team_name):
 @cache_page(cache_duration)
 def problems_overview(request):
 	problems = Problem.objects.all()
-	problems = sorted(problems, key=lambda problem: int(problem.name.split('-')[0]))
+	problems = sorted(problems, key=lambda problem: int(problem.name.split('.')[0]))
 	rounds = Round.objects.all()
 	for problem in problems:
 		problem.npres = len(rounds.filter(problem_presented=problem))

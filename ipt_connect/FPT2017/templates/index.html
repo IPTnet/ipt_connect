@@ -1,6 +1,5 @@
 {% load staticfiles %}
 
-<html lang="en">
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
@@ -15,17 +14,29 @@
             <h1>
                 <table><tr>
                     <td style="width:75px"><a href="//iptnet.info"><img src="{% static 'FPT2017/IPT_logo.png' %}" alt="FPT 2017" style="width:50px;height:50px;"></a></td>
-                    <td class="td-center" style="width:250px;text-align:left"><a href="//connect.iptnet.info">IPT connect | </a><a href="{% url 'FPT2017:tournament_overview' %}">FPT 2017</a></td>
-                    <td class="td-center"><a href="{% url 'FPT2017:rounds' %}">Physics Fights</a></td>
-                    <td class="td-center"><a href="{% url 'FPT2017:ranking' %}">Ranking</a></td>
-                    <td class="td-center"><a href="{% url 'FPT2017:problems_overview' %}">Problems</a></td>
-                    <td class="td-center"><a href="{% url 'FPT2017:participants_overview' %}">Participants</a></td>
-                    <td class="td-center"><a href="{% url 'FPT2017:jurys_overview' %}">Jurys</a></td>
-
+                    <td class="td-center" style="width:250px;text-align:left"><a href="//connect.iptnet.info">IPT connect</a></td>
+                    <td class="td-center"></td>
+                    <td class="td-center"></td>
+                    <td class="td-center"></td>
+                    <td class="td-center"></td>
+                    <td class="td-center"></td>
                 </tr></table>
             </h1>
         </div>
 {% block content %}
+    <div class="content container">
+        <p class="emphase">
+			Welcome to IPT connect. This website hosts the results of the successive editions of the <a href="http://iptnet.info">International Physicists' Tournamenent</a>.
+		</p>
+        <p class="emphase">
+			<a href="http://connect.iptnet.info/IPT2016">Results of IPT 2016</a>
+		</p>
+        <p class="emphase">
+			<a href="http://connect.iptnet.info/FPT2017">Results of FPT 2017</a>
+		</p>
+    </div>
+
+	
 {% endblock %}
 </body>
 </html>
