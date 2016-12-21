@@ -53,8 +53,8 @@ class Participant(models.Model):
 	)
 
 	# parameters
-	name = models.CharField(max_length=50,default=None,verbose_name='Nom')
-	surname = models.CharField(max_length=50,default=None,verbose_name='Prénom')
+	name = models.CharField(max_length=50,default=None,verbose_name='Prénom')
+	surname = models.CharField(max_length=50,default=None,verbose_name='Nom')
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES,verbose_name='Genre')
 	email = models.EmailField(help_text='Cette adresse sera utilisée pour envoyer des informations importantes aux participants.',verbose_name='Email')
 	birthdate = models.DateField(default='1900-01-31',verbose_name='Date de naissance')
