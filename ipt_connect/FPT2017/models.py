@@ -334,7 +334,7 @@ class Team(models.Model):
 
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
-	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_FPT2017')
+	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_FPT2017',verbose_name="Référent")
 	def __unicode__(self):
 
 		return self.name
