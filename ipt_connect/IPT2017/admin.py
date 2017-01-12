@@ -56,7 +56,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 		u = User.objects.get(username = request.user.username)
 		if request.user.is_superuser:
 			return qs
-		return qs.filter(team = u.Team_IPT2016)
+		return qs.filter(team = u.Team_IPT2017)
 
 class JuryAdmin(admin.ModelAdmin):
 
