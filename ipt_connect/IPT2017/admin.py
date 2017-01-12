@@ -47,7 +47,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	def save_model(self, request, obj, form, change):
 		if not(request.user.is_superuser):
 			u = User.objects.get(username = request.user.username)
-			obj.team = u.Team_IPT2016
+			obj.team = u.Team_IPT2017
 			obj.save()
 		obj.save()
 
