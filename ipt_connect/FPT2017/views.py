@@ -70,7 +70,7 @@ def tournament_overview(request):
 	rounds = Round.objects.all()
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
-	pfs = [1, 2, 3, 4]
+	pfs = [1, 2, 3]
 	rooms = Room.objects.all()
 	rooms = sorted(rooms, key=lambda room: room.name)
 	roomnumbers = [ind +1 for ind, room in enumerate(rooms)]
@@ -148,7 +148,7 @@ def problem_detail(request, pk):
 @cache_page(cache_duration_short)
 def rounds(request):
 	rounds = Round.objects.all()
-	pfs = [1, 2, 3, 4]
+	pfs = [1, 2, 3]
 	rooms = Room.objects.all()
 	rooms = sorted(rooms, key=lambda room: room.name)
 	orderedroundsperroom=[]
@@ -244,8 +244,7 @@ def physics_fights(request):
 	pf1 = rounds.filter(pf_number=1)
 	pf2 = rounds.filter(pf_number=2)
 	pf3 = rounds.filter(pf_number=3)
-	pf4 = rounds.filter(pf_number=4)
-	return render(request, 'FPT2017/physics_fights.html', {'pf1': pf1, 'pf2': pf2, 'pf3': pf3, 'pf4': pf4})
+	return render(request, 'FPT2017/physics_fights.html', {'pf1': pf1, 'pf2': pf2, 'pf3': pf3})
 
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):

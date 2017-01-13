@@ -112,7 +112,7 @@ class Participant(models.Model):
 				if verbose:
 					print "I consider all the Rounds played so far."
 			else:
-				assert pfnumber in [1, 2, 3, 4, 5], "Your pfnumber is %i. This is odd." % (pfnumber)
+				assert pfnumber in [1, 2, 3], "Your pfnumber is %i. This is odd." % (pfnumber)
 				myrounds = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round.pf_number == pfnumber]))
 				if verbose:
 					print "I consider only the Rounds from Physics Fight %i" % int(pfnumber)
@@ -349,7 +349,7 @@ class Team(models.Model):
 		:return: Return a list with the coefficient for every round
 		"""
 
-		pfs = [1, 2, 3, 4]
+		pfs = [1, 2, 3]
 		eternalrejections = EternalRejection.objects.filter(round__reporter__team=self)
 
 		beforetactical = []
@@ -397,7 +397,7 @@ class Team(models.Model):
 
 		# get all the rounds where my participants are involved in
 		rounds = Round.objects.filter(reporter__team=self) | Round.objects.filter(opponent__team=self) | Round.objects.filter(reviewer__team=self)
-		mypfnumbers = [1, 2, 3, 4]
+		mypfnumbers = [1, 2, 3]
 
 		bonuspoints = []
 		for mypfnumber in mypfnumbers:
@@ -649,7 +649,7 @@ class Round(models.Model):
 			default=None
 			)
 	round_number = models.IntegerField(
-			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(4))),
+			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(3))),
 			default=None
 			)
 	room = models.ForeignKey(Room)

@@ -10,10 +10,10 @@
     <div class="content container">
         <table>
             <tr>
-                <th class="th-center">Rank</th>
-                <th class="th-center">Team</th>
+                <th class="th-center">Rang</th>
+                <th class="th-center">Équipe</th>
                 <th class="th-center">Points</th>
-                <th class="th-center">Physics Fights Status</th>
+                <th class="th-center">Statut des Physics Fights</th>
             </tr>
         {% for team in rankteams %}
             <tr>
@@ -23,9 +23,9 @@
                 <td class="td-center"><p class="emphase">{{team.points}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
-                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight ongoing</p>
+                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight en cours</p>
                     {% else %}
-                        <p class="emphase"><b>{{team.pfsplayed}}</b> fights completed</p>
+                        <p class="emphase"><b>{{team.pfsplayed}}</b> fights finis</p>
                     {% endif %}
 
                 {% else %}
@@ -34,9 +34,9 @@
                 <td class="td-center">{{team.points}}</td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
-                        <b>{{team.currentpf|ordinal}}</b> fight ongoing
+                        <b>{{team.currentpf|ordinal}}</b> fight en cours
                     {% else %}
-                        <b>{{team.pfsplayed}}</b> fights completed
+                        <b>{{team.pfsplayed}}</b> fights finis
                     {% endif %}
 
                 {% endif %}

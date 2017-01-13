@@ -11,7 +11,7 @@
         </div>
 
         <div class="content container">
-            <p class="emphase">Problem presented: <a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
+            <p class="emphase">Problème présenté: <a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
         </div>
 
 
@@ -38,10 +38,10 @@
         <div class="content container">
             <table>
                 <tr>
-                    <th>Jury member</th>
-                    <th class="td-center">Grade Reporter</th>
-                    <th class="td-center">Grade Opponent</th>
-                    <th class="td-center">Grade Reviewer</th>
+                    <th>Jurés</th>
+                    <th class="td-center">Note du Reporter</th>
+                    <th class="td-center">Note de l'Opponent</th>
+                    <th class="td-center">Note du Reviewer</th>
                 </tr>
 
                 {% for jurygrade in jurygrades %}
@@ -54,7 +54,7 @@
                 {% endfor %}
 
                 <tr>
-                    <td><p class="emphase">MEAN*</p></td>
+                    <td><p class="emphase">Moyenne*</p></td>
                     {% for meangrade in meangrades %}
                     <td class="td-center"><p class="emphase">{{meangrade|floatformat:2}}</p></td>
                     {% endfor %}
@@ -64,7 +64,7 @@
         </div>
 
         <div class="content container">
-            <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members. The multiplicative role coefficient is not taken into account here.</p>
+            <p class="comment">*La moins bonne note n'est pas prise en compte; et s'il y a plus de sept jurés, la plus haute note non plus. Ici les coefficients multiplicatifs liés aux rôles (3,2 et 1) ne sont pas pris en compte.</p>
         </div>
 
 
@@ -72,23 +72,23 @@
         <div class="content container">
 
             {% if tacticalrejections.count > 0 %}
-            <p>Tactical rejections:</p>
+            <p>Rejets temporaires:</p>
             {% endif %}
             {% for tacticalrejection in tacticalrejections %}
             <li><a href="{% url 'FPT2017:problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
             {% empty %}
-            <p>No Tactical Rejections</p>
+            <p>Pas de rejet temporaire</p>
             {% endfor %}
         </div>
 
         {% for eternalrejection in eternalrejection %}
         <div class="content container">
-            <p>Eternal rejection:</p>
+            <p>Rejet permanent:</p>
             <li><a href="{% url 'FPT2017:problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
         </div>
         {% empty %}
         <div class="content container">
-            <p>No Eternal Rejection</p>
+            <p>Pas de rejet permanent</p>
         </div>
         {% endfor %}
 
@@ -122,38 +122,37 @@
 
         <div class="content container">
             {% if round.unavailable_problems %}
-                <p class="emphase">Unavailable problems:</p>
+                <p class="emphase">Problème(s) bloqué(s):</p>
 
                 {% if round.unavailable_problems.presented_this_pf %}
                     {% for problem in round.unavailable_problems.presented_this_pf %}
-                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this fight</li>
+                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a déjà été présenté dans ce Physics Fight</li>
                     {% endfor %}
                 {% endif %}
 
                 {% if round.unavailable_problems.eternal_rejection %}
                     {% for problem in round.unavailable_problems.eternal_rejection %}
-                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been eternally rejected</li>
+                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été rejeté de façon permanente</li>
                     {% endfor %}
                 {% endif %}
 
                 {% if round.unavailable_problems.presented_by_reporter %}
                     {% for problem in round.unavailable_problems.presented_by_reporter %}
-                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
+                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été présenté plus tôt par le Reporter</li>
                     {% endfor %}
                 {% endif %}
 
                 {% if round.unavailable_problems.opposed_by_opponent %}
                     {% for problem in round.unavailable_problems.opposed_by_opponent %}
-                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
+                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été opposé plus tôt par l'Opponent</li>
                     {% endfor %}
                 {% endif %}
 
                 {% if round.unavailable_problems.presented_by_opponent %}
                     {% for problem in round.unavailable_problems.presented_by_opponent %}
-                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
+                        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été présenté plus tôt par l'Opponent</li>
                     {% endfor %}
                 {% endif %}
-
 
             {% endif %}
         </div>
@@ -163,7 +162,7 @@
         </div>
 
         <div class="content container">
-            <p>This round has not started yet !</p>
+            <p>Cette ronde n'est pas encore démarrée !</p>
         </div>
     {% endif %}
 

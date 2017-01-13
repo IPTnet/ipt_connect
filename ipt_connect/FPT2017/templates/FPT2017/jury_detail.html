@@ -8,9 +8,9 @@
 
     <div class="content container">
         {% if jury.team %}
-            <li class="emphase">Jury member affiliated with {{jury.team.name}}</li>
+            <li class="emphase">Juré associé à l'équipe {{jury.team.name}}</li>
         {% else %}
-            <li class="emphase">External jury member</li>
+            <li class="emphase">Juré externe</li>
         {% endif %}
 
     </div>
@@ -19,10 +19,10 @@
 
         <table class="sortable">
             <tr>
-                <th class="td-center">Problems judged</th>
-                <th class="td-center">Grade Reporter</th>
-                <th class="td-center">Grade Opponent</th>
-                <th class="td-center">Grade Reviewer</th>
+                <th class="td-center">Problèmes jugés</th>
+                <th class="td-center">Note au Reporter</th>
+                <th class="td-center">Noter à l'Opponent</th>
+                <th class="td-center">Note au Reviewer</th>
             </tr>
             {% for grade in grades %}
                 <tr>

@@ -18,7 +18,6 @@
                 <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=1 %}">Physics Fight 1</a></th>
                 <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=2 %}">Physics Fight 2</a></th>
                 <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=3 %}">Physics Fight 3</a></th>
-                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=4 %}">Physics Fight 4</a></th>
             </tr>
 
             {% for thisroom in orderedroundsperroom %}
@@ -40,38 +39,5 @@
     </div>
 
 
-    <div class="content container">
-        <table class="table-borders">
-            <tr>
-                <th class="th-center"><a href="{% url 'FPT2017:physics_fight_detail' pfid=5 %}">Final</a></th>
-            </tr>
-
-            <tr>
-                <td class="td-border">
-                    <table>
-                        {% for round in finalrounds %}
-                        <td class="td-center"><a href="{% url 'FPT2017:finalround_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
-                        {% endfor %}
-                    </table>
-                </td>
-
-            </tr>
-
-        </table>
-
-        <table class="table-borders">
-            <tr>
-                {% for ranking in finalranking%}
-                <th class="th-center">{{ranking.0}}</th>
-                {% endfor %}
-            </tr>
-
-            <tr>
-                {% for ranking in finalranking%}
-                <td class="td-center">{{ranking.1|floatformat:2}}</td>
-                {% endfor %}
-            </tr>
-        </table>
-    </div>
-
+   
 {% endblock content %}

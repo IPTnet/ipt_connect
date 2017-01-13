@@ -17,7 +17,7 @@
             </b></p>
         {% for participant in participants %}
             <div>
-                <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} gathered {{participant.points|floatformat:2}} points.</a></li>
+                <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a apporté {{participant.points|floatformat:2}} points.</a></li>
             </div>
         {% endfor %}
 
@@ -34,9 +34,9 @@
     <div class="content container">
         <table class="sortable">
             <tr>
-                <th class="td-center">Problems presented</th>
-                <th class="td-center">Grade</th>
-                <th class="td-center">Role</th>
+                <th class="td-center">Problèmes présentés</th>
+                <th class="td-center">Note</th>
+                <th class="td-center">Rôle</th>
             </tr>
             {% for round in allrounds %}
                 <tr>
@@ -52,7 +52,7 @@
 
     <div class="content container">
         {% if penalties %}
-        <p class="emphase"><b>Penalties:</b></p>
+        <p class="emphase"><b>Pénalités:</b></p>
             {% for p in penalties %}
 
             <li>Multiplicative coefficient of {{p.1}} for the Report in {{p.0|ordinal}} Physics Fight.</li>
