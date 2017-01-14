@@ -1,13 +1,12 @@
-{% extends 'FPT2017/head.html' %} {% load humanize %} {% block content %} {% for round in round %} {% if finished %}
+{% extends 'FPT2017/head.html' %}
+{% load humanize %}
+{% block content %}
+{% for round in round %}
 <div class="section">
     <h1>{{round}}</h1>
 </div>
 
-<div class="content container">
-    <p class="emphase">Problème présenté: <a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
-</div>
-
-
+{% if started %}
 <div class="content container">
     <table>
         <tr>
@@ -17,16 +16,60 @@
             <th class="th-center">Reviewer</th>
         </tr>
 
+        {% if finished %}
         <tr>
             <td class="td-center"></td>
-            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reporter.team.name %}">{{round.reporter.team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
-            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.opponent.team.name %}">{{round.opponent.team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
-            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reviewer.team.name %}">{{round.reviewer.team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
         </tr>
+
+        {% else %}
+        <tr>
+            <td class="td-center"></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
+        </tr>
+        {% endif %}
+
 
     </table>
 </div>
 
+<div class="content container">
+    <h2>Problème(s) bloqué(s):</h2>
+
+    {% if round.unavailable_problems.number_of_unavailable_problems > 0 %}
+    {% if round.unavailable_problems.presented_this_pf %}
+    {% for problem in round.unavailable_problems.presented_this_pf %}
+    <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a déjà été présenté dans ce Physics Fight</li>
+    {% endfor %}
+    {% endif %}
+    {% if round.unavailable_problems.eternal_rejection %} {% for problem in round.unavailable_problems.eternal_rejection %}
+    <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été rejeté de façon permanente</li>
+    {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_reporter %} {% for problem in round.unavailable_problems.presented_by_reporter %}
+    <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été présenté plus tôt par le Reporter</li>
+    {% endfor %} {% endif %} {% if round.unavailable_problems.opposed_by_opponent %} {% for problem in round.unavailable_problems.opposed_by_opponent %}
+    <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été opposé plus tôt par l'Opponent</li>
+    {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_opponent %} {% for problem in round.unavailable_problems.presented_by_opponent %}
+    <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été présenté plus tôt par l'Opponent</li>
+    {% endfor %} {% endif %}
+    {% else %}
+    <p>Pas de problème bloqué.</p>
+     {% endif %}
+
+{% endif %}
+
+
+
+
+{% if finished %}
+
+<div class="content container">
+    <h2>Problème présenté:</h2>
+        <a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a>
+</div>
 
 <div class="content container">
     <table>
@@ -90,17 +133,17 @@
     </div>
 
 </div>
-<!-- {% endif %} -->
+{% endif %}
 
-<div class="content container">
+<!-- <div class="content container">
     <h2>Statut et problèmes</h2> {% if started %} {% if not finished %}
 
     <div class="content container">
         <table>
             <tr>
-                <th class="td-center">Reporter</th>
-                <th class="td-center">Opponent</th>
-                <th class="td-center">Reviewer</th>
+                <th class="th-center">Reporter</th>
+                <th class="th-center">Opponent</th>
+                <th class="th-center">Reviewer</th>
             </tr>
 
             <tr>
@@ -113,30 +156,14 @@
     </div>
     {% endif %}
 
-    <div class="content container">
-        {% if round.unavailable_problems.number_of_unavailable_problems > 0 %}
-        <h3>Problème(s) bloqué(s):</h3>
-        {% if round.unavailable_problems.presented_this_pf %}
-        {% for problem in round.unavailable_problems.presented_this_pf %}
-        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a déjà été présenté dans ce Physics Fight</li>
-        {% endfor %}
-        {% endif %}
-        {% if round.unavailable_problems.eternal_rejection %} {% for problem in round.unavailable_problems.eternal_rejection %}
-        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été rejeté de façon permanente</li>
-        {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_reporter %} {% for problem in round.unavailable_problems.presented_by_reporter %}
-        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été présenté plus tôt par le Reporter</li>
-        {% endfor %} {% endif %} {% if round.unavailable_problems.opposed_by_opponent %} {% for problem in round.unavailable_problems.opposed_by_opponent %}
-        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été opposé plus tôt par l'Opponent</li>
-        {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_opponent %} {% for problem in round.unavailable_problems.presented_by_opponent %}
-        <li><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> a été présenté plus tôt par l'Opponent</li>
-        {% endfor %} {% endif %}
-        {% else %}
-        <p>Pas de problème bloqué.</p>
-         {% endif %} {% else %}
+
+    {% else %}
         <div class="content container">
             <p>Cette ronde n'est pas encore démarrée !</p>
         </div>
     </div>
 </div>
 
-{% endif %} {% endfor %} {% endblock content %}
+{% endif %} -->
+{% endfor %}
+{% endblock content %}
