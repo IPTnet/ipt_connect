@@ -790,6 +790,14 @@ class EternalRejection(models.Model):
 
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
+def update_points_post_save(sender, instance, **kwargs):
+	update_points(sender, instance, **kwargs)
+
+@receiver(post_delete, sender=Round, dispatch_uid="update_participant_team_points")
+def update_points_post_delete(sender, instance, **kwargs):
+	update_points(sender, instance, **kwargs)
+
+
 def update_points(sender, instance, **kwargs):
 	print "YOLOOOO !!!"
 	instance.reporter.points_so_far = instance.reporter.points(verbose=0)
