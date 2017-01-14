@@ -9,6 +9,16 @@ from string import replace
 import sys
 from django.utils.deconstruct import deconstructible
 
+# Parameters
+npf = 3
+with_final_pf = False
+reject_malus = 0.4
+npfreject_max = 1 # if more than nrejectmax tactical rejections during a fight, remove reject_malus to the coefficient
+netreject_max = 1
+
+# Useful static variables
+pfs = [i+1 for i in range(npf)]
+
 
 def mean(vec):
 	return float(sum(vec)) / len(vec)
@@ -112,7 +122,7 @@ class Participant(models.Model):
 				if verbose:
 					print "I consider all the Rounds played so far."
 			else:
-				assert pfnumber in [1, 2, 3], "Your pfnumber is %i. This is odd." % (pfnumber)
+				assert pfnumber in pfs, "Your pfnumber is %i. This is odd." % (pfnumber)
 				myrounds = list(set([jurygrade.round for jurygrade in jurygrades if jurygrade.round.pf_number == pfnumber]))
 				if verbose:
 					print "I consider only the Rounds from Physics Fight %i" % int(pfnumber)
@@ -147,40 +157,16 @@ class Participant(models.Model):
 			if verbose:
 				print "In %s, I was the %s" % (myround, role)
 
-			# Rule for grade rejection: divide the number of jury by 4.
-			# Round the result (if result is X.5, round up to X+1)
-			# If the result is even, reject result/2 lowest and result/2 highest marks
-			# If the result is odd, reject result/2 + 0.5 lowest and result/2 - 0.5 highest marks.
-			# Example : 7 jury members --> /4 = 1.75 --> round = 2 --> reject 1 highest and 1 lowest marks
+			####### For FPT 2017 #######
+			ngrades = len(roundgrades)
 
+			# Remove lowest grade
+			roundgrades.pop(0)
 
-			if len(roundgrades) in [5, 6]:
-				nreject = 1
-			elif len(roundgrades) in [7, 8]:
-				nreject = 2
-			else:
-				nreject = round(len(roundgrades) / 4.0)
-
-			if round(nreject / 2.0) == nreject / 2.0:
-				nlow = int(nreject / 2.0)
-				nhigh = int(nlow)
-			else:
-				nlow = int(nreject / 2.0 + 0.5)
-				nhigh = int(nreject / 2.0 - 0.5)
-
-			if verbose:
-				print "\t%i Jury Members graded me" % len(roundgrades)
-				print "\t%i lowest mark(s) and %i highest mark(s) are discarded"  % (nlow, nhigh)
-
-			i = 0
-			while i < nhigh:
+			# If there are 7 or more jury members, remove highest grade too
+			if ngrades >= 7 :
 				roundgrades.pop(-1)
-				i += 1
 
-			i = 0
-			while i < nlow:
-				roundgrades.pop(0)
-				i += 1
 
 			average_grades.append({"value": mean(roundgrades), "round":myround, "role":role})
 			if verbose:
@@ -349,19 +335,17 @@ class Team(models.Model):
 		:return: Return a list with the coefficient for every round
 		"""
 
-		pfs = [1, 2, 3]
 		eternalrejections = EternalRejection.objects.filter(round__reporter__team=self)
 
 		beforetactical = []
 		netrej = 0
 		for pf in pfs:
 			netrej += len(eternalrejections.filter(round__pf_number=pf))
-			beforetactical.append(3.0 - 0.2*max(0, (netrej-1)))
+			beforetactical.append(3.0 - reject_malus*max(0, (netrej-netreject_max)))
 
 
 		# get all the tactical rejections
 		rejections = TacticalRejection.objects.filter(round__reporter__team=self)
-
 
 
 		prescoeffs = []
@@ -372,17 +356,19 @@ class Team(models.Model):
 			pfrejections = [rejection for rejection in rejections if rejection.round.pf_number == pf]
 			if verbose:
 				print "%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)
-			if len(pfrejections) > 3:
-				npenalities += len(pfrejections) - 3
+			if len(pfrejections) > npfreject_max:
+				npenalities += len(pfrejections) - npfreject_max
 			if verbose:
 				if npenalities > 0:
-					print "Penality of %.1f points on the Reporter Coefficient" %  float(0.2*npenalities)
+					print "Penality of %.1f points on the Reporter Coefficient" %  float(reject_malus*npenalities)
 				else:
 					print "No penality"
-			prescoeffs.append(beforetactical[ind] - 0.2 * npenalities)
+			prescoeffs.append(beforetactical[ind] - reject_malus * npenalities)
 
 		# add the coeff for the final, 3.0 by default
-		prescoeffs.append(3.0)
+		if with_final_pf:
+			prescoeffs.append(3.0)
+
 		return prescoeffs
 
 	# functions
@@ -397,10 +383,10 @@ class Team(models.Model):
 
 		# get all the rounds where my participants are involved in
 		rounds = Round.objects.filter(reporter__team=self) | Round.objects.filter(opponent__team=self) | Round.objects.filter(reviewer__team=self)
-		mypfnumbers = [1, 2, 3]
+		# mypfnumbers = [1, 2, 3]
 
 		bonuspoints = []
-		for mypfnumber in mypfnumbers:
+		for mypfnumber in pfs:
 			pfrounds = rounds.filter(pf_number=mypfnumber) # for a given round, I am always in the same room
 
 			# refine to match user params
