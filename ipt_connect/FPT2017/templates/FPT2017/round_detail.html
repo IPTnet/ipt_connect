@@ -16,12 +16,23 @@
             <th class="th-center">Reviewer</th>
         </tr>
 
+        {% if finished %}
         <tr>
             <td class="td-center"></td>
-            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reporter.team.name %}">{{round.reporter.team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
-            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.opponent.team.name %}">{{round.opponent.team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
-            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reviewer.team.name %}">{{round.reviewer.team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a> -- <a href="{% url 'FPT2017:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
         </tr>
+
+        {% else %}
+        <tr>
+            <td class="td-center"></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
+            <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
+        </tr>
+        {% endif %}
+
 
     </table>
 </div>
