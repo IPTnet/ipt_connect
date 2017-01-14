@@ -8,7 +8,7 @@ from django.utils.encoding import iri_to_uri
 from string import replace
 import sys
 from django.utils.deconstruct import deconstructible
-from django.db.models.signals import post_save
+from django.db.models.signals import post_save, post_delete
 from django.dispatch import receiver
 
 # Parameters
@@ -790,34 +790,47 @@ class EternalRejection(models.Model):
 
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
-def update_points_post_save(sender, instance, **kwargs):
-	update_points(sender, instance, **kwargs)
-
-@receiver(post_delete, sender=Round, dispatch_uid="update_participant_team_points")
-def update_points_post_delete(sender, instance, **kwargs):
-	update_points(sender, instance, **kwargs)
-
-
 def update_points(sender, instance, **kwargs):
 	print "YOLOOOO !!!"
-	instance.reporter.points_so_far = instance.reporter.points(verbose=0)
-	instance.reporter.save(update_fields=["points_so_far"])
+	teams = Team.objects.all()
+	for t in teams:
+		t.points_so_far = t.points()
+		t.save(update_fields=["points_so_far"])
 
-	instance.opponent.points_so_far = instance.opponent.points(verbose=0)
-	instance.opponent.save(update_fields=["points_so_far"])
+	participants = Team.objects.all()
+	for p in participants:
+		p.points_so_far = p.points()
+		p.save(update_fields=["points_so_far"])
 
-	instance.reviewer.points_so_far = instance.reviewer.points(verbose=0)
-	instance.reviewer.save(update_fields=["points_so_far"])
 
-	if instance.reporter_2 is not None :
-		instance.reporter_2.points_so_far = instance.reporter_2.points(verbose=0)
-		instance.reporter_2.save(update_fields=["points_so_far"])
+	# if instance.reporter is not None :
+	# 	instance.reporter.points_so_far = instance.reporter.points(verbose=0)
+	# 	instance.reporter.save(update_fields=["points_so_far"])
+	#
+	# if instance.opponent is not None :
+	# 	instance.opponent.points_so_far = instance.opponent.points(verbose=0)
+	# 	instance.opponent.save(update_fields=["points_so_far"])
+	#
+	# if instance.reporter_2 is not None :
+	# instance.reviewer.points_so_far = instance.reviewer.points(verbose=0)
+	# instance.reviewer.save(update_fields=["points_so_far"])
+	#
+	# if instance.reporter_2 is not None :
+	# 	instance.reporter_2.points_so_far = instance.reporter_2.points(verbose=0)
+	# 	instance.reporter_2.save(update_fields=["points_so_far"])
+	#
+	# instance.reporter_team.points_so_far = instance.reporter_team.points()
+	# instance.reporter_team.save(update_fields=["points_so_far"])
+	#
+	# instance.opponent_team.points_so_far = instance.opponent_team.points()
+	# instance.opponent_team.save(update_fields=["points_so_far"])
+	#
+	# instance.reviewer_team.points_so_far = instance.reviewer_team.points()
+	# instance.reviewer_team.save(update_fields=["points_so_far"])
 
-	instance.reporter_team.points_so_far = instance.reporter_team.points()
-	instance.reporter_team.save(update_fields=["points_so_far"])
-
-	instance.opponent_team.points_so_far = instance.opponent_team.points()
-	instance.opponent_team.save(update_fields=["points_so_far"])
-
-	instance.reviewer_team.points_so_far = instance.reviewer_team.points()
-	instance.reviewer_team.save(update_fields=["points_so_far"])
+# def update_points_post_save(sender, instance, **kwargs):
+# 	update_points(sender, instance, **kwargs)
+#
+# @receiver(post_delete, sender=Round, dispatch_uid="update_participant_team_points")
+# def update_points_post_delete(sender, instance, **kwargs):
+	# update_points(sender, instance, **kwargs)
