@@ -5,31 +5,44 @@ from models import *
 from django import forms
 from django.forms import widgets
 
+
 class JuryGradeInline(admin.TabularInline):
 	model = JuryGrade
 	extra = 0
+
 
 class TacticalRejectionInline(admin.TabularInline):
 	model = TacticalRejection
 	extra = 0
 
+
 class EternalRejectionInline(admin.TabularInline):
 	model = EternalRejection
 	extra = 0
 
+
 class Roundadmin(admin.ModelAdmin):
 
-	list_display = ('pf_number','round_number','room')
-	list_filter = ('pf_number','round_number','room')
+	list_display = ('pf_number', 'round_number', 'room')
+	list_filter = ('pf_number', 'round_number', 'room')
 	fieldsets = [
-	('General Information', {'fields': [('pf_number', "round_number", "room"), ("reporter_team", "opponent_team", "reviewer_team")]}),
-	(None, {'fields': [("reporter"), ('opponent'), ('reviewer'), 'problem_presented']})
+	('General Information', {'fields': [
+	 ('pf_number', "round_number", "room"), ("reporter_team", "opponent_team", "reviewer_team")]}),
+	(None, {'fields': [("reporter"), ('opponent'),
+	 ('reviewer'), 'problem_presented']})
 	]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
 
+	def save_model(self, request, obj, form, change):
+		pass  # don't actually save the parent instance
+
+	def save_formset(self, request, form, formset, change):
+		formset.save() # this will save the children
+		form.instance.save() # form.instance is the parent
+
 	class Media:
 		js = ('admin/js/jquery.js','admin/js/participant_fill.js',)
-	#TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
+	# TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
 
 
 class TeamAdmin(admin.ModelAdmin):

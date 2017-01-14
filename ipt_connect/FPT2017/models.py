@@ -8,17 +8,19 @@ from django.utils.encoding import iri_to_uri
 from string import replace
 import sys
 from django.utils.deconstruct import deconstructible
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 # Parameters
-npf = 3
-with_final_pf = False
-reject_malus = 0.4
-npfreject_max = 1 # if more than nrejectmax tactical rejections during a fight, remove reject_malus to the coefficient
-netreject_max = 1
+npf = 3					# Number of Physics fights
+with_final_pf = False	# Is there a Final Fight ?
+reject_malus = 0.4		# Malus for too many rejections
+npfreject_max = 1		# Maximum number of tactical rejection (per fight)
+netreject_max = 1		# Maximum number of eternal rejection
 
 # Useful static variables
 pfs = [i+1 for i in range(npf)]
-
+npf_tot = npf + int(with_final_pf)
 
 def mean(vec):
 	return float(sum(vec)) / len(vec)
@@ -76,6 +78,8 @@ class Participant(models.Model):
 	#diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	#shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
 	remark = models.TextField(blank=True,verbose_name='Remarques')
+
+	points_so_far = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, editable=False)
 
 
 	# functions
@@ -158,6 +162,7 @@ class Participant(models.Model):
 				print "In %s, I was the %s" % (myround, role)
 
 			####### For FPT 2017 #######
+			# print roundgrades
 			ngrades = len(roundgrades)
 
 			# Remove lowest grade
@@ -234,6 +239,11 @@ class Participant(models.Model):
 					print msg
 
 		return participants, participants.index(self)+1
+
+	@classmethod
+	def fast_team_ranking(cls, team):
+		participants = Participant.objects.filter(role='TM', team=team) | Participant.objects.filter(role='TC', team=team)
+		return sorted(participants, key=lambda x : x.points_so_far)[::-1]
 
 
 
@@ -321,6 +331,9 @@ class Team(models.Model):
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
 	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_FPT2017',verbose_name="Référent")
+	points_so_far = models.DecimalField(max_digits=10, decimal_places=2, default=0.00, editable=False)
+
+
 	def __unicode__(self):
 
 		return self.name
@@ -554,6 +567,14 @@ class Team(models.Model):
 
 		return teams, teams.index(self)+1
 
+	@classmethod
+	def fast_ranking(cls):
+		teams = cls.objects.all()
+		teams = sorted(teams, key=lambda x : x.points_so_far)[::-1]
+		return teams
+
+
+
 	def problems(self, verbose=False, currentround=None):
 		"""
 		Get all the problems that I cannot present(already presented or eternal rejection) and cannot oppose(already opposed)
@@ -631,7 +652,7 @@ class Jury(models.Model):
 class Round(models.Model):
 
 	pf_number = models.IntegerField(
-			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(5))),
+			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(npf_tot))),
 			default=None
 			)
 	round_number = models.IntegerField(
@@ -713,6 +734,7 @@ class Round(models.Model):
 		unavailable_problems["presented_by_reporter"] = [p for p in presented_by_reporter if p != None]
 		unavailable_problems["opposed_by_opponent"] = [p for p in opposed_by_opponent if p != None]
 		unavailable_problems["presented_by_opponent"] = [p for p in presented_by_opponent if p != None]
+		unavailable_problems["number_of_unavailable_problems"] = sum([len(unavailable_problems[k]) for k in unavailable_problems.keys()])
 
 		return unavailable_problems
 
@@ -764,3 +786,30 @@ class EternalRejection(models.Model):
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem
+
+
+# method for updating Teams and Participants when rounds are saved
+@receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
+def update_points(sender, instance, **kwargs):
+	print "YOLOOOO !!!"
+	instance.reporter.points_so_far = instance.reporter.points(verbose=0)
+	instance.reporter.save(update_fields=["points_so_far"])
+
+	instance.opponent.points_so_far = instance.opponent.points(verbose=0)
+	instance.opponent.save(update_fields=["points_so_far"])
+
+	instance.reviewer.points_so_far = instance.reviewer.points(verbose=0)
+	instance.reviewer.save(update_fields=["points_so_far"])
+
+	if instance.reporter_2 is not None :
+		instance.reporter_2.points_so_far = instance.reporter_2.points(verbose=0)
+		instance.reporter_2.save(update_fields=["points_so_far"])
+
+	instance.reporter_team.points_so_far = instance.reporter_team.points()
+	instance.reporter_team.save(update_fields=["points_so_far"])
+
+	instance.opponent_team.points_so_far = instance.opponent_team.points()
+	instance.opponent_team.save(update_fields=["points_so_far"])
+
+	instance.reviewer_team.points_so_far = instance.reviewer_team.points()
+	instance.reviewer_team.save(update_fields=["points_so_far"])

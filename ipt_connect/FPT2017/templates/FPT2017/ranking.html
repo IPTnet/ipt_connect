@@ -20,7 +20,7 @@
                 {% if team.emphase %}
                 <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
                 <td class="td-center"><p class="emphase"><a href="{% url 'FPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
-                <td class="td-center"><p class="emphase">{{team.points}}</p></td>
+                <td class="td-center"><p class="emphase">{{team.points_so_far}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
                         <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight en cours</p>
@@ -46,6 +46,6 @@
         {% endfor %}
 
         </table>
-        <p class="emphase">The first three teams are qualified for the Final Physics Fight</p>
+        <p class="emphase">L'équipe en tête du classement à l'issue de la sélection française sera qualifiée pour l'International Physicists' Tournament.</p>
     </div>
 {% endblock content %}

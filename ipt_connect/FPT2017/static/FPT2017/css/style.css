@@ -2,6 +2,10 @@ h1, h2, h3, h4 {
     font-family: 'Bitter', cursive;
 }
 
+h3 {
+    font-size: 12pt
+}
+
 body {
     background: #EFEFEF;
     margin: 0 !important;
@@ -113,10 +117,11 @@ table {
 	border-color: black;*/
 }
 
-th {
+.th {
     text-align: left;
     padding: 8px;
-    /*color: #EFEFEF;*/
+    color: #EFEFEF;
+    font-weight: 300;
 }
 
 td {
