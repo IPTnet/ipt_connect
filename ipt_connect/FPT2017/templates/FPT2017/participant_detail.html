@@ -7,7 +7,7 @@
     </div>
 
     <div class="content container">
-        <li>Membre de l'équipe {{participant.team.name}}</li>
+        <li>Membre de l'équipe <a href="{% url 'FPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
 
     </div>
 
