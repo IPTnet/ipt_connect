@@ -481,7 +481,7 @@ class Team(models.Model):
 		return bonuspoints
 
 
-	def points(self, pfnumber=None, rounds=None, verbose=False, bonuspoints=True):
+	def points(self, pfnumber=None, rounds=None, verbose=False, bonuspoints=False):
 		"""
 		I get all the participants that are in my team and sum their average grades, multiplied by their roles.
 		If all the fights from a round are played, I add the corresponding bonus points
