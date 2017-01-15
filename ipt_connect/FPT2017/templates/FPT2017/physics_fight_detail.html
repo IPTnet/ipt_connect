@@ -1,7 +1,7 @@
 {% extends 'FPT2017/head.html' %} {% load humanize %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
 
 <div class="section">
-    <h1>Physics Fight {{roomgrades.0.2.pf}} | Room {{roundsgrades.2.room}}</h1>
+    <h1>Physics Fight {{roomgrades.0.2.pf}} | Salle {{roundsgrades.2.room}}</h1>
 </div>
 
 
@@ -17,7 +17,7 @@
             {% endfor %}
         </tr>
         <tr>
-            <th class="th">Jury Member</th>
+            <th class="th">Jurés</th>
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th>
                 <table>
@@ -64,18 +64,18 @@
 </div>
 
 <div class="content container">
-    <p class="comment">*La moins bonne note n'est pas prise en compte; et s'il y a plus de sept jurés, la plus haute note non plus. Ici les coefficients multiplicatifs liés aux rôles (3,2 et 1) ne sont pas pris en compte.</p>
+    <p class="comment">*La moins bonne note n'est pas prise en compte; et s'il y a sept jurés ou plus, la plus haute note non plus. Ici les coefficients multiplicatifs liés aux rôles (3,2 et 1) ne sont pas pris en compte.</p>
 </div>
 
 {% else %}
 <div class="content container">
-    <p class="emphase">No grades registered yet !</p>
+    <p class="emphase">Aucune note enregistrée pour le moment !</p>
 </div>
 
 {% endif %} {% endfor %} {% else %}
 
 <div class="content container">
-    <p class="emphase">No Rounds played yet !</p>
+    <p class="emphase">Aucun Round joué pour le moment !</p>
 </div>
 
 {% endif %} {% endblock content %}
