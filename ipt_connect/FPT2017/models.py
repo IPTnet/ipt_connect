@@ -671,7 +671,7 @@ class Round(models.Model):
 	submitted_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
 
 	def __unicode__(self):
-		return "Fight %i | Round %i | Room %s" % (self.pf_number, self.round_number, self.room.name)
+		return "Fight %i | Round %i | Salle %s" % (self.pf_number, self.round_number, self.room.name)
 
 	def ident(self):
 		return "%s%s%s" %(self.pf_number, self.round_number, self.room.ident())
