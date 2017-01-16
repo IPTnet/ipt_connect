@@ -797,7 +797,7 @@ def update_points(sender, instance, **kwargs):
 		t.points_so_far = t.points()
 		t.save(update_fields=["points_so_far"])
 
-	participants = Team.objects.all()
+	participants = Participant.objects.all()
 	for p in participants:
 		p.points_so_far = p.points()
 		p.save(update_fields=["points_so_far"])
