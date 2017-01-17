@@ -20,7 +20,7 @@
                 {% if team.emphase %}
                 <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
                 <td class="td-center"><p class="emphase"><a href="{% url 'FPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
-                <td class="td-center"><p class="emphase">{{team.points_so_far}}</p></td>
+                <td class="td-center"><p class="emphase">{{team.points_so_far|floatformat:2}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
                         <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight en cours</p>
@@ -31,7 +31,7 @@
                 {% else %}
                 <td class="td-center">{{team.rank|ordinal}}</td>
                 <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></td>
-                <td class="td-center">{{team.points}}</td>
+                <td class="td-center">{{team.points_so_far|floatformat:2}}</td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
                         <b>{{team.currentpf|ordinal}}</b> fight en cours
