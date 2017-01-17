@@ -13,7 +13,7 @@
     <h2>Participants:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a une moyenne de {{participant.points|floatformat:2}} (sans coefficients).</a></li>
+        <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a rapporté {{participant.points|floatformat:2}} points (sans coefficients).</a></li>
     </div>
     {% endfor %}
 
