@@ -13,8 +13,8 @@ def home(request):
 
 	return HttpResponse(text)
 
-cache_duration_short = 1 #60 * 1
-cache_duration = 1#60 * 1# 60 * 60
+cache_duration_short = 60 * 1
+cache_duration = 60 *  60 * 60
 
 
 @cache_page(cache_duration)
@@ -33,6 +33,19 @@ def participants_overview(request):
 	participants = sorted(participants, key=lambda participant: participant.avggrade)[::-1]
 
 	return render(request, 'FPT2017/participants_overview.html', {'participants': participants})
+	
+@cache_page(cache_duration)
+def participants_all(request):
+	participants = Participant.objects.all().order_by('team','role','name')
+
+	return render(request, 'FPT2017/participants_all.html', {'participants': participants})
+	
+@cache_page(cache_duration)
+def participants_export(request):
+	participants = Participant.objects.all().order_by('team','role','name')
+
+	return render(request, 'FPT2017/listing_participants.html', {'participants': participants})
+	
 
 @cache_page(cache_duration)
 def participant_detail(request, pk):
