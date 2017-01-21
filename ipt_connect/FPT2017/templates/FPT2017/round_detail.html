@@ -1,7 +1,7 @@
 {% extends 'FPT2017/head.html' %}
 {% load humanize %}
 {% block content %}
-{% for round in round %}
+{# for round in round #}
 <div class="section">
     <h1>{{round}}</h1>
 </div>
@@ -58,7 +58,7 @@
     {% else %}
     <p>Pas de problème bloqué.</p>
      {% endif %}
-
+</div>
 {% endif %}
 
 
@@ -67,8 +67,8 @@
 {% if finished %}
 
 <div class="content container">
-    <h2>Problème présenté:</h2>
-        <a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a>
+    <h2>Problème présenté: <a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a> </h2>
+
 </div>
 
 <div class="content container">
@@ -165,5 +165,5 @@
 </div>
 
 {% endif %} -->
-{% endfor %}
+{# endfor #}
 {% endblock content %}

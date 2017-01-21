@@ -6,6 +6,10 @@ h3 {
     font-size: 12pt
 }
 
+h2 {
+    padding-top: 10px
+}
+
 body {
     background: #EFEFEF;
     margin: 0 !important;
