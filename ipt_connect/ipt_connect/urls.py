@@ -21,7 +21,7 @@ admin.site.site_header = 'IPT administration'
 from django.conf import settings
 from django.conf.urls import include, url
 
-if settings.DEBUG:
+if settings.DEBUG_TOOLBAR:
     import debug_toolbar
     urlpatterns += [
         url(r'^__debug__/', include(debug_toolbar.urls)),
