@@ -5,7 +5,7 @@
 </div>
 
 <div class="content container">
-    <h1> {{team.ranking.1|ordinal}} place, with {{team.points|floatformat:2}} points.</h1>
+    <h1> {{team.rank|ordinal}} place, with {{team.total_points|floatformat:2}} points.</h1>
 </div>
 
 
@@ -13,7 +13,7 @@
     <h2>Participants:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a rapporté {{participant.points|floatformat:2}} points (sans coefficients).</a></li>
+        <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a rapporté {{participant.total_points|floatformat:2}} points.</a></li>
     </div>
     {% endfor %}
 

@@ -33,12 +33,28 @@ class Roundadmin(admin.ModelAdmin):
 	]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
 
+	# Saving the round triggers the computation of the scores, so we need to save the
+	# JuryGrade's first in order to use up-to-date grades. The soution used here is to
+	# use the save_related function, which will first save the inline models, and then
+	# call round.save() in there
 	def save_model(self, request, obj, form, change):
 		pass  # don't actually save the parent instance
 
-	def save_formset(self, request, form, formset, change):
-		formset.save() # this will save the children
-		form.instance.save() # form.instance is the parent
+	def save_related(self, request, form, formsets, change):
+		# first save the inlines
+		for formset in formsets:
+			self.save_formset(request, form, formset, change=change)
+		# the save the round once, triggerring the update_scores methods
+		form.instance.save()
+
+	# def save_formset(self, request, form, formset, change):
+	# 	# print self
+	# 	# print request
+	# 	# print form
+	# 	# print formset
+	# 	# print change
+	# 	formset.save() # this will save the children (the JuryGrade)
+	# 	form.instance.save() # form.instance is the parent (ie the Round)
 
 	class Media:
 		js = ('admin/js/jquery.js','admin/js/participant_fill.js',)

@@ -21,8 +21,7 @@ cache_duration = 1#60 * 1# 60 * 60
 def participants_overview(request):
 	participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
 	for participant in participants:
-		# participant.allpoints = participant.points()
-		participant.allpoints = participant.points_so_far
+		participant.allpoints = participant.tot_score_as_reporter + participant.tot_score_as_opponent + participant.tot_score_as_reviewer
 		try:
 			participant.avggrade = participant.allpoints / len(Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant))
 		except:
@@ -37,13 +36,23 @@ def participants_overview(request):
 @cache_page(cache_duration)
 def participant_detail(request, pk):
 	participant = Participant.objects.get(pk=pk)
-	average_grades=participant.compute_average_grades(verbose=False)
+	# average_grades=participant.compute_average_grades(verbose=False)
+	rounds = (Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)).order_by('pf_number', 'round_number')
+	average_grades = []
+	for round in rounds:
+		if round.reporter == participant :
+			average_grades.append({"value": round.score_reporter, "round":round, "role":"reporter"})
+		elif round.opponent == participant :
+			average_grades.append({"value": round.score_opponent, "round":round, "role":"opponent"})
+		else :
+			average_grades.append({"value": round.score_reviewer, "round":round, "role":"reviewer"})
+
 	return render(request, 'FPT2017/participant_detail.html', {'participant': participant, "average_grades": average_grades})
 
 @cache_page(cache_duration)
 def jurys_overview(request):
-	jurys = Jury.objects.all()
-	jurys = sorted(jurys, key=lambda participant: participant.name)
+	jurys = Jury.objects.all().order_by('name')
+	# jurys = sorted(jurys, key=lambda participant: participant.name)
 	for jury in jurys:
 		mygrades = JuryGrade.objects.filter(jury=jury)
 		if mygrades:
@@ -97,47 +106,78 @@ def teams_overview(request):
 
 @cache_page(cache_duration)
 def team_detail(request, team_name):
-	team = Team.objects.filter(name=team_name)
+	team = Team.objects.get(name=team_name)
+	ranking = Team.objects.order_by('-total_points')
+	for i,t in enumerate(ranking):
+		if t == team:
+			team.rank = i+1
+	# team.rank = ranking.index(team) + 1
 	participants = Participant.objects.filter(team=team).filter(role='TM') | Participant.objects.filter(team=team).filter(role='TC')
 	# rankedparticipants = participants[0].ranking(pool="team", verbose=False)[0]
-	rankedparticipants = Participant.fast_team_ranking(team)
+	rankedparticipants = participants.order_by('total_points')
 	teamleaders = Jury.objects.filter(team=team)
 	myreprounds = Round.objects.filter(reporter_team=team)
 	myopprounds = Round.objects.filter(opponent_team=team)
 	myrevrounds = Round.objects.filter(reviewer_team=team)
 	allrounds = []
-	for rounds in [myreprounds, myopprounds, myrevrounds]:
-		for round in rounds:
-			if len(JuryGrade.objects.filter(round=round)) > 0:
-				if round.reporter_team == team[0]:
-					round.myrole = "reporter"
-					round.mygrade = round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
-				if round.opponent_team == team[0]:
-					round.myrole = "opponent"
-					round.mygrade = round.opponent.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
-				if round.reviewer_team == team[0]:
-					round.myrole = 'reviewer'
-					round.mygrade = round.reviewer.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+	# for rounds in [myreprounds, myopprounds, myrevrounds]:
+	# 	for round in rounds:
+	# 		if len(JuryGrade.objects.filter(round=round)) > 0:
+	# 			if round.reporter_team == team[0]:
+	# 				round.myrole = "reporter"
+	# 				round.mygrade = round.score_reporter #round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+	# 			if round.opponent_team == team[0]:
+	# 				round.myrole = "opponent"
+	# 				round.mygrade = round.score_opponent #round.opponent.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+	# 			if round.reviewer_team == team[0]:
+	# 				round.myrole = 'reviewer'
+	# 				round.mygrade = round.score_reviewer #ound.reviewer.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+	#
+	# 			allrounds.append(round)
 
-				allrounds.append(round)
+	for round in myreprounds:
+		# if len(JuryGrade.objects.filter(round=round)) > 0:
+		if round.score_reporter > 0.:
+			round.myrole = "reporter"
+			round.mygrade = round.score_reporter
+			 #round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+			allrounds.append(round)
+	for round in myopprounds:
+		# if len(JuryGrade.objects.filter(round=round)) > 0:
+		if round.score_opponent > 0.:
+			round.myrole = "opponent"
+			round.mygrade = round.score_opponent
+			 #round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+			allrounds.append(round)
+	for round in myrevrounds:
+		# if len(JuryGrade.objects.filter(round=round)) > 0:
+		if round.score_reviewer > 0.:
+			round.myrole = "reporter"
+			round.mygrade = round.score_reviewer
+			 #round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
+			allrounds.append(round)
 
 	penalties=[]
-	for ind, p in enumerate([penalty for penalty in team[0].presentation_coefficients(verbose=False)]):
+	prescoeffs = team.presentation_coefficients(verbose=False)
+	for ind, p in enumerate(prescoeffs):
 		if p != 3.0:
 			penalties.append([ind+1, p])
-	return render(request, 'FPT2017/team_detail.html', {'team': team[0], 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties})
+	return render(request, 'FPT2017/team_detail.html', {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties})
 
 @cache_page(cache_duration)
 def problems_overview(request):
-	problems = Problem.objects.all()
-	problems = sorted(problems, key=lambda problem: int(problem.name.split('.')[0]))
+	problems = Problem.objects.all().order_by('name')
+	# problems = sorted(problems, key=lambda problem: int(problem.name.split('.')[0]))
 	rounds = Round.objects.all()
 	for problem in problems:
 		problem.npres = len(rounds.filter(problem_presented=problem))
-		meangrades = problem.status(verbose=False, meangradesonly=True)
-		problem.meangradrep = meangrades["report"]
-		problem.meangradopp = meangrades["opposition"]
-		problem.meangradrev = meangrades["review"]
+		# meangrades = problem.status(verbose=False, meangradesonly=True)
+		# problem.meangradrep = meangrades["report"]
+		# problem.meangradopp = meangrades["opposition"]
+		# problem.meangradrev = meangrades["review"]
+		problem.meangradrep = problem.mean_score_of_reporters
+		problem.meangradopp = problem.mean_score_of_opponents
+		problem.meangradrev = problem.mean_score_of_reviewers
 
 	return render(request, 'FPT2017/problems_overview.html', {'problems': problems})
 
@@ -152,18 +192,19 @@ def problem_detail(request, pk):
 def rounds(request):
 	rounds = Round.objects.all()
 	# pfs = [1, 2, 3]
-	rooms = Room.objects.all()
-	rooms = sorted(rooms, key=lambda room: room.name)
+	rooms = Room.objects.order_by('name')
+	# rooms = sorted(rooms, key=lambda room: room.name)
 	orderedroundsperroom=[]
 	for room in rooms:
 		thisroom = []
 		for pf in pfs:
-			thispf = []
-			myrounds = Round.objects.filter(pf_number=pf).filter(room=room)
-			myrounds = sorted(myrounds, key=lambda round: round.round_number)
-			for ind2, round in enumerate(myrounds):
-				thispf.append(round)
-			thisroom.append(thispf)
+			# thispf = []
+			# myrounds = Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number')
+			# myrounds = sorted(myrounds, key=lambda round: round.round_number)
+			# for round in myrounds:
+			# 	thispf.append(round)
+			# thisroom.append(thispf)
+			thisroom.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
 		orderedroundsperroom.append(thisroom)
 
 	if with_final_pf :
@@ -189,23 +230,27 @@ def rounds(request):
 
 @cache_page(cache_duration_short)
 def round_detail(request, pk):
-	round = Round.objects.filter(pk=pk)
-	thisround = round[0]
-	jurygrades = JuryGrade.objects.filter(round=round)
-	jurygrades = sorted(jurygrades, key=lambda jurygrade: jurygrade.jury.name)
+	round = Round.objects.get(pk=pk)
+	# thisround = round[0]
+	jurygrades = JuryGrade.objects.filter(round=round).order_by('jury__name')
+	# jurygrades = sorted(jurygrades, key=lambda jurygrade: jurygrade.jury.name)
 	meangrades = []
 
 	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
-	if None in [thisround.reporter_team, thisround.opponent_team, thisround.reviewer_team]:
+	if None in [round.reporter_team, round.opponent_team, round.reviewer_team]:
 		started = False
 	else:
 		started = True
 
 	# participants mean grades. If the fight is finished, then at least some jurygrades must exists
 	if len(jurygrades) != 0:
-		meangrades.append(thisround.reporter.compute_average_grades(rounds=round, verbose=False)[0]["value"])
-		meangrades.append(thisround.opponent.compute_average_grades(rounds=round, verbose=False)[0]["value"])
-		meangrades.append(thisround.reviewer.compute_average_grades(rounds=round, verbose=False)[0]["value"])
+		# meangrades.append(thisround.reporter.compute_average_grades(rounds=round, verbose=False)[0]["value"])
+		# meangrades.append(thisround.opponent.compute_average_grades(rounds=round, verbose=False)[0]["value"])
+		# meangrades.append(thisround.reviewer.compute_average_grades(rounds=round, verbose=False)[0]["value"])
+		meangrades.append(round.score_reporter)
+		meangrades.append(round.score_opponent)
+		meangrades.append(round.score_reviewer)
+
 		finished = True
 	else:
 		finished = False
@@ -256,42 +301,58 @@ def physics_fights(request):
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):
 	rounds = Round.objects.filter(pf_number=pfid)
-	rooms = list(set([round.room for round in rounds]))
-	rooms = sorted(rooms, key=lambda room: room.name)
+	# rooms = Room.objects.filter(round__pf_number=pfid).order_by('name')
+	# rooms = list(set([round.room for round in rounds]))
+	# rooms = sorted(rooms, key=lambda room: room.name)
+	rooms = Room.objects.all().order_by('name')
 	roomgrades = []
 
 	for room in rooms:
-		roomrounds = rounds.filter(room=room)
-		roomrounds = sorted(roomrounds, key=lambda round: round.pf_number)
+		roomrounds = rounds.filter(room=room)#.order_by('pf_number')
+		# roomrounds = sorted(roomrounds, key=lambda round: round.pf_number)
 		finished=False
 		# all the jury members of this fight-room, sorted by name
-		jurynames = JuryGrade.objects.filter(round=roomrounds[0])
-		jurynames = sorted([jurygrade.jury.name for jurygrade in jurynames])
-		juryallgrades = []
-		for juryname in jurynames:
-			juryallgrade = {"name": juryname}
-			juryroundsgrades = []
-			for round in roomrounds:
-				try:
-					# if one round has no jurygrade, it means it is not finished.
-					juryroundsgrade=JuryGrade.objects.filter(round=round).filter(jury__name=juryname)[0]
-					finished=True
-					juryroundsgrades.append(juryroundsgrade)
-				except:
-					pass
+		# juryallgrades = []
+		# jurynames = JuryGrade.objects.filter(round=roomrounds[0]).order_by('jury__name')
+		# jurynames = sorted([jurygrade.jury.name for jurygrade in jurynames])
+		# jurynames = [jurygrade.jury.name for jurygrade in jurynames]
+		# for juryname in jurynames:
+		# 	juryallgrade = {"name": juryname}
+		# 	juryroundsgrades = []
+		# 	for round in roomrounds:
+		# 		try:
+		# 			# if one round has no jurygrade, it means it is not finished.
+		# 			juryroundsgrade=JuryGrade.objects.filter(round=round).filter(jury__name=juryname)[0]
+		# 			finished=True
+		# 			juryroundsgrades.append(juryroundsgrade)
+		# 		except:
+		# 			pass
+		#
+		# 	juryallgrade["juryroundsgrades"] = juryroundsgrades
+		# 	# print juryallgrade
+		# 	juryallgrades.append(juryallgrade)
+		grades = JuryGrade.objects.filter(round__room=room, round__pf_number=pfid).order_by('round__round_number', 'jury__name')
+		gradesdico = {}
+		for grade in grades:
+			gradesdico[grade.jury.name] = []
+		for grade in grades:
+			gradesdico[grade.jury.name].append(grade)
 
-			juryallgrade["juryroundsgrades"] = juryroundsgrades
-
-			juryallgrades.append(juryallgrade)
+		juryallgrades = [{'juryroundsgrades': gradesdico[juryname], 'name': juryname} for juryname in gradesdico.keys()]
+		print juryallgrades
 
 		# meangrades
 		meanroundsgrades = []
 		for round in roomrounds:
 			meangrades=[]
 			try:
-				meangrades.append(round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"])
-				meangrades.append(round.opponent.compute_average_grades(rounds=[round], verbose=False)[0]["value"])
-				meangrades.append(round.reviewer.compute_average_grades(rounds=[round], verbose=False)[0]["value"])
+				# meangrades.append(round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"])
+				# meangrades.append(round.opponent.compute_average_grades(rounds=[round], verbose=False)[0]["value"])
+				# meangrades.append(round.reviewer.compute_average_grades(rounds=[round], verbose=False)[0]["value"])
+				meangrades.append(round.score_reporter)
+				meangrades.append(round.score_opponent)
+				meangrades.append(round.score_reviewer)
+
 			except:
 				pass
 			meanroundsgrades.append(meangrades)
@@ -308,7 +369,8 @@ def ranking(request):
 	# teams = Team.objects.all()
 	rankteams = []
 
-	ranking = Team.fast_ranking()
+	# ranking = Team.fast_ranking()
+	ranking = Team.objects.order_by('-total_points')
 
 	# print ranking
 
@@ -318,13 +380,13 @@ def ranking(request):
 
 		# for ind, team in enumerate(ranking[0]):
 		for ind, team in enumerate(ranking):
-			myreprounds = Round.objects.filter(reporter_team=team)
-			myopprounds = Round.objects.filter(opponent_team=team)
-			myrevrounds = Round.objects.filter(reviewer_team=team)
-			pfsplayed = min(len(myreprounds), len(myopprounds), len(myrevrounds))
+			nrounds_as_rep = team.nrounds_as_rep # Round.objects.filter(reporter_team=team)
+			nrounds_as_opp = team.nrounds_as_opp # Round.objects.filter(opponent_team=team)
+			nrounds_as_rev = team.nrounds_as_rev # Round.objects.filter(reviewer_team=team)
+			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
 			team.pfsplayed = pfsplayed
 			team.ongoingpf = False
-			if max(len(myreprounds), len(myopprounds), len(myrevrounds)) > pfsplayed:
+			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
 				team.ongoingpf = True
 				team.currentpf = pfsplayed+1
 			team.rank = ind+1
