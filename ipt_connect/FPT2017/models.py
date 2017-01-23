@@ -22,7 +22,7 @@ netreject_max = 1		# Maximum number of eternal rejection
 # Useful static variables
 pfs = [i+1 for i in range(npf)]
 npf_tot = npf + int(with_final_pf)
-grade_choices = (((ind, ind) for ind in range(10+1)))
+grade_choices = [((ind, ind) for ind in range(10+1))]
 
 def mean(vec):
 	return float(sum(vec)) / len(vec)
