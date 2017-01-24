@@ -769,31 +769,32 @@ class Round(models.Model):
 		# print roundgrades
 		ngrades = len(reporter_grades)
 
-		# Remove lowest grade
-		reporter_grades.pop(0)
-		opponent_grades.pop(0)
-		reviewer_grades.pop(0)
+		if ngrades > 1 :
+			# Remove lowest grade
+			reporter_grades.pop(0)
+			opponent_grades.pop(0)
+			reviewer_grades.pop(0)
 
-		# If there are 7 or more jury members, remove highest grade too
-		if ngrades >= 7 :
-			reporter_grades.pop(-1)
-			opponent_grades.pop(-1)
-			reviewer_grades.pop(-1)
+			# If there are 7 or more jury members, remove highest grade too
+			if ngrades >= 7 :
+				reporter_grades.pop(-1)
+				opponent_grades.pop(-1)
+				reviewer_grades.pop(-1)
 
-		self.score_reporter = mean(reporter_grades)
-		self.score_opponent = mean(opponent_grades)
-		self.score_reviewer = mean(reviewer_grades)
+			self.score_reporter = mean(reporter_grades)
+			self.score_opponent = mean(opponent_grades)
+			self.score_reviewer = mean(reviewer_grades)
 
-		prescoeff = self.reporter_team.presentation_coefficients()[self.pf_number-1]
-		# print prescoeff
+			prescoeff = self.reporter_team.presentation_coefficients()[self.pf_number-1]
+			# print prescoeff
 
-		self.points_reporter = self.score_reporter * prescoeff
-		self.points_opponent = self.score_opponent * 2.0
-		self.points_reviewer = self.score_reviewer
+			self.points_reporter = self.score_reporter * prescoeff
+			self.points_opponent = self.score_opponent * 2.0
+			self.points_reviewer = self.score_reviewer
 
-		# print self.points_reporter
-		# print self.points_opponent
-		# print self.points_reviewer
+			# print self.points_reporter
+			# print self.points_opponent
+			# print self.points_reviewer
 
 
 		super(Round, self).save(*args, **kwargs)
