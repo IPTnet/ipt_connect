@@ -963,7 +963,7 @@ class EternalRejection(models.Model):
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
 def update_points(sender, instance, **kwargs):
 	print "YOLOOOO !!!"
-	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) :
+	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) or instance.problem_presented is None :
 		# then all teams aren't yet defined, there is no need to compute scores
 		pass
 	else :
@@ -973,6 +973,5 @@ def update_points(sender, instance, **kwargs):
 		for team in teams:
 			team.update_scores()
 
-	# and the problem mean scores
-	if instance.problem_presented is not None :
+		# and the problem mean scores
 		instance.problem_presented.update_scores()
