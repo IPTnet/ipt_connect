@@ -32,19 +32,19 @@ def participants_overview(request):
 	participants = sorted(participants, key=lambda participant: participant.avggrade)[::-1]
 
 	return render(request, 'FPT2017/participants_overview.html', {'participants': participants})
-	
+
 @cache_page(cache_duration)
 def participants_all(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
 	return render(request, 'FPT2017/participants_all.html', {'participants': participants})
-	
+
 @cache_page(cache_duration)
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
 	return render(request, 'FPT2017/listing_participants.html', {'participants': participants})
-	
+
 
 @cache_page(cache_duration)
 def participant_detail(request, pk):
@@ -165,7 +165,7 @@ def team_detail(request, team_name):
 	for round in myrevrounds:
 		# if len(JuryGrade.objects.filter(round=round)) > 0:
 		if round.score_reviewer > 0.:
-			round.myrole = "reporter"
+			round.myrole = "reviewer"
 			round.mygrade = round.score_reviewer
 			 #round.reporter.compute_average_grades(rounds=[round], verbose=False)[0]["value"]
 			allrounds.append(round)
