@@ -973,5 +973,6 @@ def update_points(sender, instance, **kwargs):
 		for team in teams:
 			team.update_scores()
 
-		# and the problem mean scores
+	# and the problem mean scores
+	if instance.problem_presented is not None :
 		instance.problem_presented.update_scores()
