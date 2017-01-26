@@ -20,16 +20,16 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '****'
+SECRET_KEY = 'XXX'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SERVER_EMAIL='****'
+SERVER_EMAIL='XXX'
 
-ADMINS = (('****'),)
+ADMINS = (('XXX', 'XXX@XXX'),)
 
-ALLOWED_HOSTS = [u"****",]
+ALLOWED_HOSTS = [u"XXX",]
 
 
 # Application definition
@@ -44,7 +44,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'IPT2016',
-    'FPT2017',
+	'FPT2017',
+	'IPT2017',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -55,6 +56,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+#    'django.middleware.security.SecurityMiddleware',
+	'ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware',
 )
 
 ROOT_URLCONF = 'ipt_connect.urls'
@@ -135,35 +138,3 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
-
-DEBUG_TOOLBAR = False
-
-if DEBUG_TOOLBAR :
-
-    INSTALLED_APPS += ('debug_toolbar', 'debug_toolbar_line_profiler',)
-
-    MIDDLEWARE_CLASSES = ('debug_toolbar.middleware.DebugToolbarMiddleware',) + MIDDLEWARE_CLASSES
-
-
-    DEBUG_TOOLBAR_PANELS = [
-        'debug_toolbar.panels.versions.VersionsPanel',
-        'debug_toolbar.panels.timer.TimerPanel',
-        'debug_toolbar.panels.settings.SettingsPanel',
-        'debug_toolbar.panels.headers.HeadersPanel',
-        'debug_toolbar.panels.request.RequestPanel',
-        'debug_toolbar.panels.sql.SQLPanel',
-        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-        'debug_toolbar.panels.templates.TemplatesPanel',
-        'debug_toolbar.panels.cache.CachePanel',
-        'debug_toolbar.panels.signals.SignalsPanel',
-        'debug_toolbar.panels.logging.LoggingPanel',
-        'debug_toolbar.panels.redirects.RedirectsPanel',
-        'debug_toolbar_line_profiler.panel.ProfilingPanel',
-    ]
-
-    INTERNAL_IPS = ('127.0.0.1',)
-
-    def show_toolbar(request):
-        return True
-
-    SHOW_TOOLBAR_CALLBACK = show_toolbar

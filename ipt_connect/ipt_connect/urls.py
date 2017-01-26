@@ -13,16 +13,8 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^IPT2016/', include('IPT2016.urls', namespace='IPT2016')),
     url(r'^FPT2017/', include('FPT2017.urls', namespace='FPT2017')),
+	url(r'^IPT2017/', include('IPT2017.urls', namespace='IPT2017')),
 ]
 
 
 admin.site.site_header = 'IPT administration'
-
-from django.conf import settings
-from django.conf.urls import include, url
-
-if settings.DEBUG_TOOLBAR:
-    import debug_toolbar
-    urlpatterns += [
-        url(r'^__debug__/', include(debug_toolbar.urls)),
-        ]
