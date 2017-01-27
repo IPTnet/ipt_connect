@@ -407,8 +407,3 @@ def ranking(request):
 	
 	return render(request, 'FPT2017/ranking.html', {'rankteams': rankteams})
 
-@user_passes_test(lambda u: u.is_superuser)
-def listing_participants(request):
-	participants_objects = Participant.objects.all()
-
-	return render(request, 'FPT2017/listing_participants.html',{'participants' : participants_objects})
