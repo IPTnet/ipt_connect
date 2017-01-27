@@ -725,6 +725,7 @@ class Jury(models.Model):
 	pf1 = models.BooleanField(default=False,verbose_name='Présent lors du PF 1 ?')
 	pf2 = models.BooleanField(default=False,verbose_name='Présent lors du PF 2 ?')
 	pf3 = models.BooleanField(default=False,verbose_name='Présent lors du PF 3 ?')
+	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation à afficher')
 
 	def __unicode__(self):
 		return self.name
