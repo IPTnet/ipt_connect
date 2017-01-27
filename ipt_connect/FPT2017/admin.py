@@ -89,7 +89,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 class JuryAdmin(admin.ModelAdmin):
 
-	list_display = ('name',)
+	list_display = ('name','remark',)
 
 
 # Register your models here.

@@ -721,6 +721,7 @@ class Room(models.Model):
 class Jury(models.Model):
 	name = models.CharField(max_length=50)
 	team = models.ForeignKey('Team', null=True, blank=True)
+	remark = models.TextField(blank=True,verbose_name='Remarques')
 
 	def __unicode__(self):
 		return self.name
