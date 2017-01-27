@@ -39,7 +39,7 @@ def participants_all(request):
 
 	return render(request, 'FPT2017/participants_all.html', {'participants': participants})
 
-@cache_page(cache_duration)
+@user_passes_test(lambda u: u.is_superuser)
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
@@ -378,10 +378,8 @@ def physics_fight_detail(request, pfid):
 
 @cache_page(cache_duration)
 def ranking(request):
-
 	# teams = Team.objects.all()
 	rankteams = []
-
 	# ranking = Team.fast_ranking()
 	ranking = Team.objects.order_by('-total_points')
 
@@ -406,7 +404,7 @@ def ranking(request):
 			if team.rank == 1:
 				team.emphase=True
 			rankteams.append(team)
-
+	
 	return render(request, 'FPT2017/ranking.html', {'rankteams': rankteams})
 
 @user_passes_test(lambda u: u.is_superuser)
