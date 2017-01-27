@@ -722,6 +722,9 @@ class Jury(models.Model):
 	name = models.CharField(max_length=50)
 	team = models.ForeignKey('Team', null=True, blank=True)
 	remark = models.TextField(blank=True,verbose_name='Remarques')
+	pf1 = models.BooleanField(default=False,verbose_name='Présent lors du PF 1 ?')
+	pf2 = models.BooleanField(default=False,verbose_name='Présent lors du PF 2 ?')
+	pf3 = models.BooleanField(default=False,verbose_name='Présent lors du PF 3 ?')
 
 	def __unicode__(self):
 		return self.name
