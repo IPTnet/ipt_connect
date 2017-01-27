@@ -26,4 +26,5 @@ urlpatterns = [
     url(r'^ranking$', ranking, name='ranking'),
     url(r'^participants_export$', participants_export),
 	url(r'^participants_all$', participants_all),
+	url(r'^jury_export$', jury_export),
 ]

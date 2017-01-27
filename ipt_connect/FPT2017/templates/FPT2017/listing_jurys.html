@@ -1,0 +1,13 @@
+<h1>Participants of FPT 2017</h1>
+
+
+{% for jury in jurys %}
+
+
+{{ jury.name }},{{ jury.surname }},{{ jury.affiliation }}</p>
+
+{% empty %}
+
+    <p>There is no registered jury member.</p>
+
+{% endfor %}

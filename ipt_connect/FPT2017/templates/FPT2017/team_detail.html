@@ -20,7 +20,7 @@
 
     <h2>Team-Leaders:</h2> {% for teamleader in teamleaders %}
     <div>
-        <li><a href="{% url 'FPT2017:jury_detail' pk=teamleader.pk %}">{{teamleader.name}}</a></li>
+        <li><a href="{% url 'FPT2017:jury_detail' pk=teamleader.pk %}">{{teamleader.name}} {{teamleader.surname}}</a></li>
     </div>
     {% endfor %}
 </div>

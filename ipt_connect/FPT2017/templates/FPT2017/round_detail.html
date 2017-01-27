@@ -82,7 +82,7 @@
 
         {% for jurygrade in jurygrades %}
         <tr>
-            <td><a href="{% url 'FPT2017:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}}</a></td>
+            <td><a href="{% url 'FPT2017:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
             <td class="td-center">{{jurygrade.grade_reporter|floatformat:2}}</td>
             <td class="td-center">{{jurygrade.grade_opponent|floatformat:2}}</td>
             <td class="td-center">{{jurygrade.grade_reviewer|floatformat:2}}</td>
