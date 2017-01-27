@@ -89,8 +89,9 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 class JuryAdmin(admin.ModelAdmin):
 
-	list_display = ('name','team','remark',)
-
+	list_display = ('name','team','pf1','pf2','pf3','remark',)
+	list_filter = ('team','pf1','pf2','pf3',)
+	search_fields = ('name',)
 
 # Register your models here.
 admin.site.register(Team,TeamAdmin)
