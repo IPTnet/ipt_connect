@@ -35,9 +35,15 @@ def participants_overview(request):
 
 @cache_page(cache_duration)
 def participants_all(request):
-	participants = Participant.objects.all().order_by('team','role','name')
+	participants = Participant.objects.all().order_by('team','surname')
 
 	return render(request, 'FPT2017/participants_all.html', {'participants': participants})
+	
+@cache_page(cache_duration)
+def participants_trombinoscope(request):
+	participants = Participant.objects.all().order_by('team','surname')
+
+	return render(request, 'FPT2017/participants_trombi.html', {'participants': participants})
 
 @user_passes_test(lambda u: u.is_superuser)
 def participants_export(request):
