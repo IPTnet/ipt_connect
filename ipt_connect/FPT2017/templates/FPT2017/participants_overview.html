@@ -16,7 +16,10 @@
                 <th class="th-center">Nom</th>
                 <th class="th-center">Équipe</th>
                 <th class="th-center">Points (somme)</th>
-                <th class="th-center">Notes (moyenne)</th>
+                <th class="th-center">Note moyenne</th>
+                <th class="th-center">Score moyen reporter</th>
+                <th class="th-center">Score moyen opponent</th>
+                <th class="th-center">Score moyen reviewer</th>
             </tr>
         {% for participant in participants %}
             <tr>
@@ -24,6 +27,9 @@
                 <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
                 <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
                 <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_reporter|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_opponent|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_reviewer|floatformat:2}}</td>
             </tr>
         {% endfor %}
         </table>
