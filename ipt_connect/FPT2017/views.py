@@ -51,11 +51,15 @@ def participants_export(request):
 
 	return render(request, 'FPT2017/listing_participants.html', {'participants': participants})
 
-#@user_passes_test(lambda u: u.is_superuser)
 def jury_export(request):
 	jurys = Jury.objects.all().order_by('surname')
 
 	return render(request, 'FPT2017/listing_jurys.html', {'jurys': jurys})
+	
+def jury_export_web(request):
+	jurys = Jury.objects.filter(team=None).order_by('surname')
+
+	return render(request, 'FPT2017/listing_jurys_web.html', {'jurys': jurys})	
 
 
 @cache_page(cache_duration)
