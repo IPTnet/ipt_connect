@@ -51,6 +51,11 @@ def participants_export(request):
 
 	return render(request, 'FPT2017/listing_participants.html', {'participants': participants})
 
+def participants_export_web(request):
+	participants = Participant.objects.exclude(role='ACC').order_by('team','role','surname')
+
+	return render(request, 'FPT2017/listing_participants_web.html', {'participants': participants})
+	
 def jury_export(request):
 	jurys = Jury.objects.all().order_by('surname')
 
@@ -60,6 +65,8 @@ def jury_export_web(request):
 	jurys = Jury.objects.filter(team=None).order_by('surname')
 
 	return render(request, 'FPT2017/listing_jurys_web.html', {'jurys': jurys})	
+	
+
 
 
 @cache_page(cache_duration)
@@ -360,14 +367,14 @@ def physics_fight_detail(request, pfid):
 		# 	juryallgrade["juryroundsgrades"] = juryroundsgrades
 		# 	# print juryallgrade
 		# 	juryallgrades.append(juryallgrade)
-		grades = JuryGrade.objects.filter(round__room=room, round__pf_number=pfid).order_by('round__round_number', 'jury__name')
+		grades = JuryGrade.objects.filter(round__room=room, round__pf_number=pfid).order_by('round__round_number', 'jury__surname')
 		gradesdico = {}
 		for grade in grades:
-			gradesdico[grade.jury.name] = []
+			gradesdico[grade.jury] = []
 		for grade in grades:
-			gradesdico[grade.jury.name].append(grade)
+			gradesdico[grade.jury].append(grade)
 
-		juryallgrades = [{'juryroundsgrades': gradesdico[juryname], 'name': juryname} for juryname in gradesdico.keys()]
+		juryallgrades = [{'juryroundsgrades': gradesdico[jury], 'name': jury.name+" "+jury.surname} for jury in gradesdico.keys()]
 		print juryallgrades
 
 		# meangrades
