@@ -719,8 +719,15 @@ class Room(models.Model):
 				return ind+1
 
 class Jury(models.Model):
-	name = models.CharField(max_length=50)
+	name = models.CharField(max_length=50,verbose_name='Prénom')
+	surname = models.CharField(max_length=50,verbose_name='Nom')
+	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation à afficher')
 	team = models.ForeignKey('Team', null=True, blank=True)
+	pf1 = models.BooleanField(default=False,verbose_name='Présent lors du PF 1 ?')
+	pf2 = models.BooleanField(default=False,verbose_name='Présent lors du PF 2 ?')
+	pf3 = models.BooleanField(default=False,verbose_name='Présent lors du PF 3 ?')
+	remark = models.TextField(blank=True,verbose_name='Remarques')
+	
 
 	def __unicode__(self):
 		return self.name

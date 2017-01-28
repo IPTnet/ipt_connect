@@ -3,14 +3,18 @@
 {% block content %}
 
     <div class="section">
-        <h1>{{jury.name}}</h1>
+        <h1>{{jury.name}} {{jury.surname}}</h1>
     </div>
 
     <div class="content container">
         {% if jury.team %}
             <li class="emphase">Juré associé à l'équipe {{jury.team.name}}</li>
         {% else %}
+            {% if jury.affiliation %}
+            <li class="emphase">Juré externe - {{jury.affiliation}}</li>
+            {% else %}
             <li class="emphase">Juré externe</li>
+            {% endif %}
         {% endif %}
 
     </div>
