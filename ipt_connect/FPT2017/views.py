@@ -39,17 +39,23 @@ def participants_all(request):
 
 	return render(request, 'FPT2017/participants_all.html', {'participants': participants})
 	
-@cache_page(cache_duration)
+@user_passes_test(lambda u: u.is_superuser)
 def participants_trombinoscope(request):
 	participants = Participant.objects.all().order_by('team','surname')
 
-	return render(request, 'FPT2017/participants_trombi.html', {'participants': participants})
+	return render(request, 'FPT2017/participants_trombinoscope.html', {'participants': participants})
 
 @user_passes_test(lambda u: u.is_superuser)
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
 	return render(request, 'FPT2017/listing_participants.html', {'participants': participants})
+
+#@user_passes_test(lambda u: u.is_superuser)
+def jury_export(request):
+	jurys = Jury.objects.all().order_by('surname')
+
+	return render(request, 'FPT2017/listing_jurys.html', {'jurys': jurys})
 
 
 @cache_page(cache_duration)
