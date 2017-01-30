@@ -72,11 +72,11 @@ class Participant(models.Model):
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES,verbose_name='Genre')
 	email = models.EmailField(help_text='Cette adresse sera utilisée pour envoyer des informations importantes aux participants.',verbose_name='Email')
 	birthdate = models.DateField(default='1900-01-31',verbose_name='Date de naissance')
-	photo = models.ImageField(upload_to=UploadToPathAndRename('FPT2017/id_photo'),help_text="Merci d'utiliser une photo d'identité.", null=True)
+	photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2017/id_photo'),help_text="Merci d'utiliser une photo d'identité.", null=True)
 	team = models.ForeignKey('Team', null=True,verbose_name='Équipe')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="L'équipe doit comporter exactement un Team Captain (étudiant), entre deux et cinq Team Members (étudiants) et entre un et deux Team Leaders (encadrants). N'oubliez pas de vous ajouter vous-même !", default="TM",verbose_name='Rôle')
 	#affiliation = models.CharField(max_length=50,default='XXX University')
-	veteran = models.BooleanField(default=False,help_text="Est-ce que cette personne a déjà pris part au FPT ou à l'IPT ? (indicatif)",verbose_name='Vétéran')
+	veteran = models.BooleanField(default=False,help_text="Est-ce que cette personne a déjà pris part au IPT ou à l'IPT ? (indicatif)",verbose_name='Vétéran')
 	#diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	#shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
 	remark = models.TextField(blank=True,verbose_name='Remarques')
@@ -380,7 +380,7 @@ class Team(models.Model):
 
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
-	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_FPT2017',verbose_name="Référent")
+	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT2017',verbose_name="Référent")
 
 	total_points = models.FloatField(default=0.0, editable=False)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)

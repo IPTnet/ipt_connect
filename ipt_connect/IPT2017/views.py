@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import user_passes_test
 
 def home(request):
 
-	text = """<h1>FPT 2017</h1>
+	text = """<h1>IPT 2017</h1>
 
 			  <p>It's coming...</p>"""
 
@@ -31,40 +31,40 @@ def participants_overview(request):
 	#rankedparticipants = participants[0].ranking(verbose=False)[0]
 	participants = sorted(participants, key=lambda participant: participant.avggrade)[::-1]
 
-	return render(request, 'FPT2017/participants_overview.html', {'participants': participants})
+	return render(request, 'IPT2017/participants_overview.html', {'participants': participants})
 
 @cache_page(cache_duration)
 def participants_all(request):
 	participants = Participant.objects.all().order_by('team','surname')
 
-	return render(request, 'FPT2017/participants_all.html', {'participants': participants})
+	return render(request, 'IPT2017/participants_all.html', {'participants': participants})
 	
 @user_passes_test(lambda u: u.is_superuser)
 def participants_trombinoscope(request):
 	participants = Participant.objects.all().order_by('team','surname')
 
-	return render(request, 'FPT2017/participants_trombinoscope.html', {'participants': participants})
+	return render(request, 'IPT2017/participants_trombinoscope.html', {'participants': participants})
 
 @user_passes_test(lambda u: u.is_superuser)
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
-	return render(request, 'FPT2017/listing_participants.html', {'participants': participants})
+	return render(request, 'IPT2017/listing_participants.html', {'participants': participants})
 
 def participants_export_web(request):
 	participants = Participant.objects.exclude(role='ACC').order_by('team','role','surname')
 
-	return render(request, 'FPT2017/listing_participants_web.html', {'participants': participants})
+	return render(request, 'IPT2017/listing_participants_web.html', {'participants': participants})
 	
 def jury_export(request):
 	jurys = Jury.objects.all().order_by('surname')
 
-	return render(request, 'FPT2017/listing_jurys.html', {'jurys': jurys})
+	return render(request, 'IPT2017/listing_jurys.html', {'jurys': jurys})
 	
 def jury_export_web(request):
 	jurys = Jury.objects.filter(team=None).order_by('surname')
 
-	return render(request, 'FPT2017/listing_jurys_web.html', {'jurys': jurys})	
+	return render(request, 'IPT2017/listing_jurys_web.html', {'jurys': jurys})	
 	
 
 
@@ -83,7 +83,7 @@ def participant_detail(request, pk):
 		else :
 			average_grades.append({"value": round.score_reviewer, "round":round, "role":"reviewer"})
 
-	return render(request, 'FPT2017/participant_detail.html', {'participant': participant, "average_grades": average_grades})
+	return render(request, 'IPT2017/participant_detail.html', {'participant': participant, "average_grades": average_grades})
 
 @cache_page(cache_duration)
 def jurys_overview(request):
@@ -103,14 +103,14 @@ def jurys_overview(request):
 			jury.meanrevgrade = mean([grade.grade_reviewer for grade in mygrades])
 		else:
 			jury.meanrevgrade = 0.0
-	return render(request, 'FPT2017/jurys_overview.html', {'jurys': jurys})
+	return render(request, 'IPT2017/jurys_overview.html', {'jurys': jurys})
 
 
 @cache_page(cache_duration)
 def jury_detail(request, pk):
 	jury = Jury.objects.get(pk=pk)
 	mygrades = JuryGrade.objects.filter(jury=jury)
-	return render(request, 'FPT2017/jury_detail.html', {'jury': jury, "grades": mygrades})
+	return render(request, 'IPT2017/jury_detail.html', {'jury': jury, "grades": mygrades})
 
 @cache_page(cache_duration)
 def tournament_overview(request):
@@ -132,13 +132,13 @@ def tournament_overview(request):
 				thispf.append(round)
 			thisroom.append(thispf)
 		orderedroundsperroom.append(thisroom)
-	return render(request, 'FPT2017/tournament_overview.html', {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom})
+	return render(request, 'IPT2017/tournament_overview.html', {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom})
 
 @cache_page(cache_duration)
 def teams_overview(request):
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
-	return render(request, 'FPT2017/teams_overview.html', {'teams': teams})
+	return render(request, 'IPT2017/teams_overview.html', {'teams': teams})
 
 @cache_page(cache_duration)
 def team_detail(request, team_name):
@@ -198,7 +198,7 @@ def team_detail(request, team_name):
 	for ind, p in enumerate(prescoeffs):
 		if p != 3.0:
 			penalties.append([ind+1, p])
-	return render(request, 'FPT2017/team_detail.html', {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties})
+	return render(request, 'IPT2017/team_detail.html', {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties})
 
 @cache_page(cache_duration)
 def problems_overview(request):
@@ -215,14 +215,14 @@ def problems_overview(request):
 		problem.meangradopp = problem.mean_score_of_opponents
 		problem.meangradrev = problem.mean_score_of_reviewers
 
-	return render(request, 'FPT2017/problems_overview.html', {'problems': problems})
+	return render(request, 'IPT2017/problems_overview.html', {'problems': problems})
 
 @cache_page(cache_duration)
 def problem_detail(request, pk):
 	problem = Problem.objects.get(pk=pk)
 	(meangrades, teamresults) = problem.status(verbose=False)
 
-	return render(request, 'FPT2017/problem_detail.html', {'problem': problem, "meangrades": meangrades, "teamresults": teamresults})
+	return render(request, 'IPT2017/problem_detail.html', {'problem': problem, "meangrades": meangrades, "teamresults": teamresults})
 
 @cache_page(cache_duration_short)
 def rounds(request):
@@ -258,10 +258,10 @@ def rounds(request):
 		for team, point in zip(finalteams, finalpoints):
 			finalranking.append([team, point])
 
-		return render(request, 'FPT2017/rounds.html', {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking})
+		return render(request, 'IPT2017/rounds.html', {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking})
 
 	else :
-		return render(request, 'FPT2017/rounds.html', {'orderedroundsperroom': orderedroundsperroom})
+		return render(request, 'IPT2017/rounds.html', {'orderedroundsperroom': orderedroundsperroom})
 
 
 @cache_page(cache_duration_short)
@@ -294,7 +294,7 @@ def round_detail(request, pk):
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
-	return render(request, 'FPT2017/round_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
+	return render(request, 'IPT2017/round_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
 
 @cache_page(cache_duration_short)
 def finalround_detail(request, pk):
@@ -322,7 +322,7 @@ def finalround_detail(request, pk):
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
-	return render(request, 'FPT2017/finalround_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
+	return render(request, 'IPT2017/finalround_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
 
 
 
@@ -332,7 +332,7 @@ def physics_fights(request):
 	pf1 = rounds.filter(pf_number=1)
 	pf2 = rounds.filter(pf_number=2)
 	pf3 = rounds.filter(pf_number=3)
-	return render(request, 'FPT2017/physics_fights.html', {'pf1': pf1, 'pf2': pf2, 'pf3': pf3})
+	return render(request, 'IPT2017/physics_fights.html', {'pf1': pf1, 'pf2': pf2, 'pf3': pf3})
 
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):
@@ -397,7 +397,7 @@ def physics_fight_detail(request, pfid):
 		roundsgrades = [juryallgrades, meanroundsgrades, infos]
 		roomgrades.append(roundsgrades)
 
-	return render(request, 'FPT2017/physics_fight_detail.html', {"roomgrades": roomgrades})
+	return render(request, 'IPT2017/physics_fight_detail.html', {"roomgrades": roomgrades})
 
 @cache_page(cache_duration)
 def ranking(request):
@@ -428,5 +428,5 @@ def ranking(request):
 				team.emphase=True
 			rankteams.append(team)
 	
-	return render(request, 'FPT2017/ranking.html', {'rankteams': rankteams})
+	return render(request, 'IPT2017/ranking.html', {'rankteams': rankteams})
 
