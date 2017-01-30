@@ -1,4 +1,4 @@
-{% extends 'FPT2017/head.html' %}
+{% extends 'IPT2017/head.html' %}
 
 {% block content %}
 
@@ -9,7 +9,7 @@
     <div class="content container">
         {% for team in teams %}
             <div>
-                <p><a href="{% url 'FPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p>
+                <p><a href="{% url 'IPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p>
             </div>
         {% endfor %}
     </div>

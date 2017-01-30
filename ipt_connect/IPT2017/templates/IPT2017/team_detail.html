@@ -1,4 +1,4 @@
-{% extends 'FPT2017/head.html' %} {% load humanize %} {% block content %}
+{% extends 'IPT2017/head.html' %} {% load humanize %} {% block content %}
 
 <div class="section">
     <h1>{{team.name}}</h1>
@@ -13,14 +13,14 @@
     <h2>Participants:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a rapporté {{participant.total_points|floatformat:2}} points.</a></li>
+        <li><a href="{% url 'IPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a rapporté {{participant.total_points|floatformat:2}} points.</a></li>
     </div>
     {% endfor %}
 
 
     <h2>Team-Leaders:</h2> {% for teamleader in teamleaders %}
     <div>
-        <li><a href="{% url 'FPT2017:jury_detail' pk=teamleader.pk %}">{{teamleader.name}} {{teamleader.surname}}</a></li>
+        <li><a href="{% url 'IPT2017:jury_detail' pk=teamleader.pk %}">{{teamleader.name}} {{teamleader.surname}}</a></li>
     </div>
     {% endfor %}
 </div>
@@ -35,8 +35,8 @@
         </tr>
         {% for round in allrounds %}
         <tr>
-            <td class="td-center"><a href="{% url 'FPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
-            <td class="td-center"><a href="{% url 'FPT2017:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
+            <td class="td-center"><a href="{% url 'IPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
+            <td class="td-center"><a href="{% url 'IPT2017:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
             <td class="td-center">{{round.myrole}}</td>
 
         </tr>

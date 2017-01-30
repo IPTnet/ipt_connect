@@ -1,4 +1,4 @@
-{% extends 'FPT2017/head.html' %} {% load humanize %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
+{% extends 'IPT2017/head.html' %} {% load humanize %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
 
 <div class="section">
     <h1>Physics Fight {{roomgrades.0.2.pf}} | Salle {{roundsgrades.2.room}}</h1>
@@ -13,7 +13,7 @@
             <th class="th-center" width=25%></th>
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th class="th-center">
-                <p> <a href="{% url 'FPT2017:round_detail' pk=juryroundsgrade.round.pk %}">Round {{juryroundsgrade.round.round_number}}</a></p> <a href="{% url 'FPT2017:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a></th>
+                <p> <a href="{% url 'IPT2017:round_detail' pk=juryroundsgrade.round.pk %}">Round {{juryroundsgrade.round.round_number}}</a></p> <a href="{% url 'IPT2017:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a></th>
             {% endfor %}
         </tr>
         <tr>
@@ -21,16 +21,16 @@
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th>
                 <table>
-                    <td class="th-center">Rep. (<a href="{% url 'FPT2017:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>)</td>
-                    <td class="th-center">Opp. (<a href="{% url 'FPT2017:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>)</td>
-                    <td class="th-center">Rev. (<a href="{% url 'FPT2017:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>)</td>
+                    <td class="th-center">Rep. (<a href="{% url 'IPT2017:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>)</td>
+                    <td class="th-center">Opp. (<a href="{% url 'IPT2017:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>)</td>
+                    <td class="th-center">Rev. (<a href="{% url 'IPT2017:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>)</td>
                 </table>
             </th>
             {% endfor %}
         </tr>
         {% for juryallgrade in roundsgrades.0 %}
         <tr>
-            <td><a href="{% url 'FPT2017:jury_detail' pk=juryallgrade.juryroundsgrades.0.jury.pk %}">{{juryallgrade.name}}</a></td>
+            <td><a href="{% url 'IPT2017:jury_detail' pk=juryallgrade.juryroundsgrades.0.jury.pk %}">{{juryallgrade.name}}</a></td>
             {% for juryroundsgrade in juryallgrade.juryroundsgrades %}
             <td>
                 <table>
