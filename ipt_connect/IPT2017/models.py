@@ -13,10 +13,10 @@ from django.dispatch import receiver
 from django.db.models import Avg, Sum
 
 # Parameters
-npf = 3					# Number of Physics fights
-with_final_pf = False	# Is there a Final Fight ?
-reject_malus = 0.4		# Malus for too many rejections
-npfreject_max = 1		# Maximum number of tactical rejection (per fight)
+npf = 4					# Number of Physics fights
+with_final_pf = True	# Is there a Final Fight ?
+reject_malus = 0.2		# Malus for too many rejections
+npfreject_max = 3		# Maximum number of tactical rejection (per fight)
 netreject_max = 1		# Maximum number of eternal rejection
 
 # Useful static variables
@@ -53,9 +53,9 @@ class Participant(models.Model):
 	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
 
 
-	GENDER_CHOICES = ( ('M','Garçon'), ('F','Fille'), ('D','Ne souhaite pas préciser'))
+	GENDER_CHOICES = ( ('M','Male'), ('F','Female'), ('D','Decline to report'))
 
-	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompagnant') )
+	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompagnying') )
 
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
 
@@ -67,19 +67,19 @@ class Participant(models.Model):
 	)
 
 	# parameters
-	name = models.CharField(max_length=50,default=None,verbose_name='Prénom')
-	surname = models.CharField(max_length=50,default=None,verbose_name='Nom')
-	gender = models.CharField(max_length=1,choices=GENDER_CHOICES,verbose_name='Genre')
-	email = models.EmailField(help_text='Cette adresse sera utilisée pour envoyer des informations importantes aux participants.',verbose_name='Email')
-	birthdate = models.DateField(default='1900-01-31',verbose_name='Date de naissance')
-	photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2017/id_photo'),help_text="Merci d'utiliser une photo d'identité.", null=True)
-	team = models.ForeignKey('Team', null=True,verbose_name='Équipe')
-	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="L'équipe doit comporter exactement un Team Captain (étudiant), entre deux et cinq Team Members (étudiants) et entre un et deux Team Leaders (encadrants). N'oubliez pas de vous ajouter vous-même !", default="TM",verbose_name='Rôle')
-	#affiliation = models.CharField(max_length=50,default='XXX University')
-	veteran = models.BooleanField(default=False,help_text="Est-ce que cette personne a déjà pris part au IPT ou à l'IPT ? (indicatif)",verbose_name='Vétéran')
-	#diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
-	#shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
-	remark = models.TextField(blank=True,verbose_name='Remarques')
+	name = models.CharField(max_length=50,default=None,verbose_name='Name')
+	surname = models.CharField(max_length=50,default=None,verbose_name='Surname')
+	gender = models.CharField(max_length=1,choices=GENDER_CHOICES,verbose_name='Gender')
+	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email')
+	birthdate = models.DateField(default='1900-01-31',verbose_name='Birthdate')
+	photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2017/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
+	team = models.ForeignKey('Team', null=True,verbose_name='Team')
+	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
+	affiliation = models.CharField(max_length=50,default='XXX University')
+	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the IPT? (informative only)",verbose_name='Veteran')
+	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
+	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
+	remark = models.TextField(blank=True,verbose_name='Remarks')
 
 	total_points = models.FloatField(default=0.0, editable=False)
 	mean_score_as_reporter = models.FloatField(default=0.0, editable=False)
@@ -380,7 +380,7 @@ class Team(models.Model):
 
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
-	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT2017',verbose_name="Référent")
+	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT2017',verbose_name="Admin")
 
 	total_points = models.FloatField(default=0.0, editable=False)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)
@@ -719,14 +719,16 @@ class Room(models.Model):
 				return ind+1
 
 class Jury(models.Model):
-	name = models.CharField(max_length=50,verbose_name='Prénom')
-	surname = models.CharField(max_length=50,verbose_name='Nom')
-	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation à afficher')
+	name = models.CharField(max_length=50,verbose_name='Name')
+	surname = models.CharField(max_length=50,verbose_name='Surname')
+	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation to display',help_text='Will be used for export (badges and web).')
 	team = models.ForeignKey('Team', null=True, blank=True)
-	pf1 = models.BooleanField(default=False,verbose_name='Présent lors du PF 1 ?')
-	pf2 = models.BooleanField(default=False,verbose_name='Présent lors du PF 2 ?')
-	pf3 = models.BooleanField(default=False,verbose_name='Présent lors du PF 3 ?')
-	remark = models.TextField(blank=True,verbose_name='Remarques')
+	pf1 = models.BooleanField(default=False,verbose_name='PF 1')
+	pf2 = models.BooleanField(default=False,verbose_name='PF 2')
+	pf3 = models.BooleanField(default=False,verbose_name='PF 3')
+	pf4 = models.BooleanField(default=False,verbose_name='PF 4')
+	final = models.BooleanField(default=False,verbose_name='Final')
+	remark = models.TextField(blank=True,verbose_name='Remarks')
 	
 
 	def __unicode__(self):
