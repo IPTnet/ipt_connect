@@ -1,0 +1,44 @@
+{% extends 'FPT2017/head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{{jury.name}} {{jury.surname}}</h1>
+    </div>
+
+    <div class="content container">
+        {% if jury.team %}
+            <li class="emphase">Team Leader de l'équipe {{jury.team.name}}</li>
+        {% else %}
+            {% if jury.affiliation %}
+            <li class="emphase">Juré externe - {{jury.affiliation}}</li>
+            {% else %}
+            <li class="emphase">Juré externe</li>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+    <div class="content container">
+
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Problèmes jugés</th>
+                <th class="th-center">Note au Reporter</th>
+                <th class="th-center">Noter à l'Opponent</th>
+                <th class="th-center">Note au Reviewer</th>
+            </tr>
+            {% for grade in grades %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'FPT2017:problem_detail' pk=grade.round.problem_presented.pk %}">{{grade.round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:round_detail' pk=grade.round.pk %}">{{grade.grade_reporter}} ({{grade.round.reporter_team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:round_detail' pk=grade.round.pk %}">{{grade.grade_opponent}} ({{grade.round.opponent_team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:round_detail' pk=grade.round.pk %}">{{grade.grade_reviewer}} ({{grade.round.reviewer_team.name}})</a></td>
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+
+{% endblock content %}

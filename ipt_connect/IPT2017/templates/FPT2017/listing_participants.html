@@ -1,0 +1,13 @@
+<h1>Participants of FPT 2017</h1>
+
+
+{% for participant in participants %}
+
+
+{{ participant.name }},{{ participant.surname }},{{ participant.team }},{{ participant.gender }},{{ participant.role }},{{ participant.photo }},{{ participant.email }}<br>
+
+{% empty %}
+
+    <p>There is no registered participant.</p>
+
+{% endfor %}

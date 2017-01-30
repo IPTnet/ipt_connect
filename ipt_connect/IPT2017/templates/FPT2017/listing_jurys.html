@@ -1,0 +1,10 @@
+{% for jury in jurys %}
+
+
+{{ jury.name }},{{ jury.surname }},{{ jury.affiliation }} <br>
+
+{% empty %}
+
+    <p>There is no registered jury member.</p>
+
+{% endfor %}

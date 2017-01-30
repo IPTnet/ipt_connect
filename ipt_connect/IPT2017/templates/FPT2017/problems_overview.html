@@ -1,0 +1,35 @@
+{% extends 'FPT2017/head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Aperçu des problèmes</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">Cliquez sur les noms des problèmes pour accéder à des statistiques plus détaillées. Cliquez sur les en-têtes des colonnes pour trier le tableau.</p>
+    </div>
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Nom</th>
+                <th class="th-center"># de présentations</th>
+                <th class="th-center">Note moyenne du Reporter</th>
+                <th class="th-center">Note moyenne de l'Opponent</th>
+                <th class="th-center">Note moyenne du Reviewer</th>
+            </tr>
+        {% for problem in problems %}
+            <tr>
+                <td class="td-center"><a href="{% url 'FPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a></td>
+                <td class="td-center">{{problem.npres}}</td>
+                <td class="td-center">{{problem.meangradrep|floatformat:2}}</td>
+                <td class="td-center">{{problem.meangradopp|floatformat:2}}</td>
+                <td class="td-center">{{problem.meangradrev|floatformat:2}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+
+{% endblock content %}

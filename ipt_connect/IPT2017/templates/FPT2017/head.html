@@ -1,0 +1,41 @@
+{% load staticfiles %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+	<link rel="stylesheet" type="text/css" href="{% static 'FPT2017/css/style.css' %}"/>
+    <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans" rel="stylesheet">    <script src="/static/js/sorttable.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'FPT2017/IPT_logo.png' %}" />
+    <title>FPT 2017</title>
+</head>
+<body>
+        <div class="topmenu">
+            <h1>
+                <table><tr>
+                    <td style="width:75px"><a href="//iptnet.info"><img src="{% static 'FPT2017/IPT_logo.png' %}" alt="FPT 2017" style="width:50px;height:50px;"></a></td>
+                    <td class="td-center" style="width:250px;text-align:left"><a href="//connect.iptnet.info">IPT connect | </a><a href="{% url 'FPT2017:tournament_overview' %}">FPT 2017</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:rounds' %}">Physics Fights</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:ranking' %}">Classement</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:problems_overview' %}">Problèmes</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:participants_overview' %}">Participants</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:jurys_overview' %}">Jurés</a></td>
+
+                </tr></table>
+            </h1>
+        </div>
+{% block content %}
+{% endblock %}
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-64253971-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+{% extends 'FPT2017/head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Aperçu des participants</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">Cliquez sur les noms pour accéder à des statistiques plus détaillées. Cliquez sur les en-têtes des colonnes pour trier le tableau.</p>
+    </div>
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Nom</th>
+                <th class="th-center">Équipe</th>
+                <th class="th-center">Points (somme)</th>
+                <th class="th-center">Note moyenne</th>
+                <th class="th-center">Note moyenne Reporter</th>
+                <th class="th-center">Note moyenne Opponent</th>
+                <th class="th-center">Note moyenne Reviewer</th>
+            </tr>
+        {% for participant in participants %}
+            <tr>
+                <td class="td-center"><a href="{% url 'FPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
+                <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
+                <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_reporter|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_opponent|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_reviewer|floatformat:2}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock content %}

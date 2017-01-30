@@ -1,0 +1,50 @@
+{% extends 'FPT2017/head.html' %}
+{% load humanize %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>Classement général</h1>
+    </div>
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="th-center">Rang</th>
+                <th class="th-center">Équipe</th>
+                <th class="th-center">Points</th>
+                <th class="th-center">Statut des Physics Fights</th>
+            </tr>
+        {% for team in rankteams %}
+            <tr>
+                {% if team.emphase %}
+                <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
+                <td class="td-center"><p class="emphase"><a href="{% url 'FPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
+                <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
+                <td class="td-center">
+                    {% if team.ongoingpf %}
+                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight en cours</p>
+                    {% else %}
+                        <p class="emphase"><b>{{team.pfsplayed}}</b> fights finis</p>
+                    {% endif %}
+
+                {% else %}
+                <td class="td-center">{{team.rank|ordinal}}</td>
+                <td class="td-center"><a href="{% url 'FPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></td>
+                <td class="td-center">{{team.total_points|floatformat:2}}</td>
+                <td class="td-center">
+                    {% if team.ongoingpf %}
+                        <b>{{team.currentpf|ordinal}}</b> fight en cours
+                    {% else %}
+                        <b>{{team.pfsplayed}}</b> fights finis
+                    {% endif %}
+
+                {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+
+        </table>
+    </div>
+{% endblock content %}

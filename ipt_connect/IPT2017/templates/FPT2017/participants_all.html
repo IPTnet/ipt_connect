@@ -1,0 +1,23 @@
+{% extends 'FPT2017/head_bis.html' %}
+
+{% block content %}
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Nom</th>
+                <th class="th-center">Équipe</th>
+                <th class="th-center">Rôle</th>
+            </tr>
+        {% for participant in participants %}
+            <tr>
+                <td class="td-center">{{participant.fullname}}</td>
+                <td class="td-center">{{participant.team.name}}</td>
+                <td class="td-center">{{participant.role}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+	
+
+{% endblock content %}

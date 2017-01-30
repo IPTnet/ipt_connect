@@ -1,0 +1,36 @@
+{% extends 'FPT2017/head.html' %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{{participant.fullname}}</h1>
+    </div>
+
+    <div class="content container">
+        <li>Membre de l'équipe <a href="{% url 'FPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
+
+    </div>
+
+
+    <div class="content container">
+
+        <table class="sortable">
+            <tr>
+                <th class="th-center">Problèmes présentés</th>
+                <th class="th-center">Note</th>
+                <th class="th-center">Rôle</th>
+            </tr>
+            {% for average_grade in average_grades %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'FPT2017:problem_detail' pk=average_grade.round.problem_presented.pk %}">{{average_grade.round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'FPT2017:round_detail' pk=average_grade.round.pk %}">{{average_grade.value|floatformat:2}}</a></td>
+                    <td class="td-center">{{average_grade.role}}</td>
+
+                </tr>
+            {% endfor %}
+
+        </table>
+    </div>
+
+    </div>
+{% endblock content %}
