@@ -30,4 +30,5 @@ urlpatterns = [
 	url(r'^jury_export$', jury_export),
 	url(r'^jury_export_web$', jury_export_web),
 	url(r'^trombinoscope$', participants_trombinoscope),
+    url(r'^soon', soon),
 ]
