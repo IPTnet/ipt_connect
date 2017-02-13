@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 from models import *
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.admin.views.decorators import staff_member_required
 
 def home(request):
 
@@ -14,9 +15,54 @@ def home(request):
 	return HttpResponse(text)
 
 cache_duration_short = 60 * 1
-cache_duration = 60 *  60 * 60
+cache_duration = 60 *  60
+
+ninja_mode = True
+
+def ninja_test(user):
+	return user.is_staff or not ninja_mode
+
+@cache_page(cache_duration)
+def soon(request):
+	return render(request, 'IPT2017/bebacksoon.html')
+
+#####################################################
+################# SUPER USERS VIEWS #################
+@user_passes_test(lambda u: u.is_superuser)
+def participants_trombinoscope(request):
+	participants = Participant.objects.all().order_by('team','surname')
+
+	return render(request, 'IPT2017/participants_trombinoscope.html', {'participants': participants})
+
+@user_passes_test(lambda u: u.is_superuser)
+def participants_export(request):
+	participants = Participant.objects.all().order_by('team','role','name')
+
+	return render(request, 'IPT2017/listing_participants.html', {'participants': participants})
+
+@user_passes_test(lambda u: u.is_superuser)
+def participants_export_web(request):
+	participants = Participant.objects.exclude(role='ACC').order_by('team','role','surname')
+
+	return render(request, 'IPT2017/listing_participants_web.html', {'participants': participants})
+
+@user_passes_test(lambda u: u.is_superuser)
+def jury_export(request):
+	jurys = Jury.objects.all().order_by('surname')
+
+	return render(request, 'IPT2017/listing_jurys.html', {'jurys': jurys})
+
+@user_passes_test(lambda u: u.is_superuser)
+def jury_export_web(request):
+	jurys = Jury.objects.filter(team=None).order_by('surname')
+
+	return render(request, 'IPT2017/listing_jurys_web.html', {'jurys': jurys})
+################# SUPER USERS VIEWS #################
+#####################################################
 
 
+
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def participants_overview(request):
 	participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
@@ -33,42 +79,15 @@ def participants_overview(request):
 
 	return render(request, 'IPT2017/participants_overview.html', {'participants': participants})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def participants_all(request):
 	participants = Participant.objects.all().order_by('team','surname')
 
 	return render(request, 'IPT2017/participants_all.html', {'participants': participants})
-	
-@user_passes_test(lambda u: u.is_superuser)
-def participants_trombinoscope(request):
-	participants = Participant.objects.all().order_by('team','surname')
-
-	return render(request, 'IPT2017/participants_trombinoscope.html', {'participants': participants})
-
-@user_passes_test(lambda u: u.is_superuser)
-def participants_export(request):
-	participants = Participant.objects.all().order_by('team','role','name')
-
-	return render(request, 'IPT2017/listing_participants.html', {'participants': participants})
-
-def participants_export_web(request):
-	participants = Participant.objects.exclude(role='ACC').order_by('team','role','surname')
-
-	return render(request, 'IPT2017/listing_participants_web.html', {'participants': participants})
-	
-def jury_export(request):
-	jurys = Jury.objects.all().order_by('surname')
-
-	return render(request, 'IPT2017/listing_jurys.html', {'jurys': jurys})
-	
-def jury_export_web(request):
-	jurys = Jury.objects.filter(team=None).order_by('surname')
-
-	return render(request, 'IPT2017/listing_jurys_web.html', {'jurys': jurys})	
-	
 
 
-
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def participant_detail(request, pk):
 	participant = Participant.objects.get(pk=pk)
@@ -85,6 +104,7 @@ def participant_detail(request, pk):
 
 	return render(request, 'IPT2017/participant_detail.html', {'participant': participant, "average_grades": average_grades})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def jurys_overview(request):
 	jurys = Jury.objects.all().order_by('name')
@@ -106,12 +126,14 @@ def jurys_overview(request):
 	return render(request, 'IPT2017/jurys_overview.html', {'jurys': jurys})
 
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def jury_detail(request, pk):
 	jury = Jury.objects.get(pk=pk)
 	mygrades = JuryGrade.objects.filter(jury=jury)
 	return render(request, 'IPT2017/jury_detail.html', {'jury': jury, "grades": mygrades})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def tournament_overview(request):
 	rounds = Round.objects.all()
@@ -134,12 +156,14 @@ def tournament_overview(request):
 		orderedroundsperroom.append(thisroom)
 	return render(request, 'IPT2017/tournament_overview.html', {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def teams_overview(request):
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
 	return render(request, 'IPT2017/teams_overview.html', {'teams': teams})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def team_detail(request, team_name):
 	team = Team.objects.get(name=team_name)
@@ -200,6 +224,7 @@ def team_detail(request, team_name):
 			penalties.append([ind+1, p])
 	return render(request, 'IPT2017/team_detail.html', {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def problems_overview(request):
 	problems = Problem.objects.all().order_by('name')
@@ -217,6 +242,7 @@ def problems_overview(request):
 
 	return render(request, 'IPT2017/problems_overview.html', {'problems': problems})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def problem_detail(request, pk):
 	problem = Problem.objects.get(pk=pk)
@@ -224,6 +250,7 @@ def problem_detail(request, pk):
 
 	return render(request, 'IPT2017/problem_detail.html', {'problem': problem, "meangrades": meangrades, "teamresults": teamresults})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration_short)
 def rounds(request):
 	rounds = Round.objects.all()
@@ -264,6 +291,7 @@ def rounds(request):
 		return render(request, 'IPT2017/rounds.html', {'orderedroundsperroom': orderedroundsperroom})
 
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration_short)
 def round_detail(request, pk):
 	round = Round.objects.get(pk=pk)
@@ -296,6 +324,7 @@ def round_detail(request, pk):
 
 	return render(request, 'IPT2017/round_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration_short)
 def finalround_detail(request, pk):
 	round = Round.objects.filter(pk=pk)
@@ -326,6 +355,7 @@ def finalround_detail(request, pk):
 
 
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def physics_fights(request):
 	rounds = Round.objects.all()
@@ -334,6 +364,7 @@ def physics_fights(request):
 	pf3 = rounds.filter(pf_number=3)
 	return render(request, 'IPT2017/physics_fights.html', {'pf1': pf1, 'pf2': pf2, 'pf3': pf3})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):
 	rounds = Round.objects.filter(pf_number=pfid)
@@ -399,6 +430,7 @@ def physics_fight_detail(request, pfid):
 
 	return render(request, 'IPT2017/physics_fight_detail.html', {"roomgrades": roomgrades})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def ranking(request):
 	# teams = Team.objects.all()
@@ -427,6 +459,5 @@ def ranking(request):
 			if team.rank == 1:
 				team.emphase=True
 			rankteams.append(team)
-	
-	return render(request, 'IPT2017/ranking.html', {'rankteams': rankteams})
 
+	return render(request, 'IPT2017/ranking.html', {'rankteams': rankteams})
