@@ -69,9 +69,9 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','email','role','gender','birthdate','veteran','diet','shirt_size','remark')
+	list_display = ('surname','name','team','email','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
 	search_fields = ('surname','name')
-	list_filter = ('team','gender','role','veteran','diet','shirt_size')
+	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
 
 	def save_model(self, request, obj, form, change):
 		if not(request.user.is_superuser):
@@ -89,8 +89,8 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 class JuryAdmin(admin.ModelAdmin):
 
-	list_display = ('name','surname','team','affiliation','pf1','pf2','pf3','remark',)
-	list_filter = ('team','pf1','pf2','pf3',)
+	list_display = ('name','surname','team','affiliation','pf1','pf2','pf3','pf4','final','remark',)
+	list_filter = ('team','pf1','pf2','pf3','pf4','final',)
 	search_fields = ('name','surname','affiliation',)
 
 # Register your models here.
