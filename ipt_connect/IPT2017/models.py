@@ -55,7 +55,7 @@ class Participant(models.Model):
 
 	GENDER_CHOICES = ( ('M','Male'), ('F','Female'), ('D','Decline to report'))
 
-	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompagnying') )
+	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompanying') )
 
 	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs') )
 
@@ -72,12 +72,13 @@ class Participant(models.Model):
 	gender = models.CharField(max_length=1,choices=GENDER_CHOICES,verbose_name='Gender')
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email')
 	birthdate = models.DateField(default='1900-01-31',verbose_name='Birthdate')
-	photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2017/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
+	#photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2017/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
 	affiliation = models.CharField(max_length=50,default='XXX University')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the IPT? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
+	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room?",verbose_name='Mixed gender accommodation?')
 	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
 	remark = models.TextField(blank=True,verbose_name='Remarks')
 
