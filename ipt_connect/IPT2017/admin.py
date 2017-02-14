@@ -69,7 +69,7 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','email','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
+	list_display = ('surname','name','team','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
 	search_fields = ('surname','name')
 	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
 
