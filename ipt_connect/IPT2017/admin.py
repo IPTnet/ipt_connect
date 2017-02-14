@@ -63,13 +63,13 @@ class Roundadmin(admin.ModelAdmin):
 
 class TeamAdmin(admin.ModelAdmin):
 
-	list_display = ('name','IOC')
+	list_display = ('name','IOC','surname')
 	search_fields = ('name','IOC')
 
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
+	list_display = ('surname','name','team','affiliation','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
 	search_fields = ('surname','name')
 	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
 
