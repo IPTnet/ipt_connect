@@ -74,6 +74,7 @@ class Participant(models.Model):
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email')
 	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
 	phone_number = models.CharField(max_length=20,validators=[phone_regex], blank=True,help_text="Compulsory for the Team Leaders.") # validators should be a list
+	passport_number = models.CharField(max_length=50)
 	birthdate = models.DateField(default='1900-01-31',verbose_name='Birthdate')
 	#photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2017/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
