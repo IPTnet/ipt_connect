@@ -731,6 +731,8 @@ class Jury(models.Model):
 	final = models.BooleanField(default=False,verbose_name='Final')
 	remark = models.TextField(blank=True,verbose_name='Remarks')
 	
+	class Meta:
+         verbose_name = "Juror"
 
 	def __unicode__(self):
 		return self.name
