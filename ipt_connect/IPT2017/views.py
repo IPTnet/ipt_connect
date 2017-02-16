@@ -34,11 +34,11 @@ def participants_trombinoscope(request):
 
 	return render(request, 'IPT2017/participants_trombinoscope.html', {'participants': participants})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'magnusson')
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
-	return render(request, 'IPT2017/listing_participants.html', {'participants': participants})
+	return render(request, 'IPT2017/participants_export.html', {'participants': participants})
 
 @user_passes_test(lambda u: u.is_superuser)
 def participants_export_web(request):
