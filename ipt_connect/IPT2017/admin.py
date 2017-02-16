@@ -63,7 +63,7 @@ class Roundadmin(admin.ModelAdmin):
 
 class TeamAdmin(admin.ModelAdmin):
 
-	list_display = ('name','IOC','surname')
+	list_display = ('name','surname','IOC')
 	search_fields = ('name','IOC')
 
 
@@ -74,7 +74,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
 
 	def save_model(self, request, obj, form, change):
-		if not(request.user.is_superuser):
+		if not(request.user.is_superuser) and not(request.user.username == 'magnusson'):
 			u = User.objects.get(username = request.user.username)
 			obj.team = u.Team_IPT2017
 			obj.save()
@@ -83,7 +83,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	def get_queryset(self,request):
 		qs = super(ParticipantAdmin,self).get_queryset(request)
 		u = User.objects.get(username = request.user.username)
-		if request.user.is_superuser:
+		if request.user.is_superuser or request.user.username == 'magnusson':
 			return qs
 		return qs.filter(team = u.Team_IPT2017)
 
