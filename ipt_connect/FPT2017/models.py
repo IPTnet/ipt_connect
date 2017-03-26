@@ -25,7 +25,7 @@ npf_tot = npf + int(with_final_pf)
 grade_choices = [(ind, ind) for ind in range(10+1)]
 
 def mean(vec):
-	return float(sum(vec)) / len(vec)
+	return float(sum(vec)) / max(len(vec),1)
 
 
 @deconstructible
@@ -719,18 +719,27 @@ class Room(models.Model):
 				return ind+1
 
 class Jury(models.Model):
-	name = models.CharField(max_length=50,verbose_name='Prénom')
 	surname = models.CharField(max_length=50,verbose_name='Nom')
+	name = models.CharField(max_length=50,verbose_name='Prénom')
 	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation à afficher')
 	team = models.ForeignKey('Team', null=True, blank=True)
 	pf1 = models.BooleanField(default=False,verbose_name='Présent lors du PF 1 ?')
 	pf2 = models.BooleanField(default=False,verbose_name='Présent lors du PF 2 ?')
 	pf3 = models.BooleanField(default=False,verbose_name='Présent lors du PF 3 ?')
 	remark = models.TextField(blank=True,verbose_name='Remarques')
-	
+
+	# functions
+	def fullname(self):
+		"""
+		:return: return the full name of the participant
+		"""
+		return self.name+' '+self.surname
 
 	def __unicode__(self):
-		return self.name
+		"""
+		:return: return the full name of the participant
+		"""
+		return self.fullname()
 
 class Round(models.Model):
 
@@ -927,11 +936,11 @@ class JuryGrade(models.Model):
 			)
 
 	def __unicode__(self):
-		return "Grade of %s" % self.jury.name
+		return "Grade of %s" % self.jury.name + self.jury.surname
 
 	def info(self):
 		print "=" * 36
-		print u"Grade of %s" % self.jury.name
+		print u"Grade of %s" % self.jury.name + self.jury.surname
 		print self.round
 		print "Reporter %s from %s : %i" % (self.round.name_reporter, self.round.reporter, self.grade_reporter)
 		print "Opponent %s from %s : %i" % (self.round.name_opponent, self.round.opponent, self.grade_opponent)
@@ -982,3 +991,9 @@ def update_points(sender, instance, **kwargs):
 
 		# and the problem mean scores
 		instance.problem_presented.update_scores()
+
+def update_all():
+	for team in Team.objects.all():
+		team.update_scores()
+	for pb in Problem.objects.all():
+		pb.update_scores()

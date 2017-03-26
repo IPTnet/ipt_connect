@@ -17,7 +17,7 @@ def home(request):
 cache_duration_short = 60 * 1
 cache_duration = 60 *  60
 
-ninja_mode = True
+ninja_mode = False
 
 def ninja_test(user):
 	return user.is_staff or not ninja_mode
@@ -301,7 +301,7 @@ def round_detail(request, pk):
 	meangrades = []
 
 	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
-	if None in [round.reporter_team, round.opponent_team, round.reviewer_team]:
+	if None in [round.reporter_team, round.opponent_team, round.reviewer_team, round.problem_presented]:
 		started = False
 	else:
 		started = True
@@ -334,7 +334,7 @@ def finalround_detail(request, pk):
 	meangrades = []
 
 	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
-	if None in [thisround.reporter_team, thisround.opponent_team, thisround.reviewer_team]:
+	if None in [thisround.reporter_team, thisround.opponent_team, thisround.reviewer_team, thisround.problem_presented]:
 		started = False
 	else:
 		started = True

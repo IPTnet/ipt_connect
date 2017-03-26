@@ -734,7 +734,7 @@ class Jury(models.Model):
 	pf4 = models.BooleanField(default=False,verbose_name='PF 4')
 	final = models.BooleanField(default=False,verbose_name='Final')
 	remark = models.TextField(blank=True,verbose_name='Remarks')
-	
+
 	class Meta:
          verbose_name = "Juror"
 
@@ -991,3 +991,47 @@ def update_points(sender, instance, **kwargs):
 
 		# and the problem mean scores
 		instance.problem_presented.update_scores()
+
+		# If this is the last round of a fight, it is time to distribute bonus points !
+		if instance.round_number == 3 :
+			rounds = Round.objects.filte(pf_number=instance.pf_number).filter(room=instance.room).order_by('round_number')
+
+			assert len(rounds) == 3, "didn't get the correct number of rounds"
+
+			# get the points of the physics fight for the 2 teams (without bonuses) in a dictionary
+			points_dict = {}
+			for team in teams:
+				points_dict[team] = 0.0
+			for round in rounds :
+				# add the points of each round
+				points_dict[round.reporter_team] += round.points_reviewer
+				points_dict[round.opponent_team] += round.points_opponent
+				points_dict[round.reviewer_team] += round.points_reviewer
+
+			# get teams sorted by total points for the physics fight
+			team_podium = sorted(teams, key = lambda t : points_dict[t], reverse=True)
+			points_list = [points_dict[t] for t in team_podium]
+
+			# If everyone is ex-aequo
+			if points_list[0] == points_list[1] and points_list[0] == points_list[2] :
+				team_podium[0].total_points += 1.
+				team_podium[1].total_points += 1.
+				team_podium[2].total_points += 1.
+			# If 1 and 2 are ex-aequo
+			elif points_list[0] == points_list[1]:
+				team_podium[0].total_points += 1.5
+				team_podium[1].total_points += 1.5
+				team_podium[2].total_points += 0.0
+			# If 2 and 3 are ex-aequo
+			elif points_list[1] == points_list[2]:
+				team_podium[0].total_points += 2.0
+				team_podium[1].total_points += 0.5
+				team_podium[2].total_points += 0.5
+			# If no ex-aequo
+			else:
+				team_podium[0].total_points += 2.0
+				team_podium[1].total_points += 1.0
+				team_podium[2].total_points += 0.0
+
+			for team in teams:
+				team.save()

@@ -89,9 +89,10 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 class JuryAdmin(admin.ModelAdmin):
 
-	list_display = ('name','surname','team','affiliation','pf1','pf2','pf3','remark',)
+	list_display = ('surname','name','team','affiliation','pf1','pf2','pf3','remark',)
 	list_filter = ('team','pf1','pf2','pf3',)
-	search_fields = ('name','surname','affiliation',)
+	search_fields = ('surname','name','affiliation',)
+	# inlines = ('surname')
 
 # Register your models here.
 admin.site.register(Team,TeamAdmin)
