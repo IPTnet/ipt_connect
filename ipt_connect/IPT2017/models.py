@@ -781,21 +781,32 @@ class Round(models.Model):
 		opponent_grades = list(sorted([jurygrade.grade_opponent for jurygrade in jurygrades]))
 		reviewer_grades = list(sorted([jurygrade.grade_reviewer for jurygrade in jurygrades]))
 
-		####### For FPT 2017 #######
-		# print roundgrades
-		ngrades = len(reporter_grades)
-
+		ngrades = min(len(reporter_grades), len(opponent_grades), len(reviewer_grades))
 		if ngrades > 1 :
-			# Remove lowest grade
-			reporter_grades.pop(0)
-			opponent_grades.pop(0)
-			reviewer_grades.pop(0)
+			for grades in [reporter_grades, opponent_grades, reviewer_grades]:
+				if len(grades) in [5, 6]:
+					nreject = 1
+				elif len(grades) in [7, 8]:
+					nreject = 2
+				else:
+					nreject = round(len(grades) / 4.0)
 
-			# If there are 7 or more jury members, remove highest grade too
-			if ngrades >= 7 :
-				reporter_grades.pop(-1)
-				opponent_grades.pop(-1)
-				reviewer_grades.pop(-1)
+				if round(nreject / 2.0) == nreject / 2.0:
+				   nlow = int(nreject / 2.0)
+				   nhigh = int(nlow)
+				else:
+				   nlow = int(nreject / 2.0 + 0.5)
+				   nhigh = int(nreject / 2.0 - 0.5)
+
+				i = 0
+				while i < nhigh:
+				   grades.pop(-1)
+				   i += 1
+
+				i = 0
+				while i < nlow:
+				   grades.pop(0)
+				   i += 1
 
 			self.score_reporter = mean(reporter_grades)
 			self.score_opponent = mean(opponent_grades)
