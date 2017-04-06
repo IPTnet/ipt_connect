@@ -621,7 +621,7 @@ def update_points(sender, instance, **kwargs):
 
 		# If this is the last round of a fight, it is time to distribute bonus points !
 		if instance.round_number == 3 :
-			rounds = Round.objects.filte(pf_number=instance.pf_number).filter(room=instance.room).order_by('round_number')
+			rounds = Round.objects.filter(pf_number=instance.pf_number).filter(room=instance.room).order_by('round_number')
 
 			assert len(rounds) == 3, "didn't get the correct number of rounds"
 

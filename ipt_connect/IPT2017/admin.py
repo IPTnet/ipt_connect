@@ -44,7 +44,7 @@ class Roundadmin(admin.ModelAdmin):
 		# first save the inlines
 		for formset in formsets:
 			self.save_formset(request, form, formset, change=change)
-		# the save the round once, triggerring the update_scores methods
+		# then save the round once, triggerring the update_scores methods
 		form.instance.save()
 
 	# def save_formset(self, request, form, formset, change):
