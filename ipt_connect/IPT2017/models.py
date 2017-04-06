@@ -392,6 +392,11 @@ class Room(models.Model):
 class Jury(models.Model):
 	name = models.CharField(max_length=50,verbose_name='Name')
 	surname = models.CharField(max_length=50,verbose_name='Surname')
+	def fullname(self):
+		"""
+		:return: return the full name of the jury member
+		"""
+		return self.name+' '+self.surname
 	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation to display',help_text='Will be used for export (badges and web).')
 	team = models.ForeignKey('Team', null=True, blank=True)
 	pf1 = models.BooleanField(default=False,verbose_name='PF 1')
