@@ -5,7 +5,7 @@
 </div>
 
 <div class="content container">
-    <h1> {{team.rank|ordinal}} avec {{team.total_points|floatformat:2}} points.</h1>
+    <h1> {{team.rank|ordinal}} with {{team.total_points|floatformat:2}} points.</h1>
 </div>
 
 
@@ -13,7 +13,7 @@
     <h2>Participants:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'IPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} a rapporté {{participant.total_points|floatformat:2}} points.</a></li>
+        <li><a href="{% url 'IPT2017:participant_detail' pk=participant.pk %}">{{participant.fullname}} gathered {{participant.total_points|floatformat:2}} points.</a></li>
     </div>
     {% endfor %}
 
@@ -29,9 +29,9 @@
 <div class="content container">
     <table class="sortable">
         <tr>
-            <th class="th-center">Problèmes présentés</th>
-            <th class="th-center">Note</th>
-            <th class="th-center">Rôle</th>
+            <th class="th-center">Problems presented</th>
+            <th class="th-center">Grade</th>
+            <th class="th-center">Role</th>
         </tr>
         {% for round in allrounds %}
         <tr>
@@ -47,10 +47,10 @@
 
 <div class="content container">
     {% if penalties %}
-    <h3>Pénalités:</h3>
+    <h3>Penalties:</h3>
     {% for p in penalties %}
 
-    <li>Coefficient multiplicatif de {{p.1}} pour le Reporter dans le {{p.0|ordinal}} Physics Fight.</li>
+    <li>Multiplicative coefficient of {{p.1}} for the Reporter in the {{p.0|ordinal}} Physics Fight.</li>
 
     {% endfor %} {% endif %}
 

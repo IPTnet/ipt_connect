@@ -611,7 +611,7 @@ class EternalRejection(models.Model):
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
 def update_points(sender, instance, **kwargs):
-	print "YOLOOOO !!!"
+	print "Updating points !!!"
 	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) or instance.problem_presented is None :
 		# then all teams aren't yet defined, there is no need to compute scores
 		pass

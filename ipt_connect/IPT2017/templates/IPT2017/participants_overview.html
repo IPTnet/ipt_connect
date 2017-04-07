@@ -3,23 +3,23 @@
 {% block content %}
 
     <div class="section">
-        <h1>Aperçu des participants</h1>
+        <h1>Participants overview</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Cliquez sur les noms pour accéder à des statistiques plus détaillées. Cliquez sur les en-têtes des colonnes pour trier le tableau.</p>
+        <p class="emphase">Clic on the names for detailed statistics. Clic on the headers to sort the table.</p>
     </div>
 
     <div class="content container">
         <table class="sortable">
             <tr>
-                <th class="th-center">Nom</th>
-                <th class="th-center">Équipe</th>
-                <th class="th-center">Points (somme)</th>
-                <th class="th-center">Note moyenne</th>
-                <th class="th-center">Note moyenne Reporter</th>
-                <th class="th-center">Note moyenne Opponent</th>
-                <th class="th-center">Note moyenne Reviewer</th>
+                <th class="th-center">Name</th>
+                <th class="th-center">Team</th>
+                <th class="th-center">Points (sum)</th>
+                <th class="th-center">Mean grade</th>
+                <th class="th-center">Mean Report grade</th>
+                <th class="th-center">Mean Opposition grade</th>
+                <th class="th-center">Mean Review grade</th>
             </tr>
         {% for participant in participants %}
             <tr>

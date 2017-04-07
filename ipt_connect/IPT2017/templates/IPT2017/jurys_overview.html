@@ -4,21 +4,21 @@
 {% block content %}
 
     <div class="section">
-        <h1>Aperçu des jurés</h1>
+        <h1>Jury overview</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Cliquez sur les noms pour accéder à des statistiques plus détaillées. Cliquez sur les en-têtes des colonnes pour trier le tableau.</p>
+        <p class="emphase">Clic on the names for detailed statistics. Clic on the headers to sort the table.</p>
     </div>
 
 
     <div class="content container">
         <table class="sortable">
             <tr>
-                <th class="th-center">Nom</th>
-                <th class="th-center">Note moyenne pour le Reporter</th>
-                <th class="th-center">Note moyenne pour l'Opponent</th>
-                <th class="th-center">Note moyenne pour le Reviewer</th>
+                <th class="th-center">Name</th>
+                <th class="th-center">Mean grade of the Reporter</th>
+                <th class="th-center">Mean grade of the Opponent</th>
+                <th class="th-center">Mean grade of the Reviewer</th>
             </tr>
         {% for jury in jurys %}
             <tr>

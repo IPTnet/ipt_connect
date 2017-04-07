@@ -1,5 +1,5 @@
 {% extends 'IPT2017/head.html' %}
-
+{% load staticfiles %}
 {% block content %}
 
     <div class="section">
@@ -9,9 +9,9 @@
 	<div class="content container">
 	<table style="width:100%">
   <tr>
-  <td><img src="IPT_logo.png" width=500></td>
+  <td><img src="{% static 'IPT2017/IPT_logo.png' %}" alt="IPT 2017" style="width:50px;height:50px;" width="500"></td>
     <td>
-        <p class="emphase">Come back later to discover the full interface !</p>
+        <p class="emphase">Come back later to discover the wonders of the IPT-connect interface!</p>
 
     </td>
 

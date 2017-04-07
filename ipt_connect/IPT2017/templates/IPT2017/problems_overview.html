@@ -3,21 +3,21 @@
 {% block content %}
 
     <div class="section">
-        <h1>Aperçu des problèmes</h1>
+        <h1>Problems overview</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Cliquez sur les noms des problèmes pour accéder à des statistiques plus détaillées. Cliquez sur les en-têtes des colonnes pour trier le tableau.</p>
+        <p class="emphase">Click on the problem names for detailed statistics. Click on the headers to sort the table.</p>
     </div>
 
     <div class="content container">
         <table class="sortable">
             <tr>
-                <th class="th-center">Nom</th>
-                <th class="th-center"># de présentations</th>
-                <th class="th-center">Note moyenne du Reporter</th>
-                <th class="th-center">Note moyenne de l'Opponent</th>
-                <th class="th-center">Note moyenne du Reviewer</th>
+                <th class="th-center">Name</th>
+                <th class="th-center"># of presentations</th>
+                <th class="th-center">Mean Report grade</th>
+                <th class="th-center">Mean Opposition grade</th>
+                <th class="th-center">Mean Review grade</th>
             </tr>
         {% for problem in problems %}
             <tr>

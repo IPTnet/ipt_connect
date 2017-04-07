@@ -1,7 +1,7 @@
 {% extends 'IPT2017/head.html' %} {% load humanize %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
 
 <div class="section">
-    <h1>Physics Fight {{roomgrades.0.2.pf}} | Salle {{roundsgrades.2.room}}</h1>
+    <h1>Physics Fight {{roomgrades.0.2.pf}} | Room {{roundsgrades.2.room}}</h1>
 </div>
 
 
@@ -45,7 +45,7 @@
 
         <tr>
             <td>
-                <p class="emphase">MOYENNE*</p>
+                <p class="emphase">MEAN*</p>
             </td>
             {% for meanroundsgrade in roundsgrades.1 %} {% if meanroundsgrade %}
             <td>
@@ -64,18 +64,18 @@
 </div>
 
 <div class="content container">
-    <p class="comment">*La moins bonne note n'est pas prise en compte; et s'il y a sept jurés ou plus, la plus haute note non plus. Ici les coefficients multiplicatifs liés aux rôles (3,2 et 1) ne sont pas pris en compte.</p>
+    <p class="comment">*The lowest and highest grade(s) might be discarded according to the number of jury members.</p>
 </div>
 
 {% else %}
 <div class="content container">
-    <p class="emphase">Aucune note enregistrée pour le moment !</p>
+    <p class="emphase">No grade registered so far !</p>
 </div>
 
 {% endif %} {% endfor %} {% else %}
 
 <div class="content container">
-    <p class="emphase">Aucun Round joué pour le moment !</p>
+    <p class="emphase">No round played so far !</p>
 </div>
 
 {% endif %} {% endblock content %}

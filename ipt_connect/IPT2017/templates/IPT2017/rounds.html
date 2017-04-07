@@ -4,11 +4,11 @@
 {% block content %}
 
     <div class="section">
-        <h1>Aperçu des Rounds</h1>
+        <h1>Rounds overview</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Cliquez sur chaque Round pour avoir un résumé détaillé. Cliquez sur les Physics Fights pour avoir une vue synthétique de tous les Rounds.</p>
+        <p class="emphase">Click on a Round to get a detailed summary. Click on a Physics Fight to get a summarized view of all the corresponding Rounds.</p>
     </div>
 
     <div class="content container">
@@ -18,6 +18,7 @@
                 <th class="th-center"><a href="{% url 'IPT2017:physics_fight_detail' pfid=1 %}">Physics Fight 1</a></th>
                 <th class="th-center"><a href="{% url 'IPT2017:physics_fight_detail' pfid=2 %}">Physics Fight 2</a></th>
                 <th class="th-center"><a href="{% url 'IPT2017:physics_fight_detail' pfid=3 %}">Physics Fight 3</a></th>
+                <th class="th-center"><a href="{% url 'IPT2017:physics_fight_detail' pfid=3 %}">Physics Fight 4</a></th>
             </tr>
 
             {% for thisroom in orderedroundsperroom %}
