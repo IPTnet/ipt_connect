@@ -28,7 +28,10 @@ npf_tot = npf + int(with_final_pf)
 grade_choices = [(ind, ind) for ind in range(10+1)]
 
 def mean(vec):
-	return float(sum(vec)) / len(vec)
+	if len(vec) != 0:
+		return float(sum(vec)) / len(vec)
+	else:
+		return 0
 
 
 @deconstructible
