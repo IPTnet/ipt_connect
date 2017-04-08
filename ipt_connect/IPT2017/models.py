@@ -397,7 +397,7 @@ class Jury(models.Model):
 		:return: return the full name of the jury member
 		"""
 		return self.name+' '+self.surname
-	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email')
+	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email', blank=True)
 	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation to display',help_text='Will be used for export (badges and web).')
 	team = models.ForeignKey('Team', null=True, blank=True)
 	pf1 = models.BooleanField(default=False,verbose_name='PF 1')
