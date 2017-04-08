@@ -34,7 +34,7 @@ class Roundadmin(admin.ModelAdmin):
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
 
 	# Saving the round triggers the computation of the scores, so we need to save the
-	# JuryGrade's first in order to use up-to-date grades. The soution used here is to
+	# JuryGrade's first in order to use up-to-date grades. The solution used here is to
 	# use the save_related function, which will first save the inline models, and then
 	# call round.save() in there
 	def save_model(self, request, obj, form, change):

@@ -418,8 +418,6 @@ class Jury(models.Model):
 	class Meta:
 		verbose_name = "Juror"
 
-	def __unicode__(self):
-		return self.name
 
 class Round(models.Model):
 
