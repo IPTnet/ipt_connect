@@ -12,6 +12,8 @@ from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
 from django.db.models import Avg, Sum
 from django.core.validators import RegexValidator
+from django.dispatch import Signal
+
 
 # Parameters
 npf = 4					# Number of Physics fights
@@ -668,3 +670,15 @@ def update_points(sender, instance, **kwargs):
 
 			for team in teams:
 				team.save()
+
+
+update_signal = Signal()
+
+@receiver(update_signal, sender=Round, dispatch_uid="update_all")
+def update_all(sender, **kwargs):
+	for team in Team.objects.all():
+		team.update_scores()
+	for pb in Problem.objects.all():
+		pb.update_scores()
+
+	return "Teams, participants and problems updated !"

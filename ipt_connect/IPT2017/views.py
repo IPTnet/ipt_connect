@@ -57,6 +57,15 @@ def jury_export_web(request):
 	jurys = Jury.objects.filter(team=None).order_by('surname')
 
 	return render(request, 'IPT2017/listing_jurys_web.html', {'jurys': jurys})
+
+@user_passes_test(lambda u: u.is_superuser)
+def update_all(request):
+	list_receivers = update_signal.send(sender=Round)
+
+	assert len(list_receivers) == 1, "len(list_receivers) is not 1 in view update_all"
+
+	return HttpResponse(list_receivers[0][1])
+
 ################# SUPER USERS VIEWS #################
 #####################################################
 
