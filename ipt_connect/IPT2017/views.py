@@ -15,7 +15,7 @@ def home(request):
 	return HttpResponse(text)
 
 cache_duration_short = 1 * 1
-cache_duration = 60 *  5
+cache_duration = 1 *  5
 
 ninja_mode = True
 
@@ -65,9 +65,6 @@ def update_all(request):
 	assert len(list_receivers) == 1, "len(list_receivers) is not 1 in view update_all"
 
 	return HttpResponse(list_receivers[0][1])
-
-################# SUPER USERS VIEWS #################
-#####################################################
 
 
 

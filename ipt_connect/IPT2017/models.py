@@ -2,11 +2,10 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
-import os
+import os, sys
 from uuid import uuid4
 from django.utils.encoding import iri_to_uri
 from string import replace
-import sys
 from django.utils.deconstruct import deconstructible
 from django.db.models.signals import post_save, pre_save
 from django.dispatch import receiver
@@ -402,6 +401,10 @@ class Jury(models.Model):
 		:return: return the full name of the jury member
 		"""
 		return self.name+' '+self.surname
+
+	def __unicode__(self):
+		return self.fullname()
+
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email', blank=True)
 	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation to display',help_text='Will be used for export (badges and web).')
 	team = models.ForeignKey('Team', null=True, blank=True)
@@ -616,13 +619,12 @@ class EternalRejection(models.Model):
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
 def update_points(sender, instance, **kwargs):
-	print "YOLOOOO !!!"
+	print "Updating points !"
 	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) or instance.problem_presented is None :
 		# then all teams aren't yet defined, there is no need to compute scores
 		pass
 	else :
 		teams = [instance.reporter_team, instance.opponent_team, instance.reviewer_team]
-
 		# then compute teams (and participants) scores
 		for team in teams:
 			team.update_scores()
@@ -636,7 +638,7 @@ def update_points(sender, instance, **kwargs):
 
 			assert len(rounds) == 3, "didn't get the correct number of rounds"
 
-			# get the points of the physics fight for the 2 teams (without bonuses) in a dictionary
+			# get the points of the physics fight for the 3 teams (without bonuses) in a dictionary
 			points_dict = {}
 			for team in teams:
 				points_dict[team] = 0.0
@@ -647,7 +649,7 @@ def update_points(sender, instance, **kwargs):
 				points_dict[round.reviewer_team] += round.points_reviewer
 
 			# get teams sorted by total points for the physics fight
-			team_podium = sorted(teams, key = lambda t : points_dict[t], reverse=True)
+			team_podium = sorted(teams, key = lambda t : points_dict[t], reverse=False)
 			points_list = [points_dict[t] for t in team_podium]
 
 			# If everyone is ex-aequo
@@ -676,12 +678,14 @@ def update_points(sender, instance, **kwargs):
 
 
 update_signal = Signal()
-
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
-	for team in Team.objects.all():
-		team.update_scores()
+	for round in Round.objects.all():
+		update_points(sender, instance=round)
+
+	# just in case...
 	for pb in Problem.objects.all():
 		pb.update_scores()
 
 	return "Teams, participants and problems updated !"
+
