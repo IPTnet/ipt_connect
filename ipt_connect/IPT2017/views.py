@@ -15,7 +15,7 @@ def home(request):
 	return HttpResponse(text)
 
 cache_duration_short = 1 * 1
-cache_duration = 1 *  5
+cache_duration = 30 *  1
 
 ninja_mode = True
 
@@ -411,3 +411,51 @@ def ranking(request):
 			rankteams.append(team)
 
 	return render(request, 'IPT2017/ranking.html', {'rankteams': rankteams})
+
+def poolranking(request):
+
+	# Pool A
+	rankteamsA = []
+	ranking = Team.objects.filter(pool="A").order_by('-total_points')
+
+	# if len(teams) > 0 :
+	if len(ranking) > 0:
+
+		for ind, team in enumerate(ranking):
+			nrounds_as_rep = team.nrounds_as_rep # Round.objects.filter(reporter_team=team)
+			nrounds_as_opp = team.nrounds_as_opp # Round.objects.filter(opponent_team=team)
+			nrounds_as_rev = team.nrounds_as_rev # Round.objects.filter(reviewer_team=team)
+			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
+			team.pfsplayed = pfsplayed
+			team.ongoingpf = False
+			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
+				team.ongoingpf = True
+				team.currentpf = pfsplayed+1
+			team.rank = ind+1
+			if team.rank == 1:
+				team.emphase=True
+			rankteamsA.append(team)
+
+	# Pool B
+	rankteamsB = []
+	ranking = Team.objects.filter(pool="B").order_by('-total_points')
+
+	# if len(teams) > 0 :
+	if len(ranking) > 0:
+
+		for ind, team in enumerate(ranking):
+			nrounds_as_rep = team.nrounds_as_rep # Round.objects.filter(reporter_team=team)
+			nrounds_as_opp = team.nrounds_as_opp # Round.objects.filter(opponent_team=team)
+			nrounds_as_rev = team.nrounds_as_rev # Round.objects.filter(reviewer_team=team)
+			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
+			team.pfsplayed = pfsplayed
+			team.ongoingpf = False
+			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
+				team.ongoingpf = True
+				team.currentpf = pfsplayed+1
+			team.rank = ind+1
+			if team.rank == 1:
+				team.emphase=True
+			rankteamsB.append(team)
+
+	return render(request, 'IPT2017/poolranking.html', {'rankteamsA': rankteamsA, 'rankteamsB': rankteamsB})

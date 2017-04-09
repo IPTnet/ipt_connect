@@ -236,9 +236,12 @@ class Team(models.Model):
 	This model represent a team, to which all the participants belong to
 	"""
 
+	POOL_CHOICES = ( ('A','Pool A'), ('B','Pool B'), ('O','Not attributed'))
+
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
 	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT2017',verbose_name="Admin")
+	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)

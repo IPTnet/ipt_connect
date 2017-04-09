@@ -13,6 +13,7 @@
                 <th class="th-center">Rank</th>
                 <th class="th-center">Team</th>
                 <th class="th-center">Points</th>
+                <th class="th-center">Pool</th>
                 <th class="th-center">Physics Fights status</th>
             </tr>
         {% for team in rankteams %}
@@ -21,6 +22,7 @@
                 <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
                 <td class="td-center"><p class="emphase"><a href="{% url 'IPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
                 <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
+                <td class="td-center"><p class="emphase">{{team.pool}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
                         <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight ongoing</p>
@@ -46,5 +48,11 @@
         {% endfor %}
 
         </table>
+    </div>
+
+    <div>
+        <center>
+        <h3><a href="{% url 'IPT2017:poolranking' %}">Pools Ranking</a></h3>
+        </center>
     </div>
 {% endblock content %}

@@ -24,6 +24,7 @@ urlpatterns = [
 	url(r'^physics_fights$', physics_fights, name='physics_fights'),
 	url(r'^physics_fights/(?P<pfid>[0-9]+)/$', physics_fight_detail, name='physics_fight_detail'),
     url(r'^ranking$', ranking, name='ranking'),
+    url(r'^poolranking$', poolranking, name='poolranking'),
     url(r'^participants_export$', participants_export),
 	url(r'^participants_export_web$', participants_export_web),
 	url(r'^participants_all$', participants_all),
