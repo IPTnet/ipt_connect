@@ -15,9 +15,9 @@ def home(request):
 	return HttpResponse(text)
 
 cache_duration_short = 1 * 1
-cache_duration = 30 *  1
+cache_duration = 60 * 1
 
-ninja_mode = True
+ninja_mode = False
 
 def ninja_test(user):
 	return user.is_staff or not ninja_mode
