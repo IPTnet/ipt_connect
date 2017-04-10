@@ -688,10 +688,25 @@ def update_all(sender, **kwargs):
 		print round.round_number
 	#sys.exit()
 		update_points(sender, instance=round)
-
+		round.save()
 	# just in case...
 	for pb in Problem.objects.all():
 		pb.update_scores()
 
+	# remove the phantom grades, if any
+	rgrades = []
+	for round in rounds:
+		mygrades = JuryGrade.objects.filter(round=round)
+		for grade in mygrades:
+			rgrades.append(grade)
+
+	allgrades = JuryGrade.objects.all()
+	print len(allgrades)
+	i = 0
+	for grade in allgrades:
+		if grade not in rgrades:
+			i+=1
+			grade.delete()
+	print "I removed %i phantom grades..." % i
 	return "Teams, participants and problems updated !"
 

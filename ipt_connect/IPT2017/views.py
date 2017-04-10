@@ -15,7 +15,7 @@ def home(request):
 	return HttpResponse(text)
 
 cache_duration_short = 1 * 1
-cache_duration = 60 * 1
+cache_duration = 1 * 1
 
 ninja_mode = False
 
