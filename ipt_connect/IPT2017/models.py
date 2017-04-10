@@ -112,7 +112,7 @@ class Participant(models.Model):
 		return self.fullname()
 
 	def update_scores(self):
-		print "Updating scores for", self
+		#print "Updating scores for", self
 		rounds_as_reporter = Round.objects.filter(reporter=self)
 		rounds_as_opponent = Round.objects.filter(opponent=self)
 		rounds_as_reviewer = Round.objects.filter(reviewer=self)
@@ -221,7 +221,7 @@ class Problem(models.Model):
 			return meangrades
 
 	def update_scores(self):
-		print "Updating scores for", self
+		#print "Updating scores for", self
 		rounds = Round.objects.filter(problem_presented=self)
 
 		self.mean_score_of_reporters = mean([round.score_reporter for round in rounds])
@@ -244,6 +244,7 @@ class Team(models.Model):
 	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)
+	bonus_points = models.FloatField(default=0.0, editable=False)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)
 	nrounds_as_opp = models.IntegerField(default=0, editable=False)
 	nrounds_as_rev = models.IntegerField(default=0, editable=False)
@@ -296,8 +297,9 @@ class Team(models.Model):
 
 		return prescoeffs
 
+
 	def update_scores(self):
-		print "Updating scores for", self
+		#print "Updating scores for", self
 		rounds_as_reporter = Round.objects.filter(reporter_team=self)
 		rounds_as_opponent = Round.objects.filter(opponent_team=self)
 		rounds_as_reviewer = Round.objects.filter(reviewer_team=self)
@@ -619,7 +621,7 @@ class EternalRejection(models.Model):
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
 def update_points(sender, instance, **kwargs):
-	print "Updating points !"
+	print "Updating Round %s" % instance
 	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) or instance.problem_presented is None :
 		# then all teams aren't yet defined, there is no need to compute scores
 		pass
@@ -632,67 +634,77 @@ def update_points(sender, instance, **kwargs):
 		# and the problem mean scores
 		instance.problem_presented.update_scores()
 
-		# If this is the last round of a fight, it is time to distribute bonus points !
-		if instance.round_number == 3 :
-			rounds = Round.objects.filter(pf_number=instance.pf_number).filter(room=instance.room).order_by('round_number')
 
-			assert len(rounds) == 3, "didn't get the correct number of rounds"
+def bonuspoints():
 
-			# get the points of the physics fight for the 3 teams (without bonuses) in a dictionary
-			points_dict = {}
-			for team in teams:
-				points_dict[team] = 0.0
-			for round in rounds :
-				# add the points of each round
-				points_dict[round.reporter_team] += round.points_reporter
-				points_dict[round.opponent_team] += round.points_opponent
-				points_dict[round.reviewer_team] += round.points_reviewer
+	# the rounds must be saved first !
+	rounds = Round.objects.all()
+	allteams = Team.objects.all()
 
+	bonuspts = {}
+	# set the bonus points to zero
+	for team in allteams:
+		bonuspts[team] = 0.0
 
-			# get teams sorted by total points for the physics fight
-			team_podium = sorted(teams, key = lambda t : points_dict[t], reverse=True)
-			points_list = [points_dict[t] for t in team_podium]
+	for round in rounds.filter(round_number=3):
+		thispfteams = [round.reporter_team, round.opponent_team, round.reviewer_team]
+		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room).order_by('round_number')
 
-			# If everyone is ex-aequo
-			if points_list[0] == points_list[1] and points_list[0] == points_list[2] :
-				team_podium[0].total_points += 1.
-				team_podium[1].total_points += 1.
-				team_podium[2].total_points += 1.
-			# If 1 and 2 are ex-aequo
-			elif points_list[0] == points_list[1]:
-				team_podium[0].total_points += 1.5
-				team_podium[1].total_points += 1.5
-				team_podium[2].total_points += 0.0
-			# If 2 and 3 are ex-aequo
-			elif points_list[1] == points_list[2]:
-				team_podium[0].total_points += 2.0
-				team_podium[1].total_points += 0.5
-				team_podium[2].total_points += 0.5
-			# If no ex-aequo
-			else:
-				team_podium[0].total_points += 2.0
-				team_podium[1].total_points += 1.0
-				team_podium[2].total_points += 0.0
+		# get the points of the physics fight for the 3 teams (without bonuses) in a dictionary
+		points_dict = {}
+		for team in thispfteams:
+			points_dict[team] = 0.0
+		for pfround in thispfrounds :
+			# add the points of each round
+			points_dict[pfround.reporter_team] += pfround.points_reporter
+			points_dict[pfround.opponent_team] += pfround.points_opponent
+			points_dict[pfround.reviewer_team] += pfround.points_reviewer
 
-			for team in teams:
-				team.save()
+# get teams sorted by total points for the physics fight
+		team_podium = sorted(thispfteams, key = lambda t : points_dict[t], reverse=True)
+		points_list = [points_dict[t] for t in team_podium]
+
+		# If everyone is ex-aequo
+		if points_list[0] == points_list[1] and points_list[0] == points_list[2] :
+			team_podium[0].bonus_points = 1.
+			team_podium[1].bonus_points = 1.
+			team_podium[2].bonus_points = 1.
+		# If 1 and 2 are ex-aequo
+		elif points_list[0] == points_list[1]:
+			team_podium[0].bonus_points = 1.5
+			team_podium[1].bonus_points = 1.5
+			team_podium[2].bonus_points = 0.0
+		# If 2 and 3 are ex-aequo
+		elif points_list[1] == points_list[2]:
+			team_podium[0].bonus_points = 2.0
+			team_podium[1].bonus_points = 0.5
+			team_podium[2].bonus_points = 0.5
+		# If no ex-aequo
+		else:
+			team_podium[0].bonus_points = 2.0
+			team_podium[1].bonus_points = 1.0
+			team_podium[2].bonus_points = 0.0
+
+		sumbonuspts = 0
+		for team in team_podium:
+			bonuspts[team] += team.bonus_points
+			sumbonuspts += team.bonus_points
+		assert sumbonuspts == 3.0, sumbonuspts
+
+	return bonuspts
 
 
 update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
-
-
-	allrounds = sorted(Round.objects.all(),key=lambda round : round.round_number)
+	allrounds = sorted(Round.objects.all(),key=lambda round : round.round_number, reverse=False)
 
 	for round in allrounds:
-		print round.round_number
-	#sys.exit()
-		update_points(sender, instance=round)
-		round.save()
-	# just in case...
-	for pb in Problem.objects.all():
-		pb.update_scores()
+		print round
+
+	allgrades = JuryGrade.objects.all()
+	allteams = Team.objects.all()
+
 
 	# remove the phantom grades, if any
 	rgrades = []
@@ -701,13 +713,41 @@ def update_all(sender, **kwargs):
 		for grade in mygrades:
 			rgrades.append(grade)
 
-	allgrades = JuryGrade.objects.all()
-	print len(allgrades)
+
 	i = 0
 	for grade in allgrades:
 		if grade not in rgrades:
 			i+=1
 			grade.delete()
 	print "I removed %i phantom grades..." % i
+
+	"""
+	# reset the bonus points to zero
+	for team in allteams:
+		team.bonus_points = 0.0
+	"""
+
+	# update rounds
+	for round in allrounds:
+		# we do not want to add the bonus points now, let's keep that for a next step (just to check, that might disappear later)
+		update_points(sender, instance=round)
+		#round.save()
+		#sys.exit()
+
+	# add the bonus points
+	bonuspts = bonuspoints()
+	print "="*15
+	for team in allteams:
+		#print "----"
+		#print team.name, team.total_points, bonuspts[team]
+		team.total_points += bonuspts[team]
+		team.save()
+		#print team.total_points
+
+
+	# just in case, update the problems
+	for pb in Problem.objects.all():
+		pb.update_scores()
+
 	return "Teams, participants and problems updated !"
 

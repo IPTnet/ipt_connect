@@ -15,7 +15,7 @@ def home(request):
 	return HttpResponse(text)
 
 cache_duration_short = 1 * 1
-cache_duration = 1 * 1
+cache_duration = 60 * 1
 
 ninja_mode = False
 
@@ -350,7 +350,6 @@ def physics_fights(request):
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):
 	rounds = Round.objects.filter(pf_number=pfid)
-
 	rooms = Room.objects.all().order_by('name')
 
 	roomgrades = []
