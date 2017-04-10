@@ -681,7 +681,12 @@ def update_points(sender, instance, **kwargs):
 update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
-	for round in Round.objects.all():
+
+	allrounds = sorted(Round.objects.all(),key=lambda round : round.round_number)
+
+	for round in allrounds:
+		print round.round_number
+	#sys.exit()
 		update_points(sender, instance=round)
 
 	# just in case...
