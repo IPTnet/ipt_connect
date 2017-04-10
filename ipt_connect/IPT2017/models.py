@@ -682,6 +682,7 @@ update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
 
+
 	allrounds = sorted(Round.objects.all(),key=lambda round : round.round_number)
 
 	for round in allrounds:
@@ -695,7 +696,7 @@ def update_all(sender, **kwargs):
 
 	# remove the phantom grades, if any
 	rgrades = []
-	for round in rounds:
+	for round in allrounds:
 		mygrades = JuryGrade.objects.filter(round=round)
 		for grade in mygrades:
 			rgrades.append(grade)
