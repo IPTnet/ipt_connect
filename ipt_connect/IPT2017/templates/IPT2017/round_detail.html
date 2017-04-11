@@ -53,7 +53,7 @@
     {% endfor %} {% endif %} {% if round.unavailable_problems.opposed_by_opponent %} {% for problem in round.unavailable_problems.opposed_by_opponent %}
     <li><a href="{% url 'IPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
     {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_opponent %} {% for problem in round.unavailable_problems.presented_by_opponent %}
-    <li><a href="{% url 'IPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
+    <li><a href="{% url 'IPT2017:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
     {% endfor %} {% endif %}
     {% else %}
     <p>No forbidden problems.</p>
@@ -110,7 +110,7 @@
 
 
 <div class="content container">
-    <h2>Rejections</h2>
+    <h2>Reje</h2>
 
     <div class="content container">
         <h3>Tactical rejection(s):</h3> {% for tacticalrejection in tacticalrejections %}
