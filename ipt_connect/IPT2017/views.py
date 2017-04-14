@@ -311,14 +311,12 @@ def round_detail(request, pk):
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
 @cache_page(cache_duration)
 def finalround_detail(request, pk):
-	round = Round.objects.filter(pk=pk)
-	thisround = round[0]
-	jurygrades = JuryGrade.objects.filter(round=round)
-	jurygrades = sorted(jurygrades, key=lambda jurygrade: jurygrade.jury.name)
+	round = Round.objects.get(pk=pk)
+	jurygrades = JuryGrade.objects.filter(round=round).order_by('jury__name')
 	meangrades = []
 
 	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
-	if None in [thisround.reporter_team, thisround.opponent_team, thisround.reviewer_team]:
+	if None in [round.reporter_team, round.opponent_team, round.reviewer_team]:
 		started = False
 	else:
 		started = True
@@ -411,8 +409,9 @@ def ranking(request):
 
 	return render(request, 'IPT2017/ranking.html', {'rankteams': rankteams})
 
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2017/soon')
+@cache_page(cache_duration)
 def poolranking(request):
-
 	# Pool A
 	rankteamsA = []
 	ranking = Team.objects.filter(pool="A").order_by('-total_points')

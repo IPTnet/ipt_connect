@@ -300,6 +300,10 @@ class Team(models.Model):
 
 	def update_scores(self):
 		#print "Updating scores for", self
+
+		qfrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+
+
 		rounds_as_reporter = Round.objects.filter(reporter_team=self)
 		rounds_as_opponent = Round.objects.filter(opponent_team=self)
 		rounds_as_reviewer = Round.objects.filter(reviewer_team=self)
@@ -638,7 +642,7 @@ def update_points(sender, instance, **kwargs):
 def bonuspoints():
 
 	# the rounds must be saved first !
-	rounds = Round.objects.all()
+	rounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
 	allteams = Team.objects.all()
 
 	bonuspts = {}
@@ -697,15 +701,16 @@ def bonuspoints():
 update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
-	allrounds = sorted(Round.objects.all(),key=lambda round : round.round_number, reverse=False)
 
-	for round in allrounds:
-		print round
+	allrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
+
 
 	allgrades = JuryGrade.objects.all()
 	allteams = Team.objects.all()
 
 
+	"""
 	# remove the phantom grades, if any
 	rgrades = []
 	for round in allrounds:
@@ -720,6 +725,7 @@ def update_all(sender, **kwargs):
 			i+=1
 			grade.delete()
 	print "I removed %i phantom grades..." % i
+	"""
 
 	"""
 	# reset the bonus points to zero
