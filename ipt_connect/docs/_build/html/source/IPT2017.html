@@ -1,0 +1,2028 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IPT2017 package &#8212; ipt-connect 2.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="ipt2017-package">
+<h1>IPT2017 package<a class="headerlink" href="#ipt2017-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="IPT2017.migrations.html">IPT2017.migrations package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="IPT2017.migrations.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IPT2017.migrations.html#module-IPT2017.migrations.0001_initial">IPT2017.migrations.0001_initial module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IPT2017.migrations.html#module-IPT2017.migrations.0002_team_bonus_points">IPT2017.migrations.0002_team_bonus_points module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="IPT2017.migrations.html#module-IPT2017.migrations">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-IPT2017.admin">
+<span id="ipt2017-admin-module"></span><h2>IPT2017.admin module<a class="headerlink" href="#module-IPT2017.admin" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPT2017.admin.EternalRejectionInline">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">EternalRejectionInline</code><span class="sig-paren">(</span><em>parent_model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#EternalRejectionInline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.EternalRejectionInline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.TabularInline</span></code></p>
+<dl class="attribute">
+<dt id="IPT2017.admin.EternalRejectionInline.extra">
+<code class="descname">extra</code><em class="property"> = 0</em><a class="headerlink" href="#IPT2017.admin.EternalRejectionInline.extra" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.EternalRejectionInline.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.EternalRejectionInline.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.EternalRejectionInline.model">
+<code class="descname">model</code><a class="headerlink" href="#IPT2017.admin.EternalRejectionInline.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#IPT2017.models.EternalRejection" title="IPT2017.models.EternalRejection"><code class="xref py py-class docutils literal"><span class="pre">IPT2017.models.EternalRejection</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.admin.JuryAdmin">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">JuryAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#JuryAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.JuryAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('surname', 'name', 'team', 'affiliation', 'pf1', 'pf2', 'pf3', 'pf4', 'final', 'email', 'remark')</em><a class="headerlink" href="#IPT2017.admin.JuryAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryAdmin.list_filter">
+<code class="descname">list_filter</code><em class="property"> = ('team', 'pf1', 'pf2', 'pf3', 'pf4', 'final')</em><a class="headerlink" href="#IPT2017.admin.JuryAdmin.list_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.JuryAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryAdmin.search_fields">
+<code class="descname">search_fields</code><em class="property"> = ('surname', 'name', 'affiliation')</em><a class="headerlink" href="#IPT2017.admin.JuryAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.admin.JuryGradeInline">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">JuryGradeInline</code><span class="sig-paren">(</span><em>parent_model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#JuryGradeInline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.JuryGradeInline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.TabularInline</span></code></p>
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryGradeInline.extra">
+<code class="descname">extra</code><em class="property"> = 0</em><a class="headerlink" href="#IPT2017.admin.JuryGradeInline.extra" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryGradeInline.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.JuryGradeInline.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.JuryGradeInline.model">
+<code class="descname">model</code><a class="headerlink" href="#IPT2017.admin.JuryGradeInline.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#IPT2017.models.JuryGrade" title="IPT2017.models.JuryGrade"><code class="xref py py-class docutils literal"><span class="pre">IPT2017.models.JuryGrade</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.admin.ParticipantAdmin">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">ParticipantAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#ParticipantAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="method">
+<dt id="IPT2017.admin.ParticipantAdmin.get_queryset">
+<code class="descname">get_queryset</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#ParticipantAdmin.get_queryset"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin.get_queryset" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.ParticipantAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('surname', 'name', 'team', 'affiliation', 'email', 'phone_number', 'role', 'gender', 'birthdate', 'veteran', 'diet', 'shirt_size', 'mixed_gender_accommodation', 'remark')</em><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.ParticipantAdmin.list_filter">
+<code class="descname">list_filter</code><em class="property"> = ('team', 'gender', 'role', 'veteran', 'diet', 'shirt_size', 'mixed_gender_accommodation')</em><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin.list_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.ParticipantAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.admin.ParticipantAdmin.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>request</em>, <em>obj</em>, <em>form</em>, <em>change</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#ParticipantAdmin.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin.save_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.ParticipantAdmin.search_fields">
+<code class="descname">search_fields</code><em class="property"> = ('surname', 'name')</em><a class="headerlink" href="#IPT2017.admin.ParticipantAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.admin.Roundadmin">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">Roundadmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#Roundadmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.Roundadmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="class">
+<dt id="IPT2017.admin.Roundadmin.Media">
+<em class="property">class </em><code class="descname">Media</code><a class="reference internal" href="../_modules/IPT2017/admin.html#Roundadmin.Media"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.Roundadmin.Media" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="attribute">
+<dt id="IPT2017.admin.Roundadmin.Media.js">
+<code class="descname">js</code><em class="property"> = ('admin/js/jquery.js', 'admin/js/participant_fill.js')</em><a class="headerlink" href="#IPT2017.admin.Roundadmin.Media.js" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.Roundadmin.fieldsets">
+<code class="descname">fieldsets</code><em class="property"> = [('General Information', {'fields': [('pf_number', 'round_number', 'room'), ('reporter_team', 'opponent_team', 'reviewer_team')]}), (None, {'fields': ['reporter', 'opponent', 'reviewer', 'problem_presented']})]</em><a class="headerlink" href="#IPT2017.admin.Roundadmin.fieldsets" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.Roundadmin.inlines">
+<code class="descname">inlines</code><em class="property"> = [&lt;class 'IPT2017.admin.TacticalRejectionInline'&gt;, &lt;class 'IPT2017.admin.EternalRejectionInline'&gt;, &lt;class 'IPT2017.admin.JuryGradeInline'&gt;]</em><a class="headerlink" href="#IPT2017.admin.Roundadmin.inlines" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.Roundadmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('pf_number', 'round_number', 'room')</em><a class="headerlink" href="#IPT2017.admin.Roundadmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.Roundadmin.list_filter">
+<code class="descname">list_filter</code><em class="property"> = ('pf_number', 'round_number', 'room')</em><a class="headerlink" href="#IPT2017.admin.Roundadmin.list_filter" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.Roundadmin.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.Roundadmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.admin.Roundadmin.save_model">
+<code class="descname">save_model</code><span class="sig-paren">(</span><em>request</em>, <em>obj</em>, <em>form</em>, <em>change</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#Roundadmin.save_model"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.Roundadmin.save_model" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.admin.Roundadmin.save_related">
+<code class="descname">save_related</code><span class="sig-paren">(</span><em>request</em>, <em>form</em>, <em>formsets</em>, <em>change</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#Roundadmin.save_related"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.Roundadmin.save_related" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.admin.TacticalRejectionInline">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">TacticalRejectionInline</code><span class="sig-paren">(</span><em>parent_model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#TacticalRejectionInline"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.TacticalRejectionInline" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.TabularInline</span></code></p>
+<dl class="attribute">
+<dt id="IPT2017.admin.TacticalRejectionInline.extra">
+<code class="descname">extra</code><em class="property"> = 0</em><a class="headerlink" href="#IPT2017.admin.TacticalRejectionInline.extra" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.TacticalRejectionInline.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.TacticalRejectionInline.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.TacticalRejectionInline.model">
+<code class="descname">model</code><a class="headerlink" href="#IPT2017.admin.TacticalRejectionInline.model" title="Permalink to this definition">¶</a></dt>
+<dd><p>alias of <a class="reference internal" href="#IPT2017.models.TacticalRejection" title="IPT2017.models.TacticalRejection"><code class="xref py py-class docutils literal"><span class="pre">IPT2017.models.TacticalRejection</span></code></a></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.admin.TeamAdmin">
+<em class="property">class </em><code class="descclassname">IPT2017.admin.</code><code class="descname">TeamAdmin</code><span class="sig-paren">(</span><em>model</em>, <em>admin_site</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/admin.html#TeamAdmin"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.admin.TeamAdmin" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.contrib.admin.options.ModelAdmin</span></code></p>
+<dl class="attribute">
+<dt id="IPT2017.admin.TeamAdmin.list_display">
+<code class="descname">list_display</code><em class="property"> = ('name', 'surname', 'IOC')</em><a class="headerlink" href="#IPT2017.admin.TeamAdmin.list_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.TeamAdmin.media">
+<code class="descname">media</code><a class="headerlink" href="#IPT2017.admin.TeamAdmin.media" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.admin.TeamAdmin.search_fields">
+<code class="descname">search_fields</code><em class="property"> = ('name', 'IOC')</em><a class="headerlink" href="#IPT2017.admin.TeamAdmin.search_fields" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-IPT2017.forms">
+<span id="ipt2017-forms-module"></span><h2>IPT2017.forms module<a class="headerlink" href="#module-IPT2017.forms" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPT2017.forms.member_for_team">
+<code class="descclassname">IPT2017.forms.</code><code class="descname">member_for_team</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/forms.html#member_for_team"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.forms.member_for_team" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-IPT2017.models">
+<span id="ipt2017-models-module"></span><h2>IPT2017.models module<a class="headerlink" href="#module-IPT2017.models" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="IPT2017.models.EternalRejection">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">EternalRejection</code><span class="sig-paren">(</span><em>id</em>, <em>round</em>, <em>problem</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#EternalRejection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.EternalRejection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="IPT2017.models.EternalRejection.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.EternalRejection.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.EternalRejection.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.EternalRejection.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.EternalRejection.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.EternalRejection.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.EternalRejection.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.EternalRejection.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.EternalRejection.problem">
+<code class="descname">problem</code><a class="headerlink" href="#IPT2017.models.EternalRejection.problem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.EternalRejection.problem_id">
+<code class="descname">problem_id</code><a class="headerlink" href="#IPT2017.models.EternalRejection.problem_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.EternalRejection.round">
+<code class="descname">round</code><a class="headerlink" href="#IPT2017.models.EternalRejection.round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.EternalRejection.round_id">
+<code class="descname">round_id</code><a class="headerlink" href="#IPT2017.models.EternalRejection.round_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.Jury">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">Jury</code><span class="sig-paren">(</span><em>id</em>, <em>name</em>, <em>surname</em>, <em>email</em>, <em>affiliation</em>, <em>team</em>, <em>pf1</em>, <em>pf2</em>, <em>pf3</em>, <em>pf4</em>, <em>final</em>, <em>remark</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Jury"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Jury" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="IPT2017.models.Jury.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.Jury.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Jury.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.Jury.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.affiliation">
+<code class="descname">affiliation</code><a class="headerlink" href="#IPT2017.models.Jury.affiliation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.email">
+<code class="descname">email</code><a class="headerlink" href="#IPT2017.models.Jury.email" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.final">
+<code class="descname">final</code><a class="headerlink" href="#IPT2017.models.Jury.final" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Jury.fullname">
+<code class="descname">fullname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Jury.fullname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Jury.fullname" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">return the full name of the jury member</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.Jury.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.jurygrade_set">
+<code class="descname">jurygrade_set</code><a class="headerlink" href="#IPT2017.models.Jury.jurygrade_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.name">
+<code class="descname">name</code><a class="headerlink" href="#IPT2017.models.Jury.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.Jury.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.pf1">
+<code class="descname">pf1</code><a class="headerlink" href="#IPT2017.models.Jury.pf1" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.pf2">
+<code class="descname">pf2</code><a class="headerlink" href="#IPT2017.models.Jury.pf2" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.pf3">
+<code class="descname">pf3</code><a class="headerlink" href="#IPT2017.models.Jury.pf3" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.pf4">
+<code class="descname">pf4</code><a class="headerlink" href="#IPT2017.models.Jury.pf4" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.remark">
+<code class="descname">remark</code><a class="headerlink" href="#IPT2017.models.Jury.remark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.surname">
+<code class="descname">surname</code><a class="headerlink" href="#IPT2017.models.Jury.surname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.team">
+<code class="descname">team</code><a class="headerlink" href="#IPT2017.models.Jury.team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Jury.team_id">
+<code class="descname">team_id</code><a class="headerlink" href="#IPT2017.models.Jury.team_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.JuryGrade">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">JuryGrade</code><span class="sig-paren">(</span><em>id</em>, <em>round</em>, <em>jury</em>, <em>grade_reporter</em>, <em>grade_opponent</em>, <em>grade_reviewer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#JuryGrade"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.JuryGrade" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="IPT2017.models.JuryGrade.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.JuryGrade.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.JuryGrade.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.JuryGrade.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.JuryGrade.get_grade_opponent_display">
+<code class="descname">get_grade_opponent_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.JuryGrade.get_grade_opponent_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.JuryGrade.get_grade_reporter_display">
+<code class="descname">get_grade_reporter_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.JuryGrade.get_grade_reporter_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.JuryGrade.get_grade_reviewer_display">
+<code class="descname">get_grade_reviewer_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.JuryGrade.get_grade_reviewer_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.grade_opponent">
+<code class="descname">grade_opponent</code><a class="headerlink" href="#IPT2017.models.JuryGrade.grade_opponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.grade_reporter">
+<code class="descname">grade_reporter</code><a class="headerlink" href="#IPT2017.models.JuryGrade.grade_reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.grade_reviewer">
+<code class="descname">grade_reviewer</code><a class="headerlink" href="#IPT2017.models.JuryGrade.grade_reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.JuryGrade.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.JuryGrade.info">
+<code class="descname">info</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#JuryGrade.info"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.JuryGrade.info" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.jury">
+<code class="descname">jury</code><a class="headerlink" href="#IPT2017.models.JuryGrade.jury" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.jury_id">
+<code class="descname">jury_id</code><a class="headerlink" href="#IPT2017.models.JuryGrade.jury_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.JuryGrade.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.round">
+<code class="descname">round</code><a class="headerlink" href="#IPT2017.models.JuryGrade.round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.JuryGrade.round_id">
+<code class="descname">round_id</code><a class="headerlink" href="#IPT2017.models.JuryGrade.round_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.Participant">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">Participant</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Participant"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Participant" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>This class represent the basic model of our program, a participant.
+It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament.</p>
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.DIET_CHOICES">
+<code class="descname">DIET_CHOICES</code><em class="property"> = (('NO', 'No specific diet'), ('NOPORK', 'No pork'), ('NOMEAT', 'No meat'), ('NOFISH', 'No fish'), ('NOMEAT_NOEGG', 'No meat, No eggs'), ('OTHER', 'Other (see remarks)'))</em><a class="headerlink" href="#IPT2017.models.Participant.DIET_CHOICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Participant.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.Participant.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.GENDER_CHOICES">
+<code class="descname">GENDER_CHOICES</code><em class="property"> = (('M', 'Male'), ('F', 'Female'), ('D', 'Decline to report'))</em><a class="headerlink" href="#IPT2017.models.Participant.GENDER_CHOICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Participant.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.Participant.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.ROLE_CHOICES">
+<code class="descname">ROLE_CHOICES</code><em class="property"> = (('TM', 'Team Member'), ('TC', 'Team Captain'), ('TL', 'Team Leader'), ('ACC', 'Accompanying'))</em><a class="headerlink" href="#IPT2017.models.Participant.ROLE_CHOICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.SHIRT_SIZES">
+<code class="descname">SHIRT_SIZES</code><em class="property"> = (('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'Extra Large'))</em><a class="headerlink" href="#IPT2017.models.Participant.SHIRT_SIZES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.affiliation">
+<code class="descname">affiliation</code><a class="headerlink" href="#IPT2017.models.Participant.affiliation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.birthdate">
+<code class="descname">birthdate</code><a class="headerlink" href="#IPT2017.models.Participant.birthdate" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.diet">
+<code class="descname">diet</code><a class="headerlink" href="#IPT2017.models.Participant.diet" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.email">
+<code class="descname">email</code><a class="headerlink" href="#IPT2017.models.Participant.email" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="IPT2017.models.Participant.fast_team_ranking">
+<em class="property">classmethod </em><code class="descname">fast_team_ranking</code><span class="sig-paren">(</span><em>team</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Participant.fast_team_ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Participant.fast_team_ranking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.fullname">
+<code class="descname">fullname</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Participant.fullname"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Participant.fullname" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">return the full name of the participant</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.gender">
+<code class="descname">gender</code><a class="headerlink" href="#IPT2017.models.Participant.gender" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.get_diet_display">
+<code class="descname">get_diet_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Participant.get_diet_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.get_gender_display">
+<code class="descname">get_gender_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Participant.get_gender_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.get_next_by_birthdate">
+<code class="descname">get_next_by_birthdate</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Participant.get_next_by_birthdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.get_previous_by_birthdate">
+<code class="descname">get_previous_by_birthdate</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Participant.get_previous_by_birthdate" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.get_role_display">
+<code class="descname">get_role_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Participant.get_role_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.get_shirt_size_display">
+<code class="descname">get_shirt_size_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Participant.get_shirt_size_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.Participant.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.mean_score_as_opponent">
+<code class="descname">mean_score_as_opponent</code><a class="headerlink" href="#IPT2017.models.Participant.mean_score_as_opponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.mean_score_as_reporter">
+<code class="descname">mean_score_as_reporter</code><a class="headerlink" href="#IPT2017.models.Participant.mean_score_as_reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.mean_score_as_reviewer">
+<code class="descname">mean_score_as_reviewer</code><a class="headerlink" href="#IPT2017.models.Participant.mean_score_as_reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.mixed_gender_accommodation">
+<code class="descname">mixed_gender_accommodation</code><a class="headerlink" href="#IPT2017.models.Participant.mixed_gender_accommodation" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.name">
+<code class="descname">name</code><a class="headerlink" href="#IPT2017.models.Participant.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.Participant.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.opponent_name">
+<code class="descname">opponent_name</code><a class="headerlink" href="#IPT2017.models.Participant.opponent_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.passport_number">
+<code class="descname">passport_number</code><a class="headerlink" href="#IPT2017.models.Participant.passport_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.phone_number">
+<code class="descname">phone_number</code><a class="headerlink" href="#IPT2017.models.Participant.phone_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.phone_regex">
+<code class="descname">phone_regex</code><em class="property"> = &lt;django.core.validators.RegexValidator object&gt;</em><a class="headerlink" href="#IPT2017.models.Participant.phone_regex" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.remark">
+<code class="descname">remark</code><a class="headerlink" href="#IPT2017.models.Participant.remark" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.reporter_name_1">
+<code class="descname">reporter_name_1</code><a class="headerlink" href="#IPT2017.models.Participant.reporter_name_1" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.reporter_name_2">
+<code class="descname">reporter_name_2</code><a class="headerlink" href="#IPT2017.models.Participant.reporter_name_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.reviewer_name">
+<code class="descname">reviewer_name</code><a class="headerlink" href="#IPT2017.models.Participant.reviewer_name" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.role">
+<code class="descname">role</code><a class="headerlink" href="#IPT2017.models.Participant.role" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.shirt_size">
+<code class="descname">shirt_size</code><a class="headerlink" href="#IPT2017.models.Participant.shirt_size" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.surname">
+<code class="descname">surname</code><a class="headerlink" href="#IPT2017.models.Participant.surname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.team">
+<code class="descname">team</code><a class="headerlink" href="#IPT2017.models.Participant.team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.team_id">
+<code class="descname">team_id</code><a class="headerlink" href="#IPT2017.models.Participant.team_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.tot_score_as_opponent">
+<code class="descname">tot_score_as_opponent</code><a class="headerlink" href="#IPT2017.models.Participant.tot_score_as_opponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.tot_score_as_reporter">
+<code class="descname">tot_score_as_reporter</code><a class="headerlink" href="#IPT2017.models.Participant.tot_score_as_reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.tot_score_as_reviewer">
+<code class="descname">tot_score_as_reviewer</code><a class="headerlink" href="#IPT2017.models.Participant.tot_score_as_reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.total_points">
+<code class="descname">total_points</code><a class="headerlink" href="#IPT2017.models.Participant.total_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Participant.update_scores">
+<code class="descname">update_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Participant.update_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Participant.update_scores" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Participant.veteran">
+<code class="descname">veteran</code><a class="headerlink" href="#IPT2017.models.Participant.veteran" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.Problem">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">Problem</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Problem"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Problem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>This model represents one of the 17 problems</p>
+<dl class="exception">
+<dt id="IPT2017.models.Problem.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.Problem.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Problem.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.Problem.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.description">
+<code class="descname">description</code><a class="headerlink" href="#IPT2017.models.Problem.description" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.eternalrejection_set">
+<code class="descname">eternalrejection_set</code><a class="headerlink" href="#IPT2017.models.Problem.eternalrejection_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.Problem.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.mean_score_of_opponents">
+<code class="descname">mean_score_of_opponents</code><a class="headerlink" href="#IPT2017.models.Problem.mean_score_of_opponents" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.mean_score_of_reporters">
+<code class="descname">mean_score_of_reporters</code><a class="headerlink" href="#IPT2017.models.Problem.mean_score_of_reporters" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.mean_score_of_reviewers">
+<code class="descname">mean_score_of_reviewers</code><a class="headerlink" href="#IPT2017.models.Problem.mean_score_of_reviewers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.name">
+<code class="descname">name</code><a class="headerlink" href="#IPT2017.models.Problem.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.Problem.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.round_set">
+<code class="descname">round_set</code><a class="headerlink" href="#IPT2017.models.Problem.round_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Problem.status">
+<code class="descname">status</code><span class="sig-paren">(</span><em>verbose=True</em>, <em>meangradesonly=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Problem.status"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Problem.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>Compute mean grades of the problem</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body"></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Problem.tacticalrejection_set">
+<code class="descname">tacticalrejection_set</code><a class="headerlink" href="#IPT2017.models.Problem.tacticalrejection_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Problem.update_scores">
+<code class="descname">update_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Problem.update_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Problem.update_scores" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.Room">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">Room</code><span class="sig-paren">(</span><em>id</em>, <em>name</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Room"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Room" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="IPT2017.models.Room.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.Room.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Room.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.Room.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Room.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.Room.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Room.ident">
+<code class="descname">ident</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Room.ident"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Room.ident" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Room.name">
+<code class="descname">name</code><a class="headerlink" href="#IPT2017.models.Room.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Room.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.Room.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Room.round_set">
+<code class="descname">round_set</code><a class="headerlink" href="#IPT2017.models.Room.round_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.Round">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">Round</code><span class="sig-paren">(</span><em>id</em>, <em>pf_number</em>, <em>round_number</em>, <em>room</em>, <em>reporter_team</em>, <em>opponent_team</em>, <em>reviewer_team</em>, <em>reporter</em>, <em>reporter_2</em>, <em>opponent</em>, <em>reviewer</em>, <em>problem_presented</em>, <em>submitted_date</em>, <em>score_reporter</em>, <em>score_opponent</em>, <em>score_reviewer</em>, <em>points_reporter</em>, <em>points_opponent</em>, <em>points_reviewer</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Round"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="IPT2017.models.Round.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.Round.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Round.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.Round.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.eternalrejection_set">
+<code class="descname">eternalrejection_set</code><a class="headerlink" href="#IPT2017.models.Round.eternalrejection_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Round.get_pf_number_display">
+<code class="descname">get_pf_number_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Round.get_pf_number_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Round.get_round_number_display">
+<code class="descname">get_round_number_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Round.get_round_number_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.Round.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Round.ident">
+<code class="descname">ident</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Round.ident"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Round.ident" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.jurygrade_set">
+<code class="descname">jurygrade_set</code><a class="headerlink" href="#IPT2017.models.Round.jurygrade_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.Round.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.opponent">
+<code class="descname">opponent</code><a class="headerlink" href="#IPT2017.models.Round.opponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.opponent_id">
+<code class="descname">opponent_id</code><a class="headerlink" href="#IPT2017.models.Round.opponent_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.opponent_team">
+<code class="descname">opponent_team</code><a class="headerlink" href="#IPT2017.models.Round.opponent_team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.opponent_team_id">
+<code class="descname">opponent_team_id</code><a class="headerlink" href="#IPT2017.models.Round.opponent_team_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.pf_number">
+<code class="descname">pf_number</code><a class="headerlink" href="#IPT2017.models.Round.pf_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.points_opponent">
+<code class="descname">points_opponent</code><a class="headerlink" href="#IPT2017.models.Round.points_opponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.points_reporter">
+<code class="descname">points_reporter</code><a class="headerlink" href="#IPT2017.models.Round.points_reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.points_reviewer">
+<code class="descname">points_reviewer</code><a class="headerlink" href="#IPT2017.models.Round.points_reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.problem_presented">
+<code class="descname">problem_presented</code><a class="headerlink" href="#IPT2017.models.Round.problem_presented" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.problem_presented_id">
+<code class="descname">problem_presented_id</code><a class="headerlink" href="#IPT2017.models.Round.problem_presented_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reporter">
+<code class="descname">reporter</code><a class="headerlink" href="#IPT2017.models.Round.reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reporter_2">
+<code class="descname">reporter_2</code><a class="headerlink" href="#IPT2017.models.Round.reporter_2" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reporter_2_id">
+<code class="descname">reporter_2_id</code><a class="headerlink" href="#IPT2017.models.Round.reporter_2_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reporter_id">
+<code class="descname">reporter_id</code><a class="headerlink" href="#IPT2017.models.Round.reporter_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reporter_team">
+<code class="descname">reporter_team</code><a class="headerlink" href="#IPT2017.models.Round.reporter_team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reporter_team_id">
+<code class="descname">reporter_team_id</code><a class="headerlink" href="#IPT2017.models.Round.reporter_team_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reviewer">
+<code class="descname">reviewer</code><a class="headerlink" href="#IPT2017.models.Round.reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reviewer_id">
+<code class="descname">reviewer_id</code><a class="headerlink" href="#IPT2017.models.Round.reviewer_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reviewer_team">
+<code class="descname">reviewer_team</code><a class="headerlink" href="#IPT2017.models.Round.reviewer_team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.reviewer_team_id">
+<code class="descname">reviewer_team_id</code><a class="headerlink" href="#IPT2017.models.Round.reviewer_team_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.room">
+<code class="descname">room</code><a class="headerlink" href="#IPT2017.models.Round.room" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.room_id">
+<code class="descname">room_id</code><a class="headerlink" href="#IPT2017.models.Round.room_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.round_number">
+<code class="descname">round_number</code><a class="headerlink" href="#IPT2017.models.Round.round_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Round.save">
+<code class="descname">save</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Round.save"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Round.save" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.score_opponent">
+<code class="descname">score_opponent</code><a class="headerlink" href="#IPT2017.models.Round.score_opponent" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.score_reporter">
+<code class="descname">score_reporter</code><a class="headerlink" href="#IPT2017.models.Round.score_reporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.score_reviewer">
+<code class="descname">score_reviewer</code><a class="headerlink" href="#IPT2017.models.Round.score_reviewer" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.submitted_date">
+<code class="descname">submitted_date</code><a class="headerlink" href="#IPT2017.models.Round.submitted_date" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Round.tacticalrejection_set">
+<code class="descname">tacticalrejection_set</code><a class="headerlink" href="#IPT2017.models.Round.tacticalrejection_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Round.unavailable_problems">
+<code class="descname">unavailable_problems</code><span class="sig-paren">(</span><em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Round.unavailable_problems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Round.unavailable_problems" title="Permalink to this definition">¶</a></dt>
+<dd><p>From the rules:</p>
+<p>The Opponent may challenge the Reporter on any problem with the exception of a problem that:
+a) was permanently rejected by the Reporter earlier;
+b) was presented by the Reporter earlier;
+c) was opposed by the Opponent earlier;
+d) was presented by the Opponent earlier.
+If there are no problems left to challenge, the bans d), c), b), a) are successively removed, in that order.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>verbose</strong> – verbosity flag</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">return a tuple with five lists : ([already_presented_this_round], [a], [b], [c], [d])</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.TacticalRejection">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">TacticalRejection</code><span class="sig-paren">(</span><em>id</em>, <em>round</em>, <em>problem</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#TacticalRejection"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.TacticalRejection" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<dl class="exception">
+<dt id="IPT2017.models.TacticalRejection.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.TacticalRejection.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.TacticalRejection.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.TacticalRejection.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.TacticalRejection.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.TacticalRejection.problem">
+<code class="descname">problem</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.problem" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.TacticalRejection.problem_id">
+<code class="descname">problem_id</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.problem_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.TacticalRejection.round">
+<code class="descname">round</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.round" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a many-to-one or
+one-to-one (via ForwardOneToOneDescriptor subclass) relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child.parent</span></code> is a <code class="docutils literal"><span class="pre">ForwardManyToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.TacticalRejection.round_id">
+<code class="descname">round_id</code><a class="headerlink" href="#IPT2017.models.TacticalRejection.round_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.Team">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">Team</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Team"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Team" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.db.models.base.Model</span></code></p>
+<p>This model represent a team, to which all the participants belong to</p>
+<dl class="exception">
+<dt id="IPT2017.models.Team.DoesNotExist">
+<em class="property">exception </em><code class="descname">DoesNotExist</code><a class="headerlink" href="#IPT2017.models.Team.DoesNotExist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.ObjectDoesNotExist</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.IOC">
+<code class="descname">IOC</code><a class="headerlink" href="#IPT2017.models.Team.IOC" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related object on the forward side of a one-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Restaurant</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">place</span> <span class="o">=</span> <span class="n">OneToOneField</span><span class="p">(</span><span class="n">Place</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;restaurant&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">restaurant.place</span></code> is a <code class="docutils literal"><span class="pre">ForwardOneToOneDescriptor</span></code> instance.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.IOC_id">
+<code class="descname">IOC_id</code><a class="headerlink" href="#IPT2017.models.Team.IOC_id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="exception">
+<dt id="IPT2017.models.Team.MultipleObjectsReturned">
+<em class="property">exception </em><code class="descname">MultipleObjectsReturned</code><a class="headerlink" href="#IPT2017.models.Team.MultipleObjectsReturned" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">django.core.exceptions.MultipleObjectsReturned</span></code></p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.POOL_CHOICES">
+<code class="descname">POOL_CHOICES</code><em class="property"> = (('A', 'Pool A'), ('B', 'Pool B'), ('O', 'Not attributed'))</em><a class="headerlink" href="#IPT2017.models.Team.POOL_CHOICES" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.bonus_points">
+<code class="descname">bonus_points</code><a class="headerlink" href="#IPT2017.models.Team.bonus_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="classmethod">
+<dt id="IPT2017.models.Team.fast_ranking">
+<em class="property">classmethod </em><code class="descname">fast_ranking</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Team.fast_ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Team.fast_ranking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Team.get_pool_display">
+<code class="descname">get_pool_display</code><span class="sig-paren">(</span><em>*moreargs</em>, <em>**morekwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.Team.get_pool_display" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.id">
+<code class="descname">id</code><a class="headerlink" href="#IPT2017.models.Team.id" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.jury_set">
+<code class="descname">jury_set</code><a class="headerlink" href="#IPT2017.models.Team.jury_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.name">
+<code class="descname">name</code><a class="headerlink" href="#IPT2017.models.Team.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.nrounds_as_opp">
+<code class="descname">nrounds_as_opp</code><a class="headerlink" href="#IPT2017.models.Team.nrounds_as_opp" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.nrounds_as_rep">
+<code class="descname">nrounds_as_rep</code><a class="headerlink" href="#IPT2017.models.Team.nrounds_as_rep" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.nrounds_as_rev">
+<code class="descname">nrounds_as_rev</code><a class="headerlink" href="#IPT2017.models.Team.nrounds_as_rev" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.objects">
+<code class="descname">objects</code><em class="property"> = &lt;django.db.models.manager.Manager object&gt;</em><a class="headerlink" href="#IPT2017.models.Team.objects" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.opponentteam">
+<code class="descname">opponentteam</code><a class="headerlink" href="#IPT2017.models.Team.opponentteam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.participant_set">
+<code class="descname">participant_set</code><a class="headerlink" href="#IPT2017.models.Team.participant_set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.pool">
+<code class="descname">pool</code><a class="headerlink" href="#IPT2017.models.Team.pool" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Team.presentation_coefficients">
+<code class="descname">presentation_coefficients</code><span class="sig-paren">(</span><em>verbose=False</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Team.presentation_coefficients"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Team.presentation_coefficients" title="Permalink to this definition">¶</a></dt>
+<dd><p>Modify the presentation coefficient from a given round up to the end of the physics fights if more than three problems are tactically rejected.</p>
+<p>The coefficient loses 0.2 points for every additional rejection. This penality is carried over all the subsequents rounds, but disappear for the Final</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>verbose</strong> – Verbosity flag</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">Return a list with the coefficient for every round</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Team.problems">
+<code class="descname">problems</code><span class="sig-paren">(</span><em>verbose=False</em>, <em>currentround=None</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Team.problems"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Team.problems" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all the problems that I cannot present(already presented or eternal rejection) and cannot oppose(already opposed)</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>verbose</strong> – verbosity Flag</li>
+<li><strong>currentround</strong> – A Round instance. Return all the unpresentable problems before the current round. If none, return on all the round. This sentence is terribly unclear. Rephrase.</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">tuple of three lists. each list contains the problems that are eternally rejected, already presented and already opposed</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.reporterteam">
+<code class="descname">reporterteam</code><a class="headerlink" href="#IPT2017.models.Team.reporterteam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.reviewerteam">
+<code class="descname">reviewerteam</code><a class="headerlink" href="#IPT2017.models.Team.reviewerteam" title="Permalink to this definition">¶</a></dt>
+<dd><p>Accessor to the related objects manager on the reverse side of a
+many-to-one relation.</p>
+<p>In the example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">Child</span><span class="p">(</span><span class="n">Model</span><span class="p">):</span>
+    <span class="n">parent</span> <span class="o">=</span> <span class="n">ForeignKey</span><span class="p">(</span><span class="n">Parent</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;children&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">parent.children</span></code> is a <code class="docutils literal"><span class="pre">ReverseManyToOneDescriptor</span></code> instance.</p>
+<p>Most of the implementation is delegated to a dynamically defined manager
+class built by <code class="docutils literal"><span class="pre">create_forward_many_to_many_manager()</span></code> defined below.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.surname">
+<code class="descname">surname</code><a class="headerlink" href="#IPT2017.models.Team.surname" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="IPT2017.models.Team.total_points">
+<code class="descname">total_points</code><a class="headerlink" href="#IPT2017.models.Team.total_points" title="Permalink to this definition">¶</a></dt>
+<dd><p>A wrapper for a deferred-loading field. When the value is read from this
+object the first time, the query is executed.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="IPT2017.models.Team.update_scores">
+<code class="descname">update_scores</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#Team.update_scores"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.Team.update_scores" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="IPT2017.models.UploadToPathAndRename">
+<em class="property">class </em><code class="descclassname">IPT2017.models.</code><code class="descname">UploadToPathAndRename</code><span class="sig-paren">(</span><em>path</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#UploadToPathAndRename"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.UploadToPathAndRename" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal"><span class="pre">object</span></code></p>
+<dl class="method">
+<dt id="IPT2017.models.UploadToPathAndRename.deconstruct">
+<code class="descname">deconstruct</code><span class="sig-paren">(</span><em>obj</em><span class="sig-paren">)</span><a class="headerlink" href="#IPT2017.models.UploadToPathAndRename.deconstruct" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a 3-tuple of class import path, positional arguments,
+and keyword arguments.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.models.bonuspoints">
+<code class="descclassname">IPT2017.models.</code><code class="descname">bonuspoints</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#bonuspoints"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.bonuspoints" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.models.mean">
+<code class="descclassname">IPT2017.models.</code><code class="descname">mean</code><span class="sig-paren">(</span><em>vec</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#mean"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.mean" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.models.update_all">
+<code class="descclassname">IPT2017.models.</code><code class="descname">update_all</code><span class="sig-paren">(</span><em>sender</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#update_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.update_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.models.update_points">
+<code class="descclassname">IPT2017.models.</code><code class="descname">update_points</code><span class="sig-paren">(</span><em>sender</em>, <em>instance</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/models.html#update_points"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.models.update_points" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-IPT2017.tests">
+<span id="ipt2017-tests-module"></span><h2>IPT2017.tests module<a class="headerlink" href="#module-IPT2017.tests" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ipt2017-urls-module">
+<h2>IPT2017.urls module<a class="headerlink" href="#ipt2017-urls-module" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-IPT2017.views">
+<span id="ipt2017-views-module"></span><h2>IPT2017.views module<a class="headerlink" href="#module-IPT2017.views" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="IPT2017.views.finalround_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">finalround_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#finalround_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.finalround_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.home">
+<code class="descclassname">IPT2017.views.</code><code class="descname">home</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.home" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.jury_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">jury_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#jury_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.jury_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.jury_export">
+<code class="descclassname">IPT2017.views.</code><code class="descname">jury_export</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#jury_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.jury_export" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.jury_export_web">
+<code class="descclassname">IPT2017.views.</code><code class="descname">jury_export_web</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#jury_export_web"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.jury_export_web" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.jurys_overview">
+<code class="descclassname">IPT2017.views.</code><code class="descname">jurys_overview</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#jurys_overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.jurys_overview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.ninja_test">
+<code class="descclassname">IPT2017.views.</code><code class="descname">ninja_test</code><span class="sig-paren">(</span><em>user</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#ninja_test"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.ninja_test" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.participant_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">participant_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#participant_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.participant_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.participants_all">
+<code class="descclassname">IPT2017.views.</code><code class="descname">participants_all</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#participants_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.participants_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.participants_export">
+<code class="descclassname">IPT2017.views.</code><code class="descname">participants_export</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#participants_export"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.participants_export" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.participants_export_web">
+<code class="descclassname">IPT2017.views.</code><code class="descname">participants_export_web</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#participants_export_web"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.participants_export_web" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.participants_overview">
+<code class="descclassname">IPT2017.views.</code><code class="descname">participants_overview</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#participants_overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.participants_overview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.participants_trombinoscope">
+<code class="descclassname">IPT2017.views.</code><code class="descname">participants_trombinoscope</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#participants_trombinoscope"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.participants_trombinoscope" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.physics_fight_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">physics_fight_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#physics_fight_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.physics_fight_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.physics_fights">
+<code class="descclassname">IPT2017.views.</code><code class="descname">physics_fights</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#physics_fights"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.physics_fights" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.poolranking">
+<code class="descclassname">IPT2017.views.</code><code class="descname">poolranking</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#poolranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.poolranking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.problem_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">problem_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#problem_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.problem_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.problems_overview">
+<code class="descclassname">IPT2017.views.</code><code class="descname">problems_overview</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#problems_overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.problems_overview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.ranking">
+<code class="descclassname">IPT2017.views.</code><code class="descname">ranking</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#ranking"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.ranking" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.round_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">round_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#round_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.round_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.rounds">
+<code class="descclassname">IPT2017.views.</code><code class="descname">rounds</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#rounds"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.rounds" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.soon">
+<code class="descclassname">IPT2017.views.</code><code class="descname">soon</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#soon"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.soon" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.team_detail">
+<code class="descclassname">IPT2017.views.</code><code class="descname">team_detail</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#team_detail"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.team_detail" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.teams_overview">
+<code class="descclassname">IPT2017.views.</code><code class="descname">teams_overview</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#teams_overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.teams_overview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.tournament_overview">
+<code class="descclassname">IPT2017.views.</code><code class="descname">tournament_overview</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#tournament_overview"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.tournament_overview" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="function">
+<dt id="IPT2017.views.update_all">
+<code class="descclassname">IPT2017.views.</code><code class="descname">update_all</code><span class="sig-paren">(</span><em>request</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/IPT2017/views.html#update_all"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#IPT2017.views.update_all" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+<div class="section" id="module-IPT2017">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-IPT2017" title="Permalink to this headline">¶</a></h2>
+<p>This is the IPT 2016 Magic Machine, a django/python toolbox that organises a tournament and compute the grades</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Authors:</th><td class="field-body">Vivien Bonvin and Maxime Harazi</td>
+</tr>
+<tr class="field-even field"><th class="field-name">License:</th><td class="field-body">GPLv3 or later</td>
+</tr>
+</tbody>
+</table>
+<p>If you use this package for your own tournament, please cite our organisation and website: iptnet.info, thanks !</p>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Vivien Bonvin, Maxime Harazi, Cyrille Doux.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+      |
+      <a href="../_sources/source/IPT2017.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

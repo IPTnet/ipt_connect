@@ -1,0 +1,844 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>IPT2017.models &#8212; ipt-connect 2.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '2.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head>
+  <body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for IPT2017.models</h1><div class="highlight"><pre>
+<span></span><span class="c1"># coding: utf8</span>
+<span class="kn">from</span> <span class="nn">django.db</span> <span class="k">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="k">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django.utils</span> <span class="k">import</span> <span class="n">timezone</span>
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="kn">from</span> <span class="nn">uuid</span> <span class="k">import</span> <span class="n">uuid4</span>
+<span class="kn">from</span> <span class="nn">django.utils.encoding</span> <span class="k">import</span> <span class="n">iri_to_uri</span>
+<span class="kn">from</span> <span class="nn">string</span> <span class="k">import</span> <span class="n">replace</span>
+<span class="kn">from</span> <span class="nn">django.utils.deconstruct</span> <span class="k">import</span> <span class="n">deconstructible</span>
+<span class="kn">from</span> <span class="nn">django.db.models.signals</span> <span class="k">import</span> <span class="n">post_save</span><span class="p">,</span> <span class="n">pre_save</span>
+<span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="k">import</span> <span class="n">receiver</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="k">import</span> <span class="n">Avg</span><span class="p">,</span> <span class="n">Sum</span>
+<span class="kn">from</span> <span class="nn">django.core.validators</span> <span class="k">import</span> <span class="n">RegexValidator</span>
+<span class="kn">from</span> <span class="nn">django.dispatch</span> <span class="k">import</span> <span class="n">Signal</span>
+
+
+<span class="c1"># Parameters</span>
+<span class="n">npf</span> <span class="o">=</span> <span class="mi">4</span>					<span class="c1"># Number of Physics fights</span>
+<span class="n">with_final_pf</span> <span class="o">=</span> <span class="kc">True</span>	<span class="c1"># Is there a Final Fight ?</span>
+<span class="n">reject_malus</span> <span class="o">=</span> <span class="mf">0.2</span>		<span class="c1"># Malus for too many rejections</span>
+<span class="n">npfreject_max</span> <span class="o">=</span> <span class="mi">3</span>		<span class="c1"># Maximum number of tactical rejection (per fight)</span>
+<span class="n">netreject_max</span> <span class="o">=</span> <span class="mi">1</span>		<span class="c1"># Maximum number of eternal rejection</span>
+
+<span class="c1"># Useful static variables</span>
+<span class="n">pfs</span> <span class="o">=</span> <span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npf</span><span class="p">)]</span>
+<span class="n">npf_tot</span> <span class="o">=</span> <span class="n">npf</span> <span class="o">+</span> <span class="nb">int</span><span class="p">(</span><span class="n">with_final_pf</span><span class="p">)</span>
+<span class="n">grade_choices</span> <span class="o">=</span> <span class="p">[(</span><span class="n">ind</span><span class="p">,</span> <span class="n">ind</span><span class="p">)</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+
+<div class="viewcode-block" id="mean"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.mean">[docs]</a><span class="k">def</span> <span class="nf">mean</span><span class="p">(</span><span class="n">vec</span><span class="p">):</span>
+	<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+		<span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">vec</span><span class="p">))</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">vec</span><span class="p">)</span>
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="mi">0</span></div>
+
+
+<div class="viewcode-block" id="UploadToPathAndRename"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.UploadToPathAndRename">[docs]</a><span class="nd">@deconstructible</span>
+<span class="k">class</span> <span class="nc">UploadToPathAndRename</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+	<span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">path</span><span class="p">):</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span> <span class="o">=</span> <span class="n">path</span>
+
+	<span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="n">filename</span><span class="p">):</span>
+		<span class="n">ext</span> <span class="o">=</span> <span class="n">filename</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;-&#39;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+		<span class="c1"># get filename</span>
+		<span class="k">if</span> <span class="n">instance</span><span class="o">.</span><span class="n">pk</span><span class="p">:</span>
+			<span class="n">filename</span> <span class="o">=</span> <span class="n">iri_to_uri</span><span class="p">(</span><span class="n">replace</span><span class="p">((</span><span class="sa">u</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">_</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">team</span><span class="p">,</span><span class="n">instance</span><span class="o">.</span><span class="n">surname</span><span class="p">,</span><span class="n">instance</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">ext</span><span class="p">),</span><span class="s1">&#39; &#39;</span><span class="p">,</span><span class="s1">&#39;_&#39;</span><span class="p">))</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="c1"># set filename as random string</span>
+			<span class="n">filename</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{}</span><span class="s1">.</span><span class="si">{}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">uuid4</span><span class="p">()</span><span class="o">.</span><span class="n">hex</span><span class="p">,</span> <span class="n">ext</span><span class="p">)</span>
+		<span class="c1"># return the whole path to the file</span>
+		<span class="k">return</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">sub_path</span><span class="p">,</span> <span class="n">filename</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="Participant"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Participant">[docs]</a><span class="k">class</span> <span class="nc">Participant</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This class represent the basic model of our program, a participant.</span>
+<span class="sd">	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament.&quot;&quot;&quot;</span>
+
+
+	<span class="n">GENDER_CHOICES</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span><span class="s1">&#39;Male&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;F&#39;</span><span class="p">,</span><span class="s1">&#39;Female&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;D&#39;</span><span class="p">,</span><span class="s1">&#39;Decline to report&#39;</span><span class="p">))</span>
+
+	<span class="n">ROLE_CHOICES</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span><span class="s1">&#39;Team Member&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;TC&#39;</span><span class="p">,</span><span class="s1">&#39;Team Captain&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;TL&#39;</span><span class="p">,</span><span class="s1">&#39;Team Leader&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;ACC&#39;</span><span class="p">,</span><span class="s1">&#39;Accompanying&#39;</span><span class="p">)</span> <span class="p">)</span>
+
+	<span class="n">DIET_CHOICES</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="s1">&#39;NO&#39;</span><span class="p">,</span><span class="s1">&#39;No specific diet&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;NOPORK&#39;</span><span class="p">,</span><span class="s1">&#39;No pork&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;NOMEAT&#39;</span><span class="p">,</span><span class="s1">&#39;No meat&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;NOFISH&#39;</span><span class="p">,</span><span class="s1">&#39;No fish&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;NOMEAT_NOEGG&#39;</span><span class="p">,</span><span class="s1">&#39;No meat, No eggs&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;OTHER&#39;</span><span class="p">,</span><span class="s1">&#39;Other (see remarks)&#39;</span><span class="p">)</span>  <span class="p">)</span>
+
+	<span class="n">SHIRT_SIZES</span> <span class="o">=</span> <span class="p">(</span>
+		<span class="p">(</span><span class="s1">&#39;S&#39;</span><span class="p">,</span> <span class="s1">&#39;Small&#39;</span><span class="p">),</span>
+		<span class="p">(</span><span class="s1">&#39;M&#39;</span><span class="p">,</span> <span class="s1">&#39;Medium&#39;</span><span class="p">),</span>
+		<span class="p">(</span><span class="s1">&#39;L&#39;</span><span class="p">,</span> <span class="s1">&#39;Large&#39;</span><span class="p">),</span>
+		<span class="p">(</span><span class="s1">&#39;XL&#39;</span><span class="p">,</span> <span class="s1">&#39;Extra Large&#39;</span><span class="p">),</span>
+	<span class="p">)</span>
+
+	<span class="c1"># parameters</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Name&#39;</span><span class="p">)</span>
+	<span class="n">surname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Surname&#39;</span><span class="p">)</span>
+	<span class="n">gender</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">choices</span><span class="o">=</span><span class="n">GENDER_CHOICES</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Gender&#39;</span><span class="p">)</span>
+	<span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;This address will be used to send the participant every important infos about the tournament.&#39;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Email&#39;</span><span class="p">)</span>
+	<span class="n">phone_regex</span> <span class="o">=</span> <span class="n">RegexValidator</span><span class="p">(</span><span class="n">regex</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;^\+?1?\d{9,15}$&#39;</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s2">&quot;Phone number must be entered in the format: &#39;+999999999&#39;. Up to 15 digits allowed.&quot;</span><span class="p">)</span>
+	<span class="n">phone_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">validators</span><span class="o">=</span><span class="p">[</span><span class="n">phone_regex</span><span class="p">],</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">help_text</span><span class="o">=</span><span class="s2">&quot;Compulsory for the Team Leaders.&quot;</span><span class="p">)</span> <span class="c1"># validators should be a list</span>
+	<span class="n">passport_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+	<span class="n">birthdate</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;1900-01-31&#39;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Birthdate&#39;</span><span class="p">)</span>
+	<span class="c1">#photo = models.ImageField(upload_to=UploadToPathAndRename(&#39;IPT2017/id_photo&#39;),help_text=&quot;Please use a clear ID photo. This will be used for badges and transportation cards.&quot;, null=True)</span>
+	<span class="n">team</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Team&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Team&#39;</span><span class="p">)</span>
+	<span class="n">role</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">choices</span><span class="o">=</span><span class="n">ROLE_CHOICES</span><span class="p">,</span><span class="n">help_text</span><span class="o">=</span><span class="s2">&quot;The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don&#39;t forget to register yourself!&quot;</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="s2">&quot;TM&quot;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Role&#39;</span><span class="p">)</span>
+	<span class="n">affiliation</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">default</span><span class="o">=</span><span class="s1">&#39;XXX University&#39;</span><span class="p">)</span>
+	<span class="n">veteran</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">help_text</span><span class="o">=</span><span class="s2">&quot;Has the participant already participated in the IPT? (informative only)&quot;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Veteran&#39;</span><span class="p">)</span>
+	<span class="n">diet</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span><span class="n">choices</span><span class="o">=</span><span class="n">DIET_CHOICES</span><span class="p">,</span><span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Does the participant have a specific diet?&#39;</span><span class="p">)</span>
+	<span class="n">mixed_gender_accommodation</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">help_text</span><span class="o">=</span><span class="s2">&quot;Is it ok for the participant to be in a mixed gender hotel room?&quot;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Mixed gender accommodation?&#39;</span><span class="p">)</span>
+	<span class="n">shirt_size</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span><span class="n">choices</span><span class="o">=</span><span class="n">SHIRT_SIZES</span><span class="p">)</span>
+	<span class="n">remark</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Remarks&#39;</span><span class="p">)</span>
+
+	<span class="n">total_points</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">mean_score_as_reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">mean_score_as_opponent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">mean_score_as_reviewer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">tot_score_as_reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">tot_score_as_opponent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">tot_score_as_reviewer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+	<span class="c1"># functions</span>
+<div class="viewcode-block" id="Participant.fullname"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Participant.fullname">[docs]</a>	<span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		:return: return the full name of the participant</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">surname</span></div>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		:return: return the full name of the participant</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullname</span><span class="p">()</span>
+
+<div class="viewcode-block" id="Participant.update_scores"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Participant.update_scores">[docs]</a>	<span class="k">def</span> <span class="nf">update_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c1">#print &quot;Updating scores for&quot;, self</span>
+		<span class="n">rounds_as_reporter</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reporter</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">rounds_as_opponent</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">opponent</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">rounds_as_reviewer</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reviewer</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_reporter</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">score_reporter</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_reporter</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_opponent</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">score_opponent</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_opponent</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_reviewer</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">score_reviewer</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_reviewer</span><span class="p">])</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mean_score_as_reporter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_reporter</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rounds_as_reporter</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mean_score_as_opponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_opponent</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rounds_as_opponent</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mean_score_as_reviewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_reviewer</span> <span class="o">/</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">rounds_as_reviewer</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+
+		<span class="n">res</span> <span class="o">=</span> <span class="mf">0.0</span>
+		<span class="n">res</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">points_reporter</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_reporter</span><span class="p">])</span>
+		<span class="n">res</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_opponent</span> <span class="o">*</span> <span class="mf">2.0</span>
+		<span class="n">res</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tot_score_as_reviewer</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">total_points</span> <span class="o">=</span> <span class="n">res</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Participant.fast_team_ranking"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Participant.fast_team_ranking">[docs]</a>	<span class="nd">@classmethod</span>
+	<span class="k">def</span> <span class="nf">fast_team_ranking</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">team</span><span class="p">):</span>
+		<span class="n">participants</span> <span class="o">=</span> <span class="n">Participant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s1">&#39;TM&#39;</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">)</span> <span class="o">|</span> <span class="n">Participant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">role</span><span class="o">=</span><span class="s1">&#39;TC&#39;</span><span class="p">,</span> <span class="n">team</span><span class="o">=</span><span class="n">team</span><span class="p">)</span>
+		<span class="k">return</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">participants</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">total_points</span><span class="p">)[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span></div></div>
+
+
+
+<div class="viewcode-block" id="Problem"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Problem">[docs]</a><span class="k">class</span> <span class="nc">Problem</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This model represents one of the 17 problems</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+	<span class="n">description</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+	<span class="n">mean_score_of_reporters</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">mean_score_of_opponents</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">mean_score_of_reviewers</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="Problem.status"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Problem.status">[docs]</a>	<span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">meangradesonly</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Compute mean grades of the problem</span>
+
+<span class="sd">		:return:</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c1"># first, get a list of who presented what</span>
+		<span class="n">rounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">problem_presented</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">reporters</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">opponents</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">reviewers</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="p">:</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">JuryGrade</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">round</span><span class="o">=</span><span class="nb">round</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="n">reporters</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">reporter_team</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">score_reporter</span><span class="p">})</span>
+				<span class="n">opponents</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">opponent_team</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">score_opponent</span><span class="p">})</span>
+				<span class="n">reviewers</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">reviewer_team</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="p">,</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">score_reviewer</span><span class="p">})</span>
+
+		<span class="c1"># use this to compute the mean grades</span>
+                <span class="k">if</span> <span class="mi">0</span> <span class="ow">in</span> <span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="n">reporters</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponents</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">reviewers</span><span class="p">)]:</span>
+                        <span class="n">meangrades</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;report&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;opposition&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;review&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                        <span class="n">meangrades</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;report&quot;</span><span class="p">:</span> <span class="n">mean</span><span class="p">([</span><span class="n">reporter</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">reporter</span> <span class="ow">in</span> <span class="n">reporters</span><span class="p">]),</span> <span class="s2">&quot;opposition&quot;</span><span class="p">:</span> <span class="n">mean</span><span class="p">([</span><span class="n">opponent</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">opponent</span> <span class="ow">in</span> <span class="n">opponents</span><span class="p">]),</span> <span class="s2">&quot;review&quot;</span><span class="p">:</span> <span class="n">mean</span><span class="p">([</span><span class="n">reviewer</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">reviewer</span> <span class="ow">in</span> <span class="n">reviewers</span><span class="p">])}</span>
+
+
+		<span class="k">if</span> <span class="n">meangradesonly</span><span class="o">==</span><span class="kc">False</span><span class="p">:</span>
+			<span class="c1"># then, reorder that list per teams</span>
+			<span class="n">myteamsnames</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="n">elt</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">elt</span> <span class="ow">in</span> <span class="n">reporters</span><span class="o">+</span><span class="n">opponents</span><span class="o">+</span><span class="n">reviewers</span><span class="p">]))</span>
+
+			<span class="n">teamresults</span> <span class="o">=</span> <span class="p">[]</span>
+			<span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">myteamsnames</span><span class="p">:</span>
+				<span class="k">if</span> <span class="ow">not</span> <span class="n">name</span> <span class="ow">in</span> <span class="p">[</span><span class="n">teamresult</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="k">for</span> <span class="n">teamresult</span> <span class="ow">in</span> <span class="n">teamresults</span><span class="p">]:</span>
+					<span class="n">teamresult</span> <span class="o">=</span> <span class="p">{}</span>
+					<span class="n">teamresult</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">name</span>
+
+					<span class="c1"># They can be multiple report/oppos/review on the same problem by the same team !!!</span>
+					<span class="n">reports</span><span class="o">=</span><span class="p">[]</span>
+					<span class="n">oppositions</span><span class="o">=</span><span class="p">[]</span>
+					<span class="n">reviews</span><span class="o">=</span><span class="p">[]</span>
+					<span class="c1"># get the scores from presentations</span>
+					<span class="k">for</span> <span class="n">reporter</span> <span class="ow">in</span> <span class="n">reporters</span><span class="p">:</span>
+						<span class="k">if</span> <span class="n">reporter</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+							<span class="n">reports</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="n">reporter</span><span class="p">[</span><span class="s2">&quot;round&quot;</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">reporter</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]})</span>
+					<span class="c1"># get the scores from oppositions</span>
+					<span class="k">for</span> <span class="n">opponent</span> <span class="ow">in</span> <span class="n">opponents</span><span class="p">:</span>
+						<span class="k">if</span> <span class="n">opponent</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+							<span class="n">oppositions</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="n">opponent</span><span class="p">[</span><span class="s2">&quot;round&quot;</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">opponent</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]})</span>
+					<span class="c1"># get the scores from reviews</span>
+					<span class="k">for</span> <span class="n">reviewer</span> <span class="ow">in</span> <span class="n">reviewers</span><span class="p">:</span>
+						<span class="k">if</span> <span class="n">reviewer</span><span class="p">[</span><span class="s2">&quot;name&quot;</span><span class="p">]</span> <span class="o">==</span> <span class="n">name</span><span class="p">:</span>
+							<span class="n">reviews</span><span class="o">.</span><span class="n">append</span><span class="p">({</span><span class="s2">&quot;round&quot;</span><span class="p">:</span> <span class="n">reviewer</span><span class="p">[</span><span class="s2">&quot;round&quot;</span><span class="p">],</span> <span class="s2">&quot;value&quot;</span><span class="p">:</span> <span class="n">reviewer</span><span class="p">[</span><span class="s2">&quot;value&quot;</span><span class="p">]})</span>
+
+					<span class="n">teamresult</span><span class="p">[</span><span class="s2">&quot;reports&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reports</span>
+					<span class="n">teamresult</span><span class="p">[</span><span class="s2">&quot;oppositions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">oppositions</span>
+					<span class="n">teamresult</span><span class="p">[</span><span class="s2">&quot;reviews&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">reviews</span>
+
+					<span class="n">teamresults</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">teamresult</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="k">pass</span>
+
+			<span class="k">return</span> <span class="p">(</span><span class="n">meangrades</span><span class="p">,</span> <span class="n">teamresults</span><span class="p">)</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="k">return</span> <span class="n">meangrades</span></div>
+
+<div class="viewcode-block" id="Problem.update_scores"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Problem.update_scores">[docs]</a>	<span class="k">def</span> <span class="nf">update_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c1">#print &quot;Updating scores for&quot;, self</span>
+		<span class="n">rounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">problem_presented</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">mean_score_of_reporters</span> <span class="o">=</span> <span class="n">mean</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">score_reporter</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mean_score_of_opponents</span> <span class="o">=</span> <span class="n">mean</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">score_opponent</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="p">])</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">mean_score_of_reviewers</span> <span class="o">=</span> <span class="n">mean</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">score_reviewer</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="p">])</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span></div></div>
+
+
+<div class="viewcode-block" id="Team"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Team">[docs]</a><span class="k">class</span> <span class="nc">Team</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	This model represent a team, to which all the participants belong to</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="n">POOL_CHOICES</span> <span class="o">=</span> <span class="p">(</span> <span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">,</span><span class="s1">&#39;Pool A&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;B&#39;</span><span class="p">,</span><span class="s1">&#39;Pool B&#39;</span><span class="p">),</span> <span class="p">(</span><span class="s1">&#39;O&#39;</span><span class="p">,</span><span class="s1">&#39;Not attributed&#39;</span><span class="p">))</span>
+
+	<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+	<span class="n">surname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">default</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+	<span class="n">IOC</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">SET_NULL</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;Team_IPT2017&#39;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s2">&quot;Admin&quot;</span><span class="p">)</span>
+	<span class="n">pool</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">choices</span><span class="o">=</span><span class="n">POOL_CHOICES</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Pool&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+	<span class="n">total_points</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">bonus_points</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">nrounds_as_rep</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">nrounds_as_opp</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">nrounds_as_rev</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="Team.presentation_coefficients"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Team.presentation_coefficients">[docs]</a>	<span class="k">def</span> <span class="nf">presentation_coefficients</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Modify the presentation coefficient from a given round up to the end of the physics fights if more than three problems are tactically rejected.</span>
+
+<span class="sd">		The coefficient loses 0.2 points for every additional rejection. This penality is carried over all the subsequents rounds, but disappear for the Final</span>
+
+<span class="sd">		:param verbose: Verbosity flag</span>
+<span class="sd">		:return: Return a list with the coefficient for every round</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="n">eternalrejections</span> <span class="o">=</span> <span class="n">EternalRejection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">round__reporter_team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+		<span class="n">beforetactical</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">netrej</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">pf</span> <span class="ow">in</span> <span class="n">pfs</span><span class="p">:</span>
+			<span class="n">netrej</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">eternalrejections</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">round__pf_number</span><span class="o">=</span><span class="n">pf</span><span class="p">))</span>
+			<span class="n">beforetactical</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">3.0</span> <span class="o">-</span> <span class="n">reject_malus</span><span class="o">*</span><span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="p">(</span><span class="n">netrej</span><span class="o">-</span><span class="n">netreject_max</span><span class="p">)))</span>
+
+		<span class="c1"># get all the tactical rejections</span>
+		<span class="n">rejections</span> <span class="o">=</span> <span class="n">TacticalRejection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">round__reporter_team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+		<span class="n">prescoeffs</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="n">npenalities</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="nb">print</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;Tactical Rejection Penalites for Team </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">20</span>
+		<span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">pf</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">pfs</span><span class="p">):</span>
+			<span class="n">pfrejections</span> <span class="o">=</span> <span class="p">[</span><span class="n">rejection</span> <span class="k">for</span> <span class="n">rejection</span> <span class="ow">in</span> <span class="n">rejections</span> <span class="k">if</span> <span class="n">rejection</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">pf_number</span> <span class="o">==</span> <span class="n">pf</span><span class="p">]</span>
+			<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+				<span class="nb">print</span> <span class="s2">&quot;</span><span class="si">%i</span><span class="s2"> tactical rejections by Team </span><span class="si">%s</span><span class="s2"> in Physics Fight </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">pfrejections</span><span class="p">),</span> <span class="bp">self</span><span class="p">,</span> <span class="n">pf</span><span class="p">)</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">pfrejections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">npfreject_max</span><span class="p">:</span>
+				<span class="n">npenalities</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">pfrejections</span><span class="p">)</span> <span class="o">-</span> <span class="n">npfreject_max</span>
+			<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+				<span class="k">if</span> <span class="n">npenalities</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+					<span class="nb">print</span> <span class="s2">&quot;Penality of </span><span class="si">%.1f</span><span class="s2"> points on the Reporter Coefficient&quot;</span> <span class="o">%</span>  <span class="nb">float</span><span class="p">(</span><span class="n">reject_malus</span><span class="o">*</span><span class="n">npenalities</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="nb">print</span> <span class="s2">&quot;No penality&quot;</span>
+			<span class="n">prescoeffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">beforetactical</span><span class="p">[</span><span class="n">ind</span><span class="p">]</span> <span class="o">-</span> <span class="n">reject_malus</span> <span class="o">*</span> <span class="n">npenalities</span><span class="p">)</span>
+
+		<span class="c1"># add the coeff for the final, 3.0 by default</span>
+		<span class="k">if</span> <span class="n">with_final_pf</span><span class="p">:</span>
+			<span class="n">prescoeffs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mf">3.0</span><span class="p">)</span>
+
+		<span class="k">return</span> <span class="n">prescoeffs</span></div>
+
+
+<div class="viewcode-block" id="Team.update_scores"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Team.update_scores">[docs]</a>	<span class="k">def</span> <span class="nf">update_scores</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="c1">#print &quot;Updating scores for&quot;, self</span>
+
+		<span class="n">qfrounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+
+
+		<span class="n">rounds_as_reporter</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reporter_team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">rounds_as_opponent</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">opponent_team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">rounds_as_reviewer</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reviewer_team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">nrounds_as_rep</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rounds_as_reporter</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">nrounds_as_opp</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rounds_as_opponent</span><span class="p">)</span>
+		<span class="bp">self</span><span class="o">.</span><span class="n">nrounds_as_rev</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">rounds_as_reviewer</span><span class="p">)</span>
+
+		<span class="n">res</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+		<span class="n">res</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">points_reporter</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_reporter</span><span class="p">])</span>
+		<span class="n">res</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">points_opponent</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_opponent</span><span class="p">])</span>
+		<span class="n">res</span> <span class="o">+=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">round</span><span class="o">.</span><span class="n">points_reviewer</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds_as_reviewer</span><span class="p">])</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">total_points</span> <span class="o">=</span> <span class="n">res</span>
+
+		<span class="bp">self</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+		<span class="n">participants</span> <span class="o">=</span> <span class="n">Participant</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">participants</span><span class="p">:</span>
+			<span class="n">p</span><span class="o">.</span><span class="n">update_scores</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="Team.fast_ranking"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Team.fast_ranking">[docs]</a>	<span class="nd">@classmethod</span>
+	<span class="k">def</span> <span class="nf">fast_ranking</span><span class="p">(</span><span class="bp">cls</span><span class="p">):</span>
+		<span class="n">teams</span> <span class="o">=</span> <span class="bp">cls</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+		<span class="n">teams</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">teams</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">total_points</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="k">return</span> <span class="n">teams</span></div>
+
+
+
+<div class="viewcode-block" id="Team.problems"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Team.problems">[docs]</a>	<span class="k">def</span> <span class="nf">problems</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">currentround</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		Get all the problems that I cannot present(already presented or eternal rejection) and cannot oppose(already opposed)</span>
+
+<span class="sd">		:param verbose: verbosity Flag</span>
+<span class="sd">		:param currentround: A Round instance. Return all the unpresentable problems before the current round. If none, return on all the round. This sentence is terribly unclear. Rephrase.</span>
+
+<span class="sd">		:return: tuple of three lists. each list contains the problems that are eternally rejected, already presented and already opposed</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="nb">print</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">20</span><span class="p">,</span> <span class="s2">&quot;Problems of Team </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">20</span>
+		<span class="n">noproblems</span><span class="o">=</span><span class="p">[]</span>
+
+		<span class="k">if</span> <span class="n">currentround</span> <span class="o">!=</span><span class="kc">None</span><span class="p">:</span>
+			<span class="n">pf_number</span> <span class="o">=</span> <span class="n">currentround</span><span class="o">.</span><span class="n">pf_number</span>
+		<span class="k">else</span><span class="p">:</span> <span class="c1">#TODO: remove these stupid 999 values and implement the pf rejection properly</span>
+			<span class="n">round_number</span> <span class="o">=</span> <span class="mi">999</span>
+
+		<span class="c1"># the eternal rejection</span>
+		<span class="n">eternal_rejections</span> <span class="o">=</span> <span class="n">EternalRejection</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">round__reporter__team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="c1"># assert len(eternal_rejections) &lt; 2, &quot;Team %s has more than one eternal rejection. This is forbidden!&quot; % self.name</span>
+		<span class="c1"># Well, apparently it is...</span>
+		<span class="n">reject</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eternal_rejections</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">eternal_rejections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">pf_number</span> <span class="o">&lt;</span> <span class="n">pf_number</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+				<span class="nb">print</span> <span class="s2">&quot;Team </span><span class="si">%s</span><span class="s2"> rejected eternally problem </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">eternal_rejections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">problem</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+			<span class="n">reject</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">eternal_rejections</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">problem</span><span class="p">)</span>
+		<span class="n">noproblems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">reject</span><span class="p">)</span>
+
+		<span class="c1"># now all the problems already presented</span>
+		<span class="n">rounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">reporter__team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">rounds</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span> <span class="k">if</span> <span class="nb">round</span><span class="o">.</span><span class="n">pf_number</span> <span class="o">&lt;</span> <span class="n">pf_number</span><span class="p">]</span>
+		<span class="n">presented</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+				<span class="nb">print</span> <span class="s2">&quot;In </span><span class="si">%s</span><span class="s2">, I presented problem </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">round</span><span class="p">,</span> <span class="nb">round</span><span class="o">.</span><span class="n">problem_presented</span><span class="p">)</span>
+			<span class="n">presented</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="o">.</span><span class="n">problem_presented</span><span class="p">)</span>
+		<span class="n">noproblems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">presented</span><span class="p">)</span>
+
+		<span class="c1"># and problems already opposed</span>
+		<span class="n">rounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">opponent__team</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">rounds</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span> <span class="k">if</span> <span class="nb">round</span><span class="o">.</span><span class="n">pf_number</span> <span class="o">&lt;</span> <span class="n">pf_number</span><span class="p">]</span>
+		<span class="n">opposed</span> <span class="o">=</span> <span class="p">[]</span>
+		<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="p">:</span>
+			<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+				<span class="nb">print</span> <span class="s2">&quot;In </span><span class="si">%s</span><span class="s2">, I opposed problem </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="nb">round</span><span class="p">,</span> <span class="nb">round</span><span class="o">.</span><span class="n">problem_presented</span><span class="p">)</span>
+			<span class="n">opposed</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">round</span><span class="o">.</span><span class="n">problem_presented</span><span class="p">)</span>
+		<span class="n">noproblems</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">opposed</span><span class="p">)</span>
+
+		<span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="n">noproblems</span><span class="p">)</span> <span class="o">==</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Something wrong with your rejected problem...&quot;</span>
+		<span class="k">return</span> <span class="n">noproblems</span></div></div>
+
+
+
+
+<div class="viewcode-block" id="Room"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Room">[docs]</a><span class="k">class</span> <span class="nc">Room</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="Room.ident"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Room.ident">[docs]</a>	<span class="k">def</span> <span class="nf">ident</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="n">rooms</span> <span class="o">=</span> <span class="n">Room</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+		<span class="k">for</span> <span class="n">ind</span><span class="p">,</span> <span class="n">room</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">rooms</span><span class="p">):</span>
+			<span class="k">if</span> <span class="n">room</span><span class="o">==</span><span class="bp">self</span><span class="p">:</span>
+				<span class="k">return</span> <span class="n">ind</span><span class="o">+</span><span class="mi">1</span></div></div>
+
+<div class="viewcode-block" id="Jury"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Jury">[docs]</a><span class="k">class</span> <span class="nc">Jury</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+	<span class="n">name</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Name&#39;</span><span class="p">)</span>
+	<span class="n">surname</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Surname&#39;</span><span class="p">)</span>
+<div class="viewcode-block" id="Jury.fullname"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Jury.fullname">[docs]</a>	<span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		:return: return the full name of the jury member</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">name</span><span class="o">+</span><span class="s1">&#39; &#39;</span><span class="o">+</span><span class="bp">self</span><span class="o">.</span><span class="n">surname</span></div>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">fullname</span><span class="p">()</span>
+
+	<span class="n">email</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;This address will be used to send the participant every important infos about the tournament.&#39;</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Email&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">affiliation</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Affiliation to display&#39;</span><span class="p">,</span><span class="n">help_text</span><span class="o">=</span><span class="s1">&#39;Will be used for export (badges and web).&#39;</span><span class="p">)</span>
+	<span class="n">team</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="s1">&#39;Team&#39;</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">pf1</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;PF 1&#39;</span><span class="p">)</span>
+	<span class="n">pf2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;PF 2&#39;</span><span class="p">)</span>
+	<span class="n">pf3</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;PF 3&#39;</span><span class="p">)</span>
+	<span class="n">pf4</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;PF 4&#39;</span><span class="p">)</span>
+	<span class="n">final</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Final&#39;</span><span class="p">)</span>
+	<span class="n">remark</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">(</span><span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">verbose_name</span><span class="o">=</span><span class="s1">&#39;Remarks&#39;</span><span class="p">)</span>
+
+	<span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+		<span class="n">verbose_name</span> <span class="o">=</span> <span class="s2">&quot;Juror&quot;</span></div>
+
+
+<div class="viewcode-block" id="Round"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Round">[docs]</a><span class="k">class</span> <span class="nc">Round</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+	<span class="n">pf_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+			<span class="n">choices</span><span class="o">=</span><span class="p">(((</span><span class="n">ind</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Fight &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">npf_tot</span><span class="p">))),</span>
+			<span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+			<span class="p">)</span>
+	<span class="n">round_number</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+			<span class="n">choices</span><span class="o">=</span><span class="p">(((</span><span class="n">ind</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;Round &#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">ind</span><span class="o">+</span><span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">ind</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">))),</span>
+			<span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+			<span class="p">)</span>
+	<span class="n">room</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Room</span><span class="p">)</span>
+	<span class="n">reporter_team</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Team</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reporterteam&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">opponent_team</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Team</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;opponentteam&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">reviewer_team</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Team</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reviewerteam&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Participant</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reporter_name_1&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">reporter_2</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Participant</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reporter_name_2&#39;</span><span class="p">)</span>
+	<span class="n">opponent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Participant</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;opponent_name&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">reviewer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Participant</span><span class="p">,</span> <span class="n">related_name</span><span class="o">=</span><span class="s1">&#39;reviewer_name&#39;</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">problem_presented</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Problem</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">submitted_date</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">timezone</span><span class="o">.</span><span class="n">now</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+	<span class="n">score_reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">score_opponent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">score_reviewer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+	<span class="n">points_reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">points_opponent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+	<span class="n">points_reviewer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">FloatField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">editable</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s2">&quot;Fight </span><span class="si">%i</span><span class="s2"> | Round </span><span class="si">%i</span><span class="s2"> | Salle </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pf_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">room</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+<div class="viewcode-block" id="Round.save"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Round.save">[docs]</a>	<span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+		<span class="n">jurygrades</span> <span class="o">=</span> <span class="n">JuryGrade</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="nb">round</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="s2">&quot;Update scores for&quot;</span><span class="p">,</span> <span class="bp">self</span>
+
+		<span class="n">reporter_grades</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="n">jurygrade</span><span class="o">.</span><span class="n">grade_reporter</span> <span class="k">for</span> <span class="n">jurygrade</span> <span class="ow">in</span> <span class="n">jurygrades</span><span class="p">]))</span>
+		<span class="n">opponent_grades</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="n">jurygrade</span><span class="o">.</span><span class="n">grade_opponent</span> <span class="k">for</span> <span class="n">jurygrade</span> <span class="ow">in</span> <span class="n">jurygrades</span><span class="p">]))</span>
+		<span class="n">reviewer_grades</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">sorted</span><span class="p">([</span><span class="n">jurygrade</span><span class="o">.</span><span class="n">grade_reviewer</span> <span class="k">for</span> <span class="n">jurygrade</span> <span class="ow">in</span> <span class="n">jurygrades</span><span class="p">]))</span>
+
+		<span class="n">ngrades</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">reporter_grades</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">opponent_grades</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">reviewer_grades</span><span class="p">))</span>
+		<span class="k">if</span> <span class="n">ngrades</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="p">:</span>
+			<span class="k">for</span> <span class="n">grades</span> <span class="ow">in</span> <span class="p">[</span><span class="n">reporter_grades</span><span class="p">,</span> <span class="n">opponent_grades</span><span class="p">,</span> <span class="n">reviewer_grades</span><span class="p">]:</span>
+				<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">grades</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]:</span>
+					<span class="n">nreject</span> <span class="o">=</span> <span class="mi">1</span>
+				<span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">grades</span><span class="p">)</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]:</span>
+					<span class="n">nreject</span> <span class="o">=</span> <span class="mi">2</span>
+				<span class="k">else</span><span class="p">:</span>
+					<span class="n">nreject</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">grades</span><span class="p">)</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">)</span>
+
+				<span class="k">if</span> <span class="nb">round</span><span class="p">(</span><span class="n">nreject</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">==</span> <span class="n">nreject</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">:</span>
+				   <span class="n">nlow</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nreject</span> <span class="o">/</span> <span class="mf">2.0</span><span class="p">)</span>
+				   <span class="n">nhigh</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nlow</span><span class="p">)</span>
+				<span class="k">else</span><span class="p">:</span>
+				   <span class="n">nlow</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nreject</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
+				   <span class="n">nhigh</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">nreject</span> <span class="o">/</span> <span class="mf">2.0</span> <span class="o">-</span> <span class="mf">0.5</span><span class="p">)</span>
+
+				<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+				<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nhigh</span><span class="p">:</span>
+				   <span class="n">grades</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+				   <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+				<span class="n">i</span> <span class="o">=</span> <span class="mi">0</span>
+				<span class="k">while</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">nlow</span><span class="p">:</span>
+				   <span class="n">grades</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+				   <span class="n">i</span> <span class="o">+=</span> <span class="mi">1</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">score_reporter</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">reporter_grades</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">score_opponent</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">opponent_grades</span><span class="p">)</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">score_reviewer</span> <span class="o">=</span> <span class="n">mean</span><span class="p">(</span><span class="n">reviewer_grades</span><span class="p">)</span>
+
+			<span class="n">prescoeff</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reporter_team</span><span class="o">.</span><span class="n">presentation_coefficients</span><span class="p">()[</span><span class="bp">self</span><span class="o">.</span><span class="n">pf_number</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+			<span class="bp">self</span><span class="o">.</span><span class="n">points_reporter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_reporter</span> <span class="o">*</span> <span class="n">prescoeff</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">points_opponent</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_opponent</span> <span class="o">*</span> <span class="mf">2.0</span>
+			<span class="bp">self</span><span class="o">.</span><span class="n">points_reviewer</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">score_reviewer</span>
+
+		<span class="nb">super</span><span class="p">(</span><span class="n">Round</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Round.ident"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Round.ident">[docs]</a>	<span class="k">def</span> <span class="nf">ident</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s2">&quot;</span><span class="si">%s%s%s</span><span class="s2">&quot;</span> <span class="o">%</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">pf_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_number</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">room</span><span class="o">.</span><span class="n">ident</span><span class="p">())</span></div>
+
+<div class="viewcode-block" id="Round.unavailable_problems"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.Round.unavailable_problems">[docs]</a>	<span class="k">def</span> <span class="nf">unavailable_problems</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+		<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">		From the rules:</span>
+
+<span class="sd">		The Opponent may challenge the Reporter on any problem with the exception of a problem that:</span>
+<span class="sd">		a) was permanently rejected by the Reporter earlier;</span>
+<span class="sd">		b) was presented by the Reporter earlier;</span>
+<span class="sd">		c) was opposed by the Opponent earlier;</span>
+<span class="sd">		d) was presented by the Opponent earlier.</span>
+<span class="sd">		If there are no problems left to challenge, the bans d), c), b), a) are successively removed, in that order.</span>
+
+<span class="sd">		:param verbose: verbosity flag</span>
+<span class="sd">		:return: return a tuple with five lists : ([already_presented_this_round], [a], [b], [c], [d])</span>
+<span class="sd">		&quot;&quot;&quot;</span>
+
+		<span class="c1"># remind that these below are ([eternal rejection], [presented], [opposed])</span>
+		<span class="n">reporter_problems</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">reporter_team</span><span class="o">.</span><span class="n">problems</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">currentround</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">opponent_problems</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_team</span><span class="o">.</span><span class="n">problems</span><span class="p">(</span><span class="n">verbose</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">currentround</span><span class="o">=</span><span class="bp">self</span><span class="p">)</span>
+		<span class="n">eternal_rejection</span> <span class="o">=</span> <span class="n">reporter_problems</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="nb">print</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">10</span><span class="p">,</span> <span class="s2">&quot;Problem rejection for </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="p">,</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">10</span>
+			<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">eternal_rejection</span><span class="p">)</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+				<span class="nb">print</span> <span class="s2">&quot;Team </span><span class="si">%s</span><span class="s2"> eternally rejected problem </span><span class="se">\n\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">reporter_team</span><span class="p">,</span> <span class="n">eternal_rejection</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+		<span class="n">presented_by_reporter</span> <span class="o">=</span> <span class="n">reporter_problems</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Team </span><span class="si">%s</span><span class="s2"> already presented the following problems:&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">reporter_team</span>
+			<span class="k">for</span> <span class="n">problem</span> <span class="ow">in</span> <span class="n">presented_by_reporter</span><span class="p">:</span>
+				<span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">problem</span>
+			<span class="nb">print</span> <span class="n">msg</span>
+		<span class="n">opposed_by_opponent</span> <span class="o">=</span> <span class="n">opponent_problems</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Team </span><span class="si">%s</span><span class="s2"> already opposed the following problems:&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_team</span>
+			<span class="k">for</span> <span class="n">problem</span> <span class="ow">in</span> <span class="n">opposed_by_opponent</span><span class="p">:</span>
+				<span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">problem</span>
+			<span class="nb">print</span> <span class="n">msg</span>
+		<span class="n">presented_by_opponent</span> <span class="o">=</span> <span class="n">opponent_problems</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;Team </span><span class="si">%s</span><span class="s2"> already presented the following problems:&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_team</span>
+			<span class="k">for</span> <span class="n">problem</span> <span class="ow">in</span> <span class="n">presented_by_opponent</span><span class="p">:</span>
+				<span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">problem</span>
+			<span class="nb">print</span> <span class="n">msg</span>
+
+		<span class="c1"># Finally, problems already presented in this Fight, in the current room</span>
+		<span class="n">thispfrounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">pf_number</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">room</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">room</span><span class="p">)</span>
+		<span class="n">presented_this_pf</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="o">.</span><span class="n">problem_presented</span> <span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">thispfrounds</span> <span class="k">if</span> <span class="nb">round</span><span class="o">.</span><span class="n">round_number</span> <span class="o">&lt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">round_number</span><span class="p">]</span>
+		<span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+			<span class="n">msg</span> <span class="o">=</span> <span class="s2">&quot;In this fight, problems already presented are:&quot;</span>
+			<span class="k">for</span> <span class="n">problem</span> <span class="ow">in</span> <span class="n">presented_this_pf</span><span class="p">:</span>
+				<span class="n">msg</span> <span class="o">+=</span> <span class="s2">&quot;</span><span class="se">\n\t</span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">problem</span>
+			<span class="nb">print</span> <span class="n">msg</span>
+
+		<span class="n">unavailable_problems</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="n">unavailable_problems</span><span class="p">[</span><span class="s2">&quot;presented_this_pf&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">presented_this_pf</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span>
+		<span class="n">unavailable_problems</span><span class="p">[</span><span class="s2">&quot;eternal_rejection&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">eternal_rejection</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span>
+		<span class="n">unavailable_problems</span><span class="p">[</span><span class="s2">&quot;presented_by_reporter&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">presented_by_reporter</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span>
+		<span class="n">unavailable_problems</span><span class="p">[</span><span class="s2">&quot;opposed_by_opponent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">opposed_by_opponent</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span>
+		<span class="n">unavailable_problems</span><span class="p">[</span><span class="s2">&quot;presented_by_opponent&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">p</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">presented_by_opponent</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="kc">None</span><span class="p">]</span>
+		<span class="n">unavailable_problems</span><span class="p">[</span><span class="s2">&quot;number_of_unavailable_problems&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">([</span><span class="nb">len</span><span class="p">(</span><span class="n">unavailable_problems</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">unavailable_problems</span><span class="o">.</span><span class="n">keys</span><span class="p">()])</span>
+
+		<span class="k">return</span> <span class="n">unavailable_problems</span></div></div>
+
+
+<div class="viewcode-block" id="JuryGrade"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.JuryGrade">[docs]</a><span class="k">class</span> <span class="nc">JuryGrade</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+	<span class="nb">round</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Round</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">jury</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Jury</span><span class="p">)</span>
+
+	<span class="n">grade_reporter</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+			<span class="n">choices</span><span class="o">=</span><span class="n">grade_choices</span><span class="p">,</span>
+			<span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+			<span class="p">)</span>
+
+	<span class="n">grade_opponent</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+			<span class="n">choices</span><span class="o">=</span><span class="n">grade_choices</span><span class="p">,</span>
+			<span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+			<span class="p">)</span>
+
+	<span class="n">grade_reviewer</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">IntegerField</span><span class="p">(</span>
+			<span class="n">choices</span><span class="o">=</span><span class="n">grade_choices</span><span class="p">,</span>
+			<span class="n">default</span><span class="o">=</span><span class="kc">None</span>
+			<span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s2">&quot;Grade of </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">jury</span><span class="o">.</span><span class="n">name</span>
+
+<div class="viewcode-block" id="JuryGrade.info"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.JuryGrade.info">[docs]</a>	<span class="k">def</span> <span class="nf">info</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="nb">print</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="mi">36</span>
+		<span class="nb">print</span> <span class="sa">u</span><span class="s2">&quot;Grade of </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">jury</span><span class="o">.</span><span class="n">name</span>
+		<span class="nb">print</span> <span class="bp">self</span><span class="o">.</span><span class="n">round</span>
+		<span class="nb">print</span> <span class="s2">&quot;Reporter </span><span class="si">%s</span><span class="s2"> from </span><span class="si">%s</span><span class="s2"> : </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">name_reporter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">reporter</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grade_reporter</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="s2">&quot;Opponent </span><span class="si">%s</span><span class="s2"> from </span><span class="si">%s</span><span class="s2"> : </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">name_opponent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">opponent</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grade_opponent</span><span class="p">)</span>
+		<span class="nb">print</span> <span class="s2">&quot;Reviewer </span><span class="si">%s</span><span class="s2"> from </span><span class="si">%s</span><span class="s2"> : </span><span class="si">%i</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">name_reviewer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">round</span><span class="o">.</span><span class="n">reviewer</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">grade_reviewer</span><span class="p">)</span></div></div>
+
+
+<div class="viewcode-block" id="TacticalRejection"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.TacticalRejection">[docs]</a><span class="k">class</span> <span class="nc">TacticalRejection</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+	<span class="nb">round</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Round</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">problem</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Problem</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s2">&quot;Problem rejected : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span></div>
+
+<div class="viewcode-block" id="EternalRejection"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.EternalRejection">[docs]</a><span class="k">class</span> <span class="nc">EternalRejection</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+
+	<span class="nb">round</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Round</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+	<span class="n">problem</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">ForeignKey</span><span class="p">(</span><span class="n">Problem</span><span class="p">)</span>
+
+	<span class="k">def</span> <span class="nf">__unicode__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+		<span class="k">return</span> <span class="s2">&quot;Problem rejected : </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">problem</span></div>
+
+
+<span class="c1"># method for updating Teams and Participants when rounds are saved</span>
+<div class="viewcode-block" id="update_points"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.update_points">[docs]</a><span class="nd">@receiver</span><span class="p">(</span><span class="n">post_save</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Round</span><span class="p">,</span> <span class="n">dispatch_uid</span><span class="o">=</span><span class="s2">&quot;update_participant_team_points&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_points</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+	<span class="nb">print</span> <span class="s2">&quot;Updating Round </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="n">instance</span>
+	<span class="k">if</span> <span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">reporter_team</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">opponent_team</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="n">instance</span><span class="o">.</span><span class="n">reviewer_team</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">or</span> <span class="n">instance</span><span class="o">.</span><span class="n">problem_presented</span> <span class="ow">is</span> <span class="kc">None</span> <span class="p">:</span>
+		<span class="c1"># then all teams aren&#39;t yet defined, there is no need to compute scores</span>
+		<span class="k">pass</span>
+	<span class="k">else</span> <span class="p">:</span>
+		<span class="n">teams</span> <span class="o">=</span> <span class="p">[</span><span class="n">instance</span><span class="o">.</span><span class="n">reporter_team</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">opponent_team</span><span class="p">,</span> <span class="n">instance</span><span class="o">.</span><span class="n">reviewer_team</span><span class="p">]</span>
+		<span class="c1"># then compute teams (and participants) scores</span>
+		<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">teams</span><span class="p">:</span>
+			<span class="n">team</span><span class="o">.</span><span class="n">update_scores</span><span class="p">()</span>
+
+		<span class="c1"># and the problem mean scores</span>
+		<span class="n">instance</span><span class="o">.</span><span class="n">problem_presented</span><span class="o">.</span><span class="n">update_scores</span><span class="p">()</span></div>
+
+
+<div class="viewcode-block" id="bonuspoints"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.bonuspoints">[docs]</a><span class="k">def</span> <span class="nf">bonuspoints</span><span class="p">():</span>
+
+	<span class="c1"># the rounds must be saved first !</span>
+	<span class="n">rounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+	<span class="n">allteams</span> <span class="o">=</span> <span class="n">Team</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+	<span class="n">bonuspts</span> <span class="o">=</span> <span class="p">{}</span>
+	<span class="c1"># set the bonus points to zero</span>
+	<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">allteams</span><span class="p">:</span>
+		<span class="n">bonuspts</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+	<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">rounds</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">round_number</span><span class="o">=</span><span class="mi">3</span><span class="p">):</span>
+		<span class="n">thispfteams</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="o">.</span><span class="n">reporter_team</span><span class="p">,</span> <span class="nb">round</span><span class="o">.</span><span class="n">opponent_team</span><span class="p">,</span> <span class="nb">round</span><span class="o">.</span><span class="n">reviewer_team</span><span class="p">]</span>
+		<span class="n">thispfrounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="nb">round</span><span class="o">.</span><span class="n">pf_number</span><span class="p">)</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">room</span><span class="o">=</span><span class="nb">round</span><span class="o">.</span><span class="n">room</span><span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="s1">&#39;round_number&#39;</span><span class="p">)</span>
+
+		<span class="c1"># get the points of the physics fight for the 3 teams (without bonuses) in a dictionary</span>
+		<span class="n">points_dict</span> <span class="o">=</span> <span class="p">{}</span>
+		<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">thispfteams</span><span class="p">:</span>
+			<span class="n">points_dict</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span>
+		<span class="k">for</span> <span class="n">pfround</span> <span class="ow">in</span> <span class="n">thispfrounds</span> <span class="p">:</span>
+			<span class="c1"># add the points of each round</span>
+			<span class="n">points_dict</span><span class="p">[</span><span class="n">pfround</span><span class="o">.</span><span class="n">reporter_team</span><span class="p">]</span> <span class="o">+=</span> <span class="n">pfround</span><span class="o">.</span><span class="n">points_reporter</span>
+			<span class="n">points_dict</span><span class="p">[</span><span class="n">pfround</span><span class="o">.</span><span class="n">opponent_team</span><span class="p">]</span> <span class="o">+=</span> <span class="n">pfround</span><span class="o">.</span><span class="n">points_opponent</span>
+			<span class="n">points_dict</span><span class="p">[</span><span class="n">pfround</span><span class="o">.</span><span class="n">reviewer_team</span><span class="p">]</span> <span class="o">+=</span> <span class="n">pfround</span><span class="o">.</span><span class="n">points_reviewer</span>
+
+<span class="c1"># get teams sorted by total points for the physics fight</span>
+		<span class="n">team_podium</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">thispfteams</span><span class="p">,</span> <span class="n">key</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">t</span> <span class="p">:</span> <span class="n">points_dict</span><span class="p">[</span><span class="n">t</span><span class="p">],</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+		<span class="n">points_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">points_dict</span><span class="p">[</span><span class="n">t</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">team_podium</span><span class="p">]</span>
+
+		<span class="c1"># If everyone is ex-aequo</span>
+		<span class="k">if</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="ow">and</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="p">:</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">1.</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">1.</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">1.</span>
+		<span class="c1"># If 1 and 2 are ex-aequo</span>
+		<span class="k">elif</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">1.5</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">1.5</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">0.0</span>
+		<span class="c1"># If 2 and 3 are ex-aequo</span>
+		<span class="k">elif</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="n">points_list</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">2.0</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">0.5</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">0.5</span>
+		<span class="c1"># If no ex-aequo</span>
+		<span class="k">else</span><span class="p">:</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">2.0</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">1.0</span>
+			<span class="n">team_podium</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">bonus_points</span> <span class="o">=</span> <span class="mf">0.0</span>
+
+		<span class="n">sumbonuspts</span> <span class="o">=</span> <span class="mi">0</span>
+		<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">team_podium</span><span class="p">:</span>
+			<span class="n">bonuspts</span><span class="p">[</span><span class="n">team</span><span class="p">]</span> <span class="o">+=</span> <span class="n">team</span><span class="o">.</span><span class="n">bonus_points</span>
+			<span class="n">sumbonuspts</span> <span class="o">+=</span> <span class="n">team</span><span class="o">.</span><span class="n">bonus_points</span>
+		<span class="k">assert</span> <span class="n">sumbonuspts</span> <span class="o">==</span> <span class="mf">3.0</span><span class="p">,</span> <span class="n">sumbonuspts</span>
+
+	<span class="k">return</span> <span class="n">bonuspts</span></div>
+
+
+<span class="n">update_signal</span> <span class="o">=</span> <span class="n">Signal</span><span class="p">()</span>
+<div class="viewcode-block" id="update_all"><a class="viewcode-back" href="../../source/IPT2017.html#IPT2017.admin.update_all">[docs]</a><span class="nd">@receiver</span><span class="p">(</span><span class="n">update_signal</span><span class="p">,</span> <span class="n">sender</span><span class="o">=</span><span class="n">Round</span><span class="p">,</span> <span class="n">dispatch_uid</span><span class="o">=</span><span class="s2">&quot;update_all&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">update_all</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+
+	<span class="n">allrounds</span> <span class="o">=</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">Round</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">pf_number</span><span class="o">=</span><span class="mi">4</span><span class="p">)</span>
+	<span class="n">allrounds</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">allrounds</span><span class="p">,</span><span class="n">key</span><span class="o">=</span><span class="k">lambda</span> <span class="nb">round</span> <span class="p">:</span> <span class="nb">round</span><span class="o">.</span><span class="n">round_number</span><span class="p">,</span> <span class="n">reverse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+
+	<span class="n">allgrades</span> <span class="o">=</span> <span class="n">JuryGrade</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+	<span class="n">allteams</span> <span class="o">=</span> <span class="n">Team</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">()</span>
+
+
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	# remove the phantom grades, if any</span>
+<span class="sd">	rgrades = []</span>
+<span class="sd">	for round in allrounds:</span>
+<span class="sd">		mygrades = JuryGrade.objects.filter(round=round)</span>
+<span class="sd">		for grade in mygrades:</span>
+<span class="sd">			rgrades.append(grade)</span>
+
+
+<span class="sd">	i = 0</span>
+<span class="sd">	for grade in allgrades:</span>
+<span class="sd">		if grade not in rgrades:</span>
+<span class="sd">			i+=1</span>
+<span class="sd">			grade.delete()</span>
+<span class="sd">	print &quot;I removed %i phantom grades...&quot; % i</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">	# reset the bonus points to zero</span>
+<span class="sd">	for team in allteams:</span>
+<span class="sd">		team.bonus_points = 0.0</span>
+<span class="sd">	&quot;&quot;&quot;</span>
+
+	<span class="c1"># update rounds</span>
+	<span class="k">for</span> <span class="nb">round</span> <span class="ow">in</span> <span class="n">allrounds</span><span class="p">:</span>
+		<span class="c1"># we do not want to add the bonus points now, let&#39;s keep that for a next step (just to check, that might disappear later)</span>
+		<span class="n">update_points</span><span class="p">(</span><span class="n">sender</span><span class="p">,</span> <span class="n">instance</span><span class="o">=</span><span class="nb">round</span><span class="p">)</span>
+		<span class="c1">#round.save()</span>
+		<span class="c1">#sys.exit()</span>
+
+	<span class="c1"># add the bonus points</span>
+	<span class="n">bonuspts</span> <span class="o">=</span> <span class="n">bonuspoints</span><span class="p">()</span>
+	<span class="nb">print</span> <span class="s2">&quot;=&quot;</span><span class="o">*</span><span class="mi">15</span>
+	<span class="k">for</span> <span class="n">team</span> <span class="ow">in</span> <span class="n">allteams</span><span class="p">:</span>
+		<span class="c1">#print &quot;----&quot;</span>
+		<span class="c1">#print team.name, team.total_points, bonuspts[team]</span>
+		<span class="n">team</span><span class="o">.</span><span class="n">total_points</span> <span class="o">+=</span> <span class="n">bonuspts</span><span class="p">[</span><span class="n">team</span><span class="p">]</span>
+		<span class="n">team</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+		<span class="c1">#print team.total_points</span>
+
+
+	<span class="c1"># just in case, update the problems</span>
+	<span class="k">for</span> <span class="n">pb</span> <span class="ow">in</span> <span class="n">Problem</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
+		<span class="n">pb</span><span class="o">.</span><span class="n">update_scores</span><span class="p">()</span>
+
+	<span class="k">return</span> <span class="s2">&quot;Teams, participants and problems updated !&quot;</span></div>
+
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper"><div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Module code</a><ul>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Vivien Bonvin, Maxime Harazi, Cyrille Doux.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.7</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
+      
+    </div>
+
+    
+
+    
+  </body>
+</html>
