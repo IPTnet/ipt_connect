@@ -1,0 +1,110 @@
+{% extends 'IPT2018/head.html' %}
+{% load humanize %}
+{% block content %}
+
+
+
+{% if finished %}
+    <div class="section">
+        <h1>IPT 2018 Final | Round {{round.round_number}}</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">Problem presented: <a href="{% url 'IPT2018:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
+    </div>
+
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="td-center"></th>
+                <th class="td-center">Reporter</th>
+                <th class="td-center">Opponent</th>
+                <th class="td-center">Reviewer</th>
+            </tr>
+
+            <tr>
+                <td class="td-center"></td>
+                <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a> -- <a href="{% url 'IPT2018:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a> -- <a href="{% url 'IPT2018:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a> -- <a href="{% url 'IPT2018:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
+            </tr>
+
+        </table>
+    </div>
+
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="th-center">Jury members</th>
+                <th class="th-center">Reporter grade</th>
+                <th class="th-center">Opponent grade</th>
+                <th class="th-center">Reviewer grade</th>
+            </tr>
+
+            {% for jurygrade in jurygrades %}
+            <tr>
+                <td><a href="{% url 'IPT2018:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
+                <td class="td-center">{{jurygrade.grade_reporter}}</td>
+                <td class="td-center">{{jurygrade.grade_opponent}}</td>
+                <td class="td-center">{{jurygrade.grade_reviewer}}</td>
+            </tr>
+            {% endfor %}
+
+            <tr>
+                <td><p class="emphase">MEAN*</p></td>
+                {% for meangrade in meangrades %}
+                <td class="td-center"><p class="emphase">{{meangrade|floatformat:2}}</p></td>
+                {% endfor %}
+            </tr>
+
+        </table>
+    </div>
+
+    <div class="content container">
+        <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members. The multiplicative role coefficient is not taken into account here.</p>
+    </div>
+
+
+{% endif %}
+{% if started %}
+
+    {% if not finished %}
+        <div class="section">
+            <h1>IPT 2018 Final | Round {{round.round_number}}</h1>
+        </div>
+        <div class="content container">
+            <table>
+                <tr>
+
+                     <th class="td-center">Reporter</th>
+                     <th class="td-center">Opponent</th>
+                     <th class="td-center">Reviewer</th>
+                </tr>
+
+                <tr>
+
+                     <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
+                     <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
+                     <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
+                 </tr>
+
+             </table>
+       </div>
+    {% endif %}
+
+
+{% else %}
+    <div class="section">
+        <h1>IPT 2018 Final | Round {{round.round_number}}</h1>
+    </div>
+
+    <div class="content container">
+        <p>This round has not started yet !</p>
+    </div>
+{% endif %}
+
+
+
+{% endblock content %}

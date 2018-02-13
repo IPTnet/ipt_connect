@@ -1,0 +1,14 @@
+<h1>Participants of IPT 2018</h1>
+
+
+Team;Affiliation;Role;Surname;Name;Passport number;Gender;Birthdate;Email;Phone number;Veteran;Diet;Mixed gender accomodation;Shirt size; Remarks <br><br>
+
+{% for participant in participants %}
+
+{{ participant.team }};{{ participant.affiliation }};{{ participant.role }};{{ participant.surname }};{{ participant.name }};{{ participant.passport_number }};{{ participant.gender }};{{ participant.birthdate }};{{ participant.email }};{{ participant.phone_number }};{{ participant.veteran }};{{ participant.diet }};{{ participant.mixed_gender_accommodation }};{{ participant.shirt_size }};{{ participant.remark }}<br>
+
+{% empty %}
+
+    <p>There is no registered participant.</p>
+
+{% endfor %}

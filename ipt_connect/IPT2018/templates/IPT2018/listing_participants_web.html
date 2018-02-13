@@ -1,0 +1,13 @@
+<h1>Participants of IPT 2018</h1>
+
+
+{% for participant in participants %}
+
+
+{{ participant.name }} {{ participant.surname }}, {{ participant.role }}<br>
+
+{% empty %}
+
+    <p>There is no registered participant.</p>
+
+{% endfor %}

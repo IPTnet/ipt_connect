@@ -1,0 +1,105 @@
+{% extends 'IPT2018/head.html' %}
+{% load humanize %}
+
+{% block content %}
+
+
+    <div class="section">
+        <h1>Ranking - Pool A</h1>
+    </div>
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="th-center">Rank</th>
+                <th class="th-center">Team</th>
+                <th class="th-center">Points</th>
+                <th class="th-center">Physics Fights status</th>
+            </tr>
+        {% for team in rankteamsA %}
+            <tr>
+                {% if team.emphase %}
+                <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
+                <td class="td-center"><p class="emphase"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
+                <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
+                <td class="td-center">
+                    {% if team.ongoingpf %}
+                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight ongoing</p>
+                    {% else %}
+                        <p class="emphase"><b>{{team.pfsplayed}}</b> fight(s) ended</p>
+                    {% endif %}
+
+                {% else %}
+                <td class="td-center">{{team.rank|ordinal}}</td>
+                <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></td>
+                <td class="td-center">{{team.total_points|floatformat:2}}</td>
+                <td class="td-center">
+                    {% if team.ongoingpf %}
+                        <b>{{team.currentpf|ordinal}}</b> fight ongoing
+                    {% else %}
+                        <b>{{team.pfsplayed}}</b> fight(s) ended
+                    {% endif %}
+
+                {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+
+        </table>
+    </div>
+
+
+   <div class="section">
+        <h1>Ranking - Pool B</h1>
+    </div>
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="th-center">Rank</th>
+                <th class="th-center">Team</th>
+                <th class="th-center">Points</th>
+                <th class="th-center">Physics Fights status</th>
+            </tr>
+        {% for team in rankteamsB %}
+            <tr>
+                {% if team.emphase %}
+                <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
+                <td class="td-center"><p class="emphase"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
+                <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
+                <td class="td-center">
+                    {% if team.ongoingpf %}
+                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight ongoing</p>
+                    {% else %}
+                        <p class="emphase"><b>{{team.pfsplayed}}</b> fight(s) ended</p>
+                    {% endif %}
+
+                {% else %}
+                <td class="td-center">{{team.rank|ordinal}}</td>
+                <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></td>
+                <td class="td-center">{{team.total_points|floatformat:2}}</td>
+                <td class="td-center">
+                    {% if team.ongoingpf %}
+                        <b>{{team.currentpf|ordinal}}</b> fight ongoing
+                    {% else %}
+                        <b>{{team.pfsplayed}}</b> fight(s) ended
+                    {% endif %}
+
+                {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+
+        </table>
+    </div>
+
+    <div>
+        <center>
+        <h3><a href="{% url 'IPT2018:ranking' %}">General Ranking</a></h3>
+        </center>
+    </div>
+
+
+{% endblock content %}
