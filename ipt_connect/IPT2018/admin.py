@@ -74,7 +74,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
 
 	def save_model(self, request, obj, form, change):
-		if not(request.user.is_superuser) and not(request.user.username == 'magnusson'):
+		if not(request.user.is_superuser) and not(request.user.username == 'fava'):
 			u = User.objects.get(username = request.user.username)
 			obj.team = u.Team_IPT2018
 			obj.save()
@@ -83,7 +83,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	def get_queryset(self,request):
 		qs = super(ParticipantAdmin,self).get_queryset(request)
 		u = User.objects.get(username = request.user.username)
-		if request.user.is_superuser or request.user.username == 'magnusson':
+		if request.user.is_superuser or request.user.username == 'fava':
 			return qs
 		return qs.filter(team = u.Team_IPT2018)
 
