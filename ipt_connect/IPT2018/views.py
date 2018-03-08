@@ -28,31 +28,31 @@ def soon(request):
 
 #####################################################
 ################# SUPER USERS VIEWS #################
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'fava' or u.username == 'vanovsky')
 def participants_trombinoscope(request):
 	participants = Participant.objects.all().order_by('team','surname')
 
 	return render(request, 'IPT2018/participants_trombinoscope.html', {'participants': participants})
 
-@user_passes_test(lambda u: u.is_superuser or u.username == 'magnusson')
+@user_passes_test(lambda u: u.is_superuser or u.username == 'fava' or u.username == 'vanovsky')
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
 	return render(request, 'IPT2018/participants_export.html', {'participants': participants})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'fava' or u.username == 'vanovsky')
 def participants_export_web(request):
 	participants = Participant.objects.exclude(role='ACC').order_by('team','role','surname')
 
 	return render(request, 'IPT2018/listing_participants_web.html', {'participants': participants})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'fava' or u.username == 'vanovsky')
 def jury_export(request):
 	jurys = Jury.objects.all().order_by('surname')
 
 	return render(request, 'IPT2018/listing_jurys.html', {'jurys': jurys})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'fava' or u.username == 'vanovsky')
 def jury_export_web(request):
 	jurys = Jury.objects.filter(team=None).order_by('surname')
 

@@ -83,7 +83,7 @@ class Participant(models.Model):
 	photo = models.ImageField(upload_to=UploadToPathAndRename('IPT2018/id_photo'),help_text="Please use a clear ID photo.", null=True)
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself! An additional fee of 300€ will have to be paid for each accompagnying person (includes accomodation, meals, souvenirs and excursions).", default="TM",verbose_name='Role')
-	affiliation = models.CharField(max_length=50,default='XXX University')
+	affiliation = models.CharField(max_length=50,default='XXX University',help_text="Will be used for official communications.")
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the IPT? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	mixed_gender_accommodation = models.BooleanField(default=False,help_text="Please note the LOC cannot guarantee the number of non-mixed gender rooms available.",verbose_name='Requires a non-mixed gender room?')
