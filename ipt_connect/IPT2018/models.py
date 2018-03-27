@@ -71,6 +71,8 @@ class Participant(models.Model):
 		('XL', 'Extra Large'),
 	)
 
+	AIRPORT_CHOICES = ( ('SVO','Sheremetyevo (SVO)'), ('DME','Domodedovo (DME)'), ('VKO','Vnukovo (VKO)'))
+
 	# parameters
 	name = models.CharField(max_length=50,default=None,verbose_name='Name',help_text="e.g. Richard")
 	surname = models.CharField(max_length=50,default=None,verbose_name='Surname',help_text="e.g. Feynman")
@@ -88,7 +90,13 @@ class Participant(models.Model):
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	mixed_gender_accommodation = models.BooleanField(default=False,help_text="Please note the LOC cannot guarantee the number of non-mixed gender rooms available.",verbose_name='Requires a non-mixed gender room?')
 	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
+	flight_number_arrival = models.CharField(max_length=50,blank=True,verbose_name='Flight number for arrival')
+	date_hour_arrival = models.TextField(blank=True,verbose_name='Expected date and hour of arrival at airport.')
+	arrival_airport = models.CharField(max_length=1, blank=True,choices=AIRPORT_CHOICES,verbose_name='Arrival airport')
+	flight_number_departure = models.CharField(max_length=50, blank=True,verbose_name='Flight number for departure')
 	remark = models.TextField(blank=True,verbose_name='Remarks')
+
+	room_number = models.CharField(max_length=50,blank=True,verbose_name='Room number')
 
 	total_points = models.FloatField(default=0.0, editable=False)
 	mean_score_as_reporter = models.FloatField(default=0.0, editable=False)

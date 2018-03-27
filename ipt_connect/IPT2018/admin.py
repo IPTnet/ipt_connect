@@ -69,12 +69,12 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','affiliation','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
-	search_fields = ('surname','name')
-	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
+	list_display = ('surname','name','team','affiliation','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark','flight_number_arrival','arrival_airport','flight_number_departure','room_number')
+	search_fields = ('surname','name','remark')
+	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation','arrival_airport')
 
 	def save_model(self, request, obj, form, change):
-		if not(request.user.is_superuser) and not(request.user.username == 'fava') and not(request.user.username == 'vanovsky'):
+		if not(request.user.is_superuser) and not(request.user.username == 'fava') and not(request.user.username == 'vanovsky') and not(request.user.username == 'david'):
 			u = User.objects.get(username = request.user.username)
 			obj.team = u.Team_IPT2018
 			obj.save()
@@ -83,7 +83,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	def get_queryset(self,request):
 		qs = super(ParticipantAdmin,self).get_queryset(request)
 		u = User.objects.get(username = request.user.username)
-		if request.user.is_superuser or request.user.username == 'fava' or request.user.username == 'vanovsky':
+		if request.user.is_superuser or request.user.username == 'fava' or request.user.username == 'vanovsky' or request.user.username == 'david':
 			return qs
 		return qs.filter(team = u.Team_IPT2018)
 
