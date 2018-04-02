@@ -58,7 +58,7 @@ def jury_export_web(request):
 
 	return render(request, 'IPT2018/listing_jurys_web.html', {'jurys': jurys})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'david')
 def update_all(request):
 	list_receivers = update_signal.send(sender=Round)
 
