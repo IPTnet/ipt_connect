@@ -399,9 +399,9 @@ def ranking(request):
 			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
 			team.pfsplayed = pfsplayed
 			team.ongoingpf = False
-			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
-				team.ongoingpf = True
-				team.currentpf = pfsplayed+1
+			#if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
+				#team.ongoingpf = True
+				#team.currentpf = pfsplayed+1
 			team.rank = ind+1
 			if team.rank == 1:
 				team.emphase=True

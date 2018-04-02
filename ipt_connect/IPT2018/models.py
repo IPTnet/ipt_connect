@@ -252,7 +252,7 @@ class Team(models.Model):
 	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)
-	bonus_points = models.FloatField(default=0.0, editable=False)
+	bonus_points = models.FloatField(default=0.0, editable=True)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)
 	nrounds_as_opp = models.IntegerField(default=0, editable=False)
 	nrounds_as_rev = models.IntegerField(default=0, editable=False)
@@ -443,7 +443,7 @@ class Round(models.Model):
 			default=None
 			)
 	round_number = models.IntegerField(
-			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(3))),
+			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(4))),
 			default=None
 			)
 	room = models.ForeignKey(Room)
@@ -649,6 +649,10 @@ def update_points(sender, instance, **kwargs):
 
 def bonuspoints():
 
+	# WARNING ! I SHOULD NOT BE USED IN IPT2018
+	return "Calling bonuspoints function should not be done in IPT2018!"
+
+
 	# the rounds must be saved first !
 	rounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
 	allteams = Team.objects.all()
@@ -718,28 +722,26 @@ def update_all(sender, **kwargs):
 	allteams = Team.objects.all()
 
 
-	"""
-	# remove the phantom grades, if any
-	rgrades = []
-	for round in allrounds:
-		mygrades = JuryGrade.objects.filter(round=round)
-		for grade in mygrades:
-			rgrades.append(grade)
+	if 1: # might still be some bugs, it is safer to delete all grades before reupdating everything.
 
+		# remove the phantom grades, if any
+		rgrades = []
+		for round in allrounds:
+			mygrades = JuryGrade.objects.filter(round=round)
+			for grade in mygrades:
+				rgrades.append(grade)
 
-	i = 0
-	for grade in allgrades:
-		if grade not in rgrades:
-			i+=1
-			grade.delete()
-	print "I removed %i phantom grades..." % i
-	"""
+		i = 0
+		for grade in allgrades:
+			if grade not in rgrades:
+				i+=1
+				grade.delete()
+		print "I removed %i phantom grades..." % i
 
-	"""
-	# reset the bonus points to zero
-	for team in allteams:
-		team.bonus_points = 0.0
-	"""
+		# reset the bonus points to zero
+		#for team in allteams:
+			#team.bonus_points = 0.0
+
 
 	# update rounds
 	for round in allrounds:
@@ -748,16 +750,18 @@ def update_all(sender, **kwargs):
 		#round.save()
 		#sys.exit()
 
+	# WARNING !!!
+	# bonus point computation becomes trickier when you have a four-team fights. I deactivite it for the moment and give you the option to add them by hand from the admin panel
 	# add the bonus points
-	bonuspts = bonuspoints()
+	# bonuspts = bonuspoints()
 	print "="*15
 	for team in allteams:
 		#print "----"
 		#print team.name, team.total_points, bonuspts[team]
-		team.total_points += bonuspts[team]
+		team.total_points += team.bonus_points
 		team.save()
 		#print team.total_points
-
+		pass
 
 	# just in case, update the problems
 	for pb in Problem.objects.all():

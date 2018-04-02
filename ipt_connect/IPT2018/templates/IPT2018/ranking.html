@@ -14,7 +14,7 @@
                 <th class="th-center">Team</th>
                 <th class="th-center">Points</th>
                 <!--<th class="th-center">Pool</th>-->
-                <th class="th-center">Physics Fights status</th>
+                <!--<th class="th-center">Physics Fights status</th>-->
             </tr>
         {% for team in rankteams %}
             <tr>
@@ -23,24 +23,24 @@
                 <td class="td-center"><p class="emphase"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
                 <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
                 <!--<td class="td-center"><p class="emphase">{{team.pool}}</p></td>-->
-                <td class="td-center">
+                <!--<td class="td-center">
                     {% if team.ongoingpf %}
                         <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight ongoing</p>
                     {% else %}
                         <p class="emphase"><b>{{team.pfsplayed}}</b> fight(s) ended</p>
-                    {% endif %}
+                    {% endif %}-->
 
                 {% else %}
                 <td class="td-center">{{team.rank|ordinal}}</td>
                 <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></td>
                 <td class="td-center">{{team.total_points|floatformat:2}}</td>
                 <!--<td class="td-center"><p class="emphase">{{team.pool}}</p></td>-->
-                <td class="td-center">
+                <!--<td class="td-center">
                     {% if team.ongoingpf %}
                         <b>{{team.currentpf|ordinal}}</b> fight ongoing
                     {% else %}
                         <b>{{team.pfsplayed}}</b> fight(s) ended
-                    {% endif %}
+                    {% endif %}-->
 
                 {% endif %}
 
