@@ -710,7 +710,7 @@ def update_all(sender, **kwargs):
 	allteams = Team.objects.all()
 
 
-	"""
+
 	# remove the phantom grades, if any
 	rgrades = []
 	for round in allrounds:
@@ -725,13 +725,13 @@ def update_all(sender, **kwargs):
 			i+=1
 			grade.delete()
 	print "I removed %i phantom grades..." % i
-	"""
 
-	"""
+
+
 	# reset the bonus points to zero
 	for team in allteams:
 		team.bonus_points = 0.0
-	"""
+	
 
 	# update rounds
 	for round in allrounds:

@@ -1,5 +1,5 @@
 # coding: utf8
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 from views import *
 from forms import member_for_team
 

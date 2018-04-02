@@ -29,7 +29,7 @@ SERVER_EMAIL='XXX'
 
 ADMINS = (('XXX', 'XXX@XXX'),)
 
-ALLOWED_HOSTS = [u"XXX",]
+ALLOWED_HOSTS = [u"XXX", u"127.0.0.1"]
 
 
 # Application definition
@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'IPT2016',
 	'FPT2017',
 	'IPT2017',
+    'IPT2018'
 )
 
 MIDDLEWARE_CLASSES = (
