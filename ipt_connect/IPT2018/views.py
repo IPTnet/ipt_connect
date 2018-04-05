@@ -439,10 +439,24 @@ def ranking(request):
 				#team.currentpf = pfsplayed+1
 			team.rank = ind+1
 			if team.rank == 1:
-				team.emphase=True
+				team.emphase = True
 			rankteams.append(team)
 
-	return render(request, 'IPT2018/ranking.html', {'rankteams': rankteams})
+
+	semirankteams = []
+	semiteams = Team.objects.filter(is_in_semi=True)
+	semiranking = semiteams.order_by('-semi_points')
+
+
+	if len(semiranking) > 0:
+
+		for ind, team in enumerate(semiranking):
+			team.rank = ind+1
+			if team.rank in [1, 2]:
+				team.emphase = True
+			semirankteams.append(team)
+
+	return render(request, 'IPT2018/ranking.html', {'rankteams': rankteams, 'semirankteams': semirankteams})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2018/soon')
 @cache_page(cache_duration)

@@ -252,7 +252,11 @@ class Team(models.Model):
 	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)
+	semi_points = models.FloatField(default=0.0, editable=False)
 	bonus_points = models.FloatField(default=0.0, editable=True)
+
+	is_in_semi = models.BooleanField(default=False, editable=True)
+
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)
 	nrounds_as_opp = models.IntegerField(default=0, editable=False)
 	nrounds_as_rev = models.IntegerField(default=0, editable=False)
@@ -311,7 +315,6 @@ class Team(models.Model):
 
 		qfrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
 
-
 		rounds_as_reporter = qfrounds.filter(reporter_team=self)
 		rounds_as_opponent = qfrounds.filter(opponent_team=self)
 		rounds_as_reviewer = qfrounds.filter(reviewer_team=self)
@@ -328,11 +331,28 @@ class Team(models.Model):
 
 		self.total_points = res
 
+
+		#todo: this is a simple c/c of above, should be redone in a smarter way
+		semirounds = Round.objects.filter(pf_number=5)
+
+		semirounds_as_reporter = semirounds.filter(reporter_team=self)
+		semirounds_as_opponent = semirounds.filter(opponent_team=self)
+		semirounds_as_reviewer = semirounds.filter(reviewer_team=self)
+
+		semires = 0.0
+
+		semires += sum([round.points_reporter for round in semirounds_as_reporter])
+		semires += sum([round.points_opponent for round in semirounds_as_opponent])
+		semires += sum([round.points_reviewer for round in semirounds_as_reviewer])
+
+		self.semi_points = semires + res
 		self.save()
 
 		participants = Participant.objects.filter(team=self)
 		for p in participants:
 			p.update_scores()
+
+
 
 
 	@classmethod
@@ -714,7 +734,7 @@ update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
 
-	allrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+	allrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4) | Round.objects.filter(pf_number=5) | Round.objects.filter(pf_number=6)
 	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 
 
@@ -759,6 +779,7 @@ def update_all(sender, **kwargs):
 		#print "----"
 		#print team.name, team.total_points, bonuspts[team]
 		team.total_points += team.bonus_points
+		team.semi_points += team.bonus_points
 		team.save()
 		#print team.total_points
 		pass

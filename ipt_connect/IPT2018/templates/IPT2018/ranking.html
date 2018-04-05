@@ -3,8 +3,42 @@
 
 {% block content %}
 
+    <!-- comment the two following div when qf fights are still being played -->
     <div class="section">
-        <h1>General Ranking</h1>
+        <h1>Semi Finals</h1>
+    </div>
+
+    <div class="content container">
+        <table>
+            <tr>
+                <th class="th-center">Rank</th>
+                <th class="th-center">Team</th>
+                <th class="th-center">Points</th>
+            </tr>
+
+        {% for team in semirankteams %}
+            <tr>
+                {% if team.emphase %}
+                <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
+                <td class="td-center"><p class="emphase"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
+                <td class="td-center"><p class="emphase">{{team.semi_points|floatformat:2}}</p></td>
+
+                {% else %}
+                <td class="td-center">{{team.rank|ordinal}}</td>
+                <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=team.name %}">{{team.name}}</a></td>
+                <td class="td-center">{{team.semi_points|floatformat:2}}</td>
+
+                {% endif %}
+
+                </td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+
+
+    <div class="section">
+        <h1>Qualifying Fights</h1>
     </div>
 
     <div class="content container">
