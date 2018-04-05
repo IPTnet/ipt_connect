@@ -15,7 +15,7 @@ from django.dispatch import Signal
 
 
 # Parameters
-npf = 4					# Number of Physics fights
+npf = 5					# Number of Physics fights
 with_final_pf = True	# Is there a Final Fight ?
 reject_malus = 0.2		# Malus for too many rejections
 npfreject_max = 3		# Maximum number of tactical rejection (per fight)
@@ -312,9 +312,9 @@ class Team(models.Model):
 		qfrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
 
 
-		rounds_as_reporter = Round.objects.filter(reporter_team=self)
-		rounds_as_opponent = Round.objects.filter(opponent_team=self)
-		rounds_as_reviewer = Round.objects.filter(reviewer_team=self)
+		rounds_as_reporter = qfrounds.filter(reporter_team=self)
+		rounds_as_opponent = qfrounds.filter(opponent_team=self)
+		rounds_as_reviewer = qfrounds.filter(reviewer_team=self)
 
 		self.nrounds_as_rep = len(rounds_as_reporter)
 		self.nrounds_as_opp = len(rounds_as_opponent)

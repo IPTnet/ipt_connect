@@ -17,7 +17,7 @@ def home(request):
 cache_duration_short = 1 * 1
 cache_duration = 20 * 1
 
-ninja_mode = False
+ninja_mode = True
 
 def ninja_test(user):
 	return user.is_staff or not ninja_mode
@@ -58,7 +58,7 @@ def jury_export_web(request):
 
 	return render(request, 'IPT2018/listing_jurys_web.html', {'jurys': jurys})
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser or u.username == 'david')
 def update_all(request):
 	list_receivers = update_signal.send(sender=Round)
 
@@ -250,22 +250,25 @@ def problem_detail(request, pk):
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2018/soon')
 @cache_page(cache_duration)
 def rounds(request):
-	rounds = Round.objects.all()
+	qfrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+
 	rooms = Room.objects.order_by('name')
 
 	orderedroundsperroom=[]
 	for room in rooms:
 		thisroom = []
-		for pf in pfs:
-			thisroom.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
+		for pf in pfs[:4]:
+			thisroom.append(qfrounds.filter(pf_number=pf).filter(room=room).order_by('round_number'))
 		orderedroundsperroom.append(thisroom)
+
+
 
 	if with_final_pf :
 		myrounds = Round.objects.filter(pf_number=npf+1)
 		finalrounds = sorted(myrounds, key=lambda round: round.round_number)
 		try:
 			finalteams = [finalrounds[0].reporter_team, finalrounds[0].opponent_team, finalrounds[0].reviewer_team]
-			finalpoints = [team.points(pfnumber=5, bonuspoints=False) for team in finalteams]
+			finalpoints = [team.points(pfnumber=npf+1, bonuspoints=False) for team in finalteams]
 		except:
 			finalteams = ["---", "---", "---"]
 			finalpoints = [0, 0, 0]
@@ -308,6 +311,35 @@ def round_detail(request, pk):
 
 	return render(request, 'IPT2018/round_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
 
+
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2018/soon')
+@cache_page(cache_duration)
+def semifinalround_detail(request, pk):
+	round = Round.objects.get(pk=pk)
+	jurygrades = JuryGrade.objects.filter(round=round).order_by('jury__name')
+	meangrades = []
+
+	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
+	if None in [round.reporter_team, round.opponent_team, round.reviewer_team]:
+		started = False
+	else:
+		started = True
+
+	# participants mean grades. If the fight is finished, then at least some jurygrades must exists
+	if len(jurygrades) != 0:
+		meangrades.append(round.score_reporter)
+		meangrades.append(round.score_opponent)
+		meangrades.append(round.score_reviewer)
+		finished = True
+	else:
+		finished = False
+
+	tacticalrejections = TacticalRejection.objects.filter(round=round)
+	eternalrejection = EternalRejection.objects.filter(round=round)
+
+	return render(request, 'IPT2018/semifinalround_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
+
+
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2018/soon')
 @cache_page(cache_duration)
 def finalround_detail(request, pk):
@@ -334,6 +366,9 @@ def finalround_detail(request, pk):
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
 	return render(request, 'IPT2018/finalround_detail.html', {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished})
+
+
+
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT2018/soon')
 @cache_page(cache_duration)

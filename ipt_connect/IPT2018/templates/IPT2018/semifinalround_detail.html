@@ -1,0 +1,139 @@
+{% extends 'IPT2018/head.html' %}
+{% load humanize %}
+{% block content %}
+{# for round in round #}
+
+<div class="section">
+    <h1>IPT 2018 Semi Final | Room {{round.room}} | Round {{round.round_number}}</h1>
+</div>
+
+{% if started %}
+<div class="content container">
+    <table>
+        <tr>
+            <th class="th-center"></th>
+            <th class="th-center">Reporter</th>
+            <th class="th-center">Opponent</th>
+            <th class="th-center">Reviewer</th>
+        </tr>
+
+        {% if finished %}
+        <tr>
+            <td class="td-center"></td>
+            <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a> -- <a href="{% url 'IPT2018:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a> -- <a href="{% url 'IPT2018:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+            <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a> -- <a href="{% url 'IPT2018:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
+        </tr>
+
+        {% else %}
+        <tr>
+            <td class="td-center"></td>
+            <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
+            <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
+            <td class="td-center"><a href="{% url 'IPT2018:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
+        </tr>
+        {% endif %}
+
+
+    </table>
+</div>
+
+<div class="content container">
+    <h2>Problem(s) forbidden:</h2>
+
+    {% if round.unavailable_problems.number_of_unavailable_problems > 0 %}
+    {% if round.unavailable_problems.presented_this_pf %}
+    {% for problem in round.unavailable_problems.presented_this_pf %}
+    <li><a href="{% url 'IPT2018:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been presented in this Round.</li>
+    {% endfor %}
+    {% endif %}
+    {% if round.unavailable_problems.eternal_rejection %} {% for problem in round.unavailable_problems.eternal_rejection %}
+    <li><a href="{% url 'IPT2018:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has already been permanently rejected.</li>
+    {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_reporter %} {% for problem in round.unavailable_problems.presented_by_reporter %}
+    <li><a href="{% url 'IPT2018:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Reporter</li>
+    {% endfor %} {% endif %} {% if round.unavailable_problems.opposed_by_opponent %} {% for problem in round.unavailable_problems.opposed_by_opponent %}
+    <li><a href="{% url 'IPT2018:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been opposed earlier by the Opponent</li>
+    {% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_opponent %} {% for problem in round.unavailable_problems.presented_by_opponent %}
+    <li><a href="{% url 'IPT2018:problem_detail' pk=problem.pk %}">{{problem.name}}</a> has been presented earlier by the Opponent</li>
+    {% endfor %} {% endif %}
+    {% else %}
+    <p>No forbidden problems.</p>
+     {% endif %}
+</div>
+{% endif %}
+
+
+
+
+{% if finished %}
+
+<div class="content container">
+    <h2>Problem presented: <a href="{% url 'IPT2018:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a> </h2>
+
+</div>
+
+<div class="content container">
+    <table>
+        <tr>
+            <th class="th-center">Jury members</th>
+            <th class="th-center">Reporter grade</th>
+            <th class="th-center">Opponent grade</th>
+            <th class="th-center">Reviewer grade</th>
+        </tr>
+
+        {% for jurygrade in jurygrades %}
+        <tr>
+            <td><a href="{% url 'IPT2018:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
+            <td class="td-center">{{jurygrade.grade_reporter}}</td>
+            <td class="td-center">{{jurygrade.grade_opponent}}</td>
+            <td class="td-center">{{jurygrade.grade_reviewer}}</td>
+        </tr>
+        {% endfor %}
+
+        <tr>
+            <td>
+                <p class="emphase">MEAN*</p>
+            </td>
+            {% for meangrade in meangrades %}
+            <td class="td-center">
+                <p class="emphase">{{meangrade|floatformat:2}}</p>
+            </td>
+            {% endfor %}
+        </tr>
+
+    </table>
+</div>
+
+<div class="content container">
+    <p class="comment">*The lowest and highest grade(s) might be discarded according to the number of jury members.</p>
+</div>
+
+
+
+<div class="content container">
+    <h2>Rejection(s)</h2>
+
+    <div class="content container">
+        <h3>Tactical rejection(s):</h3> {% for tacticalrejection in tacticalrejections %}
+        <li><a href="{% url 'IPT2018:problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+        {% empty %}
+        <p>No tactical rejections</p>
+        {% endfor %}
+    </div>
+
+    <div class="content container">
+        <h3>Eternal rejection(s):</h3> {% for eternalrejection in eternalrejection %}
+        <!-- <div class="content container"> -->
+        <li><a href="{% url 'IPT2018:problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
+        <!-- </div> -->
+        {% empty %}
+        <!-- <div class="content container"> -->
+        <p>No eternal rejection</p>
+        <!-- </div> -->
+        {% endfor %}
+    </div>
+
+</div>
+{% endif %}
+{# endfor #}
+{% endblock content %}
