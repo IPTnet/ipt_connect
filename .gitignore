@@ -1,6 +1,7 @@
 *.pyc
 *TODO.txt
 *migrations*
+.venv
 
 # General Ignore Rules
 
@@ -31,6 +32,7 @@
 *.log
 *.sql
 *.sqlite
+*.sqlite3
 
 # OS generated files #
 ######################
