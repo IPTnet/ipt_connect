@@ -2,6 +2,7 @@
 *TODO.txt
 *migrations*
 .venv
+.vscode
 
 # General Ignore Rules
 
