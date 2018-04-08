@@ -1,13 +1,6 @@
 IPT2018 package
 ===============
 
-Subpackages
------------
-
-.. toctree::
-
-    IPT2018.migrations
-
 Submodules
 ----------
 

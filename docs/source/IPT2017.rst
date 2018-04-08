@@ -1,12 +1,6 @@
 IPT2017 package
 ===============
 
-Subpackages
------------
-
-.. toctree::
-
-    IPT2017.migrations
 
 Submodules
 ----------
