@@ -2,16 +2,22 @@
 
 # ipt_connect
 
+A python/django web-based interface to track the grades, compute the rankings and display a lot of interesting statistics on the <a href="https://iptnet.info">International Physicists' Tournament</a>. 
 
--- Work in progress --
+### Status
+* Code: working, v2.0, minor display bugs to fix
+* Documentation: work in progress
+* CI: None
 
+ <a href='http://ipt-connect.readthedocs.io/en/latest/?badge=latest'>
+    <img src='https://readthedocs.org/projects/ipt-connect/badge/?version=latest' alt='Documentation Status' /></a>
 
-Starting:
+### Starting:
 * Install the requirements `pip install -r requirements.txt`
 * Run `python manage.py runserver`
 
 
-Requirements:
+### Requirements:
 - Python 2.x
-- Django
+- Django > 1.9
 - Pillow
