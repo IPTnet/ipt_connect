@@ -76,7 +76,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 	def save_model(self, request, obj, form, change):
 		if not(request.user.is_superuser) and not(request.user.username == 'magnusson'):
 			u = User.objects.get(username = request.user.username)
-			obj.team = u.Team_IPT2017
+			obj.team = u.Team_IPTdev
 			obj.save()
 		obj.save()
 
@@ -85,7 +85,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 		u = User.objects.get(username = request.user.username)
 		if request.user.is_superuser or request.user.username == 'magnusson':
 			return qs
-		return qs.filter(team = u.Team_IPT2017)
+		return qs.filter(team = u.Team_IPTdev)
 
 class JuryAdmin(admin.ModelAdmin):
 

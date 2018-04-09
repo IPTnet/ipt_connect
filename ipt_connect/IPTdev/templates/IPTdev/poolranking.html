@@ -1,4 +1,4 @@
-{% extends 'IPT2017/head.html' %}
+{% extends 'IPTdev/head.html' %}
 {% load humanize %}
 
 {% block content %}
@@ -20,7 +20,7 @@
             <tr>
                 {% if team.emphase %}
                 <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
-                <td class="td-center"><p class="emphase"><a href="{% url 'IPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
+                <td class="td-center"><p class="emphase"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
                 <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
@@ -31,7 +31,7 @@
 
                 {% else %}
                 <td class="td-center">{{team.rank|ordinal}}</td>
-                <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></td>
                 <td class="td-center">{{team.total_points|floatformat:2}}</td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
@@ -66,7 +66,7 @@
             <tr>
                 {% if team.emphase %}
                 <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
-                <td class="td-center"><p class="emphase"><a href="{% url 'IPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
+                <td class="td-center"><p class="emphase"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
                 <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
@@ -77,7 +77,7 @@
 
                 {% else %}
                 <td class="td-center">{{team.rank|ordinal}}</td>
-                <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=team.name %}">{{team.name}}</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></td>
                 <td class="td-center">{{team.total_points|floatformat:2}}</td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
@@ -97,7 +97,7 @@
 
     <div>
         <center>
-        <h3><a href="{% url 'IPT2017:ranking' %}">General Ranking</a></h3>
+        <h3><a href="{% url 'IPTdev:ranking' %}">General Ranking</a></h3>
         </center>
     </div>
 

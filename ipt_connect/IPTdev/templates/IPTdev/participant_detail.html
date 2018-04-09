@@ -1,4 +1,4 @@
-{% extends 'IPT2017/head.html' %}
+{% extends 'IPTdev/head.html' %}
 
 {% block content %}
 
@@ -22,8 +22,8 @@
             </tr>
             {% for average_grade in average_grades %}
                 <tr>
-                    <td class="td-center"><a href="{% url 'IPT2017:problem_detail' pk=average_grade.round.problem_presented.pk %}">{{average_grade.round.problem_presented}}</a></td>
-                    <td class="td-center"><a href="{% url 'IPT2017:round_detail' pk=average_grade.round.pk %}">{{average_grade.value|floatformat:2}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=average_grade.round.problem_presented.pk %}">{{average_grade.round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=average_grade.round.pk %}">{{average_grade.value|floatformat:2}}</a></td>
                     <td class="td-center">{{average_grade.role}}</td>
 
                 </tr>

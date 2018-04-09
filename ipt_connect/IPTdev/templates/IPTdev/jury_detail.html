@@ -1,4 +1,4 @@
-{% extends 'IPT2017/head.html' %}
+{% extends 'IPTdev/head.html' %}
 
 {% block content %}
 
@@ -30,10 +30,10 @@
             </tr>
             {% for grade in grades %}
                 <tr>
-                    <td class="td-center"><a href="{% url 'IPT2017:problem_detail' pk=grade.round.problem_presented.pk %}">{{grade.round.problem_presented}}</a></td>
-                    <td class="td-center"><a href="{% url 'IPT2017:round_detail' pk=grade.round.pk %}">{{grade.grade_reporter}} ({{grade.round.reporter_team.name}})</a></td>
-                    <td class="td-center"><a href="{% url 'IPT2017:round_detail' pk=grade.round.pk %}">{{grade.grade_opponent}} ({{grade.round.opponent_team.name}})</a></td>
-                    <td class="td-center"><a href="{% url 'IPT2017:round_detail' pk=grade.round.pk %}">{{grade.grade_reviewer}} ({{grade.round.reviewer_team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=grade.round.problem_presented.pk %}">{{grade.round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=grade.round.pk %}">{{grade.grade_reporter}} ({{grade.round.reporter_team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=grade.round.pk %}">{{grade.grade_opponent}} ({{grade.round.opponent_team.name}})</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=grade.round.pk %}">{{grade.grade_reviewer}} ({{grade.round.reviewer_team.name}})</a></td>
                 </tr>
             {% endfor %}
 

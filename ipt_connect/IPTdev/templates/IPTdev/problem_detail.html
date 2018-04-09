@@ -1,4 +1,4 @@
-{% extends 'IPT2017/head.html' %}
+{% extends 'IPTdev/head.html' %}
 {% load humanize %}
 
 {% block content %}
@@ -28,20 +28,20 @@
 
             {% for teamresult in teamresults %}
                 <tr>
-                    <td><a href="{% url 'IPT2017:team_detail' team_name=teamresult.name %}">{{teamresult.name}}</a></td>
+                    <td><a href="{% url 'IPTdev:team_detail' team_name=teamresult.name %}">{{teamresult.name}}</a></td>
                     <td class="td-center">
                     {% for report in teamresult.reports%}
-                        <p><a href="{% url 'IPT2017:round_detail' pk=report.round.pk %}">{{report.value|floatformat:2}}</a></p>
+                        <p><a href="{% url 'IPTdev:round_detail' pk=report.round.pk %}">{{report.value|floatformat:2}}</a></p>
                     {% endfor %}
                     </td>
                     <td class="td-center">
                     {% for opposition in teamresult.oppositions%}
-                        <p><a href="{% url 'IPT2017:round_detail' pk=opposition.round.pk %}">{{opposition.value|floatformat:2}}</a></p>
+                        <p><a href="{% url 'IPTdev:round_detail' pk=opposition.round.pk %}">{{opposition.value|floatformat:2}}</a></p>
                     {% endfor %}
                     </td>
                     <td class="td-center">
                     {% for review in teamresult.reviews%}
-                        <p><a href="{% url 'IPT2017:round_detail' pk=review.round.pk %}">{{review.value|floatformat:2}}</a></p>
+                        <p><a href="{% url 'IPTdev:round_detail' pk=review.round.pk %}">{{review.value|floatformat:2}}</a></p>
                     {% endfor %}
                     </td>
                 </tr>

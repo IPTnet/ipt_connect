@@ -1,4 +1,4 @@
-{% extends 'IPT2017/head.html' %}
+{% extends 'IPTdev/head.html' %}
 {% load humanize %}
 {% block content %}
 
@@ -6,11 +6,11 @@
 
 {% if finished %}
     <div class="section">
-        <h1>IPT 2017 Final | Round {{round.round_number}}</h1>
+        <h1>IPT dev Final | Round {{round.round_number}}</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Problem presented: <a href="{% url 'IPT2017:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
+        <p class="emphase">Problem presented: <a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
     </div>
 
 
@@ -25,9 +25,9 @@
 
             <tr>
                 <td class="td-center"></td>
-                <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a> -- <a href="{% url 'IPT2017:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
-                <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a> -- <a href="{% url 'IPT2017:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
-                <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a> -- <a href="{% url 'IPT2017:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a> -- <a href="{% url 'IPTdev:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a> -- <a href="{% url 'IPTdev:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a> -- <a href="{% url 'IPTdev:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a></td>
             </tr>
 
         </table>
@@ -45,7 +45,7 @@
 
             {% for jurygrade in jurygrades %}
             <tr>
-                <td><a href="{% url 'IPT2017:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
+                <td><a href="{% url 'IPTdev:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
                 <td class="td-center">{{jurygrade.grade_reporter}}</td>
                 <td class="td-center">{{jurygrade.grade_opponent}}</td>
                 <td class="td-center">{{jurygrade.grade_reviewer}}</td>
@@ -72,7 +72,7 @@
 
     {% if not finished %}
         <div class="section">
-            <h1>IPT 2017 Final | Round {{round.round_number}}</h1>
+            <h1>IPT dev Final | Round {{round.round_number}}</h1>
         </div>
         <div class="content container">
             <table>
@@ -85,9 +85,9 @@
 
                 <tr>
 
-                     <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
-                     <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
-                     <td class="td-center"><a href="{% url 'IPT2017:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
+                     <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a></td>
+                     <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a></td>
+                     <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a></td>
                  </tr>
 
              </table>
@@ -97,7 +97,7 @@
 
 {% else %}
     <div class="section">
-        <h1>IPT 2017 Final | Round {{round.round_number}}</h1>
+        <h1>IPT dev Final | Round {{round.round_number}}</h1>
     </div>
 
     <div class="content container">

@@ -4,7 +4,7 @@ from views import *
 from forms import member_for_team
 
 
-app_name = 'IPT2017'
+app_name = 'IPTdev'
 
 urlpatterns = [
     url(r'^$', tournament_overview),
