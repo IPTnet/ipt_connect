@@ -233,7 +233,7 @@ def team_detail(request, team_name):
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % app_version)
 @cache_page(cache_duration)
 def problems_overview(request):
-	problems = Problem.objects.all().order_by('name')
+	problems = Problem.objects.all()
 	rounds = Round.objects.all()
 	for problem in problems:
 		problem.npres = len(rounds.filter(problem_presented=problem))
