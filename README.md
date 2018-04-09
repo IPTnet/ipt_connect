@@ -15,6 +15,7 @@ A python/django web-based interface to track the grades, compute the rankings an
 ### Starting:
 * Install the requirements `pip install -r requirements.txt`
 * Run `python manage.py runserver`
+* Open <a href="http://127.0.0.1:8000/IPTdev/">http://127.0.0.1:8000/IPTdev/</a>
 
 
 ### Requirements:
