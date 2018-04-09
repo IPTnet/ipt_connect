@@ -15,9 +15,19 @@ A python/django web-based interface to track the grades, compute the rankings an
 ### Starting:
 * Install the requirements `pip install -r requirements.txt`
 * Run `python manage.py runserver`
+* Open <a href="http://127.0.0.1:8000/IPTdev/">http://127.0.0.1:8000/IPTdev/</a>
 
 
 ### Requirements:
 - Python 2.x
 - Django > 1.9
 - Pillow
+
+
+## F.A.Q:
+
+### How to add superuser and sign in to site?
+* Run `python manage.py createsuperuser`
+* Set username, email address and password.
+* Run `python manage.py runserver`
+* Open <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a> and sign in.

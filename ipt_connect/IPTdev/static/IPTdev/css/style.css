@@ -141,3 +141,21 @@ th {
     background-color: #3F5765;
     color: white;
 }
+
+footer {
+    background: #222;
+    color: #bbb;
+    font-size: 12pt;
+    text-align: center;
+    margin-top: 80px;
+    padding: 20px 0;
+}
+
+footer a:link, footer a:visited, footer a:active, footer a:hover {
+    color: #eee;
+    text-decoration: none;
+}
+
+footer svg {
+    fill: #eee;
+}
