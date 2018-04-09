@@ -44,9 +44,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'IPT2016',
-	'FPT2017',
-	'IPT2017',
-    'IPT2018'
+    'FPT2017',
+    'IPT2017',
+    'IPT2018',
+    'IPTdev'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -58,7 +59,7 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 #    'django.middleware.security.SecurityMiddleware',
-	'ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware',
+    'ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware'
 )
 
 ROOT_URLCONF = 'ipt_connect.urls'
