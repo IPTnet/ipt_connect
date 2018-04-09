@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^FPT2017/', include('FPT2017.urls', namespace='FPT2017')),
 	url(r'^IPT2017/', include('IPT2017.urls', namespace='IPT2017')),
 	url(r'^IPT2018/', include('IPT2018.urls', namespace='IPT2018')),
+    url(r'^IPTdev/', include('IPTdev.urls', namespace='IPTdev'))
 ]
 
 
