@@ -1,7 +1,8 @@
-<h1>Participants of IPT dev</h1>
+{% load i18n %}
+<h1>{% trans 'Participants of' %} IPT dev</h1>
 
 
-Team;Affiliation;Role;Surname;Name;Passport number;Gender;Birthdate;Email;Phone number;Veteran;Diet;Mixed gender accomodation;Shirt size; Remarks <br><br>
+{% trans 'Team' %};{% trans 'Affiliation' %};{% trans 'Role' %};{% trans 'Surname' %};{% trans 'Name' %};{% trans 'Passport number' %};{% trans 'Gender' %};{% trans 'Birthdate' %};{% trans 'Email' %};{% trans 'Phone number' %};{% trans 'Veteran' %};{% trans 'Diet' %};{% trans 'Mixed gender accomodation' %};{% trans 'Shirt size' %}; {% trans 'Remarks' %} <br><br>
 
 {% for participant in participants %}
 
@@ -9,6 +10,6 @@ Team;Affiliation;Role;Surname;Name;Passport number;Gender;Birthdate;Email;Phone 
 
 {% empty %}
 
-    <p>There is no registered participant.</p>
+    <p>{% trans 'There is no registered participant' %}.</p>
 
 {% endfor %}

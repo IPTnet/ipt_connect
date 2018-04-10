@@ -1,19 +1,19 @@
-{% extends 'IPTdev/head.html' %} {% load humanize %} {% block content %}
+{% extends 'IPTdev/head.html' %} {% load humanize %} {% load i18n %} {% block content %}
 
 <div class="section">
     <h1>{{team.name}}</h1>
 </div>
 
 <div class="content container">
-    <h1> {{team.rank|ordinal}} with {{team.total_points|floatformat:2}} points.</h1>
+    <h1> {{team.rank|ordinal}} {% trans 'with' %} {{team.total_points|floatformat:2}} {% trans 'points' %}.</h1>
 </div>
 
 
 <div class="content container">
-    <h2>Participants:
+    <h2>{% trans 'Participants' %}:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'IPTdev:participant_detail' pk=participant.pk %}">{{participant.fullname}} gathered {{participant.total_points|floatformat:2}} points.</a></li>
+        <li><a href="{% url 'IPTdev:participant_detail' pk=participant.pk %}">{{participant.fullname}} {% trans 'gathered' %} {{participant.total_points|floatformat:2}} {% trans 'points' %}.</a></li>
     </div>
     {% endfor %}
 
@@ -29,9 +29,9 @@
 <div class="content container">
     <table class="sortable">
         <tr>
-            <th class="th-center">Problems presented</th>
-            <th class="th-center">Grade</th>
-            <th class="th-center">Role</th>
+            <th class="th-center">{% trans 'Problems presented' %}</th>
+            <th class="th-center">{% trans 'Grade' %}</th>
+            <th class="th-center">{% trans 'Role' %}</th>
         </tr>
         {% for round in allrounds %}
         <tr>
@@ -47,10 +47,10 @@
 
 <div class="content container">
     {% if penalties %}
-    <h3>Penalties:</h3>
+    <h3>{% trans 'Penalties' %}:</h3>
     {% for p in penalties %}
 
-    <li>Multiplicative coefficient of {{p.1}} for the Reporter in the {{p.0|ordinal}} Physics Fight.</li>
+    <li>{% trans 'Multiplicative coefficient of' %} {{p.1}} {% trans 'for the Reporter in the' %} {{p.0|ordinal}} {% trans 'Physics Fight' %}.</li>
 
     {% endfor %} {% endif %}
 
