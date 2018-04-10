@@ -20,17 +20,17 @@ msgstr ""
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 #: .\IPTdev\templates\IPTdev\bebacksoon.html:7
 msgid "A little bit of patience"
-msgstr ""
+msgstr "Немного терпения"
 
 #: .\IPTdev\templates\IPTdev\bebacksoon.html:12
 msgid "Processing the grades..."
-msgstr ""
+msgstr "Обработка оценок..."
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:10
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:76
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:101
 msgid "Final"
-msgstr ""
+msgstr "Финал"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:10
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:76
@@ -41,7 +41,7 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\rounds.html:53
 #: .\IPTdev\templates\IPTdev\rounds.html:54
 msgid "Round"
-msgstr ""
+msgstr "Раунд"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:14
 #: .\IPTdev\templates\IPTdev\round_detail.html:71
@@ -70,7 +70,7 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\head.html:24
 #: .\IPTdev\templates\IPTdev\round_detail.html:78
 msgid "Jury members"
-msgstr ""
+msgstr "Члены жюри"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:42
 #: .\IPTdev\templates\IPTdev\round_detail.html:79
@@ -103,26 +103,26 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:105
 msgid "This round has not started yet !"
-msgstr ""
+msgstr "Этот раунд пока не начался!"
 
 #: .\IPTdev\templates\IPTdev\head.html:20
 msgid "Physics Fights"
-msgstr ""
+msgstr "Физичекие Бои"
 
 #: .\IPTdev\templates\IPTdev\head.html:21
 #: .\IPTdev\templates\IPTdev\poolranking.html:9
 #: .\IPTdev\templates\IPTdev\poolranking.html:55
 msgid "Ranking"
-msgstr ""
+msgstr "Ранги"
 
 #: .\IPTdev\templates\IPTdev\head.html:22
 msgid "Problems"
-msgstr ""
+msgstr "Проблемы"
 
 #: .\IPTdev\templates\IPTdev\head.html:23
 #: .\IPTdev\templates\IPTdev\team_detail.html:13
 msgid "Participants"
-msgstr ""
+msgstr "Участники"
 
 #: .\IPTdev\templates\IPTdev\jury_detail.html:12
 msgid "Team Leader of"
@@ -151,14 +151,14 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\jurys_overview.html:8
 msgid "Jury overview"
-msgstr ""
+msgstr "Жюри"
 
 #: .\IPTdev\templates\IPTdev\jurys_overview.html:12
 #: .\IPTdev\templates\IPTdev\participants_overview.html:11
 msgid ""
 "Click on the names for detailed statistics. Click on the headers to sort the "
 "table."
-msgstr ""
+msgstr "Нажмите на имя для подробной информации. Нажмите на заголовок таблицы для сортировки."
 
 #: .\IPTdev\templates\IPTdev\jurys_overview.html:19
 #: .\IPTdev\templates\IPTdev\participants_all.html:9
@@ -166,7 +166,7 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\participants_overview.html:17
 #: .\IPTdev\templates\IPTdev\problems_overview.html:17
 msgid "Name"
-msgstr ""
+msgstr "Имя"
 
 #: .\IPTdev\templates\IPTdev\jurys_overview.html:20
 #: .\IPTdev\templates\IPTdev\participants_overview.html:21
@@ -189,18 +189,18 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\listing_jurys.html:9
 #: .\IPTdev\templates\IPTdev\listing_jurys_web.html:9
 msgid "There is no registered jury member"
-msgstr ""
+msgstr "Этот член жюри не зарегистрирован"
 
 #: .\IPTdev\templates\IPTdev\listing_participants_web.html:2
 #: .\IPTdev\templates\IPTdev\participants_export.html:2
 #: .\IPTdev\templates\IPTdev\participants_trombinoscope.html:2
 msgid "Participants of"
-msgstr ""
+msgstr "Участник"
 
 #: .\IPTdev\templates\IPTdev\listing_participants_web.html:12
 #: .\IPTdev\templates\IPTdev\participants_export.html:13
 msgid "There is no registered participant"
-msgstr ""
+msgstr "Этот участник не зарегистрирован"
 
 #: .\IPTdev\templates\IPTdev\participant_detail.html:11
 msgid "Member of the team from"
@@ -213,14 +213,14 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\participant_detail.html:21
 #: .\IPTdev\templates\IPTdev\team_detail.html:33
 msgid "Grade"
-msgstr ""
+msgstr "Оценка"
 
 #: .\IPTdev\templates\IPTdev\participant_detail.html:22
 #: .\IPTdev\templates\IPTdev\participants_all.html:11
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 #: .\IPTdev\templates\IPTdev\team_detail.html:34
 msgid "Role"
-msgstr ""
+msgstr "Роль"
 
 #: .\IPTdev\templates\IPTdev\participants_all.html:10
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
@@ -229,27 +229,27 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\poolranking.html:62
 #: .\IPTdev\templates\IPTdev\ranking.html:14
 msgid "Team"
-msgstr ""
+msgstr "Команда"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Affiliation"
-msgstr ""
+msgstr "Присоеденился"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Surname"
-msgstr ""
+msgstr "Фамилия"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Passport number"
-msgstr ""
+msgstr "Номер паспорта"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Gender"
-msgstr ""
+msgstr "Пол"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Birthdate"
-msgstr ""
+msgstr "Дата рождения"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Email"
@@ -257,7 +257,7 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Phone number"
-msgstr ""
+msgstr "Номер телефона"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Veteran"
@@ -273,15 +273,19 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Shirt size"
-msgstr ""
+msgstr "Размер футболки"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Remarks"
 msgstr ""
 
+#: .\IPTdev\templates\IPTdev\participants_overview.html:7
+msgid "Participants overview"
+msgstr "Участники"
+
 #: .\IPTdev\templates\IPTdev\participants_overview.html:19
 msgid "Points (sum)"
-msgstr ""
+msgstr "Сумма очков"
 
 #: .\IPTdev\templates\IPTdev\participants_overview.html:20
 msgid "Mean grade"
@@ -294,11 +298,11 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\rounds.html:22
 #: .\IPTdev\templates\IPTdev\team_detail.html:53
 msgid "Physics Fight"
-msgstr ""
+msgstr "Физические Бои"
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:4
 msgid "Room"
-msgstr ""
+msgstr "Комната"
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:20
 msgid "Jurés"
@@ -333,7 +337,7 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\physics_fights.html:6
 msgid "Hello !"
-msgstr ""
+msgstr "Привет!"
 
 #: .\IPTdev\templates\IPTdev\physics_fights.html:9
 msgid "Incroyable chantier"
@@ -341,25 +345,25 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:9
 msgid "Pool A"
-msgstr ""
+msgstr "Группа A"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:15
 #: .\IPTdev\templates\IPTdev\poolranking.html:61
 #: .\IPTdev\templates\IPTdev\ranking.html:13
 msgid "Rank"
-msgstr ""
+msgstr "Ранг"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:17
 #: .\IPTdev\templates\IPTdev\poolranking.html:63
 #: .\IPTdev\templates\IPTdev\ranking.html:15
 msgid "Points"
-msgstr ""
+msgstr "Очки"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:18
 #: .\IPTdev\templates\IPTdev\poolranking.html:64
 #: .\IPTdev\templates\IPTdev\ranking.html:17
 msgid "Physics Fights status"
-msgstr ""
+msgstr "Статус Боя"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:28
 #: .\IPTdev\templates\IPTdev\poolranking.html:39
@@ -384,12 +388,12 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:55
 msgid "Pool B"
-msgstr ""
+msgstr "Группа B"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:101
 #: .\IPTdev\templates\IPTdev\ranking.html:7
 msgid "General Ranking"
-msgstr ""
+msgstr "Глобальный рейтинг"
 
 #: .\IPTdev\templates\IPTdev\problem_detail.html:25
 msgid "Report"
@@ -405,13 +409,13 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\problems_overview.html:7
 msgid "Problems overview"
-msgstr ""
+msgstr "Проблемы"
 
 #: .\IPTdev\templates\IPTdev\problems_overview.html:11
 msgid ""
 "Click on the problem names for detailed statistics. Click on the headers to "
 "sort the table."
-msgstr ""
+msgstr "Нажмите на проблему для подробной информации. Нажмите на заголовок таблицы для сортировки."
 
 #: .\IPTdev\templates\IPTdev\problems_overview.html:18
 msgid "# of presentations"
@@ -419,7 +423,7 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\ranking.html:16
 msgid "Pool"
-msgstr ""
+msgstr "Группа"
 
 #: .\IPTdev\templates\IPTdev\ranking.html:56
 msgid "Pools Ranking"
@@ -471,11 +475,18 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\rounds.html:8
 msgid "Rounds overview"
-msgstr ""
+msgstr "Раунды"
+
+#: .\IPTdev\templates\IPTdev\rounds.html:12
+msgid ""
+"Click on a Round to get a detailed summary. Click on a Physics Fight to get "
+"a summarized view of all the corresponding Rounds."
+msgstr "Нажмите на Раунд для подробной информации. Нажмите на Бой, чтобы получить краткое "
+"представление обо всех раундах."
 
 #: .\IPTdev\templates\IPTdev\rounds.html:48
 msgid "The Grand Finale"
-msgstr ""
+msgstr "Гранд-финал"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:8
 msgid "with"
@@ -508,26 +519,27 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\teams_overview.html:6
 msgid "Teams Overview"
-msgstr ""
+msgstr "Команды"
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:7
 msgid "Welcome!"
-msgstr ""
+msgstr "Добро пожаловать!"
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:15
 msgid "This interface gathers the results of the "
-msgstr ""
+msgstr "Этот сайт содержит результаты "
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:15
 msgid "9th International Physicists' Tournament"
-msgstr ""
+msgstr "9-го Международного Турнира по Физике"
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:17
 msgid ""
 "Most of the displayed element can be clicked on. You can access teams, "
 "individual participant or jury member statistics, as well as details of each "
 "Round, Physics Fights and Problem."
-msgstr ""
+msgstr "На многие элементы можно нажать. Сделайте это, для просмотра информации "
+"об участниках, членах жюри, а также детальной информации о кажом раунде."
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:19
 #, python-format
@@ -535,18 +547,20 @@ msgid ""
 "The results are updated continuously as the Physics Fights go on, resulting "
 "in a display that might not be completely accurate 100%% of the time (due to "
 "grade checking). Please check your emails and "
-msgstr ""
+msgstr "Все результаты обновляются постепенно на протяжени всех Боёв. Поэтому "
+"иногда информация может оказаться не полной. Пожалуйста проверяйте свой E-mail и "
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:19
 msgid "the website"
-msgstr ""
+msgstr "сайт"
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:19
 msgid " for the official announcements of the results after each Fight."
-msgstr ""
+msgstr " для получения официальной информации о результатах каждого Боя."
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:21
 msgid ""
 "In case you spot a bug or have any suggestion to improve the software, "
 "please get in touch with us at webmaster (a) iptnet (dot) info."
-msgstr ""
+msgstr "Если вы нашли ошибку или у вас есть предложения по улучшению программного обеспечения "
+"пожалуйста свяжитесь с нами: webmaster (a) iptnet (dot) info."
