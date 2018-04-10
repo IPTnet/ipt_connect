@@ -43,10 +43,6 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'IPT2016',
-    'FPT2017',
-    'IPT2017',
-    'IPT2018',
     'IPTdev'
 )
 
