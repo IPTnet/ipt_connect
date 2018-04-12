@@ -359,10 +359,13 @@ class Team(models.Model):
 		# assert len(eternal_rejections) < 2, "Team %s has more than one eternal rejection. This is forbidden!" % self.name
 		# Well, apparently it is...
 		reject = []
-		if len(eternal_rejections) > 0 and eternal_rejections[0].round.pf_number < pf_number:
-			if verbose:
-				print "Team %s rejected eternally problem %s" %(self.name, eternal_rejections[0].problem.name)
-			reject.append(eternal_rejections[0].problem)
+
+		for eternal_rejection in eternal_rejections:
+			if eternal_rejection.round.pf_number < pf_number:
+				if verbose:
+					print "Team %s rejected eternally problem %s" %(self.name, eternal_rejection.problem.name)
+				reject.append(eternal_rejection.problem)
+
 		noproblems.append(reject)
 
 		# now all the problems already presented
