@@ -41,30 +41,34 @@ msgstr "Финал"
 #: .\IPTdev\templates\IPTdev\rounds.html:53
 #: .\IPTdev\templates\IPTdev\rounds.html:54
 msgid "Round"
-msgstr "Раунд"
+msgstr "Действие"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:14
 #: .\IPTdev\templates\IPTdev\round_detail.html:71
 msgid "Problem presented"
-msgstr ""
+msgstr "Доложенная задача"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:22
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:82
 #: .\IPTdev\templates\IPTdev\round_detail.html:15
 msgid "Reporter"
-msgstr ""
+msgstr "Докладчик"
+
+# На всякий случай
+msgid "Coreporter"
+msgstr "Содокладчик"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:23
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:83
 #: .\IPTdev\templates\IPTdev\round_detail.html:16
 msgid "Opponent"
-msgstr ""
+msgstr "Оппонент"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:24
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:84
 #: .\IPTdev\templates\IPTdev\round_detail.html:17
 msgid "Reviewer"
-msgstr ""
+msgstr "Рецензент"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:41
 #: .\IPTdev\templates\IPTdev\head.html:24
@@ -75,31 +79,33 @@ msgstr "Члены жюри"
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:42
 #: .\IPTdev\templates\IPTdev\round_detail.html:79
 msgid "Reporter grade"
-msgstr ""
+msgstr "Оценка за доклад"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:43
 #: .\IPTdev\templates\IPTdev\round_detail.html:80
 msgid "Opponent grade"
-msgstr ""
+msgstr "Оценка за оппонирование"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:44
 #: .\IPTdev\templates\IPTdev\round_detail.html:81
 msgid "Reviewer grade"
-msgstr ""
+msgstr "Оценка за рецензирование"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:57
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:48
 #: .\IPTdev\templates\IPTdev\problem_detail.html:55
 #: .\IPTdev\templates\IPTdev\round_detail.html:95
 msgid "MEAN"
-msgstr ""
+msgstr "СРЕДНЕЕ"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:67
 msgid ""
 "Best(s) and worst(s) grade(s) are removed from the mean according to the "
 "number of jury members. The multiplicative role coefficient is not taken "
 "into account here."
-msgstr ""
+msgstr "Максимальные и минимальные оценки могут быть отброшены "
+"в зависимости от количества членов жюри."
+"Коэффициент роли здесь не учитывается"
 
 #: .\IPTdev\templates\IPTdev\finalround_detail.html:105
 msgid "This round has not started yet !"
@@ -113,7 +119,7 @@ msgstr "Физичекие Бои"
 #: .\IPTdev\templates\IPTdev\poolranking.html:9
 #: .\IPTdev\templates\IPTdev\poolranking.html:55
 msgid "Ranking"
-msgstr "Ранги"
+msgstr "Рейтинг"
 
 #: .\IPTdev\templates\IPTdev\head.html:22
 msgid "Problems"
@@ -126,7 +132,7 @@ msgstr "Участники"
 
 #: .\IPTdev\templates\IPTdev\jury_detail.html:12
 msgid "Team Leader of"
-msgstr ""
+msgstr "Руководитель"
 
 #: .\IPTdev\templates\IPTdev\jury_detail.html:15
 #: .\IPTdev\templates\IPTdev\jury_detail.html:17
@@ -195,7 +201,7 @@ msgstr "Этот член жюри не зарегистрирован"
 #: .\IPTdev\templates\IPTdev\participants_export.html:2
 #: .\IPTdev\templates\IPTdev\participants_trombinoscope.html:2
 msgid "Participants of"
-msgstr "Участник"
+msgstr "Участники"
 
 #: .\IPTdev\templates\IPTdev\listing_participants_web.html:12
 #: .\IPTdev\templates\IPTdev\participants_export.html:13
@@ -204,7 +210,7 @@ msgstr "Этот участник не зарегистрирован"
 
 #: .\IPTdev\templates\IPTdev\participant_detail.html:11
 msgid "Member of the team from"
-msgstr ""
+msgstr "Член команды"
 
 #: .\IPTdev\templates\IPTdev\participant_detail.html:20
 msgid "Problem(s) presented"
@@ -261,15 +267,15 @@ msgstr "Номер телефона"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Veteran"
-msgstr ""
+msgstr "Опытный турнирщик"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Diet"
-msgstr ""
+msgstr "Диета"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Mixed gender accomodation"
-msgstr ""
+msgstr "Разнополая комната"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Shirt size"
@@ -277,7 +283,7 @@ msgstr "Размер футболки"
 
 #: .\IPTdev\templates\IPTdev\participants_export.html:5
 msgid "Remarks"
-msgstr ""
+msgstr "Примечания"
 
 #: .\IPTdev\templates\IPTdev\participants_overview.html:7
 msgid "Participants overview"
@@ -285,11 +291,11 @@ msgstr "Участники"
 
 #: .\IPTdev\templates\IPTdev\participants_overview.html:19
 msgid "Points (sum)"
-msgstr "Сумма очков"
+msgstr "Сумма баллов"
 
 #: .\IPTdev\templates\IPTdev\participants_overview.html:20
 msgid "Mean grade"
-msgstr ""
+msgstr "Средний балл"
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:4
 #: .\IPTdev\templates\IPTdev\rounds.html:19
@@ -298,7 +304,7 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\rounds.html:22
 #: .\IPTdev\templates\IPTdev\team_detail.html:53
 msgid "Physics Fight"
-msgstr "Физические Бои"
+msgstr "Физические Бой"
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:4
 msgid "Room"
@@ -310,22 +316,23 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:24
 msgid "Rep."
-msgstr ""
+msgstr "Док."
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:25
 msgid "Opp."
-msgstr ""
+msgstr "Опп."
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:26
 msgid "Rev."
-msgstr ""
+msgstr "Рец."
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:67
 #: .\IPTdev\templates\IPTdev\round_detail.html:108
 msgid ""
 "The lowest and highest grade(s) might be discarded according to the number "
 "of jury members."
-msgstr ""
+msgstr "Максимальные и минимальные оценки могут быть отброшены "
+"в зависимости от количества членов жюри."
 
 #: .\IPTdev\templates\IPTdev\physics_fight_detail.html:72
 msgid "No grade registered so far !"
@@ -372,7 +379,7 @@ msgstr "Статус Боя"
 #: .\IPTdev\templates\IPTdev\ranking.html:28
 #: .\IPTdev\templates\IPTdev\ranking.html:40
 msgid "fight ongoing"
-msgstr ""
+msgstr "бой идёт"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:30
 #: .\IPTdev\templates\IPTdev\poolranking.html:76
@@ -380,11 +387,11 @@ msgstr ""
 #: .\IPTdev\templates\IPTdev\ranking.html:30
 #: .\IPTdev\templates\IPTdev\ranking.html:42
 msgid "fight(s) ended"
-msgstr ""
+msgstr "боёв завершено"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:41
 msgid "ended"
-msgstr ""
+msgstr "завершено"
 
 #: .\IPTdev\templates\IPTdev\poolranking.html:55
 msgid "Pool B"
@@ -397,29 +404,29 @@ msgstr "Глобальный рейтинг"
 
 #: .\IPTdev\templates\IPTdev\problem_detail.html:25
 msgid "Report"
-msgstr ""
+msgstr "Доклад"
 
 #: .\IPTdev\templates\IPTdev\problem_detail.html:26
 msgid "Opposition"
-msgstr ""
+msgstr "Оппонирование"
 
 #: .\IPTdev\templates\IPTdev\problem_detail.html:27
 msgid "Review"
-msgstr ""
+msgstr "Рецензирование"
 
 #: .\IPTdev\templates\IPTdev\problems_overview.html:7
 msgid "Problems overview"
-msgstr "Проблемы"
+msgstr "Обзор задач"
 
 #: .\IPTdev\templates\IPTdev\problems_overview.html:11
 msgid ""
 "Click on the problem names for detailed statistics. Click on the headers to "
 "sort the table."
-msgstr "Нажмите на проблему для подробной информации. Нажмите на заголовок таблицы для сортировки."
+msgstr "Нажмите на задачу для подробной информации. Нажмите на заголовок таблицы для сортировки."
 
 #: .\IPTdev\templates\IPTdev\problems_overview.html:18
 msgid "# of presentations"
-msgstr ""
+msgstr "Количество докладов"
 
 #: .\IPTdev\templates\IPTdev\ranking.html:16
 msgid "Pool"
@@ -427,95 +434,100 @@ msgstr "Группа"
 
 #: .\IPTdev\templates\IPTdev\ranking.html:56
 msgid "Pools Ranking"
-msgstr ""
+msgstr "Рейтинг по группам"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:47
 msgid "has already been presented in this Round."
-msgstr ""
+msgstr "была ранее доложена в этом бою"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:51
 msgid "has already been permanently rejected."
-msgstr ""
+msgstr "ранее был дан вечный отказ"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:53
 msgid "has been presented earlier by the Reporter"
-msgstr ""
+msgstr "была доложена Докладчиком ранее"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:55
 msgid "has been opposed earlier by the Opponent"
-msgstr ""
+msgstr "была оппонирована Оппонентом ранее"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:57
 msgid "has been presented earlier by the Opponent"
-msgstr ""
+msgstr "была доложена Оппонентом ранее"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:60
 msgid "No forbidden problems."
-msgstr ""
+msgstr "Нет запрещённых проблем"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:114
 msgid "Rejection(s)"
-msgstr ""
+msgstr "Отказы"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:117
 msgid "Tactical rejection(s)"
-msgstr ""
+msgstr "Тактические отказы"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:120
 msgid "No tactical rejections"
-msgstr ""
+msgstr "Нет тактических отказов"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:125
 msgid "Eternal rejection(s)"
-msgstr ""
+msgstr "Вечные отказы"
 
 #: .\IPTdev\templates\IPTdev\round_detail.html:131
 msgid "No eternal rejection"
-msgstr ""
+msgstr "Нет вечного отказа"
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:131
+# На будущее
+msgid "No eternal rejections"
+msgstr "Нет вечных отказов"
 
 #: .\IPTdev\templates\IPTdev\rounds.html:8
 msgid "Rounds overview"
-msgstr "Раунды"
+msgstr "Обзор действий"
 
 #: .\IPTdev\templates\IPTdev\rounds.html:12
 msgid ""
 "Click on a Round to get a detailed summary. Click on a Physics Fight to get "
 "a summarized view of all the corresponding Rounds."
-msgstr "Нажмите на Раунд для подробной информации. Нажмите на Бой, чтобы получить краткое "
-"представление обо всех раундах."
+msgstr "Нажмите на Действие для подробной информации. Нажмите на Бой, чтобы получить краткое "
+"представление обо всех действих."
 
 #: .\IPTdev\templates\IPTdev\rounds.html:48
 msgid "The Grand Finale"
-msgstr "Гранд-финал"
+msgstr "Финал"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:8
 msgid "with"
-msgstr ""
+msgstr "с"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:8
 #: .\IPTdev\templates\IPTdev\team_detail.html:16
 msgid "points"
-msgstr ""
+msgstr "баллами"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:16
 msgid "gathered"
-msgstr ""
+msgstr "набрано"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:32
 msgid "Problems presented"
-msgstr ""
+msgstr "Доложенные задачи"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:50
 msgid "Penalties"
-msgstr ""
+msgstr "Штрафы"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:53
 msgid "Multiplicative coefficient of"
-msgstr ""
+msgstr "Коэффициент"
 
 #: .\IPTdev\templates\IPTdev\team_detail.html:53
 msgid "for the Reporter in the"
-msgstr ""
+msgstr "для Докладчика в"
 
 #: .\IPTdev\templates\IPTdev\teams_overview.html:6
 msgid "Teams Overview"
@@ -538,8 +550,8 @@ msgid ""
 "Most of the displayed element can be clicked on. You can access teams, "
 "individual participant or jury member statistics, as well as details of each "
 "Round, Physics Fights and Problem."
-msgstr "На многие элементы можно нажать. Сделайте это, для просмотра информации "
-"об участниках, членах жюри, а также детальной информации о кажом раунде."
+msgstr "На большинство элементов можно нажать. Сделайте это для просмотра информации "
+"об участниках, членах жюри, а также детальной информации о каждом Действии, Бое или Задаче."
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:19
 #, python-format
@@ -547,12 +559,12 @@ msgid ""
 "The results are updated continuously as the Physics Fights go on, resulting "
 "in a display that might not be completely accurate 100%% of the time (due to "
 "grade checking). Please check your emails and "
-msgstr "Все результаты обновляются постепенно на протяжени всех Боёв. Поэтому "
+msgstr "Все результаты обновляются постепенно на протяжении всех Боёв. Поэтому "
 "иногда информация может оказаться не полной. Пожалуйста проверяйте свой E-mail и "
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:19
 msgid "the website"
-msgstr "сайт"
+msgstr "этот сайт"
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:19
 msgid " for the official announcements of the results after each Fight."
@@ -562,5 +574,5 @@ msgstr " для получения официальной информации �
 msgid ""
 "In case you spot a bug or have any suggestion to improve the software, "
 "please get in touch with us at webmaster (a) iptnet (dot) info."
-msgstr "Если вы нашли ошибку или у вас есть предложения по улучшению программного обеспечения "
+msgstr "Если вы нашли ошибку или у вас есть предложения по улучшению программного обеспечения, "
 "пожалуйста свяжитесь с нами: webmaster (a) iptnet (dot) info."
