@@ -45,3 +45,16 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Git and its satellites temp files #
+#####################################
+*.orig
+*.local
+*.LOCAL.*
+*.BACKUP.*
+*.BASE.*
+*.REMOTE.*
+*_LOCAL_*
+*_BACKUP_*
+*_BASE_*
+*_REMOTE_*
