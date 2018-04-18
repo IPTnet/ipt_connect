@@ -44,7 +44,7 @@
     {% if round.unavailable_problems.number_of_unavailable_problems > 0 %}
     {% if round.unavailable_problems.presented_this_pf %}
     {% for problem in round.unavailable_problems.presented_this_pf %}
-    <li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been presented in this Round.' %}</li>
+    <li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been presented in this Fight.' %}</li>
     {% endfor %}
     {% endif %}
     {% if round.unavailable_problems.eternal_rejection %} {% for problem in round.unavailable_problems.eternal_rejection %}
