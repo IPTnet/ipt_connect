@@ -3,6 +3,7 @@
 *migrations*
 .venv
 .vscode
+*.*~
 
 # General Ignore Rules
 

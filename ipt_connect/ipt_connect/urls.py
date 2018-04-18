@@ -2,7 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from ipt_connect.views import home
-from IPT2018.views import tournament_overview
+from IPTdev.views import tournament_overview
 
 urlpatterns = [
     # Examples:
@@ -14,10 +14,6 @@ urlpatterns = [
     url(r'^$', tournament_overview),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/', include('loginas.urls')),
-    url(r'^IPT2016/', include('IPT2016.urls', namespace='IPT2016')),
-    url(r'^FPT2017/', include('FPT2017.urls', namespace='FPT2017')),
-    url(r'^IPT2017/', include('IPT2017.urls', namespace='IPT2017')),
-    url(r'^IPT2018/', include('IPT2018.urls', namespace='IPT2018')),
     url(r'^IPTdev/', include('IPTdev.urls', namespace='IPTdev'))
 ]
 
