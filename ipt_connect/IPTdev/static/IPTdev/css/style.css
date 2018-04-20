@@ -19,7 +19,6 @@ body {
 }
 
 .topmenu {
-    /*background-color: #25275D;*/
     margin-top: 0px;
     margin-right: 0px;
     margin-left: 0px;
@@ -95,30 +94,16 @@ table {
     table-layout: fixed;
 }
 
-.table-borders {
-    /*border-width: 5px;*/
-    /*border-style: solid;*/
-    /*border-color: black;*/
-}
-
 .th-center, .th-center a {
     text-align: center;
     padding: 8px;
     color: #EFEFEF;
-    /*font-style: light;*/
-    /*font-size: 120%;*/
     font-weight: 300;
 }
 
 .td-center {
     text-align: center;
     padding: 8px;
-}
-
-.td-border {
-    /*border-width: 1px;
-	border-style: solid;
-	border-color: black;*/
 }
 
 .th {
