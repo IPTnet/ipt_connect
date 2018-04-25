@@ -112,7 +112,7 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'ru' # or 'en-us'
+LANGUAGE_CODE = 'en-us'
 
 LOCALE_PATHS = (
     os.path.join('locale'),
