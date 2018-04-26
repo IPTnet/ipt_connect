@@ -1,20 +1,20 @@
 {% extends 'IPTdev/head.html' %}
 {% load humanize %}
-
+{% load i18n %}
 {% block content %}
 
     <div class="section">
-        <h1>General Ranking</h1>
+        <h1>{% trans 'General Ranking' %}</h1>
     </div>
 
     <div class="content container">
         <table>
             <tr>
-                <th class="th-center">Rank</th>
-                <th class="th-center">Team</th>
-                <th class="th-center">Points</th>
-                <th class="th-center">Pool</th>
-                <th class="th-center">Physics Fights status</th>
+                <th class="th-center">{% trans 'Rank' %}</th>
+                <th class="th-center">{% trans 'Team' %}</th>
+                <th class="th-center">{% trans 'Points' %}</th>
+                <th class="th-center">{% trans 'Pool' %}</th>
+                <th class="th-center">{% trans 'Physics Fights status' %}</th>
             </tr>
         {% for team in rankteams %}
             <tr>
@@ -25,9 +25,9 @@
                 <td class="td-center"><p class="emphase">{{team.pool}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
-                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> fight ongoing</p>
+                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}</p>
                     {% else %}
-                        <p class="emphase"><b>{{team.pfsplayed}}</b> fight(s) ended</p>
+                        <p class="emphase"><b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}</p>
                     {% endif %}
 
                 {% else %}
@@ -37,9 +37,9 @@
                 <td class="td-center"><p class="emphase">{{team.pool}}</p></td>
                 <td class="td-center">
                     {% if team.ongoingpf %}
-                        <b>{{team.currentpf|ordinal}}</b> fight ongoing
+                        <b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}
                     {% else %}
-                        <b>{{team.pfsplayed}}</b> fight(s) ended
+                        <b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}
                     {% endif %}
 
                 {% endif %}
@@ -53,7 +53,7 @@
 
     <div>
         <center>
-        <h3><a href="{% url 'IPTdev:poolranking' %}">Pools Ranking</a></h3>
+        <h3><a href="{% url 'IPTdev:poolranking' %}">{% trans 'Pools Ranking' %}</a></h3>
         </center>
     </div>
 {% endblock content %}

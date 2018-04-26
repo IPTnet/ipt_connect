@@ -1,4 +1,5 @@
 {% extends 'IPTdev/head.html' %}
+{% load i18n %}
 
 {% block content %}
 
@@ -7,7 +8,7 @@
     </div>
 
     <div class="content container">
-        <li>Member of the team from <a href="{% url 'IPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
+        <li>{% trans 'Member of the team from' %} <a href="{% url 'IPT2017:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
 
     </div>
 
@@ -16,9 +17,9 @@
 
         <table class="sortable">
             <tr>
-                <th class="th-center">Problem(s) presented</th>
-                <th class="th-center">Grade</th>
-                <th class="th-center">Role</th>
+                <th class="th-center">{% trans 'Problem(s) presented' %}</th>
+                <th class="th-center">{% trans 'Grade' %}</th>
+                <th class="th-center">{% trans 'Role' %}</th>
             </tr>
             {% for average_grade in average_grades %}
                 <tr>

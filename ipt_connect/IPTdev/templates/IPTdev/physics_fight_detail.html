@@ -1,7 +1,7 @@
-{% extends 'IPTdev/head.html' %} {% load humanize %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
+{% extends 'IPTdev/head.html' %} {% load humanize %} {% load i18n %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
 
 <div class="section">
-    <h1>Physics Fight {{roomgrades.0.2.pf}} | Room {{roundsgrades.2.room}}</h1>
+    <h1>{% trans 'Physics Fight' %} {{roomgrades.0.2.pf}} | {% trans 'Room' %} {{roundsgrades.2.room}}</h1>
 </div>
 
 
@@ -13,17 +13,17 @@
             <th class="th-center" width=25%></th>
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th class="th-center">
-                <p> <a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">Round {{juryroundsgrade.round.round_number}}</a></p> <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a></th>
+                <p> <a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p> <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a></th>
             {% endfor %}
         </tr>
         <tr>
-            <th class="th">Jurés</th>
+            <th class="th">{% trans 'Jurés' %}</th>
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th>
                 <table>
-                    <td class="th-center">Rep. (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>)</td>
-                    <td class="th-center">Opp. (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>)</td>
-                    <td class="th-center">Rev. (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>)</td>
+                    <td class="th-center">{% trans 'Rep.' %} (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>)</td>
+                    <td class="th-center">{% trans 'Opp.' %} (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>)</td>
+                    <td class="th-center">{% trans 'Rev.' %} (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>)</td>
                 </table>
             </th>
             {% endfor %}
@@ -45,7 +45,7 @@
 
         <tr>
             <td>
-                <p class="emphase">MEAN*</p>
+                <p class="emphase">{% trans 'MEAN' %}*</p>
             </td>
             {% for meanroundsgrade in roundsgrades.1 %} {% if meanroundsgrade %}
             <td>
@@ -64,18 +64,18 @@
 </div>
 
 <div class="content container">
-    <p class="comment">*The lowest and highest grade(s) might be discarded according to the number of jury members.</p>
+    <p class="comment">*{% trans 'The lowest and highest grade(s) might be discarded according to the number of jury members.' %}</p>
 </div>
 
 {% else %}
 <div class="content container">
-    <p class="emphase">No grade registered so far !</p>
+    <p class="emphase">{% trans 'No grade registered so far !' %}</p>
 </div>
 
 {% endif %} {% endfor %} {% else %}
 
 <div class="content container">
-    <p class="emphase">No round played so far !</p>
+    <p class="emphase">{% trans 'No round played so far !' %}</p>
 </div>
 
 {% endif %} {% endblock content %}

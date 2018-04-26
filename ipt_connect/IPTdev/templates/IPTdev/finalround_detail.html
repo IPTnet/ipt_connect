@@ -1,16 +1,17 @@
 {% extends 'IPTdev/head.html' %}
 {% load humanize %}
+{% load i18n %}
 {% block content %}
 
 
 
 {% if finished %}
     <div class="section">
-        <h1>IPT dev Final | Round {{round.round_number}}</h1>
+        <h1>IPT dev {% trans 'Final' %} | {% trans 'Round' %} {{round.round_number}}</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Problem presented: <a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
+        <p class="emphase">{% trans 'Problem presented' %}: <a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a></p>
     </div>
 
 
@@ -18,9 +19,9 @@
         <table>
             <tr>
                 <th class="td-center"></th>
-                <th class="td-center">Reporter</th>
-                <th class="td-center">Opponent</th>
-                <th class="td-center">Reviewer</th>
+                <th class="td-center">{% trans 'Reporter' %}</th>
+                <th class="td-center">{% trans 'Opponent' %}</th>
+                <th class="td-center">{% trans 'Reviewer' %}</th>
             </tr>
 
             <tr>
@@ -37,10 +38,10 @@
     <div class="content container">
         <table>
             <tr>
-                <th class="th-center">Jury members</th>
-                <th class="th-center">Reporter grade</th>
-                <th class="th-center">Opponent grade</th>
-                <th class="th-center">Reviewer grade</th>
+                <th class="th-center">{% trans 'Jury members' %}</th>
+                <th class="th-center">{% trans 'Reporter grade' %}</th>
+                <th class="th-center">{% trans 'Opponent grade' %}</th>
+                <th class="th-center">{% trans 'Reviewer grade' %}</th>
             </tr>
 
             {% for jurygrade in jurygrades %}
@@ -53,7 +54,7 @@
             {% endfor %}
 
             <tr>
-                <td><p class="emphase">MEAN*</p></td>
+                <td><p class="emphase">{% trans 'MEAN' %}*</p></td>
                 {% for meangrade in meangrades %}
                 <td class="td-center"><p class="emphase">{{meangrade|floatformat:2}}</p></td>
                 {% endfor %}
@@ -63,7 +64,7 @@
     </div>
 
     <div class="content container">
-        <p class="comment">*Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members. The multiplicative role coefficient is not taken into account here.</p>
+        <p class="comment">*{% trans 'Best(s) and worst(s) grade(s) are removed from the mean according to the number of jury members. The multiplicative role coefficient is not taken into account here.' %}</p>
     </div>
 
 
@@ -72,15 +73,15 @@
 
     {% if not finished %}
         <div class="section">
-            <h1>IPT dev Final | Round {{round.round_number}}</h1>
+            <h1>IPT dev {% trans 'Final' %} | {% trans 'Round' %} {{round.round_number}}</h1>
         </div>
         <div class="content container">
             <table>
                 <tr>
 
-                     <th class="td-center">Reporter</th>
-                     <th class="td-center">Opponent</th>
-                     <th class="td-center">Reviewer</th>
+                     <th class="td-center">{% trans 'Reporter' %}</th>
+                     <th class="td-center">{% trans 'Opponent' %}</th>
+                     <th class="td-center">{% trans 'Reviewer' %}</th>
                 </tr>
 
                 <tr>
@@ -97,11 +98,11 @@
 
 {% else %}
     <div class="section">
-        <h1>IPT dev Final | Round {{round.round_number}}</h1>
+        <h1>IPT dev {% trans 'Final' %} | {% trans 'Round' %} {{round.round_number}}</h1>
     </div>
 
     <div class="content container">
-        <p>This round has not started yet !</p>
+        <p>{% trans 'This round has not started yet !' %}</p>
     </div>
 {% endif %}
 

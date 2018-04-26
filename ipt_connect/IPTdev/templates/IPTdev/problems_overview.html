@@ -1,23 +1,24 @@
 {% extends 'IPTdev/head.html' %}
+{% load i18n %}
 
 {% block content %}
 
     <div class="section">
-        <h1>Problems overview</h1>
+        <h1>{% trans 'Problems overview' %}</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Click on the problem names for detailed statistics. Click on the headers to sort the table.</p>
+        <p class="emphase">{% trans 'Click on the problem names for detailed statistics. Click on the headers to sort the table.' %}</p>
     </div>
 
     <div class="content container">
         <table class="sortable">
             <tr>
-                <th class="th-center">Name</th>
-                <th class="th-center"># of presentations</th>
-                <th class="th-center">Mean Report grade</th>
-                <th class="th-center">Mean Opposition grade</th>
-                <th class="th-center">Mean Review grade</th>
+                <th class="th-center">{% trans 'Name' %}</th>
+                <th class="th-center">{% trans '# of presentations' %}</th>
+                <th class="th-center">{% trans 'Mean Report grade' %}</th>
+                <th class="th-center">{% trans 'Mean Opposition grade' %}</th>
+                <th class="th-center">{% trans 'Mean Review grade' %}</th>
             </tr>
         {% for problem in problems %}
             <tr>

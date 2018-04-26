@@ -1,24 +1,25 @@
 {% extends 'IPTdev/head.html' %}
 {% load humanize %}
+{% load i18n %}
 
 {% block content %}
 
     <div class="section">
-        <h1>Rounds overview</h1>
+        <h1>{% trans 'Rounds overview' %}</h1>
     </div>
 
     <div class="content container">
-        <p class="emphase">Click on a Round to get a detailed summary. Click on a Physics Fight to get a summarized view of all the corresponding Rounds.</p>
+        <p class="emphase">{% trans 'Click on a Round to get a detailed summary. Click on a Physics Fight to get a summarized view of all the corresponding Rounds.' %}</p>
     </div>
 
     <div class="content container">
         <table class="table-borders">
             <tr>
                 <th></th>
-                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=1 %}">Physics Fight 1</a></th>
-                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=2 %}">Physics Fight 2</a></th>
-                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=3 %}">Physics Fight 3</a></th>
-                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=4 %}">Physics Fight 4</a></th>
+                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=1 %}">{% trans 'Physics Fight' %} 1</a></th>
+                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=2 %}">{% trans 'Physics Fight' %} 2</a></th>
+                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=3 %}">{% trans 'Physics Fight' %} 3</a></th>
+                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=4 %}">{% trans 'Physics Fight' %} 4</a></th>
             </tr>
 
             {% for thisroom in orderedroundsperroom %}
@@ -28,7 +29,7 @@
                 <td class="td-border">
                     <table>
                         {% for round in thispf%}
-                        <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">Round {{round.round_number}}</a></td>
+                        <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
                         {% endfor %}
                     </table>
                 </td>
@@ -44,13 +45,13 @@
         <table>
             <tr>
                 <td></td>
-                <td class="td-center"><p class="emphase">The Grand Finale</p></td>
+                <td class="td-center"><p class="emphase">{% trans 'The Grand Finale' %}</p></td>
                 <td></td>
             </tr>
             <tr>
-                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=82 %}">Round 1</a></td>
-                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=83 %}">Round 2</a></td>
-                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=84 %}">Round 3</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=82 %}">{% trans 'Round' %} 1</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=83 %}">{% trans 'Round' %} 2</a></td>
+                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=84 %}">{% trans 'Round' %} 3</a></td>
 
             </tr>
             <tr><td><p class="emphase"></p></td></tr>
