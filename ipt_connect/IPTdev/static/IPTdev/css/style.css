@@ -192,3 +192,8 @@ footer a:link, footer a:visited, footer a:active, footer a:hover {
 footer svg {
     fill: #eee;
 }
+
+.main-table {
+	margin-left:1%;
+	margin-right:1%;
+}
