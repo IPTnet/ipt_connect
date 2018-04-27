@@ -25,14 +25,16 @@
 
             {% for thisroom in orderedroundsperroom %}
             <tr>
-                <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
+                <td ><b>{{thisroom.0.0.room}}</b></td>
                 {% for thispf in thisroom %}
-                <td class="td-border">
-                    <table>
+                <td>
+                    <div class="room-list-of-rounds">
                         {% for round in thispf%}
-                        <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
+                        <div>
+                            <a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a>
+                        </div>
                         {% endfor %}
-                    </table>
+                    </div>
                 </td>
                 {% endfor %}
                 </td>
