@@ -21,9 +21,28 @@
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th>
                 <table>
-                    <td class="th-center">{% trans 'Rep.' %} (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>)</td>
-                    <td class="th-center">{% trans 'Opp.' %} (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>)</td>
-                    <td class="th-center">{% trans 'Rev.' %} (<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>)</td>
+					<tr class="pf-detail-role-row">
+						<td class="th-center">
+							{% trans 'Rep.' %}
+						</td>
+						<td class="th-center">
+							{% trans 'Opp.' %}
+						</td>
+						<td class="th-center">
+							{% trans 'Rev.' %}
+						</td>
+					</tr>
+					<tr class="pf-detail-team-row">
+						<td class="th-center">
+							<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>
+						</td>
+						<td class="th-center">
+							<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>
+						</td>
+						<td class="th-center">
+							<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>
+						</td>
+					</tr>
                 </table>
             </th>
             {% endfor %}

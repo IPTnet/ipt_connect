@@ -118,6 +118,16 @@ table {
     table-layout: fixed;
 }
 
+.pf-detail-role-row, .pf-detail-role-row td{
+    color: #EFEFEF;
+	font-weight: 700;
+}
+
+.pf-detail-team-row, .pf-detail-team-row td {
+	word-break:break-word;
+	background-color: #3F5765;
+}
+
 .th-center, .th-center a {
     text-align: center;
     padding: 8px;
