@@ -12,10 +12,11 @@
         <p class="emphase">{% trans 'Click on a Round to get a detailed summary. Click on a Physics Fight to get a summarized view of all the corresponding Rounds.' %}</p>
     </div>
 
-    <div class="content container">
+    <div class="content container-fluid main-table">
         <table class="table-borders">
             <tr>
                 <th></th>
+                <!-- TODO: unhardcode number of Physics Fights! -->
                 <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=1 %}">{% trans 'Physics Fight' %} 1</a></th>
                 <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=2 %}">{% trans 'Physics Fight' %} 2</a></th>
                 <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=3 %}">{% trans 'Physics Fight' %} 3</a></th>
@@ -24,14 +25,16 @@
 
             {% for thisroom in orderedroundsperroom %}
             <tr>
-                <td class="td-border"><table><td class="td-center"><b>{{thisroom.0.0.room}}</b></td></table></td>
+                <td ><b>{{thisroom.0.0.room}}</b></td>
                 {% for thispf in thisroom %}
-                <td class="td-border">
-                    <table>
+                <td>
+                    <div class="room-list-of-rounds">
                         {% for round in thispf%}
-                        <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
+                        <div>
+                            <a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a>
+                        </div>
                         {% endfor %}
-                    </table>
+                    </div>
                 </td>
                 {% endfor %}
                 </td>
