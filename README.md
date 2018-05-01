@@ -31,3 +31,9 @@ A python/django web-based interface to track the grades, compute the rankings an
 * Set username, email address and password.
 * Run `python manage.py runserver`
 * Open <a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a> and sign in.
+
+### How to compile language files?
+Language files compiled automatically when the server starts.
+
+### I added new text to the template. How сan I update language files?
+Run `python manage.py makemessages -a -e=html -i=grappelli/*`
