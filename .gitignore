@@ -4,6 +4,7 @@
 .venv
 .vscode
 *.*~
+*.mo
 
 # General Ignore Rules
 
