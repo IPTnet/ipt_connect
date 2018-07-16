@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+    django:
+        build: .
+        command: gunicorn ipt_connect.wsgi -b 0.0.0.0:8000
+        expose:
+            - "8000"
+    nginx:
+        image: nginx
+        volumes:
+            - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./ipt_connect/IPTdev/static:/static
+        ports:
+            - "80:80"
