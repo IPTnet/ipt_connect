@@ -12,18 +12,12 @@ from django.dispatch import receiver
 from django.db.models import Avg, Sum
 from django.core.validators import RegexValidator
 from django.dispatch import Signal
+import parameters as params
 
-
-# Parameters
-npf = 4					# Number of Physics fights
-with_final_pf = True	# Is there a Final Fight ?
-reject_malus = 0.2		# Malus for too many rejections
-npfreject_max = 3		# Maximum number of tactical rejection (per fight)
-netreject_max = 1		# Maximum number of eternal rejection
 
 # Useful static variables
-pfs = [i+1 for i in range(npf)]
-npf_tot = npf + int(with_final_pf)
+pfs = [i+1 for i in range(params.npf)]
+npf_tot = params.npf + int(params.with_final_pf)
 grade_choices = [(ind, ind) for ind in range(10+1)]
 
 def mean(vec):
@@ -269,7 +263,7 @@ class Team(models.Model):
 		netrej = 0
 		for pf in pfs:
 			netrej += len(eternalrejections.filter(round__pf_number=pf))
-			beforetactical.append(3.0 - reject_malus*max(0, (netrej-netreject_max)))
+			beforetactical.append(3.0 - params.reject_malus*max(0, (netrej-params.netreject_max)))
 
 		# get all the tactical rejections
 		rejections = TacticalRejection.objects.filter(round__reporter_team=self)
@@ -282,17 +276,17 @@ class Team(models.Model):
 			pfrejections = [rejection for rejection in rejections if rejection.round.pf_number == pf]
 			if verbose:
 				print "%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)
-			if len(pfrejections) > npfreject_max:
-				npenalities += len(pfrejections) - npfreject_max
+			if len(pfrejections) > params.npfreject_max:
+				npenalities += len(pfrejections) - params.npfreject_max
 			if verbose:
 				if npenalities > 0:
-					print "Penality of %.1f points on the Reporter Coefficient" %  float(reject_malus*npenalities)
+					print "Penality of %.1f points on the Reporter Coefficient" %  float(params.reject_malus*npenalities)
 				else:
 					print "No penality"
-			prescoeffs.append(beforetactical[ind] - reject_malus * npenalities)
+			prescoeffs.append(beforetactical[ind] - params.reject_malus * npenalities)
 
 		# add the coeff for the final, 3.0 by default
-		if with_final_pf:
+		if params.with_final_pf:
 			prescoeffs.append(3.0)
 
 		return prescoeffs

@@ -8,6 +8,7 @@ from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.translation import get_language
 import parameters as params
 
+
 def home(request):
 
 	text = """<h1>IPT</h1>
@@ -262,8 +263,8 @@ def rounds(request):
 			thisroom.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
 		orderedroundsperroom.append(thisroom)
 
-	if with_final_pf :
-		myrounds = Round.objects.filter(pf_number=npf+1)
+	if params.with_final_pf :
+		myrounds = Round.objects.filter(pf_number=params.npf+1)
 		finalrounds = sorted(myrounds, key=lambda round: round.round_number)
 		try:
 			finalteams = [finalrounds[0].reporter_team, finalrounds[0].opponent_team, finalrounds[0].reviewer_team]
