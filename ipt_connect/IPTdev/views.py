@@ -6,7 +6,7 @@ from models import *
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.translation import get_language
-from IPTdev.app_settings import app_version, NAME, FULL_NAME, NUMBER, LINK
+from IPTdev.app_settings import app_version, NAME
 
 def home(request):
 
@@ -170,7 +170,7 @@ def tournament_overview(request):
 
 		orderedroundsperroom.append(thisroom)
 
-	return render(request, 'IPT%s/tournament_overview.html' % app_version, {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'name': NAME, 'full_name': FULL_NAME, 'number': NUMBER, 'link': LINK})
+	return render(request, 'IPT%s/tournament_overview.html' % app_version, {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'name': NAME})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % app_version)
 @cache_page(cache_duration)
