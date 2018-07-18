@@ -367,21 +367,27 @@ def physics_fight_detail(request, pfid):
 		juryallgrades = [{'juryroundsgrades': gradesdico[jury], 'name': jury.name+" "+jury.surname} for jury in gradesdico.keys()]
 		print juryallgrades
 
-		# meangrades
+		# meangrades and summary grades
 		meanroundsgrades = []
+		summary_grades = {round.reporter.team.name: [] for round in roomrounds}
 		for round in roomrounds:
-			meangrades=[]
+			meangrades = []
 			try:
 				meangrades.append(round.score_reporter)
 				meangrades.append(round.score_opponent)
 				meangrades.append(round.score_reviewer)
-
+				summary_grades[round.reporter.team.name] += [round.score_reporter * round.reporter.team.presentation_coefficients()[int(pfid) - 1]]
+				summary_grades[round.opponent.team.name] += [round.score_opponent * 2.0]
+				summary_grades[round.reviewer.team.name] += [round.score_reviewer]
 			except:
 				pass
 			meanroundsgrades.append(meangrades)
 
+		for team in summary_grades:
+			summary_grades[team].append(sum(summary_grades[team]))
+		summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][3], reverse=True)
 		infos = {"pf": pfid, "room": room.name, "finished": finished}
-		roundsgrades = [juryallgrades, meanroundsgrades, infos]
+		roundsgrades = [juryallgrades, meanroundsgrades, infos, summary_grades]
 		roomgrades.append(roundsgrades)
 
 	return render(request, 'IPT%s/physics_fight_detail.html' % params.app_version, {"roomgrades": roomgrades, 'name': params.NAME})
