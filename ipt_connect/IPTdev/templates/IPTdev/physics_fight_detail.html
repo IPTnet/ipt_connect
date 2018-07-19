@@ -86,13 +86,14 @@
     <table class="table-borders">
         <tr>
             <th class="th-center">{% trans 'Team' %}</th>
+            <th class="th-center">{% trans 'Rep. mult.' %}</th>
             {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
             <th class="th-center">
                 <p><a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p>
                 <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
             </th>
             {% endfor %}
-            <th class="th-center">{% trans 'Summary' %}</th>
+            <th class="th-center">{% trans 'Sum' %}</th>
         </tr>
         {% for team in roundsgrades.3 %}
         <tr>
