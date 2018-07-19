@@ -1,0 +1,562 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-07-13 21:20+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: .\IPTdev\templates\IPTdev\bebacksoon.html:7
+msgid "A little bit of patience"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\bebacksoon.html:12
+msgid "Processing the grades..."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:10
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:76
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:101
+msgid "Final"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:10
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:76
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:101
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:16
+#: .\IPTdev\templates\IPTdev\rounds.html:34
+#: .\IPTdev\templates\IPTdev\rounds.html:55
+#: .\IPTdev\templates\IPTdev\rounds.html:56
+#: .\IPTdev\templates\IPTdev\rounds.html:57
+msgid "Round"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:14
+#: .\IPTdev\templates\IPTdev\round_detail.html:71
+msgid "Problem presented"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:22
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:82
+#: .\IPTdev\templates\IPTdev\round_detail.html:15
+msgid "Reporter"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:23
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:83
+#: .\IPTdev\templates\IPTdev\round_detail.html:16
+msgid "Opponent"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:24
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:84
+#: .\IPTdev\templates\IPTdev\round_detail.html:17
+msgid "Reviewer"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:41
+#: .\IPTdev\templates\IPTdev\head.html:34
+#: .\IPTdev\templates\IPTdev\round_detail.html:78
+msgid "Jury members"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:42
+#: .\IPTdev\templates\IPTdev\round_detail.html:79
+msgid "Reporter grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:43
+#: .\IPTdev\templates\IPTdev\round_detail.html:80
+msgid "Opponent grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:44
+#: .\IPTdev\templates\IPTdev\round_detail.html:81
+msgid "Reviewer grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:57
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:67
+#: .\IPTdev\templates\IPTdev\problem_detail.html:55
+#: .\IPTdev\templates\IPTdev\round_detail.html:95
+msgid "MEAN"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:67
+msgid ""
+"Best(s) and worst(s) grade(s) are removed from the mean according to the "
+"number of jury members. The multiplicative role coefficient is not taken "
+"into account here."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\finalround_detail.html:105
+msgid "This round has not started yet !"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\head.html:22
+msgid "Physics Fights"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\head.html:25
+#: .\IPTdev\templates\IPTdev\poolranking.html:9
+#: .\IPTdev\templates\IPTdev\poolranking.html:55
+msgid "Ranking"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\head.html:28
+msgid "Problems"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\head.html:31
+#: .\IPTdev\templates\IPTdev\team_detail.html:13
+msgid "Participants"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jury_detail.html:12
+msgid "Team Leader of"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jury_detail.html:15
+#: .\IPTdev\templates\IPTdev\jury_detail.html:17
+msgid "External jury member"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jury_detail.html:27
+msgid "Problems graded"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jury_detail.html:28
+msgid "Report grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jury_detail.html:29
+msgid "Opposition grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jury_detail.html:30
+msgid "Review grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jurys_overview.html:8
+msgid "Jury overview"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jurys_overview.html:12
+#: .\IPTdev\templates\IPTdev\participants_overview.html:11
+msgid ""
+"Click on the names for detailed statistics. Click on the headers to sort the "
+"table."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jurys_overview.html:19
+#: .\IPTdev\templates\IPTdev\participants_all.html:9
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+#: .\IPTdev\templates\IPTdev\participants_overview.html:17
+#: .\IPTdev\templates\IPTdev\problems_overview.html:17
+msgid "Name"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jurys_overview.html:20
+#: .\IPTdev\templates\IPTdev\participants_overview.html:21
+#: .\IPTdev\templates\IPTdev\problems_overview.html:19
+msgid "Mean Report grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jurys_overview.html:21
+#: .\IPTdev\templates\IPTdev\participants_overview.html:22
+#: .\IPTdev\templates\IPTdev\problems_overview.html:20
+msgid "Mean Opposition grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\jurys_overview.html:22
+#: .\IPTdev\templates\IPTdev\participants_overview.html:23
+#: .\IPTdev\templates\IPTdev\problems_overview.html:21
+msgid "Mean Review grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\listing_jurys.html:9
+#: .\IPTdev\templates\IPTdev\listing_jurys_web.html:9
+msgid "There is no registered jury member"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\listing_participants_web.html:2
+#: .\IPTdev\templates\IPTdev\participants_export.html:2
+#: .\IPTdev\templates\IPTdev\participants_trombinoscope.html:2
+msgid "Participants of"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\listing_participants_web.html:12
+#: .\IPTdev\templates\IPTdev\participants_export.html:13
+msgid "There is no registered participant"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participant_detail.html:11
+msgid "Member of the team from"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participant_detail.html:20
+msgid "Problem(s) presented"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participant_detail.html:21
+#: .\IPTdev\templates\IPTdev\team_detail.html:33
+msgid "Grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participant_detail.html:22
+#: .\IPTdev\templates\IPTdev\participants_all.html:11
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+#: .\IPTdev\templates\IPTdev\team_detail.html:34
+msgid "Role"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_all.html:10
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+#: .\IPTdev\templates\IPTdev\participants_overview.html:18
+#: .\IPTdev\templates\IPTdev\poolranking.html:16
+#: .\IPTdev\templates\IPTdev\poolranking.html:62
+#: .\IPTdev\templates\IPTdev\ranking.html:14
+msgid "Team"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Affiliation"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Surname"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Passport number"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Gender"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Birthdate"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Email"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Phone number"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Veteran"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Diet"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Mixed gender accomodation"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Shirt size"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_export.html:5
+msgid "Remarks"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_overview.html:7
+msgid "Participants overview"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_overview.html:19
+msgid "Points (sum)"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\participants_overview.html:20
+msgid "Mean grade"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:4
+#: .\IPTdev\templates\IPTdev\rounds.html:20
+#: .\IPTdev\templates\IPTdev\rounds.html:21
+#: .\IPTdev\templates\IPTdev\rounds.html:22
+#: .\IPTdev\templates\IPTdev\rounds.html:23
+#: .\IPTdev\templates\IPTdev\team_detail.html:53
+msgid "Physics Fight"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:4
+msgid "Room"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:20
+msgid "Jurés"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:26
+msgid "Rep."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:29
+msgid "Opp."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:32
+msgid "Rev."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:86
+#: .\IPTdev\templates\IPTdev\round_detail.html:108
+msgid ""
+"The lowest and highest grade(s) might be discarded according to the number "
+"of jury members."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:91
+msgid "No grade registered so far !"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fight_detail.html:97
+msgid "No round played so far !"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fights.html:6
+msgid "Hello !"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\physics_fights.html:9
+msgid "Incroyable chantier"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:9
+msgid "Pool A"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:15
+#: .\IPTdev\templates\IPTdev\poolranking.html:61
+#: .\IPTdev\templates\IPTdev\ranking.html:13
+msgid "Rank"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:17
+#: .\IPTdev\templates\IPTdev\poolranking.html:63
+#: .\IPTdev\templates\IPTdev\ranking.html:15
+msgid "Points"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:18
+#: .\IPTdev\templates\IPTdev\poolranking.html:64
+#: .\IPTdev\templates\IPTdev\ranking.html:17
+msgid "Physics Fights status"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:28
+#: .\IPTdev\templates\IPTdev\poolranking.html:39
+#: .\IPTdev\templates\IPTdev\poolranking.html:74
+#: .\IPTdev\templates\IPTdev\poolranking.html:85
+#: .\IPTdev\templates\IPTdev\ranking.html:28
+#: .\IPTdev\templates\IPTdev\ranking.html:40
+msgid "fight ongoing"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:30
+#: .\IPTdev\templates\IPTdev\poolranking.html:76
+#: .\IPTdev\templates\IPTdev\poolranking.html:87
+#: .\IPTdev\templates\IPTdev\ranking.html:30
+#: .\IPTdev\templates\IPTdev\ranking.html:42
+msgid "fight(s) ended"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:41
+msgid "ended"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:55
+msgid "Pool B"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\poolranking.html:101
+#: .\IPTdev\templates\IPTdev\ranking.html:7
+msgid "General Ranking"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\problem_detail.html:25
+msgid "Report"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\problem_detail.html:26
+msgid "Opposition"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\problem_detail.html:27
+msgid "Review"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\problems_overview.html:7
+msgid "Problems overview"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\problems_overview.html:11
+msgid ""
+"Click on the problem names for detailed statistics. Click on the headers to "
+"sort the table."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\problems_overview.html:18
+msgid "# of presentations"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\ranking.html:16
+msgid "Pool"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\ranking.html:56
+msgid "Pools Ranking"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:47
+msgid "has already been presented in this Fight."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:51
+msgid "has already been permanently rejected."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:53
+msgid "has been presented earlier by the Reporter"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:55
+msgid "has been opposed earlier by the Opponent"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:57
+msgid "has been presented earlier by the Opponent"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:60
+msgid "No forbidden problems."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:114
+msgid "Rejection(s)"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:117
+msgid "Tactical rejection(s)"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:120
+msgid "No tactical rejections"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:125
+msgid "Eternal rejection(s)"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\round_detail.html:131
+msgid "No eternal rejections"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\rounds.html:8
+msgid "Rounds overview"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\rounds.html:12
+msgid ""
+"Click on a Round to get a detailed summary. Click on a Physics Fight to get "
+"a summarized view of all the corresponding Rounds."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\rounds.html:51
+msgid "The Grand Finale"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:8
+msgid "with"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:8
+#: .\IPTdev\templates\IPTdev\team_detail.html:16
+msgid "points"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:16
+msgid "gathered"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:32
+msgid "Problems presented"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:50
+msgid "Penalties"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:53
+msgid "Multiplicative coefficient of"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\team_detail.html:53
+msgid "for the Reporter in the"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\teams_overview.html:6
+msgid "Teams Overview"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:7
+msgid "Welcome!"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:15
+msgid "This interface gathers the results of the "
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:15
+msgid "9th International Physicists' Tournament"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:17
+msgid ""
+"Most of the displayed element can be clicked on. You can access teams, "
+"individual participant or jury member statistics, as well as details of each "
+"Round, Physics Fights and Problem."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:19
+#, python-format
+msgid ""
+"The results are updated continuously as the Physics Fights go on, resulting "
+"in a display that might not be completely accurate 100%% of the time (due to "
+"grade checking). Please check your emails and "
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:19
+msgid "the website"
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:19
+msgid " for the official announcements of the results after each Fight."
+msgstr ""
+
+#: .\IPTdev\templates\IPTdev\tournament_overview.html:21
+msgid ""
+"In case you spot a bug or have any suggestion to improve the software, "
+"please get in touch with us at webmaster (a) iptnet (dot) info."
+msgstr ""
