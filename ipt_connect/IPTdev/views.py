@@ -75,6 +75,7 @@ def update_all(request):
 @cache_page(cache_duration)
 def participants_overview(request):
 	participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
+	pr = params.personal_ranking
 	for participant in participants:
 		participant.allpoints = participant.tot_score_as_reporter + participant.tot_score_as_opponent + participant.tot_score_as_reviewer
 		try:
@@ -82,10 +83,18 @@ def participants_overview(request):
 		except:
 			participant.avggrade = 0.0
 			print "PLOP"
+		for x in (Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)):
+			scores = (x.score_reporter, x.score_opponent, x.score_reviewer)
+			thresholds = (pr['rep_threshold'], pr['opp_threshold'], pr['rev_threshold'])
+			coeffs = (pr['rep_coeff'], pr['opp_coeff'], pr['rev_coeff'])
+			new_scores = []
+			for s, t, c in zip(scores, thresholds, coeffs):
+				new_scores.append((s - t) * c if s > t else 0)
+			participant.personal_score = sum(new_scores)
 
 	participants = sorted(participants, key=lambda participant: participant.avggrade, reverse=True)
 
-	return render(request, 'IPT%s/participants_overview.html' % params.app_version, {'participants': participants, 'name': params.NAME})
+	return render(request, 'IPT%s/participants_overview.html' % params.app_version, {'participants': participants, 'name': params.NAME, 'personal_ranking': pr['active']})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
