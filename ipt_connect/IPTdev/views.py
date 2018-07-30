@@ -83,14 +83,8 @@ def participants_overview(request):
 		except:
 			participant.avggrade = 0.0
 			print "PLOP"
-		for x in (Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)):
-			scores = (x.score_reporter, x.score_opponent, x.score_reviewer)
-			thresholds = (pr['rep_threshold'], pr['opp_threshold'], pr['rev_threshold'])
-			coeffs = (pr['rep_coeff'], pr['opp_coeff'], pr['rev_coeff'])
-			new_scores = []
-			for s, t, c in zip(scores, thresholds, coeffs):
-				new_scores.append((s - t) * c if s > t else 0)
-			participant.personal_score = sum(new_scores)
+		if pr['active']:
+			participant.set_personal_score()
 
 	participants = sorted(participants, key=lambda participant: participant.avggrade, reverse=True)
 
