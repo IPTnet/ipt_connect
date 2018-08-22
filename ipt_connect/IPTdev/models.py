@@ -26,6 +26,32 @@ def mean(vec):
 	else:
 		return 0
 
+def special_mean(vec):
+	if len(vec) in [5, 6]:
+		nreject = 1
+	elif len(vec) in [7, 8]:
+		nreject = 2
+	else:
+		nreject = round(len(vec) / 4.0)
+
+	if round(nreject / 2.0) == nreject / 2.0:
+		nlow = int(nreject / 2.0)
+		nhigh = int(nlow)
+	else:
+		nlow = int(nreject / 2.0 + 0.5)
+		nhigh = int(nreject / 2.0 - 0.5)
+
+	i = 0
+	while i < nhigh:
+		vec.pop(-1)
+		i += 1
+
+	i = 0
+	while i < nlow:
+		vec.pop(0)
+		i += 1
+
+	return float(sum(vec)) / len(vec)
 
 @deconstructible
 class UploadToPathAndRename(object):
@@ -477,34 +503,9 @@ class Round(models.Model):
 
 		ngrades = min(len(reporter_grades), len(opponent_grades), len(reviewer_grades))
 		if ngrades > 1 :
-			for grades in [reporter_grades, opponent_grades, reviewer_grades]:
-				if len(grades) in [5, 6]:
-					nreject = 1
-				elif len(grades) in [7, 8]:
-					nreject = 2
-				else:
-					nreject = round(len(grades) / 4.0)
-
-				if round(nreject / 2.0) == nreject / 2.0:
-				   nlow = int(nreject / 2.0)
-				   nhigh = int(nlow)
-				else:
-				   nlow = int(nreject / 2.0 + 0.5)
-				   nhigh = int(nreject / 2.0 - 0.5)
-
-				i = 0
-				while i < nhigh:
-				   grades.pop(-1)
-				   i += 1
-
-				i = 0
-				while i < nlow:
-				   grades.pop(0)
-				   i += 1
-
-			self.score_reporter = mean(reporter_grades)
-			self.score_opponent = mean(opponent_grades)
-			self.score_reviewer = mean(reviewer_grades)
+			self.score_reporter = special_mean(reporter_grades)
+			self.score_opponent = special_mean(opponent_grades)
+			self.score_reviewer = special_mean(reviewer_grades)
 
 			prescoeff = self.reporter_team.presentation_coefficients()[self.pf_number-1]
 
