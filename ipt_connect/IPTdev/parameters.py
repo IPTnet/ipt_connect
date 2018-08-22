@@ -21,3 +21,6 @@ personal_ranking = {
     'opp_coeff': 2,
     'rev_coeff': 1
 }
+
+# Calculating the mean
+replace_min_and_max = False  # Replace min and max by their mean

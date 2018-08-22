@@ -27,6 +27,10 @@ def mean(vec):
 		return 0
 
 def special_mean(vec):
+	if params.replace_min_and_max:
+		vec.append((vec.pop(0) + vec.pop()) / 2.0)
+		return float(sum(vec)) / len(vec)
+
 	nreject = round(len(vec) / 4.0)
 
 	if nreject % 2:
@@ -735,7 +739,7 @@ def update_all(sender, **kwargs):
 	for round in allrounds:
 		# we do not want to add the bonus points now, let's keep that for a next step (just to check, that might disappear later)
 		update_points(sender, instance=round)
-		#round.save()
+		round.save()
 		#sys.exit()
 
 	# add the bonus points
