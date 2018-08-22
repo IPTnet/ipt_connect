@@ -27,31 +27,21 @@ def mean(vec):
 		return 0
 
 def special_mean(vec):
-	if len(vec) in [5, 6]:
-		nreject = 1
-	elif len(vec) in [7, 8]:
-		nreject = 2
-	else:
-		nreject = round(len(vec) / 4.0)
+	nreject = round(len(vec) / 4.0)
 
-	if round(nreject / 2.0) == nreject / 2.0:
-		nlow = int(nreject / 2.0)
-		nhigh = int(nlow)
-	else:
+	if nreject % 2:
 		nlow = int(nreject / 2.0 + 0.5)
-		nhigh = int(nreject / 2.0 - 0.5)
+		nhigh = -int(nreject / 2.0 - 0.5) or None
+	else:
+		nlow = int(nreject / 2.0)
+		nhigh = -nlow
 
-	i = 0
-	while i < nhigh:
-		vec.pop(-1)
-		i += 1
+	vec = vec[nlow:nhigh]
 
-	i = 0
-	while i < nlow:
-		vec.pop(0)
-		i += 1
+	if len(vec):
+		return float(sum(vec)) / len(vec)
+	return 0
 
-	return float(sum(vec)) / len(vec)
 
 @deconstructible
 class UploadToPathAndRename(object):
