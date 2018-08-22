@@ -2,7 +2,10 @@
 
 # Views parameters
 app_version = "dev"     # keyword for url parsing
-NAME = "IPT dev"
+NAME = {
+    'short': 'Золотое сечение',
+    'full': 'Турнир "Золотое сечение" в Репном'
+}
 
 # Models parameters
 npf = 4                 # Number of Physics fights
