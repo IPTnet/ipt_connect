@@ -26,11 +26,7 @@ def mean(vec):
 	else:
 		return 0
 
-def special_mean(vec):
-	if params.replace_min_and_max:
-		vec.append((vec.pop(0) + vec.pop()) / 2.0)
-		return float(sum(vec)) / len(vec)
-
+def ipt_mean(vec):
 	nreject = round(len(vec) / 4.0)
 
 	if nreject % 2:
@@ -45,6 +41,13 @@ def special_mean(vec):
 	if len(vec):
 		return float(sum(vec)) / len(vec)
 	return 0
+
+def iypt_mean(vec):
+	vec.append((vec.pop(0) + vec.pop()) / 2.0)
+	return float(sum(vec)) / len(vec)
+
+def special_mean(vec):
+	return globals()[params.mean](vec)
 
 
 @deconstructible

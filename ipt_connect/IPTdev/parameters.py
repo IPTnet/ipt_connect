@@ -23,4 +23,4 @@ personal_ranking = {
 }
 
 # Calculating the mean
-replace_min_and_max = False  # Replace min and max by their mean
+mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
