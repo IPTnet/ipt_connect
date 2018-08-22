@@ -75,6 +75,7 @@ def update_all(request):
 @cache_page(cache_duration)
 def participants_overview(request):
 	participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
+	pr = params.personal_ranking
 	for participant in participants:
 		participant.allpoints = participant.tot_score_as_reporter + participant.tot_score_as_opponent + participant.tot_score_as_reviewer
 		try:
@@ -82,10 +83,12 @@ def participants_overview(request):
 		except:
 			participant.avggrade = 0.0
 			print "PLOP"
+		if pr['active']:
+			participant.set_personal_score()
 
 	participants = sorted(participants, key=lambda participant: participant.avggrade, reverse=True)
 
-	return render(request, 'IPT%s/participants_overview.html' % params.app_version, {'participants': participants, 'name': params.NAME})
+	return render(request, 'IPT%s/participants_overview.html' % params.app_version, {'participants': participants, 'name': params.NAME, 'personal_ranking': pr['active']})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -367,21 +370,27 @@ def physics_fight_detail(request, pfid):
 		juryallgrades = [{'juryroundsgrades': gradesdico[jury], 'name': jury.name+" "+jury.surname} for jury in gradesdico.keys()]
 		print juryallgrades
 
-		# meangrades
+		# meangrades and summary grades
 		meanroundsgrades = []
+		summary_grades = {round.reporter.team.name: [round.reporter.team.presentation_coefficients()[int(pfid) - 1]] for round in roomrounds}
 		for round in roomrounds:
-			meangrades=[]
+			meangrades = []
 			try:
 				meangrades.append(round.score_reporter)
 				meangrades.append(round.score_opponent)
 				meangrades.append(round.score_reviewer)
-
+				summary_grades[round.reporter.team.name] += [round.score_reporter * summary_grades[round.reporter.team.name][0]]
+				summary_grades[round.opponent.team.name] += [round.score_opponent * 2.0]
+				summary_grades[round.reviewer.team.name] += [round.score_reviewer]
 			except:
 				pass
 			meanroundsgrades.append(meangrades)
 
+		for team in summary_grades:
+			summary_grades[team].append(sum(summary_grades[team]))
+		summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][4], reverse=True)
 		infos = {"pf": pfid, "room": room.name, "finished": finished}
-		roundsgrades = [juryallgrades, meanroundsgrades, infos]
+		roundsgrades = [juryallgrades, meanroundsgrades, infos, summary_grades]
 		roomgrades.append(roundsgrades)
 
 	return render(request, 'IPT%s/physics_fight_detail.html' % params.app_version, {"roomgrades": roomgrades, 'name': params.NAME})

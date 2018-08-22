@@ -128,6 +128,15 @@ class Participant(models.Model):
 
 		self.save()
 
+	def set_personal_score(self):
+		pr = params.personal_ranking
+		self.personal_score = 0
+		for x in (Round.objects.filter(reporter=self) | Round.objects.filter(opponent=self) | Round.objects.filter(reviewer=self)):
+			scores = (x.score_reporter, x.score_opponent, x.score_reviewer)
+			thresholds = (pr['rep_threshold'], pr['opp_threshold'], pr['rev_threshold'])
+			coeffs = (pr['rep_coeff'], pr['opp_coeff'], pr['rev_coeff'])
+			for s, t, c in zip(scores, thresholds, coeffs):
+				self.personal_score += (s - t) * c if s > t else 0
 
 	@classmethod
 	def fast_team_ranking(cls, team):
