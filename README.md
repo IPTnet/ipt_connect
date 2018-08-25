@@ -48,3 +48,7 @@ Language files compiled automatically when the server starts.
 * Run `python manage.py makemessages -l de -e=html -i=grappelli/*` where `de` is the [locale name](https://docs.djangoproject.com/en/2.0/topics/i18n/#term-locale-name) for the message file you want to create.
 * Translate all text in the file, which will be create.
 * Run application.
+
+### How start new tournament?
+* Run `python manage.py flush`
+* Sign in as superuser and add new participants, jury members and etc.
