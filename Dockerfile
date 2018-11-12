@@ -1,9 +1,12 @@
-FROM python:2-slim
+FROM alpine
 
-ADD . /code
+ADD entrypoint.sh /entrypoint.sh
 
-WORKDIR /code
+RUN \
+    chmod +x /entrypoint.sh && \
+    apk add --update --no-cache python py-pip gettext && \
+    pip install --upgrade pip && \
+    pip install Django>=1.9 gunicorn && \
+    rm -rf /var/cache/apk/*
 
-RUN pip install -r requirements.txt
-
-WORKDIR /code/ipt_connect
+ENTRYPOINT ["/entrypoint.sh"]
