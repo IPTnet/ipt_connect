@@ -4,9 +4,11 @@ services:
 
   ipt_connect:
     build: .
-    container_name: "ipt_connect-dev"
     restart: always
+    container_name: ipt_connect-dev
     volumes:
       - ./ipt_connect:/ipt_connect
     ports:
         - "8000:8000"
+    environment:
+      - DEV=true
