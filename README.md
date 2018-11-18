@@ -20,17 +20,17 @@ A python/django web-based interface to track the grades, compute the rankings an
 * Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/)
 
 ### Docker without nginx
-If you have any web server (for example nginx) on your machine you can use [compose-without-nginx.yml](https://github.com/ijustbsd/ipt_connect/blob/docker/compose-without-nginx.yml). This image use [gunicorn](https://gunicorn.org/) as WSGI server and place `ipt_connect.sock` file into `ipt_connect` directory. Configure your web server for works with it. You can see configuration example for nginx [here](../docker/etc/service.conf).
+If you have any web server (for example nginx) on your machine you can use [compose-without-nginx.yml](https://github.com/ijustbsd/ipt_connect/blob/docker/compose-without-nginx.yml). This image uses [gunicorn](https://gunicorn.org/) as WSGI server and places `ipt_connect.sock` file into `ipt_connect` directory. Configure your web server to work with it. You can see configuration example for nginx [here](../docker/etc/service.conf).
 
 ### Docker with nginx
-If you haven't any web server you can use [compose-nginx.yml](../docker/compose-nginx.yml). This image run ipt_connect with nginx proxy and install [Let's Encrypt](https://letsencrypt.org/) certificate.
+If you haven't any web server you can use [compose-nginx.yml](../docker/compose-nginx.yml). This image runs ipt_connect with nginx proxy and installs [Let's Encrypt](https://letsencrypt.org/) certificate.
 
 **How to use:**
 * Open [compose-nginx.yml](../docker/compose-nginx.yml) and change things:
   * Set timezone to your local, for example `TZ=UTC`. For more timezone values check /usr/share/zoneinfo directory
   * `LE_EMAIL` should be your email and `LE_FQDN` for domain
 * Replace `www.example.com` in [service.conf](../docker/etc/service.conf) by your domain
-* Don't forget review your project settings, see [deployment checklist](https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/) for more information.
+* Don't forget to review your project settings, see [deployment checklist](https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/) for more information.
 
 
 ## F.A.Q:
