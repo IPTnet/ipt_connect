@@ -38,9 +38,10 @@ def special_mean(vec):
 
 	vec = vec[nlow:nhigh]
 
-	if len(vec):
+	try:
 		return float(sum(vec)) / len(vec)
-	return 0
+	except ZeroDivisionError:
+		return 0
 
 
 @deconstructible
