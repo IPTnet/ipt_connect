@@ -82,6 +82,13 @@ class Participant(models.Model):
 		('XL', 'Extra Large'),
 	)
 
+	STATUS_CHOICES = (
+		('B', 'Bachelor student'),
+		('M', 'Master student'),
+		('S', 'Specialist student'),
+		('O', 'Other')
+	)
+
 	# parameters
 	name = models.CharField(max_length=50,default=None,verbose_name='Name')
 	surname = models.CharField(max_length=50,default=None,verbose_name='Surname')
@@ -95,6 +102,7 @@ class Participant(models.Model):
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
 	affiliation = models.CharField(max_length=50,default='XXX University')
+	status = models.CharField(max_length=1,choices=STATUS_CHOICES,blank=True,verbose_name='Student status')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the IPT? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room?",verbose_name='Mixed gender accommodation?')
