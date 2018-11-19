@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+
+  ipt_connect:
+    build: .
+    restart: always
+    container_name: ipt_connect
+
+    volumes:
+      - ./ipt_connect:/ipt_connect
+
+    environment:
+      - WORKERS=3
+      - DEV=false
