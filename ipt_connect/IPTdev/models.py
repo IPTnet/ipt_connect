@@ -26,6 +26,23 @@ def mean(vec):
 	else:
 		return 0
 
+def special_mean(vec):
+	nreject = round(len(vec) / 4.0) - (len(vec) == 6)
+
+	if nreject % 2:
+		nlow = int(nreject / 2.0 + 0.5)
+		nhigh = -int(nreject / 2.0 - 0.5) or None
+	else:
+		nlow = int(nreject / 2.0)
+		nhigh = -nlow
+
+	vec = vec[nlow:nhigh]
+
+	try:
+		return float(sum(vec)) / len(vec)
+	except ZeroDivisionError:
+		return 0
+
 
 @deconstructible
 class UploadToPathAndRename(object):
@@ -65,6 +82,13 @@ class Participant(models.Model):
 		('XL', 'Extra Large'),
 	)
 
+	STATUS_CHOICES = (
+		('B', 'Bachelor student'),
+		('M', 'Master student'),
+		('S', 'Specialist student'),
+		('O', 'Other')
+	)
+
 	# parameters
 	name = models.CharField(max_length=50,default=None,verbose_name='Name')
 	surname = models.CharField(max_length=50,default=None,verbose_name='Surname')
@@ -78,6 +102,7 @@ class Participant(models.Model):
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
 	affiliation = models.CharField(max_length=50,default='XXX University')
+	status = models.CharField(max_length=1,choices=STATUS_CHOICES,blank=True,verbose_name='Student status')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the IPT? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room?",verbose_name='Mixed gender accommodation?')
@@ -477,34 +502,9 @@ class Round(models.Model):
 
 		ngrades = min(len(reporter_grades), len(opponent_grades), len(reviewer_grades))
 		if ngrades > 1 :
-			for grades in [reporter_grades, opponent_grades, reviewer_grades]:
-				if len(grades) in [5, 6]:
-					nreject = 1
-				elif len(grades) in [7, 8]:
-					nreject = 2
-				else:
-					nreject = round(len(grades) / 4.0)
-
-				if round(nreject / 2.0) == nreject / 2.0:
-				   nlow = int(nreject / 2.0)
-				   nhigh = int(nlow)
-				else:
-				   nlow = int(nreject / 2.0 + 0.5)
-				   nhigh = int(nreject / 2.0 - 0.5)
-
-				i = 0
-				while i < nhigh:
-				   grades.pop(-1)
-				   i += 1
-
-				i = 0
-				while i < nlow:
-				   grades.pop(0)
-				   i += 1
-
-			self.score_reporter = mean(reporter_grades)
-			self.score_opponent = mean(opponent_grades)
-			self.score_reviewer = mean(reviewer_grades)
+			self.score_reporter = special_mean(reporter_grades)
+			self.score_opponent = special_mean(opponent_grades)
+			self.score_reviewer = special_mean(reviewer_grades)
 
 			prescoeff = self.reporter_team.presentation_coefficients()[self.pf_number-1]
 
