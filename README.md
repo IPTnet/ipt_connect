@@ -12,16 +12,25 @@ A python/django web-based interface to track the grades, compute the rankings an
  <a href='http://ipt-connect.readthedocs.io/en/latest/?badge=latest'>
     <img src='https://readthedocs.org/projects/ipt-connect/badge/?version=latest' alt='Documentation Status' /></a>
 
-### Starting:
-* Install the requirements `pip install -r requirements.txt`
-* Run `python manage.py runserver`
-* Open <a href="http://127.0.0.1:8000/IPTdev/">http://127.0.0.1:8000/IPTdev/</a>
 
+## Choose docker image:
 
-### Requirements:
-- Python 2.x
-- Django > 1.9
-- Pillow
+### Development
+* Run `docker-compose up`
+* Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/)
+
+### Docker without nginx
+If you have any web server (for example nginx) on your machine you can use [compose-without-nginx.yml](https://github.com/ijustbsd/ipt_connect/blob/docker/compose-without-nginx.yml). This image uses [gunicorn](https://gunicorn.org/) as WSGI server and places `ipt_connect.sock` file into `ipt_connect` directory. Configure your web server to work with it. You can see configuration example for nginx [here](../docker/etc/service.conf).
+
+### Docker with nginx
+If you haven't any web server you can use [compose-nginx.yml](../docker/compose-nginx.yml). This image runs ipt_connect with nginx proxy and installs [Let's Encrypt](https://letsencrypt.org/) certificate.
+
+**How to use:**
+* Open [compose-nginx.yml](../docker/compose-nginx.yml) and change things:
+  * Set timezone to your local, for example `TZ=UTC`. For more timezone values check /usr/share/zoneinfo directory
+  * `LE_EMAIL` should be your email and `LE_FQDN` for domain
+* Replace `www.example.com` in [service.conf](../docker/etc/service.conf) by your domain
+* Don't forget to review your project settings, see [deployment checklist](https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/) for more information.
 
 
 ## F.A.Q:

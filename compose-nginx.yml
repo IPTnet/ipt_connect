@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+
+  ipt_connect:
+    build: .
+    restart: always
+    container_name: ipt_connect
+  
+    volumes:
+      - ./ipt_connect:/ipt_connect
+
+    environment:
+      - WORKERS=3
+      - DEV=false
+
+
+  nginx:
+    image: umputun/nginx-le:latest
+    hostname: nginx
+    restart: always
+    container_name: ipt_connect-nginx
+
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+    volumes:
+      - ./etc/ssl:/etc/nginx/ssl
+      - ./etc/service.conf:/etc/nginx/service.conf
+      - ./ipt_connect:/ipt_connect
+
+    ports:
+      - "80:80"
+      - "443:443"
+
+    environment:
+      - TZ=Europe/Moscow
+      - LETSENCRYPT=true
+      - LE_EMAIL=name@example.com
+      - LE_FQDN=www.example.com
