@@ -27,7 +27,7 @@ def mean(vec):
 		return 0
 
 def special_mean(vec):
-	nreject = round(len(vec) / 4.0)
+	nreject = round(len(vec) / 4.0) - (len(vec) == 6)
 
 	if nreject % 2:
 		nlow = int(nreject / 2.0 + 0.5)
