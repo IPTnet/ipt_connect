@@ -26,8 +26,8 @@ def mean(vec):
 	else:
 		return 0
 
-def special_mean(vec):
-	nreject = round(len(vec) / 4.0) - (len(vec) == 6)
+def ipt_mean(vec):
+	nreject = round(len(vec) / 4.0)
 
 	if nreject % 2:
 		nlow = int(nreject / 2.0 + 0.5)
@@ -38,10 +38,16 @@ def special_mean(vec):
 
 	vec = vec[nlow:nhigh]
 
-	try:
+	if len(vec):
 		return float(sum(vec)) / len(vec)
-	except ZeroDivisionError:
-		return 0
+	return 0
+
+def iypt_mean(vec):
+	vec.append((vec.pop(0) + vec.pop()) / 2.0)
+	return float(sum(vec)) / len(vec)
+
+def special_mean(vec):
+	return globals()[params.mean](vec)
 
 
 @deconstructible
@@ -744,7 +750,7 @@ def update_all(sender, **kwargs):
 	for round in allrounds:
 		# we do not want to add the bonus points now, let's keep that for a next step (just to check, that might disappear later)
 		update_points(sender, instance=round)
-		#round.save()
+		round.save()
 		#sys.exit()
 
 	# add the bonus points
