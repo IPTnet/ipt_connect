@@ -62,7 +62,7 @@ If you haven't any web server you can use [compose-nginx.yml](compose-nginx.yml)
 * Open [127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and sign in.
 
 ### How to switch between languages?
-Сhange `LANGUAGE_CODE` values in [this](ipt_connect/ipt_connect/settings.py) file to switch the language.  
+Сhange `LANGUAGE_CODE` values in [this](ipt_connect/ipt_connect/settings.py) file to switch the language.
 Available values:
 * en-us
 * ru
@@ -71,13 +71,13 @@ Available values:
 Run `python manage.py makemessages -a -e=html -i=grappelli/*`
 
 ### How to compile language files?
-Language files compiled automatically when the server starts.
+Language files are compiled automatically when the server starts.
 
 ### How to add a new language?
 * Run `python manage.py makemessages -l de -e=html -i=grappelli/*` where `de` is the [locale name](https://docs.djangoproject.com/en/2.0/topics/i18n/#term-locale-name) for the message file you want to create.
 * Translate all text in the file, which will be create.
 * Run application.
 
-### How start new tournament?
+### How to start a new tournament?
 * Run `python manage.py flush`
 * Sign in as superuser and add new participants, jury members and etc.
