@@ -81,3 +81,26 @@ Language files are compiled automatically when the server starts.
 ### How to start a new tournament?
 * Run `python manage.py flush`
 * Sign in as superuser and add new participants, jury members and etc.
+
+This command just deletes all the data of current tournament(s).
+If you want to start a new tournament in adition to existent,
+read below.
+
+### How to add (clone) a tournament?
+`./clone-instance.sh IPTdev IPT2019`
+`IPTdev` is the name of existing instance.
+`IPT2019` is the name of instance to be created.
+
+Look to the commits being done to see the details.
+
+There are three main parts of the new tournament:
+* `IPT2019` folder with the code
+* Records in `ipt_connect/urls.py` and `ipt_connect/settings.py`
+* Tables in the database
+
+If you are deploying an instance, which you created locally, to the remote server -
+then you have to do the required steps manually.
+Just create the instance locally and look at the commits which wil be created.
+
+Notice: this clones only structure of the tournament,
+i.e. you have an empty table for teams, no registered jurors, etc.
