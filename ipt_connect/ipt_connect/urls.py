@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^$', tournament_overview),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/', include('loginas.urls')),
-    url(r'^IPTdev/', include('IPTdev.urls', namespace='IPTdev'))
+    url(r'^IPTdev/', include('IPTdev.urls', namespace='IPTdev')),
 ]
 
 
