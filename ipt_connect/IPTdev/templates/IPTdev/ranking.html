@@ -17,34 +17,30 @@
                 <th class="th-center">{% trans 'Physics Fights status' %}</th>
             </tr>
         {% for team in rankteams %}
-            <tr>
-                {% if team.emphase %}
-                <td class="td-center"><p class="emphase">{{team.rank|ordinal}}</p></td>
-                <td class="td-center"><p class="emphase"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
-                <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
-                <td class="td-center"><p class="emphase">{{team.pool}}</p></td>
-                <td class="td-center">
-                    {% if team.ongoingpf %}
-                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}</p>
-                    {% else %}
-                        <p class="emphase"><b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}</p>
-                    {% endif %}
-
-                {% else %}
-                <td class="td-center">{{team.rank|ordinal}}</td>
-                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></td>
-                <td class="td-center">{{team.total_points|floatformat:2}}</td>
-                <td class="td-center"><p class="emphase">{{team.pool}}</p></td>
-                <td class="td-center">
-                    {% if team.ongoingpf %}
-                        <b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}
-                    {% else %}
-                        <b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}
-                    {% endif %}
-
-                {% endif %}
-
-                </td>
+            <tr {% if team.emphase %} class="emphase" {% endif %}>
+				<td class="td-center">
+					{{team.rank|ordinal}}
+				</td>
+				<td class="td-center">
+					<a href="{% url 'IPTdev:team_detail' team_name=team.name %}">
+						{{team.name}}
+					</a>
+				</td>
+				<td class="td-center">
+					{{team.total_points|floatformat:2}}
+				</td>
+				<td class="td-center">
+					{{team.pool}}
+				</td>
+				<td class="td-center">
+					{% if team.ongoingpf %}
+						<b>{{team.currentpf|ordinal}}</b>
+						{% trans 'fight ongoing' %}
+					{% else %}
+						<b>{{team.pfsplayed}}</b>
+						{% trans 'fight(s) ended' %}
+					{% endif %}
+				</td>
             </tr>
         {% endfor %}
 
