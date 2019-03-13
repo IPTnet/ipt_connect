@@ -19,6 +19,9 @@
             </tr>
         {% for team in rankteamsA %}
             <tr>
+				<!--
+				TODO: refactor team.emphase as in ranking.html
+				-->
                 {% if team.emphase %}
                 <td class="td-center"><p class="emphase">{{team.rank}}</p></td>
                 <td class="td-center"><p class="emphase"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
