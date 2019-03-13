@@ -14,7 +14,9 @@
                 <th class="th-center">{% trans 'Team' %}</th>
                 <th class="th-center">{% trans 'Points' %}</th>
                 <th class="th-center">{% trans 'Pool' %}</th>
-                <th class="th-center">{% trans 'Physics Fights status' %}</th>
+                {% if params.display_pf_status %}
+					<th class="th-center">{% trans 'Physics Fights status' %}</th>
+                {% endif %}
             </tr>
         {% for team in rankteams %}
             <tr {% if team.emphase %} class="emphase" {% endif %}>
@@ -32,15 +34,17 @@
 				<td class="td-center">
 					{{team.pool}}
 				</td>
-				<td class="td-center">
-					{% if team.ongoingpf %}
-						<b>{{team.currentpf|ordinal}}</b>
-						{% trans 'fight ongoing' %}
-					{% else %}
-						<b>{{team.pfsplayed}}</b>
-						{% trans 'fight(s) ended' %}
-					{% endif %}
-				</td>
+				{% if params.display_pf_status %}
+					<td class="td-center">
+						{% if team.ongoingpf %}
+							<b>{{team.currentpf|ordinal}}</b>
+							{% trans 'fight ongoing' %}
+						{% else %}
+							<b>{{team.pfsplayed}}</b>
+							{% trans 'fight(s) ended' %}
+						{% endif %}
+					</td>
+				{% endif %}
             </tr>
         {% endfor %}
 
