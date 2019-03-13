@@ -280,10 +280,10 @@ def rounds(request):
 		for team, point in zip(finalteams, finalpoints):
 			finalranking.append([team, point])
 
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'params': params})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'params': params, 'pfs': pfs})
 
 	else :
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params, 'pfs': pfs})
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
