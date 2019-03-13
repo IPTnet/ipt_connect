@@ -27,7 +27,7 @@ def ninja_test(user):
 
 @cache_page(cache_duration_short)
 def soon(request):
-	return render(request, 'IPT%s/bebacksoon.html' % params.app_version, {'name': params.NAME})
+	return render(request, 'IPT%s/bebacksoon.html' % params.app_version, {'params': params})
 
 #####################################################
 ################# SUPER USERS VIEWS #################
@@ -41,13 +41,13 @@ def participants_trombinoscope(request):
 def participants_export(request):
 	participants = Participant.objects.all().order_by('team','role','name')
 
-	return render(request, 'IPT%s/participants_export.html' % params.app_version, {'participants': participants, 'name': params.NAME})
+	return render(request, 'IPT%s/participants_export.html' % params.app_version, {'participants': participants, 'params': params})
 
 @user_passes_test(lambda u: u.is_superuser)
 def participants_export_web(request):
 	participants = Participant.objects.exclude(role='ACC').order_by('team','role','surname')
 
-	return render(request, 'IPT%s/listing_participants_web.html' % params.app_version, {'participants': participants, 'name': params.NAME})
+	return render(request, 'IPT%s/listing_participants_web.html' % params.app_version, {'participants': participants, 'params': params})
 
 @user_passes_test(lambda u: u.is_superuser)
 def jury_export(request):
@@ -88,7 +88,7 @@ def participants_overview(request):
 
 	participants = sorted(participants, key=lambda participant: participant.avggrade, reverse=True)
 
-	return render(request, 'IPT%s/participants_overview.html' % params.app_version, {'participants': participants, 'name': params.NAME, 'personal_ranking': pr['active']})
+	return render(request, 'IPT%s/participants_overview.html' % params.app_version, {'participants': participants, 'params': params, 'personal_ranking': pr['active']})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -114,7 +114,7 @@ def participant_detail(request, pk):
 		else :
 			average_grades.append({"value": round.score_reviewer, "round":round, "role":"reviewer"})
 
-	return render(request, 'IPT%s/participant_detail.html' % params.app_version, {'participant': participant, "average_grades": average_grades, 'name': params.NAME})
+	return render(request, 'IPT%s/participant_detail.html' % params.app_version, {'participant': participant, "average_grades": average_grades, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -135,7 +135,7 @@ def jurys_overview(request):
 			jury.meanrevgrade = mean([grade.grade_reviewer for grade in mygrades])
 		else:
 			jury.meanrevgrade = 0.0
-	return render(request, 'IPT%s/jurys_overview.html' % params.app_version, {'jurys': jurys, 'name': params.NAME})
+	return render(request, 'IPT%s/jurys_overview.html' % params.app_version, {'jurys': jurys, 'params': params})
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
@@ -143,7 +143,7 @@ def jurys_overview(request):
 def jury_detail(request, pk):
 	jury = Jury.objects.get(pk=pk)
 	mygrades = JuryGrade.objects.filter(jury=jury)
-	return render(request, 'IPT%s/jury_detail.html' % params.app_version, {'jury': jury, "grades": mygrades, 'name': params.NAME})
+	return render(request, 'IPT%s/jury_detail.html' % params.app_version, {'jury': jury, "grades": mygrades, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -174,14 +174,14 @@ def tournament_overview(request):
 
 		orderedroundsperroom.append(thisroom)
 
-	return render(request, 'IPT%s/tournament_overview.html' % params.app_version, {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'name': params.NAME})
+	return render(request, 'IPT%s/tournament_overview.html' % params.app_version, {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
 def teams_overview(request):
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
-	return render(request, 'IPT%s/teams_overview.html' % params.app_version, {'teams': teams, 'name': params.NAME})
+	return render(request, 'IPT%s/teams_overview.html' % params.app_version, {'teams': teams, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -230,7 +230,7 @@ def team_detail(request, team_name):
 		if p != 3.0:
 			penalties.append([ind+1, p])
 
-	return render(request, 'IPT%s/team_detail.html' % params.app_version, {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties, 'name': params.NAME})
+	return render(request, 'IPT%s/team_detail.html' % params.app_version, {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -243,7 +243,7 @@ def problems_overview(request):
 		problem.meangradopp = problem.mean_score_of_opponents
 		problem.meangradrev = problem.mean_score_of_reviewers
 
-	return render(request, 'IPT%s/problems_overview.html' % params.app_version, {'problems': problems, 'name': params.NAME})
+	return render(request, 'IPT%s/problems_overview.html' % params.app_version, {'problems': problems, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -251,7 +251,7 @@ def problem_detail(request, pk):
 	problem = Problem.objects.get(pk=pk)
 	(meangrades, teamresults) = problem.status(verbose=False)
 
-	return render(request, 'IPT%s/problem_detail.html' % params.app_version, {'problem': problem, "meangrades": meangrades, "teamresults": teamresults, 'name': params.NAME})
+	return render(request, 'IPT%s/problem_detail.html' % params.app_version, {'problem': problem, "meangrades": meangrades, "teamresults": teamresults, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -280,10 +280,10 @@ def rounds(request):
 		for team, point in zip(finalteams, finalpoints):
 			finalranking.append([team, point])
 
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'name': params.NAME})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'params': params})
 
 	else :
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'name': params.NAME})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params})
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
@@ -312,7 +312,7 @@ def round_detail(request, pk):
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
-	return render(request, 'IPT%s/round_detail.html' % params.app_version, {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished, 'name': params.NAME})
+	return render(request, 'IPT%s/round_detail.html' % params.app_version, {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -339,7 +339,7 @@ def finalround_detail(request, pk):
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
-	return render(request, 'IPT%s/finalround_detail.html' % params.app_version, {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished, 'name': params.NAME})
+	return render(request, 'IPT%s/finalround_detail.html' % params.app_version, {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -393,7 +393,7 @@ def physics_fight_detail(request, pfid):
 		roundsgrades = [juryallgrades, meanroundsgrades, infos, summary_grades]
 		roomgrades.append(roundsgrades)
 
-	return render(request, 'IPT%s/physics_fight_detail.html' % params.app_version, {"roomgrades": roomgrades, 'name': params.NAME})
+	return render(request, 'IPT%s/physics_fight_detail.html' % params.app_version, {"roomgrades": roomgrades, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -419,7 +419,7 @@ def ranking(request):
 				team.emphase=True
 			rankteams.append(team)
 
-	return render(request, 'IPT%s/ranking.html' % params.app_version, {'rankteams': rankteams, 'name': params.NAME})
+	return render(request, 'IPT%s/ranking.html' % params.app_version, {'rankteams': rankteams, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -488,4 +488,4 @@ def poolranking(request):
 				team.emphase=True
 			rankteamsB.append(team)
 
-	return render(request, 'IPT%s/poolranking.html' % params.app_version, {'rankteamsA': rankteamsA, 'rankteamsB': rankteamsB, 'name': params.NAME})
+	return render(request, 'IPT%s/poolranking.html' % params.app_version, {'rankteamsA': rankteamsA, 'rankteamsB': rankteamsB, 'params': params})
