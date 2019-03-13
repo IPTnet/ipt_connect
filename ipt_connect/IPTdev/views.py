@@ -348,6 +348,7 @@ def physics_fights(request):
 	pf1 = rounds.filter(pf_number=1)
 	pf2 = rounds.filter(pf_number=2)
 	pf3 = rounds.filter(pf_number=3)
+	# TODO: there are more than 3 PFs! Is this function still working and necessary?
 	return render(request, 'IPT%s/physics_fights.html' % params.app_version, {'pf1': pf1, 'pf2': pf2, 'pf3': pf3})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
