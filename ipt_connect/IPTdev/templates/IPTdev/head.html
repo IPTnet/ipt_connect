@@ -25,7 +25,11 @@
                     <a href="{% url 'IPTdev:rounds' %}">{% trans 'Physics Fights' %}</a>
                 </div>
                 <div>
-                    <a href="{% url 'IPTdev:poolranking' %}">{% trans 'Ranking' %}</a>
+                    {% if params.enable_pools %}
+						<a href="{% url 'IPTdev:poolranking' %}">{% trans 'Ranking' %}</a>
+                    {% else %}
+						<a href="{% url 'IPTdev:ranking' %}">{% trans 'Ranking' %}</a>
+                    {% endif %}
                 </div>
                 <div>
                     <a href="{% url 'IPTdev:problems_overview' %}">{% trans 'Problems' %}</a>
