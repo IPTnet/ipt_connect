@@ -12,8 +12,8 @@ app_version = "IPTdev"[3:]     # keyword for url parsing
 
 
 NAME = {
-    'short': 'IPT 2019',
-    'full': 'International Physicists\' Tournament 2019'
+    'short': 'IPT dev',
+    'full': 'International Physicists\' Tournament - Development Instance'
 }
 
 # Models parameters
