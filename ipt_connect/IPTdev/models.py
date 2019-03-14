@@ -473,6 +473,7 @@ class Jury(models.Model):
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email', blank=True)
 	affiliation = models.CharField(max_length=100,blank=True,verbose_name='Affiliation to display',help_text='Will be used for export (badges and web).')
 	team = models.ForeignKey('Team', null=True, blank=True)
+	# TODO: unhardcode PF number!
 	pf1 = models.BooleanField(default=False,verbose_name='PF 1')
 	pf2 = models.BooleanField(default=False,verbose_name='PF 2')
 	pf3 = models.BooleanField(default=False,verbose_name='PF 3')
@@ -733,6 +734,7 @@ update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
 
+	# TODO: unhardcode PF quantity! Semifinals (if any) and the Final (if any) should be mentioned too!
 	allrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
 	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 
@@ -762,7 +764,7 @@ def update_all(sender, **kwargs):
 	# reset the bonus points to zero
 	for team in allteams:
 		team.bonus_points = 0.0
-	
+
 
 	# update rounds
 	for round in allrounds:
