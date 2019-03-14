@@ -27,20 +27,38 @@ def mean(vec):
 		return 0
 
 def ipt_mean(vec):
-	nreject = round(len(vec) / 4.0)
-
-	if nreject % 2:
-		nlow = int(nreject / 2.0 + 0.5)
-		nhigh = -int(nreject / 2.0 - 0.5) or None
+	if len(vec) in [5, 6]:
+		nreject = 1
+	elif len(vec) in [7, 8]:
+		nreject = 2
 	else:
+		nreject = round(len(vec) / 4.0)
+
+
+	# TODO: the following code looks messy, but it works.
+	# There was an unsuccessful attempt to refactor it.
+	# The code should be refactored and tested.
+	# At least the while loops should be removed if possible.
+
+	if round(nreject / 2.0) == nreject / 2.0:
 		nlow = int(nreject / 2.0)
-		nhigh = -nlow
+		nhigh = int(nlow)
+	else:
+		nlow = int(nreject / 2.0 + 0.5)
+		nhigh = int(nreject / 2.0 - 0.5)
 
-	vec = vec[nlow:nhigh]
+	i = 0
+	while i < nhigh:
+		vec.pop(-1)
+		i += 1
 
-	if len(vec):
-		return float(sum(vec)) / len(vec)
-	return 0
+	i = 0
+	while i < nlow:
+		vec.pop(0)
+		i += 1
+
+	return float(sum(vec)) / len(vec)
+
 
 def iypt_mean(vec):
 	vec.append((vec.pop(0) + vec.pop()) / 2.0)
