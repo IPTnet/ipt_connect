@@ -500,7 +500,7 @@ class Round(models.Model):
 	opponent_team = models.ForeignKey(Team, related_name='opponentteam', blank=True, null=True)
 	reviewer_team = models.ForeignKey(Team, related_name='reviewerteam', blank=True, null=True)
 	reporter = models.ForeignKey(Participant, related_name='reporter_name_1', blank=True, null=True)
-	reporter_2 = models.ForeignKey(Participant, blank=True, null=True, related_name='reporter_name_2')
+	reporter_2 = models.ForeignKey(Participant, related_name='reporter_name_2', blank=True, null=True)
 	opponent = models.ForeignKey(Participant, related_name='opponent_name', blank=True, null=True)
 	reviewer = models.ForeignKey(Participant, related_name='reviewer_name', blank=True, null=True)
 	problem_presented = models.ForeignKey(Problem, blank=True, null=True)
