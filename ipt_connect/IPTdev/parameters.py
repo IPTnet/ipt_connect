@@ -41,6 +41,11 @@ mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean
 # Looks like there are some problems with it, so making it switchable
 display_pf_status = True
 
+# Is the fight summary displayed?
+# Turn it off in case of any problems
+display_pf_summary = True
+
+
 # Do we respect pools?
 # If true, then the pool is displayed in ranking table
 # and the 'Ranking' menu item leads to poolranking
