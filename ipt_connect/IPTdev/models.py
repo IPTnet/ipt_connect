@@ -296,7 +296,7 @@ class Team(models.Model):
 	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)
-	bonus_points = models.FloatField(default=0.0, editable=False)
+	bonus_points = models.FloatField(default=0.0, editable=params.manual_bonus_points)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)
 	nrounds_as_opp = models.IntegerField(default=0, editable=False)
 	nrounds_as_rev = models.IntegerField(default=0, editable=False)
@@ -762,9 +762,10 @@ def update_all(sender, **kwargs):
 
 
 
-	# reset the bonus points to zero
-	for team in allteams:
-		team.bonus_points = 0.0
+	if not params.manual_bonus_points :
+		# reset the bonus points to zero
+		for team in allteams:
+			team.bonus_points = 0.0
 
 
 	# update rounds
@@ -774,13 +775,17 @@ def update_all(sender, **kwargs):
 		round.save()
 		#sys.exit()
 
-	# add the bonus points
-	bonuspts = bonuspoints()
+	if not params.manual_bonus_points :
+		# add the bonus points
+		bonuspts = bonuspoints()
 	print "="*15
 	for team in allteams:
 		#print "----"
 		#print team.name, team.total_points, bonuspts[team]
-		team.total_points += bonuspts[team]
+		if not params.manual_bonus_points :
+			team.total_points += bonuspts[team]
+		else:
+			team.total_points += team.bonus_points
 		team.save()
 		#print team.total_points
 

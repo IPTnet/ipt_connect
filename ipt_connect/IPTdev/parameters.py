@@ -50,3 +50,10 @@ display_pf_summary = True
 # If true, then the pool is displayed in ranking table
 # and the 'Ranking' menu item leads to poolranking
 enable_pools = True
+
+
+# Are the bonus points entered manually?
+# Switch this on in case of problems with bonus points,
+# which may especially occur for 4-round fights
+# As for now, you MUST turn it to True if you have 4-round PFs !!!
+manual_bonus_points = False
