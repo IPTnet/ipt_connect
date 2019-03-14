@@ -83,29 +83,31 @@
 
     <p class="comment">*{% trans 'The lowest and highest grade(s) might be discarded according to the number of jury members.' %}</p>
 
-    <table class="table-borders">
-        <tr>
-            <th class="th-center">{% trans 'Team' %}</th>
-            <th class="th-center">{% trans 'Rep. mult.' %}</th>
-            {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
-            <th class="th-center">
-                <p><a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p>
-                <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
-            </th>
-            {% endfor %}
-            <th class="th-center">{% trans 'Sum' %}</th>
-        </tr>
-        {% for team in roundsgrades.3 %}
-        <tr>
-            <td class="td-center">
-                <a href="{% url 'IPTdev:team_detail' team_name=team.0 %}">{{ team.0 }}</a>
-            </td>
-            {% for grade in team.1 %}
-            <td class="td-center">{{ grade|floatformat:2 }}</td>
-            {% endfor %}
-        {% endfor %}
-        </tr>
-    </table>
+	{% if params.display_pf_summary %}
+		<table class="table-borders">
+			<tr>
+				<th class="th-center">{% trans 'Team' %}</th>
+				<th class="th-center">{% trans 'Rep. mult.' %}</th>
+				{% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
+				<th class="th-center">
+					<p><a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p>
+					<a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
+				</th>
+				{% endfor %}
+				<th class="th-center">{% trans 'Sum' %}</th>
+			</tr>
+			{% for team in roundsgrades.3 %}
+			<tr>
+				<td class="td-center">
+					<a href="{% url 'IPTdev:team_detail' team_name=team.0 %}">{{ team.0 }}</a>
+				</td>
+				{% for grade in team.1 %}
+				<td class="td-center">{{ grade|floatformat:2 }}</td>
+				{% endfor %}
+			{% endfor %}
+			</tr>
+		</table>
+	{% endif %}
 </div>
 
 {% else %}
