@@ -55,9 +55,11 @@
         </table>
     </div>
 
-    <div>
-        <center>
-        <h3><a href="{% url 'IPTdev:poolranking' %}">{% trans 'Pools Ranking' %}</a></h3>
-        </center>
-    </div>
+    {% if params.enable_pools %}
+		<div>
+			<center>
+			<h3><a href="{% url 'IPTdev:poolranking' %}">{% trans 'Pools Ranking' %}</a></h3>
+			</center>
+		</div>
+    {% endif %}
 {% endblock content %}
