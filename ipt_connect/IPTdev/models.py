@@ -674,6 +674,7 @@ def update_points(sender, instance, **kwargs):
 def bonuspoints():
 
 	# the rounds must be saved first !
+	# TODO: unhardcode PF quantity...
 	rounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
 	allteams = Team.objects.all()
 
