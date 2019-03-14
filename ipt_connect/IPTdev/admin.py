@@ -28,8 +28,13 @@ class Roundadmin(admin.ModelAdmin):
 	fieldsets = [
 	('General Information', {'fields': [
 	 ('pf_number', "round_number", "room"), ("reporter_team", "opponent_team", "reviewer_team")]}),
-	(None, {'fields': [("reporter"), ('opponent'),
-	 ('reviewer'), 'problem_presented']})
+	(None, {'fields': [
+		("reporter"),
+		("reporter_2"),
+		('opponent'),
+		('reviewer'),
+		'problem_presented'
+	]})
 	]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
 
