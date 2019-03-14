@@ -697,7 +697,7 @@ def bonuspoints():
 			points_dict[pfround.opponent_team] += pfround.points_opponent
 			points_dict[pfround.reviewer_team] += pfround.points_reviewer
 
-# get teams sorted by total points for the physics fight
+		# get teams sorted by total points for the physics fight
 		team_podium = sorted(thispfteams, key = lambda t : points_dict[t], reverse=True)
 		points_list = [points_dict[t] for t in team_podium]
 
