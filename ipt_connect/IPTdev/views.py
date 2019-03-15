@@ -387,9 +387,17 @@ def physics_fight_detail(request, pfid):
 				pass
 			meanroundsgrades.append(meangrades)
 
-		for team in summary_grades:
-			summary_grades[team].append(sum(summary_grades[team]))
-		summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][4], reverse=True)
+		try:
+			for team in summary_grades:
+				summary_grades[team].append(sum(summary_grades[team]))
+			summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][4], reverse=True)
+		except:
+			summary_grades = []
+
+		# TODO: make it work for any quantity of rounds
+		if roomrounds.count() != 3:
+			summary_grades = []
+
 		infos = {"pf": pfid, "room": room.name, "finished": finished}
 		roundsgrades = [juryallgrades, meanroundsgrades, infos, summary_grades]
 		roomgrades.append(roundsgrades)
