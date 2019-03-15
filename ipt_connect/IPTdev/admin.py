@@ -94,6 +94,7 @@ class ParticipantAdmin(admin.ModelAdmin):
 
 class JuryAdmin(admin.ModelAdmin):
 
+	#TODO: unhardcode PF quantity!!...
 	list_display = ('surname','name','team','affiliation','pf1','pf2','pf3','pf4','final','email','remark',)
 	list_filter = ('team','pf1','pf2','pf3','pf4','final',)
 	search_fields = ('surname','name','affiliation',)
