@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from models import *
 from django import forms
 from django.forms import widgets
+import parameters as params
 
 
 class JuryGradeInline(admin.TabularInline):
@@ -68,7 +69,10 @@ class Roundadmin(admin.ModelAdmin):
 
 class TeamAdmin(admin.ModelAdmin):
 
-	list_display = ('name','surname','IOC')
+	if params.manual_bonus_points:
+		list_display = ('name','surname','IOC','bonus_points')
+	else:
+		list_display = ('name','surname','IOC')
 	search_fields = ('name','IOC')
 
 
