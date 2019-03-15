@@ -45,15 +45,17 @@
 
         <table>
             <tr>
+                <!--
+                TODO: detablize this caption
+                -->
                 <td></td>
                 <td class="td-center"><p class="emphase">{% trans 'The Grand Finale' %}</p></td>
                 <td></td>
             </tr>
             <tr>
-                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=82 %}">{% trans 'Round' %} 1</a></td>
-                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=83 %}">{% trans 'Round' %} 2</a></td>
-                <td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=84 %}">{% trans 'Round' %} 3</a></td>
-
+				{% for round in finalrounds %}
+					<td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
+				{% endfor %}
             </tr>
             <tr><td><p class="emphase"></p></td></tr>
 
