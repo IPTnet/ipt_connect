@@ -492,7 +492,7 @@ class Round(models.Model):
 			default=None
 			)
 	round_number = models.IntegerField(
-			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(3))),
+			choices=(((ind+1, 'Round '+str(ind+1)) for ind in range(params.max_rounds_in_pf))),
 			default=None
 			)
 	room = models.ForeignKey(Room)

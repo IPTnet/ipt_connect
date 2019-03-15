@@ -23,6 +23,13 @@ reject_malus = 0.2      # Malus for too many rejections
 npfreject_max = 3       # Maximum number of tactical rejection (per fight)
 netreject_max = 1       # Maximum number of eternal rejection
 
+
+# The maximum quantity of rounds
+# Affects mostly the combobox in round admin interface
+# If you change it, make sure that bonus points are calculated properly!
+# (spoiler: they are not, so switch them to be manual below)
+max_rounds_in_pf = 3
+
 # Personal ranking
 personal_ranking = {
     'active': False,
