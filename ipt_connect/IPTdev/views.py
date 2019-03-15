@@ -389,7 +389,7 @@ def physics_fight_detail(request, pfid):
 
 		try:
 			for team in summary_grades:
-				summary_grades[team].append(sum(summary_grades[team]))
+				summary_grades[team].append(sum(summary_grades[team][1:]))
 			summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][4], reverse=True)
 		except:
 			summary_grades = []
