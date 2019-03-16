@@ -54,5 +54,13 @@
 
     {% endfor %} {% endif %}
 
+    <h3>{% trans 'Bonus points' %}:</h3>
+    <p>
+    	{% if team.bonus_points %}
+    		{{team.bonus_points}}
+    	{% else %}
+    		{% trans 'None' %}
+    	{% endif %}
+    </p>
 </div>
 {% endblock content %}
