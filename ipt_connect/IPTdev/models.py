@@ -783,9 +783,10 @@ def update_all(sender, **kwargs):
 		#print "----"
 		#print team.name, team.total_points, bonuspts[team]
 		if not params.manual_bonus_points :
-			team.total_points += bonuspts[team]
-		else:
-			team.total_points += team.bonus_points
+			team.bonus_points = bonuspts[team]
+
+		team.total_points += team.bonus_points
+
 		team.save()
 		#print team.total_points
 
