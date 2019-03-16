@@ -63,4 +63,5 @@ enable_pools = True
 # Switch this on in case of problems with bonus points,
 # which may especially occur for 4-round fights
 # As for now, you MUST turn it to True if you have 4-round PFs !!!
+# Note that swutching bonus points back to auto (from True to False) rewrites all your manual edits!
 manual_bonus_points = False
