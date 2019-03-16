@@ -103,14 +103,21 @@ def participants_all(request):
 def participant_detail(request, pk):
 	participant = Participant.objects.get(pk=pk)
 
-	rounds = (Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)).order_by('pf_number', 'round_number')
+	rounds = (Round.objects.filter(reporter=participant) | Round.objects.filter(reporter_2=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)).order_by('pf_number', 'round_number')
 
+	# TODO: refactor to use each filter separately
 	average_grades = []
 	for round in rounds:
-		if round.reporter == participant :
+		if   round.reporter   == participant :
 			average_grades.append({"value": round.score_reporter, "round":round, "role":"reporter"})
-		elif round.opponent == participant :
+
+		elif round.opponent   == participant :
 			average_grades.append({"value": round.score_opponent, "round":round, "role":"opponent"})
+
+		elif round.reporter_2 == participant :
+			if params.display_coreporters :
+				average_grades.append({"value": round.score_reporter, "round":round, "role":"coreporter"})
+
 		else :
 			average_grades.append({"value": round.score_reviewer, "round":round, "role":"reviewer"})
 

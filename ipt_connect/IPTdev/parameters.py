@@ -64,3 +64,6 @@ enable_pools = True
 # which may especially occur for 4-round fights
 # As for now, you MUST turn it to True if you have 4-round PFs !!!
 manual_bonus_points = False
+
+# Do we display coreporters publicly?
+display_coreporters = True

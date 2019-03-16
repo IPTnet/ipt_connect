@@ -34,6 +34,14 @@ no matter is the round finished or not
 							--
 							<a href="{% url 'IPTdev:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a>
 						{% endif %}
+						{% if params.display_coreporters %}
+							{% if round.reporter_2 %}
+								{% if round.reporter %}
+									and
+								{% endif %}
+								<a href="{% url 'IPTdev:participant_detail' pk=round.reporter_2.pk %}">{{round.reporter_2.fullname}}</a>
+							{% endif %}
+						{% endif %}
 					</td>
 					<td class="td-center">
 						<a href="{% url 'IPTdev:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a>
