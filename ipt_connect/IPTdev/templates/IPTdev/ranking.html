@@ -8,51 +8,7 @@
     </div>
 
     <div class="content container">
-        <table>
-            <tr>
-                <th class="th-center">{% trans 'Rank' %}</th>
-                <th class="th-center">{% trans 'Team' %}</th>
-                <th class="th-center">{% trans 'Points' %}</th>
-                {% if params.enable_pools %}
-					<th class="th-center">{% trans 'Pool' %}</th>
-                {% endif %}
-                {% if params.display_pf_status %}
-					<th class="th-center">{% trans 'Physics Fights status' %}</th>
-                {% endif %}
-            </tr>
-        {% for team in rankteams %}
-            <tr {% if team.emphase %} class="emphase" {% endif %}>
-				<td class="td-center">
-					{{team.rank|ordinal}}
-				</td>
-				<td class="td-center">
-					<a href="{% url 'IPTdev:team_detail' team_name=team.name %}">
-						{{team.name}}
-					</a>
-				</td>
-				<td class="td-center">
-					{{team.total_points|floatformat:2}}
-				</td>
-				{% if params.enable_pools %}
-					<td class="td-center">
-						{{team.pool}}
-					</td>
-				{% endif %}
-				{% if params.display_pf_status %}
-					<td class="td-center">
-						{% if team.ongoingpf %}
-							<b>{{team.currentpf|ordinal}}</b>
-							{% trans 'fight ongoing' %}
-						{% else %}
-							<b>{{team.pfsplayed}}</b>
-							{% trans 'fight(s) ended' %}
-						{% endif %}
-					</td>
-				{% endif %}
-            </tr>
-        {% endfor %}
-
-        </table>
+		{% include 'IPTdev/includes/ranking_table.html' with teams=rankteams %}
     </div>
 
     {% if params.enable_pools %}

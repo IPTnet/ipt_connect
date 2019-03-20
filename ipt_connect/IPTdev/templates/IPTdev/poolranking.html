@@ -10,47 +10,7 @@
     </div>
 
     <div class="content container">
-        <table>
-            <tr>
-                <th class="th-center">{% trans 'Rank' %}</th>
-                <th class="th-center">{% trans 'Team' %}</th>
-                <th class="th-center">{% trans 'Points' %}</th>
-                <th class="th-center">{% trans 'Physics Fights status' %}</th>
-            </tr>
-        {% for team in rankteamsA %}
-            <tr>
-				<!--
-				TODO: refactor team.emphase as in ranking.html
-				-->
-                {% if team.emphase %}
-                <td class="td-center"><p class="emphase">{{team.rank}}</p></td>
-                <td class="td-center"><p class="emphase"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
-                <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
-                <td class="td-center">
-                    {% if team.ongoingpf %}
-                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}</p>
-                    {% else %}
-                        <p class="emphase"><b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}</p>
-                    {% endif %}
-
-                {% else %}
-                <td class="td-center">{{team.rank}}</td>
-                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></td>
-                <td class="td-center">{{team.total_points|floatformat:2}}</td>
-                <td class="td-center">
-                    {% if team.ongoingpf %}
-                        <b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}
-                    {% else %}
-                        <b>{{team.pfsplayed}}</b> fight(s) {% trans 'ended' %}
-                    {% endif %}
-
-                {% endif %}
-
-                </td>
-            </tr>
-        {% endfor %}
-
-        </table>
+		{% include 'IPTdev/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
     </div>
 
 
@@ -59,44 +19,7 @@
     </div>
 
     <div class="content container">
-        <table>
-            <tr>
-                <th class="th-center">{% trans 'Rank' %}</th>
-                <th class="th-center">{% trans 'Team' %}</th>
-                <th class="th-center">{% trans 'Points' %}</th>
-                <th class="th-center">{% trans 'Physics Fights status' %}</th>
-            </tr>
-        {% for team in rankteamsB %}
-            <tr>
-                {% if team.emphase %}
-                <td class="td-center"><p class="emphase">{{team.rank}}</p></td>
-                <td class="td-center"><p class="emphase"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></p></td>
-                <td class="td-center"><p class="emphase">{{team.total_points|floatformat:2}}</p></td>
-                <td class="td-center">
-                    {% if team.ongoingpf %}
-                        <p class="emphase"><b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}</p>
-                    {% else %}
-                        <p class="emphase"><b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}</p>
-                    {% endif %}
-
-                {% else %}
-                <td class="td-center">{{team.rank}}</td>
-                <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=team.name %}">{{team.name}}</a></td>
-                <td class="td-center">{{team.total_points|floatformat:2}}</td>
-                <td class="td-center">
-                    {% if team.ongoingpf %}
-                        <b>{{team.currentpf|ordinal}}</b> {% trans 'fight ongoing' %}
-                    {% else %}
-                        <b>{{team.pfsplayed}}</b> {% trans 'fight(s) ended' %}
-                    {% endif %}
-
-                {% endif %}
-
-                </td>
-            </tr>
-        {% endfor %}
-
-        </table>
+		{% include 'IPTdev/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
     </div>
 
     <div>
