@@ -735,8 +735,7 @@ update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
 
-	# TODO: unhardcode PF quantity! Semifinals (if any) and the Final (if any) should be mentioned too!
-	allrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+	allrounds = Round.objects.all()
 	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 
 
