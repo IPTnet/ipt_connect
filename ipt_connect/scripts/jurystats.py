@@ -8,10 +8,10 @@ import math
 os.environ['DJANGO_SETTINGS_MODULE'] = "ipt_connect.settings"
 django.setup()
 
-from IPT2016.models import *
+from IPTdev.models import *
 jurys = Jury.objects.all()
 
-
+#TODO: adapt this for any tournament, not only IPT216
 
 jurygrades = JuryGrade.objects.filter(round__pf_number=1) | JuryGrade.objects.filter(round__pf_number=2) | JuryGrade.objects.filter(round__pf_number=3) | JuryGrade.objects.filter(round__pf_number=4)  # discard the final
 
