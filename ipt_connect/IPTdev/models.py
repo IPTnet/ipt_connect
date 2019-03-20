@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
 import os, sys
+import time
 from uuid import uuid4
 from django.utils.encoding import iri_to_uri
 from string import replace
@@ -735,6 +736,8 @@ update_signal = Signal()
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
 
+	old_time = time.time()
+
 	allrounds = Round.objects.all()
 	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 
@@ -794,5 +797,5 @@ def update_all(sender, **kwargs):
 	for pb in Problem.objects.all():
 		pb.update_scores()
 
-	return "Teams, participants and problems updated !"
+	return "Teams, participants and problems updated in " , int(time.time()-old_time) ,  " seconds !"
 
