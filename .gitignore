@@ -36,6 +36,8 @@
 *.sql
 *.sqlite
 *.sqlite3
+*.sqlite-journal
+*.sqlite3-journal
 
 # OS generated files #
 ######################
@@ -46,6 +48,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+nohup.out
 
 # Git and its satellites temp files #
 #####################################
