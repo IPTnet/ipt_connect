@@ -13,6 +13,8 @@ from django.dispatch import receiver
 from django.db.models import Avg, Sum
 from django.core.validators import RegexValidator
 from django.dispatch import Signal
+from django.db import transaction
+
 import parameters as params
 
 
@@ -768,32 +770,36 @@ def update_all(sender, **kwargs):
 			team.bonus_points = 0.0
 
 
-	# update rounds
-	for round in allrounds:
-		# we do not want to add the bonus points now, let's keep that for a next step (just to check, that might disappear later)
-		update_points(sender, instance=round)
-		round.save()
-		#sys.exit()
 
-	if not params.manual_bonus_points :
-		# add the bonus points
-		bonuspts = bonuspoints()
-	print "="*15
-	for team in allteams:
-		#print "----"
-		#print team.name, team.total_points, bonuspts[team]
+	#if 1:
+	with transaction.atomic():
+		# update rounds
+		for round in allrounds:
+			# we do not want to add the bonus points now, let's keep that for a next step (just to check, that might disappear later)
+			update_points(sender, instance=round)
+			round.save()
+			#sys.exit()
+
 		if not params.manual_bonus_points :
-			team.bonus_points = bonuspts[team]
+			# add the bonus points
+			bonuspts = bonuspoints()
+		print "="*15
+		for team in allteams:
+			#print "----"
+			#print team.name, team.total_points, bonuspts[team]
+			if not params.manual_bonus_points :
+				team.bonus_points = bonuspts[team]
 
-		team.total_points += team.bonus_points
+			team.total_points += team.bonus_points
 
-		team.save()
-		#print team.total_points
+			team.save()
+			#print team.total_points
 
 
-	# just in case, update the problems
-	for pb in Problem.objects.all():
-		pb.update_scores()
+		# just in case, update the problems
+		for pb in Problem.objects.all():
+			pb.update_scores()
+
 
 	return "Teams, participants and problems updated in " , int(time.time()-old_time) ,  " seconds !"
 
