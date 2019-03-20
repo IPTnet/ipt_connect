@@ -354,8 +354,7 @@ class Team(models.Model):
 	def update_scores(self):
 		#print "Updating scores for", self
 
-		# TODO: unhardcode number of rounds!
-		qfrounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+		qfrounds = Round.objects.filter(pf_number__range=(1,params.npf))
 
 
 		rounds_as_reporter = Round.objects.filter(reporter_team=self)
@@ -675,8 +674,7 @@ def update_points(sender, instance, **kwargs):
 def bonuspoints():
 
 	# the rounds must be saved first !
-	# TODO: unhardcode PF quantity...
-	rounds = Round.objects.filter(pf_number=1) | Round.objects.filter(pf_number=2) | Round.objects.filter(pf_number=3) | Round.objects.filter(pf_number=4)
+	rounds = Round.objects.all()
 	allteams = Team.objects.all()
 
 	bonuspts = {}
