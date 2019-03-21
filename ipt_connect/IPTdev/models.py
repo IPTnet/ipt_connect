@@ -373,6 +373,13 @@ class Team(models.Model):
 		res += sum([round.points_opponent for round in rounds_as_opponent])
 		res += sum([round.points_reviewer for round in rounds_as_reviewer])
 
+		# Bonus points for winning the fight are stored in a round
+		# at which the appropriate team was the reporter
+		res += sum([round.bonus_points_reporter for round in rounds_as_reporter])
+
+		if params.manual_bonus_points:
+			res += self.bonus_points
+
 		self.total_points = res
 
 		self.save()
@@ -515,6 +522,10 @@ class Round(models.Model):
 	points_reporter = models.FloatField(default=0.0, editable=False)
 	points_opponent = models.FloatField(default=0.0, editable=False)
 	points_reviewer = models.FloatField(default=0.0, editable=False)
+
+	# Bonus points for the reporters team are stored in the Round
+	# at which the team was reporting
+	bonus_points_reporter = models.FloatField(default=0.0, editable=params.manual_bonus_points)
 
 	def __unicode__(self):
 		return "Fight %i | Round %i | Salle %s" % (self.pf_number, self.round_number, self.room.name)
@@ -679,12 +690,14 @@ def bonuspoints():
 	rounds = Round.objects.all()
 	allteams = Team.objects.all()
 
-	bonuspts = {}
-	# set the bonus points to zero
-	for team in allteams:
-		bonuspts[team] = 0.0
 
 	for round in rounds.filter(round_number=3):
+
+		bonuspts = {}
+		# set the bonus points to zero
+		for team in allteams:
+			bonuspts[team] = 0.0
+
 		thispfteams = [round.reporter_team, round.opponent_team, round.reviewer_team]
 		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room).order_by('round_number')
 
@@ -704,32 +717,38 @@ def bonuspoints():
 
 		# If everyone is ex-aequo
 		if points_list[0] == points_list[1] and points_list[0] == points_list[2] :
-			team_podium[0].bonus_points = 1.
-			team_podium[1].bonus_points = 1.
-			team_podium[2].bonus_points = 1.
+			bonuspts[team_podium[0]] = 1.
+			bonuspts[team_podium[1]] = 1.
+			bonuspts[team_podium[2]] = 1.
 		# If 1 and 2 are ex-aequo
 		elif points_list[0] == points_list[1]:
-			team_podium[0].bonus_points = 1.5
-			team_podium[1].bonus_points = 1.5
-			team_podium[2].bonus_points = 0.0
+			bonuspts[team_podium[0]] = 1.5
+			bonuspts[team_podium[1]] = 1.5
+			bonuspts[team_podium[2]] = 0.0
 		# If 2 and 3 are ex-aequo
 		elif points_list[1] == points_list[2]:
-			team_podium[0].bonus_points = 2.0
-			team_podium[1].bonus_points = 0.5
-			team_podium[2].bonus_points = 0.5
+			bonuspts[team_podium[0]] = 2.0
+			bonuspts[team_podium[1]] = 0.5
+			bonuspts[team_podium[2]] = 0.5
 		# If no ex-aequo
 		else:
-			team_podium[0].bonus_points = 2.0
-			team_podium[1].bonus_points = 1.0
-			team_podium[2].bonus_points = 0.0
+			bonuspts[team_podium[0]] = 2.0
+			bonuspts[team_podium[1]] = 1.0
+			bonuspts[team_podium[2]] = 0.0
 
-		sumbonuspts = 0
-		for team in team_podium:
-			bonuspts[team] += team.bonus_points
-			sumbonuspts += team.bonus_points
-		assert sumbonuspts == 3.0, sumbonuspts
-
-	return bonuspts
+		with transaction.atomic():
+		# It is safe to use atomic transaction here,
+		# because the changes which are saved to the rounds
+		# do not affect the .filter() condition
+		#and, moreover, each round is edited only once
+			for team in team_podium:
+				round_with_report = Round.objects.filter(pf_number=round.pf_number,reporter_team=team)
+				if round_with_report.count() == 1:
+					# We suppose that one team can be a reporter once per PF
+					round_with_report = round_with_report[0]
+					round_with_report.bonus_points_reporter = bonuspts[team]
+					# TODO: get rid of save()
+					round_with_report.save()
 
 
 update_signal = Signal()
@@ -765,10 +784,13 @@ def update_all(sender, **kwargs):
 
 
 	if not params.manual_bonus_points :
-		# reset the bonus points to zero
-		for team in allteams:
-			team.bonus_points = 0.0
+		print "Updating bonus points..."
+		bonuspoints()
+		print "Done!"
 
+		# Re-querying: bonuspoints() changed round and saved them
+		allrounds = Round.objects.all()
+		allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 
 
 	#if 1:
@@ -780,20 +802,11 @@ def update_all(sender, **kwargs):
 			round.save()
 			#sys.exit()
 
-		if not params.manual_bonus_points :
-			# add the bonus points
-			bonuspts = bonuspoints()
 		print "="*15
 		for team in allteams:
 			#print "----"
-			#print team.name, team.total_points, bonuspts[team]
-			if not params.manual_bonus_points :
-				team.bonus_points = bonuspts[team]
-
-			team.total_points += team.bonus_points
-
+			print team.name, team.total_points
 			team.save()
-			#print team.total_points
 
 
 		# just in case, update the problems

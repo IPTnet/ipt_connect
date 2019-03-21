@@ -34,7 +34,9 @@ class Roundadmin(admin.ModelAdmin):
 		("reporter_2"),
 		('opponent'),
 		('reviewer'),
-		'problem_presented'
+		# ('problem_presented'),
+		# TODO: do the same in python-ish way
+		('problem_presented',"bonus_points_reporter") if params.manual_bonus_points else ('problem_presented'),
 	]})
 	]
 	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
