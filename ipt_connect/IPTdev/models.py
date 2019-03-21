@@ -774,11 +774,10 @@ def update_all(sender, **kwargs):
 		for grade in mygrades:
 			rgrades.append(grade)
 
-
 	i = 0
 	for grade in allgrades:
 		if grade not in rgrades:
-			i+=1
+			i += 1
 			grade.delete()
 	print "I removed %i phantom grades..." % i
 
