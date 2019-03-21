@@ -56,8 +56,8 @@
 
     <h3>{% trans 'Bonus points' %}:</h3>
     <p>
-    	{% if team.bonus_points %}
-    		{{team.bonus_points}}
+    	{% if bonus_points_displayed %}
+    		{{bonus_points_displayed}}
     	{% else %}
     		{% trans 'None' %}
     	{% endif %}
