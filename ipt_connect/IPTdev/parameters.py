@@ -79,3 +79,16 @@ manual_bonus_points = False
 
 # Do we display coreporters publicly?
 display_coreporters = True
+
+
+
+# Maybe a Fight should be a separate model in the database
+# However, it looks like the fight structure is defined far before the tournament starts,
+# so you will have enough time to open this file and edit everything you want.
+# If you think that I'm wrong, feel free to fork me!
+fights = {
+    # Bonus points multipliers
+    # You can set it to 2 for semifinals or the last selective PFs to emphase the drama.
+    # You can also set it to zero for the final with the same purpose!
+    'bonus_multipliers' : [1,1,1,1,0],
+}
