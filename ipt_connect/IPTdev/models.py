@@ -746,9 +746,10 @@ def bonuspoints():
 				if round_with_report.count() == 1:
 					# We suppose that one team can be a reporter once per PF
 					round_with_report = round_with_report[0]
-					round_with_report.bonus_points_reporter = bonuspts[team] * params.fights['bonus_multipliers'][round.pf_number-1]
-					# TODO: get rid of save()
-					round_with_report.save()
+					if round_with_report.bonus_points_reporter != bonuspts[team] * params.fights['bonus_multipliers'][round.pf_number-1]:
+						round_with_report.bonus_points_reporter = bonuspts[team] * params.fights['bonus_multipliers'][round.pf_number-1]
+						# TODO: get rid of save()
+						round_with_report.save()
 
 
 update_signal = Signal()
