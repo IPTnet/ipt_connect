@@ -684,7 +684,7 @@ def update_points(sender, instance, **kwargs):
 		instance.problem_presented.update_scores()
 
 
-def bonuspoints():
+def update_bonus_points():
 
 	# the rounds must be saved first !
 	rounds = Round.objects.all()
@@ -786,10 +786,10 @@ def update_all(sender, **kwargs):
 
 	if not params.manual_bonus_points :
 		print "Updating bonus points..."
-		bonuspoints()
+		update_bonus_points()
 		print "Done!"
 
-		# Re-querying: bonuspoints() changed round and saved them
+		# Re-querying: update_bonus_points() changed round and saved them
 		allrounds = Round.objects.all()
 		allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 
