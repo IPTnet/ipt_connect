@@ -763,7 +763,6 @@ def update_all(sender, **kwargs):
 
 
 	allgrades = JuryGrade.objects.all()
-	allteams = Team.objects.all()
 
 
 
@@ -791,6 +790,8 @@ def update_all(sender, **kwargs):
 		# Re-querying: update_bonus_points() changed round and saved them
 		allrounds = Round.objects.all()
 		allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
+
+	allteams = Team.objects.all()
 
 
 	#if 1:
