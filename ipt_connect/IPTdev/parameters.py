@@ -71,7 +71,10 @@ enable_pools = True
 # Switch this on in case of problems with bonus points,
 # which may especially occur for 4-round fights
 # As for now, you MUST turn it to True if you have 4-round PFs !!!
-# Note that swutching bonus points back to auto (from True to False) rewrites all your manual edits!
+# If True: both global bonuses (the team form) and local bonuses (the round form) are visible and editable
+# If False: both are invisible, global bonuses are not counted to the ranking
+# Switching from False to True: local bonuses are preserved as counted, you can edit them manually
+# Switching from True to False: local bonuses are overwritten, global bonuses are hidden and ignored so far
 manual_bonus_points = False
 
 # Do we display coreporters publicly?
