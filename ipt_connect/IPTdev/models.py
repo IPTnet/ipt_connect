@@ -759,12 +759,7 @@ def update_all(sender, **kwargs):
 	old_time = time.time()
 
 	allrounds = Round.objects.all()
-	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
-
-
 	allgrades = JuryGrade.objects.all()
-
-
 
 	# remove the phantom grades, if any
 	rgrades = []
