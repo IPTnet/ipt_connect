@@ -326,34 +326,24 @@ def round_detail(request, pk):
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
-	return render(request, 'IPT%s/round_detail.html' % params.app_version, {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished, 'params': params})
+	return render(
+		request,
+		'IPT%s/round_detail.html' % params.app_version,
+		{
+			'params': params,
+			'round': round,
+			'jurygrades': jurygrades,
+			'meangrades': meangrades,
+			'tacticalrejections': tacticalrejections,
+			'eternalrejection': eternalrejection,
+			'started': started,
+			'finished': finished,
+			'display_room_name': round.pf_number <= params.npf,
+			'display_rejections': params.fights['challenge_procedure'][round.pf_number - 1],
+			'display_problems_forbidden': params.fights['problems_forbidden'][round.pf_number - 1],
+			'physics_fight_name': params.fights['names'][round.pf_number - 1],
+		})
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
-@cache_page(cache_duration)
-def finalround_detail(request, pk):
-	round = Round.objects.get(pk=pk)
-	jurygrades = JuryGrade.objects.filter(round=round).order_by('jury__name')
-	meangrades = []
-
-	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
-	if None in [round.reporter_team, round.opponent_team, round.reviewer_team]:
-		started = False
-	else:
-		started = True
-
-	# participants mean grades. If the fight is finished, then at least some jurygrades must exists
-	if len(jurygrades) != 0:
-		meangrades.append(round.score_reporter)
-		meangrades.append(round.score_opponent)
-		meangrades.append(round.score_reviewer)
-		finished = True
-	else:
-		finished = False
-
-	tacticalrejections = TacticalRejection.objects.filter(round=round)
-	eternalrejection = EternalRejection.objects.filter(round=round)
-
-	return render(request, 'IPT%s/finalround_detail.html' % params.app_version, {'round': round, 'jurygrades': jurygrades, 'meangrades': meangrades, "tacticalrejections": tacticalrejections, "eternalrejection": eternalrejection, "started": started, "finished": finished, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)

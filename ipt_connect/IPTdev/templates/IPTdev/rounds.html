@@ -54,7 +54,7 @@
             </tr>
             <tr>
 				{% for round in finalrounds %}
-					<td class="td-center"><a href="{% url 'IPTdev:finalround_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
+					<td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
 				{% endfor %}
             </tr>
             <tr><td><p class="emphase"></p></td></tr>

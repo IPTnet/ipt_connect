@@ -91,4 +91,21 @@ fights = {
     # You can set it to 2 for semifinals or the last selective PFs to emphase the drama.
     # You can also set it to zero for the final with the same purpose!
     'bonus_multipliers' : [1,1,1,1,0],
+
+    # Is there challenge procedure at the beginning of each round of the fight?
+    # Some tournaments, such as Syberian IYPT, play the last selective PF without the challenge procedure
+    # (i.e. like a Final: every team decides what to present)
+    # This parameter influences (now) only on visiility of "Forbidden problems" block
+    # while rendering the round detail
+    'challenge_procedure': [True, True, True, True, False],
+
+    # A situation when a team chooses a problem without challenge,
+    # but there are problems which cannot be chosen, is easy to imagine
+    # So, we have a separate setting for forbidden problems!
+    'problems_forbidden': [True, True, True, True, False],
+
+    # And, finally, you can specify names for all the fights to be displayed
+    # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
+    # or "Semifinal A", or smth another.
+    'names': ['Physics Fight 1','Physics Fight 2','Physics Fight 3','Physics Fight 4','IPTdev Final']
 }

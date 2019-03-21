@@ -497,7 +497,7 @@ class Jury(models.Model):
 class Round(models.Model):
 
 	pf_number = models.IntegerField(
-			choices=(((ind+1, 'Fight '+str(ind+1)) for ind in range(npf_tot))),
+			choices=(((ind+1, params.fights['names'][ind]) for ind in range(npf_tot))),
 			default=None
 			)
 	round_number = models.IntegerField(
@@ -528,7 +528,11 @@ class Round(models.Model):
 	bonus_points_reporter = models.FloatField(default=0.0, editable=params.manual_bonus_points)
 
 	def __unicode__(self):
-		return "Fight %i | Round %i | Salle %s" % (self.pf_number, self.round_number, self.room.name)
+
+		return \
+			params.fights['names'][self.pf_number - 1] +\
+			" | Round %i" % self.round_number +\
+			(" | Room " + self.room.name if self.pf_number <= params.npf else "")
 
 	def save(self, *args, **kwargs):
 		jurygrades = JuryGrade.objects.filter(round=self)

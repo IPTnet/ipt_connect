@@ -18,7 +18,6 @@ urlpatterns = [
 	url(r'^problems/(?P<pk>[0-9]+)/$', problem_detail, name="problem_detail"),
 	url(r'^rounds$', rounds, name="rounds"),
 	url(r'^rounds/(?P<pk>[0-9]+)/$', round_detail, name="round_detail"),
-	url(r'^finalrounds/(?P<pk>[0-9]+)/$', finalround_detail, name="finalround_detail"),
 	url(r'^teams$', teams_overview, name="teams"),
 	url(r'^teams/(?P<team_name>[A-Za-z0-9\w|\W\- ]+)/$', team_detail, name='team_detail'),
 	url(r'^physics_fights$' , rounds, name="rounds"),
