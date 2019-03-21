@@ -752,11 +752,7 @@ def update_bonus_points():
 						round_with_report.save()
 
 
-update_signal = Signal()
-@receiver(update_signal, sender=Round, dispatch_uid="update_all")
-def update_all(sender, **kwargs):
-
-	old_time = time.time()
+def remove_phantom_grades():
 
 	allrounds = Round.objects.all()
 	allgrades = JuryGrade.objects.all()
@@ -776,16 +772,22 @@ def update_all(sender, **kwargs):
 	print "I removed %i phantom grades..." % i
 
 
+update_signal = Signal()
+@receiver(update_signal, sender=Round, dispatch_uid="update_all")
+def update_all(sender, **kwargs):
+
+	old_time = time.time()
+
+	remove_phantom_grades()
 
 	if not params.manual_bonus_points :
 		print "Updating bonus points..."
 		update_bonus_points()
 		print "Done!"
 
-		# Re-querying: update_bonus_points() changed round and saved them
-		allrounds = Round.objects.all()
-		allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
-
+	# The query must be refreshed: update_bonus_points() changed rounds and saved them
+	allrounds = Round.objects.all()
+	allrounds = sorted(allrounds,key=lambda round : round.round_number, reverse=False)
 	allteams = Team.objects.all()
 
 
