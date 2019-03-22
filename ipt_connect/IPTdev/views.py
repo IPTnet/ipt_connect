@@ -169,7 +169,7 @@ def tournament_overview(request):
 	for room in rooms:
 		thisroom = []
 
-		for pf in pfs:
+		for pf in selective_fights:
 			thispf = []
 			myrounds = Round.objects.filter(pf_number=pf).filter(room=room)
 			myrounds = sorted(myrounds, key=lambda round: round.round_number)
@@ -181,7 +181,7 @@ def tournament_overview(request):
 
 		orderedroundsperroom.append(thisroom)
 
-	return render(request, 'IPT%s/tournament_overview.html' % params.app_version, {'teams': teams, 'rounds': rounds, 'pfs': pfs, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'params': params})
+	return render(request, 'IPT%s/tournament_overview.html' % params.app_version, {'teams': teams, 'rounds': rounds, 'pfs': selective_fights, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -276,16 +276,16 @@ def rounds(request):
 	orderedroundsperroom=[]
 	for room in rooms:
 		thisroom = []
-		for pf in pfs:
+		for pf in selective_fights:
 			thisroom.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
 		orderedroundsperroom.append(thisroom)
 
 	if params.with_final_pf :
-		myrounds = Round.objects.filter(pf_number=params.npf+1)
+		myrounds = Round.objects.filter(pf_number=final_fight_number)
 		finalrounds = sorted(myrounds, key=lambda round: round.round_number)
 		try:
 			finalteams = [finalrounds[0].reporter_team, finalrounds[0].opponent_team, finalrounds[0].reviewer_team]
-			finalpoints = [team.points(pfnumber=5, bonuspoints=False) for team in finalteams]
+			finalpoints = [team.points(pfnumber=final_fight_number, bonuspoints=False) for team in finalteams]
 		except:
 			finalteams = ["---", "---", "---"]
 			finalpoints = [0, 0, 0]
@@ -294,10 +294,10 @@ def rounds(request):
 		for team, point in zip(finalteams, finalpoints):
 			finalranking.append([team, point])
 
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'params': params, 'pfs': pfs})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'params': params, 'pfs': selective_fights})
 
 	else :
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params, 'pfs': pfs})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params, 'pfs': selective_fights})
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)

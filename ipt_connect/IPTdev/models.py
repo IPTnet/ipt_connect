@@ -19,8 +19,10 @@ import parameters as params
 
 
 # Useful static variables
-pfs = [i+1 for i in range(params.npf)]
-npf_tot = params.npf + int(params.with_final_pf)
+selective_fights = [i+1 for i in range(params.npf)]
+selective_fights_and_semifinals = [i+1 for i in range(params.npf + params.semifinals_quantity)]
+npf_tot = params.npf + params.semifinals_quantity + int(params.with_final_pf)
+final_fight_number = params.npf + params.semifinals_quantity + 1
 grade_choices = [(ind, ind) for ind in range(10+1)]
 
 def mean(vec):
@@ -322,7 +324,7 @@ class Team(models.Model):
 
 		beforetactical = []
 		netrej = 0
-		for pf in pfs:
+		for pf in selective_fights_and_semifinals:
 			netrej += len(eternalrejections.filter(round__pf_number=pf))
 			beforetactical.append(3.0 - params.reject_malus*max(0, (netrej-params.netreject_max)))
 
@@ -333,7 +335,7 @@ class Team(models.Model):
 		npenalities = 0
 		if verbose:
 			print "="*20, "Tactical Rejection Penalites for Team %s" % self.name, "="*20
-		for ind, pf in enumerate(pfs):
+		for ind, pf in enumerate(selective_fights_and_semifinals):
 			pfrejections = [rejection for rejection in rejections if rejection.round.pf_number == pf]
 			if verbose:
 				print "%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)
