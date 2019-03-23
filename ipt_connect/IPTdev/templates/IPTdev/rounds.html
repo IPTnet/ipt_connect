@@ -16,8 +16,10 @@
         <table class="table-borders">
             <tr>
                 <th></th>
-                {% for pf in pfs %}
-                <th class="th-center"><a href="{% url 'IPTdev:physics_fight_detail' pfid=pf %}">{% trans 'Physics Fight' %} {{pf}}</a></th>
+                {% for selective_fight in selective_fight_names %}
+                    <th class="th-center">
+                        <a href="{% url 'IPTdev:physics_fight_detail' pfid=selective_fight.0 %}">{{selective_fight.1}}</a>
+                    </th>
                 {% endfor %}
             </tr>
 

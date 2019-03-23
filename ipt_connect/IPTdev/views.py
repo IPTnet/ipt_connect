@@ -271,14 +271,18 @@ def rounds(request):
 		return render(request, 'IPT%s/rounds.html' % params.app_version, {
 			'params': params,
 			'orderedroundsperroom': orderedroundsperroom,
+			'selective_fight_names': zip(selective_fights,params.fights['names'][:params.npf]),
+			'final_fight_number': final_fight_number,
 			'finalrounds': finalrounds,
 			'finalranking': finalranking,
-			'pfs': selective_fights,
-			'final_fight_number': final_fight_number,
 		})
-
+		# TODO: single return statement to avoid partial replication of the object
 	else :
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params, 'pfs': selective_fights})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {
+			'params': params,
+			'orderedroundsperroom': orderedroundsperroom,
+			'selective_fight_names': zip(selective_fights,params.fights['names'][:params.npf]),
+		})
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
