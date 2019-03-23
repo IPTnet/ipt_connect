@@ -155,33 +155,7 @@ def jury_detail(request, pk):
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
 def tournament_overview(request):
-	rounds = Round.objects.all()
-
-	teams = Team.objects.all()
-	teams = sorted(teams, key=lambda team: team.name)
-
-	rooms = Room.objects.all()
-	rooms = sorted(rooms, key=lambda room: room.name)
-
-	roomnumbers = [ind +1 for ind, room in enumerate(rooms)]
-	orderedroundsperroom=[]
-
-	for room in rooms:
-		thisroom = []
-
-		for pf in selective_fights:
-			thispf = []
-			myrounds = Round.objects.filter(pf_number=pf).filter(room=room)
-			myrounds = sorted(myrounds, key=lambda round: round.round_number)
-
-			for round in myrounds:
-				thispf.append(round)
-
-			thisroom.append(thispf)
-
-		orderedroundsperroom.append(thisroom)
-
-	return render(request, 'IPT%s/tournament_overview.html' % params.app_version, {'teams': teams, 'rounds': rounds, 'pfs': selective_fights, 'roomnumbers':roomnumbers, 'orderedroundsperroom': orderedroundsperroom, 'params': params})
+	return render(request, 'IPT%s/tournament_overview.html' % params.app_version, {'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
