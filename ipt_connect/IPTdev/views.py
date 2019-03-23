@@ -268,7 +268,14 @@ def rounds(request):
 		for team, point in zip(finalteams, finalpoints):
 			finalranking.append([team, point])
 
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'finalrounds': finalrounds, "finalranking": finalranking, 'params': params, 'pfs': selective_fights})
+		return render(request, 'IPT%s/rounds.html' % params.app_version, {
+			'params': params,
+			'orderedroundsperroom': orderedroundsperroom,
+			'finalrounds': finalrounds,
+			'finalranking': finalranking,
+			'pfs': selective_fights,
+			'final_fight_number': final_fight_number,
+		})
 
 	else :
 		return render(request, 'IPT%s/rounds.html' % params.app_version, {'orderedroundsperroom': orderedroundsperroom, 'params': params, 'pfs': selective_fights})
