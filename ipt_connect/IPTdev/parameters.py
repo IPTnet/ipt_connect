@@ -22,6 +22,8 @@ poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
 
 website_url = 'http://dev.iptnet.info'
 
+repo_url = 'https://github.com/IPTnet/ipt_connect'
+
 # Models parameters
 npf = 4                 # Number of Physics fights
 with_final_pf = True    # Is there a Final Fight ?
