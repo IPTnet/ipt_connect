@@ -254,6 +254,12 @@ def rounds(request):
 			thisroom.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
 		orderedroundsperroom.append(thisroom)
 
+	render_data = {
+		'params': params,
+		'orderedroundsperroom': orderedroundsperroom,
+		'selective_fight_names': zip(selective_fights,params.fights['names'][:params.npf]),
+	}
+
 	if params.with_final_pf :
 		myrounds = Round.objects.filter(pf_number=final_fight_number)
 		finalrounds = sorted(myrounds, key=lambda round: round.round_number)
@@ -268,21 +274,13 @@ def rounds(request):
 		for team, point in zip(finalteams, finalpoints):
 			finalranking.append([team, point])
 
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {
-			'params': params,
-			'orderedroundsperroom': orderedroundsperroom,
-			'selective_fight_names': zip(selective_fights,params.fights['names'][:params.npf]),
+		render_data.update({
 			'final_fight_number': final_fight_number,
 			'finalrounds': finalrounds,
 			'finalranking': finalranking,
 		})
-		# TODO: single return statement to avoid partial replication of the object
-	else :
-		return render(request, 'IPT%s/rounds.html' % params.app_version, {
-			'params': params,
-			'orderedroundsperroom': orderedroundsperroom,
-			'selective_fight_names': zip(selective_fights,params.fights['names'][:params.npf]),
-		})
+
+	return render(request, 'IPT%s/rounds.html' % params.app_version, render_data)
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
