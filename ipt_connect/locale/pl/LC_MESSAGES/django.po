@@ -536,7 +536,7 @@ msgstr ""
 
 #: .\IPTdev\templates\IPTdev\tournament_overview.html:17
 msgid ""
-"Most of the displayed element can be clicked on. You can access teams, "
+"Most of the displayed elements can be clicked on. You can access teams, "
 "individual participant or jury member statistics, as well as details of each "
 "Round, Physics Fights and Problem."
 msgstr ""
