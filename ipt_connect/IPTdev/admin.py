@@ -49,6 +49,8 @@ class Roundadmin(admin.ModelAdmin):
 		pass  # don't actually save the parent instance
 
 	def save_related(self, request, form, formsets, change):
+		# First save iteration to prevent errors
+		form.instance.save()
 		# first save the inlines
 		for formset in formsets:
 			self.save_formset(request, form, formset, change=change)
