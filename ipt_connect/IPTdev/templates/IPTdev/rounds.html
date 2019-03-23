@@ -37,31 +37,65 @@
         </table>
     </div>
 
-    <div class="content container">
-        <table>
-            <tr>
+
+    {% if semifinal_data %}
+        <div class="content container">
+            <table>
+                <tr>
+                    {% for sf in semifinal_data %}
+                        {% if sf.1.0 %}
+                            <td class="td-center">
+                                <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=sf.1.0.pf_number %}">
+                                    {{sf.0}}
+                                </a>
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for sf in semifinal_data %}
+                        {% if sf.1.0 %}
+                            <td>
+                                {% include 'IPTdev/includes/list_rounds.html' with roundlist=sf.1 %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
                 <!--
-                TODO: detablize?
+                TODO: move the margin to CSS
                 -->
-                <td class="td-center">
-                    <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">
-                        {% trans 'The Grand Finale' %}
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    {% include 'IPTdev/includes/list_rounds.html' with roundlist=finalrounds %}
-                </td>
-            </tr>
-            <!--
-            TODO: move the margin to CSS
-            -->
-            <tr><td><p class="emphase"></p></td></tr>
+                <tr><td><p class="emphase"></p></td></tr>
 
-        </table>
-    </div>
+            </table>
+        </div>
+    {% endif %}
 
+    {% if finalrounds %}
+        <div class="content container">
+            <table>
+                <tr>
+                    <!--
+                    TODO: detablize?
+                    -->
+                    <td class="td-center">
+                        <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">
+                            {% trans 'The Grand Finale' %}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% include 'IPTdev/includes/list_rounds.html' with roundlist=finalrounds %}
+                    </td>
+                </tr>
+                <!--
+                TODO: move the margin to CSS
+                -->
+                <tr><td><p class="emphase"></p></td></tr>
+
+            </table>
+        </div>
+    {% endif %}
 
 
 {% endblock content %}

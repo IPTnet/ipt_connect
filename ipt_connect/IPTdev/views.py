@@ -280,6 +280,17 @@ def rounds(request):
 			'finalranking': finalranking,
 		})
 
+	if params.semifinals_quantity > 0:
+		semifinal_rounds = []
+		for pf in semifinals:
+			semifinal_rounds.append(Round.objects.filter(pf_number=pf).order_by('round_number'))
+		render_data.update({
+			'semifinal_data': zip(
+				params.fights['names'][params.npf:params.npf+params.semifinals_quantity],
+				semifinal_rounds
+			)
+		})
+
 	return render(request, 'IPT%s/rounds.html' % params.app_version, render_data)
 
 

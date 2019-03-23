@@ -21,6 +21,7 @@ import parameters as params
 # Useful static variables
 selective_fights = [i+1 for i in range(params.npf)]
 selective_fights_and_semifinals = [i+1 for i in range(params.npf + params.semifinals_quantity)]
+semifinals = [i+1 for i in range(params.npf, params.npf + params.semifinals_quantity)]
 npf_tot = params.npf + params.semifinals_quantity + int(params.with_final_pf)
 final_fight_number = params.npf + params.semifinals_quantity + 1
 grade_choices = [(ind, ind) for ind in range(10+1)]
