@@ -1,0 +1,10 @@
+{% load humanize %}
+{% load i18n %}
+
+<div class="room-list-of-rounds">
+	{% for round in roundlist%}
+	<div>
+		<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a>
+	</div>
+	{% endfor %}
+</div>

@@ -26,13 +26,7 @@
                 <td ><b>{{thisroom.0.0.room}}</b></td>
                 {% for thispf in thisroom %}
                 <td>
-                    <div class="room-list-of-rounds">
-                        {% for round in thispf%}
-                        <div>
-                            <a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a>
-                        </div>
-                        {% endfor %}
-                    </div>
+                    {% include 'IPTdev/includes/list_rounds.html' with roundlist=thispf %}
                 </td>
                 {% endfor %}
                 </td>
@@ -45,21 +39,22 @@
         <table>
             <tr>
                 <!--
-                TODO: detablize this caption
+                TODO: detablize?
                 -->
-                <td></td>
                 <td class="td-center">
                     <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">
                         {% trans 'The Grand Finale' %}
                     </a>
                 </td>
-                <td></td>
             </tr>
             <tr>
-				{% for round in finalrounds %}
-					<td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'Round' %} {{round.round_number}}</a></td>
-				{% endfor %}
+                <td>
+                    {% include 'IPTdev/includes/list_rounds.html' with roundlist=finalrounds %}
+                </td>
             </tr>
+            <!--
+            TODO: move the margin to CSS
+            -->
             <tr><td><p class="emphase"></p></td></tr>
 
         </table>
