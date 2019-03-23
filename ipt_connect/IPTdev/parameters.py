@@ -13,7 +13,9 @@ app_version = "IPTdev"[3:]     # keyword for url parsing
 
 NAME = {
     'short': 'IPT dev',
-    'full': 'International Physicists\' Tournament - Development Instance'
+    'full': 'International Physicists\' Tournament - Development Instance',
+    # ... and the name used in tournament overview
+    'front': '11th International Physicists\' Tournament',
 }
 
 poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
