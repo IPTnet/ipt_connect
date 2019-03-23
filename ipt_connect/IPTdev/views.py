@@ -396,7 +396,13 @@ def physics_fight_detail(request, pfid):
 		roundsgrades = [juryallgrades, meanroundsgrades, infos, summary_grades]
 		roomgrades.append(roundsgrades)
 
-	return render(request, 'IPT%s/physics_fight_detail.html' % params.app_version, {"roomgrades": roomgrades, 'params': params})
+	return render(request, 'IPT%s/physics_fight_detail.html' % params.app_version, {
+		'params': params,
+		'roomgrades': roomgrades,
+		'ignore_rooms': int(pfid) > params.npf,
+		'fight_name': params.fights['names'][int(pfid) - 1],
+		'no_round_played': rounds.count() == 0,
+	})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
