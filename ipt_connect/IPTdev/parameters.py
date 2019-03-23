@@ -16,6 +16,8 @@ NAME = {
     'full': 'International Physicists\' Tournament - Development Instance'
 }
 
+poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
+
 # Models parameters
 npf = 4                 # Number of Physics fights
 with_final_pf = True    # Is there a Final Fight ?

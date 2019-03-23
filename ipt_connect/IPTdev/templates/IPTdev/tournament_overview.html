@@ -10,7 +10,11 @@
 	<div class="content container">
 	<table style="width:100%">
   <tr>
-  <td><img src="http://france.iptnet.info/wp-content/uploads/sites/2/2016/09/IPT2017_apple.png" width=500></td>
+    {% if params.poster_url %}
+        <td>
+            <img src="{{params.poster_url}}" width=500/>
+        </td>
+    {% endif %}
     <td>
         <p class="emphase">{% trans "This interface gathers the results of the " %}<a href="http://dev.iptnet.info">{% trans "9th International Physicists' Tournament" %}</a>.</p>
 
