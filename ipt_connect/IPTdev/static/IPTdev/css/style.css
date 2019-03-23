@@ -176,12 +176,21 @@ th {
 }
 
 footer {
-    background: #222;
     color: #bbb;
     font-size: 12pt;
     text-align: center;
     margin-top: 80px;
     padding: 20px 0;
+    background: #26275D;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(right bottom, #26275D, #0684A0);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(top left, #26275D, #0684A0);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(top left, #26275D, #0684A0);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to top left, #26275D, #0684A0);
+    /* Standard syntax */
 }
 
 footer a:link, footer a:visited, footer a:active, footer a:hover {
