@@ -1,124 +1,139 @@
-{% extends 'IPTdev/head.html' %} {% load humanize %} {% load i18n %} {% block content %} {% if roomgrades %} {% for roundsgrades in roomgrades%}
+{% extends 'IPTdev/head.html' %}
+{% load humanize %}
+{% load i18n %}
 
-<div class="section">
-    <h1>{% trans 'Physics Fight' %} {{roomgrades.0.2.pf}} | {% trans 'Room' %} {{roundsgrades.2.room}}</h1>
-</div>
+{% block content %}
+
+{% if roomgrades %}
+    {% for roundsgrades in roomgrades%}
+
+        <div class="section">
+            <h1>
+                {% trans 'Physics Fight' %} {{roomgrades.0.2.pf}} | {% trans 'Room' %} {{roundsgrades.2.room}}
+            </h1>
+        </div>
 
 
-{% if roundsgrades.0.0.juryroundsgrades %}
+        {% if roundsgrades.0.0.juryroundsgrades %}
 
-<div class="content container-fluid main-table">
-    <table class="table-borders">
-        <tr >
-            <th class="th-center" width=15%></th>
-            {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
-            <th class="th-center">
-                <p> <a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p> <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a></th>
-            {% endfor %}
-        </tr>
-        <tr>
-            <th class="th">{% trans 'Jurés' %}</th>
-            {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
-            <th>
-                <table>
-					<tr class="pf-detail-role-row">
-						<td class="th-center">
-							{% trans 'Rep.' %}
-						</td>
-						<td class="th-center">
-							{% trans 'Opp.' %}
-						</td>
-						<td class="th-center">
-							{% trans 'Rev.' %}
-						</td>
-					</tr>
-					<tr class="pf-detail-team-row">
-						<td class="th-center">
-							<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>
-						</td>
-						<td class="th-center">
-							<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>
-						</td>
-						<td class="th-center">
-							<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>
-						</td>
-					</tr>
-                </table>
-            </th>
-            {% endfor %}
-        </tr>
-        {% for juryallgrade in roundsgrades.0 %}
-        <tr>
-            <td><a href="{% url 'IPTdev:jury_detail' pk=juryallgrade.juryroundsgrades.0.jury.pk %}">{{juryallgrade.name}}</a></td>
-            {% for juryroundsgrade in juryallgrade.juryroundsgrades %}
-            <td>
-                <table>
-                    <td class="td-center">{{juryroundsgrade.grade_reporter}}</td>
-                    <td class="td-center">{{juryroundsgrade.grade_opponent}}</td>
-                    <td class="td-center">{{juryroundsgrade.grade_reviewer}}</td>
-                </table>
-            </td>
-            {% endfor %}
-        </tr>
-        {% endfor %}
-
-        <tr>
-            <td>
-                <p class="emphase">{% trans 'MEAN' %}*</p>
-            </td>
-            {% for meanroundsgrade in roundsgrades.1 %} {% if meanroundsgrade %}
-            <td>
-                <table>
-                    {% for meangrade in meanroundsgrade %}
-                    <td class="td-center">
-                        <p class="emphase">{{meangrade|floatformat:2}}</p>
-                    </td>
+            <div class="content container-fluid main-table">
+                <table class="table-borders">
+                    <tr >
+                        <th class="th-center" width=15%></th>
+                        {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
+                            <th class="th-center">
+                                <p>
+                                <a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p> <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th class="th">{% trans 'Jurés' %}</th>
+                        {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
+                            <th>
+                                <table>
+                                    <tr class="pf-detail-role-row">
+                                        <td class="th-center">
+                                            {% trans 'Rep.' %}
+                                        </td>
+                                        <td class="th-center">
+                                            {% trans 'Opp.' %}
+                                        </td>
+                                        <td class="th-center">
+                                            {% trans 'Rev.' %}
+                                        </td>
+                                    </tr>
+                                    <tr class="pf-detail-team-row">
+                                        <td class="th-center">
+                                            <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>
+                                        </td>
+                                        <td class="th-center">
+                                            <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>
+                                        </td>
+                                        <td class="th-center">
+                                            <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </th>
+                        {% endfor %}
+                    </tr>
+                    {% for juryallgrade in roundsgrades.0 %}
+                        <tr>
+                            <td><a href="{% url 'IPTdev:jury_detail' pk=juryallgrade.juryroundsgrades.0.jury.pk %}">{{juryallgrade.name}}</a></td>
+                            {% for juryroundsgrade in juryallgrade.juryroundsgrades %}
+                                <td>
+                                    <table>
+                                        <td class="td-center">{{juryroundsgrade.grade_reporter}}</td>
+                                        <td class="td-center">{{juryroundsgrade.grade_opponent}}</td>
+                                        <td class="td-center">{{juryroundsgrade.grade_reviewer}}</td>
+                                    </table>
+                                </td>
+                            {% endfor %}
+                        </tr>
                     {% endfor %}
+
+                    <tr>
+                        <td>
+                            <p class="emphase">{% trans 'MEAN' %}*</p>
+                        </td>
+                        {% for meanroundsgrade in roundsgrades.1 %}
+                            {% if meanroundsgrade %}
+                                <td>
+                                    <table>
+                                        {% for meangrade in meanroundsgrade %}
+                                        <td class="td-center">
+                                            <p class="emphase">{{meangrade|floatformat:2}}</p>
+                                        </td>
+                                        {% endfor %}
+                                    </table>
+                                </td>
+                            {% endif %}
+                        {% endfor %}
+                    </tr>
+
                 </table>
-            </td>
-            {% endif %} {% endfor %}
-        </tr>
 
-    </table>
+                <p class="comment">*{% trans 'The lowest and highest grade(s) might be discarded according to the number of jury members.' %}</p>
 
-    <p class="comment">*{% trans 'The lowest and highest grade(s) might be discarded according to the number of jury members.' %}</p>
+                {% if params.display_pf_summary %}
+                    <table class="table-borders">
+                        <tr>
+                            <th class="th-center">{% trans 'Team' %}</th>
+                            <th class="th-center">{% trans 'Rep. mult.' %}</th>
+                            {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
+                                <th class="th-center">
+                                    <p><a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p>
+                                    <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
+                                </th>
+                            {% endfor %}
+                            <th class="th-center">{% trans 'Sum' %}</th>
+                        </tr>
+                        {% for team in roundsgrades.3 %}
+                        <tr>
+                            <td class="td-center">
+                                <a href="{% url 'IPTdev:team_detail' team_name=team.0 %}">{{ team.0 }}</a>
+                            </td>
+                            {% for grade in team.1 %}
+                                <td class="td-center">{{ grade|floatformat:2 }}</td>
+                            {% endfor %}
+                        {% endfor %}
+                        </tr>
+                    </table>
+                {% endif %}
+        </div>
 
-	{% if params.display_pf_summary %}
-		<table class="table-borders">
-			<tr>
-				<th class="th-center">{% trans 'Team' %}</th>
-				<th class="th-center">{% trans 'Rep. mult.' %}</th>
-				{% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
-				<th class="th-center">
-					<p><a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p>
-					<a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
-				</th>
-				{% endfor %}
-				<th class="th-center">{% trans 'Sum' %}</th>
-			</tr>
-			{% for team in roundsgrades.3 %}
-			<tr>
-				<td class="td-center">
-					<a href="{% url 'IPTdev:team_detail' team_name=team.0 %}">{{ team.0 }}</a>
-				</td>
-				{% for grade in team.1 %}
-				<td class="td-center">{{ grade|floatformat:2 }}</td>
-				{% endfor %}
-			{% endfor %}
-			</tr>
-		</table>
-	{% endif %}
-</div>
+        {% else %}
+            <div class="content container">
+                <p class="emphase">{% trans 'No grade registered so far !' %}</p>
+            </div>
+        {% endif %}
+    {% endfor %}
 
 {% else %}
-<div class="content container">
-    <p class="emphase">{% trans 'No grade registered so far !' %}</p>
-</div>
+    <div class="content container">
+        <p class="emphase">{% trans 'No round played so far !' %}</p>
+    </div>
+{% endif %}
 
-{% endif %} {% endfor %} {% else %}
-
-<div class="content container">
-    <p class="emphase">{% trans 'No round played so far !' %}</p>
-</div>
-
-{% endif %} {% endblock content %}
+{% endblock content %}
