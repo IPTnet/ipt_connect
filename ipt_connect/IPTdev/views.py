@@ -418,80 +418,42 @@ def rank_ordinal(value):
             return u"%d%s" % (value, t[0])
         return u'%d%s' % (value, t[value % 10])
 
+def create_ranking(teams):
+    rankteams = []
+
+    if len(teams) > 0:
+
+        for ind, team in enumerate(teams):
+            nrounds_as_rep = team.nrounds_as_rep
+            nrounds_as_opp = team.nrounds_as_opp
+            nrounds_as_rev = team.nrounds_as_rev
+            pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
+            team.pfsplayed = pfsplayed
+            team.ongoingpf = False
+            if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
+                team.ongoingpf = True
+                team.currentpf = pfsplayed + 1
+            team.rank = rank_ordinal(ind + 1)
+            rankteams.append(team)
+
+    return rankteams
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
 def ranking(request):
-	rankteams = []
-	ranking = Team.objects.order_by('-total_points')
+    rankteams = create_ranking(Team.objects.order_by('-total_points'))
+    rankteams[0].emphase = True
 
-	# if len(teams) > 0 :
-	if len(ranking) > 0:
-
-		for ind, team in enumerate(ranking):
-			nrounds_as_rep = team.nrounds_as_rep # Round.objects.filter(reporter_team=team)
-			nrounds_as_opp = team.nrounds_as_opp # Round.objects.filter(opponent_team=team)
-			nrounds_as_rev = team.nrounds_as_rev # Round.objects.filter(reviewer_team=team)
-			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
-			team.pfsplayed = pfsplayed
-			team.ongoingpf = False
-			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
-				team.ongoingpf = True
-				team.currentpf = pfsplayed+1
-			team.rank = ind+1
-			if team.rank == 1:
-				team.emphase=True
-			rankteams.append(team)
-
-	return render(request, 'IPT%s/ranking.html' % params.app_version, {'rankteams': rankteams, 'params': params})
+    return render(request, 'IPT%s/ranking.html' % params.app_version, {'rankteams': rankteams, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
 def poolranking(request):
 
-
 	# Pool A
-	rankteamsA = []
-	ranking = Team.objects.filter(pool="A").order_by('-total_points')
-
-	# if len(teams) > 0 :
-	if len(ranking) > 0:
-
-		for ind, team in enumerate(ranking):
-			nrounds_as_rep = team.nrounds_as_rep # Round.objects.filter(reporter_team=team)
-			nrounds_as_opp = team.nrounds_as_opp # Round.objects.filter(opponent_team=team)
-			nrounds_as_rev = team.nrounds_as_rev # Round.objects.filter(reviewer_team=team)
-			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
-			team.pfsplayed = pfsplayed
-			team.ongoingpf = False
-			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
-				team.ongoingpf = True
-				team.currentpf = pfsplayed+1
-			team.rank = rank_ordinal(ind+1)
-			if team.rank == 1:
-				team.emphase=True
-			rankteamsA.append(team)
+	rankteamsA = create_ranking(Team.objects.filter(pool="A").order_by('-total_points'))
 
 	# Pool B
-	rankteamsB = []
-	ranking = Team.objects.filter(pool="B").order_by('-total_points')
-
-	# if len(teams) > 0 :
-	if len(ranking) > 0:
-
-		for ind, team in enumerate(ranking):
-			nrounds_as_rep = team.nrounds_as_rep # Round.objects.filter(reporter_team=team)
-			nrounds_as_opp = team.nrounds_as_opp # Round.objects.filter(opponent_team=team)
-			nrounds_as_rev = team.nrounds_as_rev # Round.objects.filter(reviewer_team=team)
-			pfsplayed = min(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev)
-			team.pfsplayed = pfsplayed
-			team.ongoingpf = False
-			if max(nrounds_as_rep, nrounds_as_opp, nrounds_as_rev) > pfsplayed:
-				team.ongoingpf = True
-				team.currentpf = pfsplayed+1
-			team.rank = rank_ordinal(ind+1)
-			if team.rank == 1:
-				team.emphase=True
-			rankteamsB.append(team)
+	rankteamsB = create_ranking(Team.objects.filter(pool="B").order_by('-total_points'))
 
 	return render(request, 'IPT%s/poolranking.html' % params.app_version, {'rankteamsA': rankteamsA, 'rankteamsB': rankteamsB, 'params': params})
