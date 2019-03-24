@@ -32,6 +32,12 @@ reject_malus = 0.2      # Malus for too many rejections
 npfreject_max = 3       # Maximum number of tactical rejection (per fight)
 netreject_max = 1       # Maximum number of eternal rejection
 
+# Should we reset the point sum before semifinals?
+# Does not affect reporter's coeff., rejections nor problems forbidden
+reset_points_before_semi = False
+
+# The same thing for the final - for the most pathological cases!
+reset_points_before_final = True
 
 # The maximum quantity of rounds
 # Affects mostly the combobox in round admin interface

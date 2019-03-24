@@ -302,6 +302,10 @@ class Team(models.Model):
 	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)
+	semi_points = models.FloatField(default=0.0, editable=False)
+	final_points = models.FloatField(default=0.0, editable=False)
+	is_in_semi = models.BooleanField(default=False, editable=True)
+	is_in_final = models.BooleanField(default=False, editable=True)
 	bonus_points = models.FloatField(default=0.0, editable=params.manual_bonus_points)
 	nrounds_as_rep = models.IntegerField(default=0, editable=False)
 	nrounds_as_opp = models.IntegerField(default=0, editable=False)
@@ -394,6 +398,18 @@ class Team(models.Model):
 
 		if params.manual_bonus_points:
 			self.total_points += self.bonus_points
+
+		if self.is_in_semi:
+			semirounds = Round.objects.filter(pf_number__range=(params.npf + 1, params.npf + params.semifinals_quantity))
+			self.semi_points = self.get_scores_for_rounds(semirounds)[0]
+			if not params.reset_points_before_semi:
+				self.semi_points += self.total_points
+
+		if self.is_in_final:
+			finalrounds = Round.objects.filter(pf_number=final_fight_number)
+			self.final_points = self.get_scores_for_rounds(finalrounds)[0]
+			if not params.reset_points_before_final:
+				self.final_points += self.total_points
 
 		self.save()
 
