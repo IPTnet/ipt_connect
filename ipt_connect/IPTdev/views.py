@@ -398,6 +398,27 @@ def physics_fight_detail(request, pfid):
 		'no_round_played': rounds.count() == 0,
 	})
 
+
+def rank_ordinal(value):
+    try:
+        value = int(value)
+    except ValueError:
+        return value
+    lang = get_language()
+    if lang == 'ru':
+        t = ('-ый', '-ый', '-ой', '-ий', '-ый', '-ый', '-ой', '-ой', '-ой', '-ый')
+        if not value:
+            return "0-ой"
+        if value in range(10, 20):
+            return "%d-ый" % (value)
+        return '%d%s' % (value, t[value % 10])
+    else:
+        t = ('th', 'st', 'nd', 'rd') + ('th',) * 6
+        if value % 100 in (11, 12, 13):
+            return u"%d%s" % (value, t[0])
+        return u'%d%s' % (value, t[value % 10])
+
+
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
 def ranking(request):
@@ -428,24 +449,6 @@ def ranking(request):
 @cache_page(cache_duration)
 def poolranking(request):
 
-	def rank_ordinal(value):
-		try:
-			value = int(value)
-		except ValueError:
-			return value
-		lang = get_language()
-		if lang == 'ru':
-			t = ('-ый', '-ый', '-ой', '-ий', '-ый', '-ый', '-ой', '-ой', '-ой', '-ый')
-			if not value:
-				return "0-ой"
-			if value in range(10, 20):
-				return "%d-ый" % (value)
-			return '%d%s' % (value, t[value % 10])
-		else:
-			t = ('th', 'st', 'nd', 'rd') + ('th',) * 6
-			if value % 100 in (11, 12, 13):
-				return u"%d%s" % (value, t[0])
-			return u'%d%s' % (value, t[value % 10])
 
 	# Pool A
 	rankteamsA = []
