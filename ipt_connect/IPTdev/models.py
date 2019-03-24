@@ -356,19 +356,11 @@ class Team(models.Model):
 		return prescoeffs
 
 
-	def update_scores(self):
-		#print "Updating scores for", self
+	def get_scores_for_rounds(self, rounds, include_bonus=True):
 
-		qfrounds = Round.objects.filter(pf_number__range=(1,params.npf))
-
-
-		rounds_as_reporter = Round.objects.filter(reporter_team=self)
-		rounds_as_opponent = Round.objects.filter(opponent_team=self)
-		rounds_as_reviewer = Round.objects.filter(reviewer_team=self)
-
-		self.nrounds_as_rep = len(rounds_as_reporter)
-		self.nrounds_as_opp = len(rounds_as_opponent)
-		self.nrounds_as_rev = len(rounds_as_reviewer)
+		rounds_as_reporter = rounds.filter(reporter_team=self)
+		rounds_as_opponent = rounds.filter(opponent_team=self)
+		rounds_as_reviewer = rounds.filter(reviewer_team=self)
 
 		res = 0.0
 
@@ -376,14 +368,32 @@ class Team(models.Model):
 		res += sum([round.points_opponent for round in rounds_as_opponent])
 		res += sum([round.points_reviewer for round in rounds_as_reviewer])
 
-		# Bonus points for winning the fight are stored in a round
-		# at which the appropriate team was the reporter
-		res += sum([round.bonus_points_reporter for round in rounds_as_reporter])
+		if include_bonus:
+			# Bonus points for winning the fight are stored in a round
+			# at which the appropriate team was the reporter
+			res += sum([round.bonus_points_reporter for round in rounds_as_reporter])
+
+		return (
+			res,
+			len(rounds_as_reporter),
+			len(rounds_as_opponent),
+			len(rounds_as_reviewer),
+		)
+
+
+	def update_scores(self):
+		#print "Updating scores for", self
+
+		qfrounds = Round.objects.filter(pf_number__range=(1,params.npf))
+		qfscores = self.get_scores_for_rounds(qfrounds)
+
+		self.total_points   = qfscores[0]
+		self.nrounds_as_rep = qfscores[1]
+		self.nrounds_as_opp = qfscores[2]
+		self.nrounds_as_rev = qfscores[3]
 
 		if params.manual_bonus_points:
-			res += self.bonus_points
-
-		self.total_points = res
+			self.total_points += self.bonus_points
 
 		self.save()
 
