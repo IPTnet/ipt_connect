@@ -438,13 +438,28 @@ def create_ranking(teams):
 
     return rankteams
 
+
+def create_semi_ranking():
+	teams = Team.objects.filter(is_in_semi=True).order_by('-semi_points')
+	if teams.count() == 0:
+		return None
+
+	return create_ranking(teams)
+
+
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
 def ranking(request):
-    rankteams = create_ranking(Team.objects.order_by('-total_points'))
-    rankteams[0].emphase = True
+	rankteams = create_ranking(Team.objects.order_by('-total_points'))
+	rankteams[0].emphase = True
 
-    return render(request, 'IPT%s/ranking.html' % params.app_version, {'rankteams': rankteams, 'params': params})
+	semirankteams = create_semi_ranking()
+
+	return render(request, 'IPT%s/ranking.html' % params.app_version, {
+		'params': params,
+		'rankteams': rankteams,
+		'semirankteams': semirankteams,
+	})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
@@ -456,4 +471,11 @@ def poolranking(request):
 	# Pool B
 	rankteamsB = create_ranking(Team.objects.filter(pool="B").order_by('-total_points'))
 
-	return render(request, 'IPT%s/poolranking.html' % params.app_version, {'rankteamsA': rankteamsA, 'rankteamsB': rankteamsB, 'params': params})
+	semirankteams = create_semi_ranking()
+
+	return render(request, 'IPT%s/poolranking.html' % params.app_version, {
+		'params': params,
+		'rankteamsA': rankteamsA,
+		'rankteamsB': rankteamsB,
+		'semirankteams': semirankteams,
+	})
