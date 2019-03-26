@@ -11,7 +11,7 @@ django.setup()
 from IPTdev.models import *
 jurys = Jury.objects.all()
 
-#TODO: adapt this for any tournament, not only IPT216
+# TODO: make sure if it works for any tournament, not only IPT2016
 
 jurygrades = JuryGrade.objects.filter(round__pf_number=1) | JuryGrade.objects.filter(round__pf_number=2) | JuryGrade.objects.filter(round__pf_number=3) | JuryGrade.objects.filter(round__pf_number=4)  # discard the final
 
