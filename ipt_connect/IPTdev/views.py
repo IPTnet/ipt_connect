@@ -386,7 +386,7 @@ def physics_fight_detail(request, pfid):
 
 			summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][-1], reverse=True)
 
-			if finished:
+			if finished and params.display_pf_summary_bonus_points:
 				for team_summary in summary_grades:
 					reporter_round = roomrounds.filter(reporter_team=team_summary[0])[0]
 					team_summary[1].append(reporter_round.bonus_points_reporter)

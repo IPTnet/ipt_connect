@@ -67,6 +67,9 @@ display_pf_status = True
 # Turn it off in case of any problems
 display_pf_summary = True
 
+# Are the bonus points displayed in the fight summary?
+display_pf_summary_bonus_points = True
+
 
 # Do we respect pools?
 # If true, then the pool is displayed in ranking table
