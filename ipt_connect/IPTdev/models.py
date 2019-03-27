@@ -759,12 +759,12 @@ def update_bonus_points():
 	for round in rounds.filter(round_number=3):
 
 		bonuspts = {}
+		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room)
+		thispfteams = get_involved_teams_dict(thispfrounds).keys()
 		# set the bonus points to zero
 		for team in allteams:
 			bonuspts[team] = 0.0
 
-		thispfteams = [round.reporter_team, round.opponent_team, round.reviewer_team]
-		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room).order_by('round_number')
 
 		# get the points of the physics fight for the 3 teams (without bonuses) in a dictionary
 		points_dict = {}
