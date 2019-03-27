@@ -717,6 +717,15 @@ def update_points(sender, instance, **kwargs):
 		instance.problem_presented.update_scores()
 
 
+def get_involved_teams_dict(round_list):
+	teams_dict = {}
+	for r in round_list:
+		teams_dict[r.reporter_team] = {}
+		teams_dict[r.opponent_team] = {}
+		teams_dict[r.reviewer_team] = {}
+	return teams_dict
+
+
 def update_bonus_points():
 
 	# the rounds must be saved first !
