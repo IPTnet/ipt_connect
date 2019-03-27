@@ -349,7 +349,8 @@ def physics_fight_detail(request, pfid):
 
 	roomgrades = []
 	for room in rooms:
-		roomrounds = rounds.filter(room=room)
+		roomrounds = rounds.filter(room=room).order_by('round_number')
+
 		finished = False
 		grades = JuryGrade.objects.filter(round__room=room, round__pf_number=pfid).order_by('round__round_number', 'jury__surname')
 		gradesdico = {}
