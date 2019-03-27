@@ -48,13 +48,13 @@
                                 </tr>
                                 <tr class="pf-detail-team-row">
                                     <td class="th-center">
-                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter.team.name %}">{{juryroundsgrade.round.reporter.team.name}}</a>
+                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter_team.name %}">{{juryroundsgrade.round.reporter_team.name}}</a>
                                     </td>
                                     <td class="th-center">
-                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent.team.name %}">{{juryroundsgrade.round.opponent.team.name}}</a>
+                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent_team.name %}">{{juryroundsgrade.round.opponent_team.name}}</a>
                                     </td>
                                     <td class="th-center">
-                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer.team.name %}">{{juryroundsgrade.round.reviewer.team.name}}</a>
+                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
                                     </td>
                                 </tr>
                             </table>
