@@ -759,6 +759,10 @@ def update_bonus_points():
 		bonuspts = {}
 		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room)
 		thispfteams = get_involved_teams_dict(thispfrounds).keys()
+
+		if thispfrounds.count() != len(thispfteams):
+			continue
+
 		# set the bonus points to zero
 		for team in thispfteams:
 			bonuspts[team] = 0.0
