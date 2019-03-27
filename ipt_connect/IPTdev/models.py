@@ -79,6 +79,29 @@ def special_mean(vec):
 	return globals()[params.mean](vec)
 
 
+def distribute_bonus_points(points_list):
+	if len(points_list) == 3:
+		return distribute_bonus_points_3(points_list)
+	return [0.0, 0.0, 0.0, 0.0, 0.0]
+
+def distribute_bonus_points_3(points_list):
+
+	# If everyone is ex-aequo
+	if points_list[0] == points_list[1] and points_list[0] == points_list[2]:
+		return [1.0, 1.0, 1.0]
+
+	# If 1 and 2 are ex-aequo
+	if points_list[0] == points_list[1]:
+		return [1.5, 1.5, 0.0]
+
+	# If 2 and 3 are ex-aequo
+	if points_list[1] == points_list[2]:
+		return [2.0, 0.5, 0.5]
+
+	# If no ex-aequo
+	return [2.0, 1.0, 0.0]
+
+
 @deconstructible
 class UploadToPathAndRename(object):
 
@@ -762,26 +785,11 @@ def update_bonus_points():
 		team_podium = sorted(thispfteams, key = lambda t : points_dict[t], reverse=True)
 		points_list = [points_dict[t] for t in team_podium]
 
-		# If everyone is ex-aequo
-		if points_list[0] == points_list[1] and points_list[0] == points_list[2] :
-			bonuspts[team_podium[0]] = 1.
-			bonuspts[team_podium[1]] = 1.
-			bonuspts[team_podium[2]] = 1.
-		# If 1 and 2 are ex-aequo
-		elif points_list[0] == points_list[1]:
-			bonuspts[team_podium[0]] = 1.5
-			bonuspts[team_podium[1]] = 1.5
-			bonuspts[team_podium[2]] = 0.0
-		# If 2 and 3 are ex-aequo
-		elif points_list[1] == points_list[2]:
-			bonuspts[team_podium[0]] = 2.0
-			bonuspts[team_podium[1]] = 0.5
-			bonuspts[team_podium[2]] = 0.5
-		# If no ex-aequo
-		else:
-			bonuspts[team_podium[0]] = 2.0
-			bonuspts[team_podium[1]] = 1.0
-			bonuspts[team_podium[2]] = 0.0
+		bonus_list = distribute_bonus_points(points_list)
+
+		# TODO: rewrite in python-ish way
+		for i in range(len(points_list)):
+			bonuspts[team_podium[i]] = bonus_list[i]
 
 		with transaction.atomic():
 		# It is safe to use atomic transaction here,
