@@ -43,7 +43,7 @@ reset_points_before_final = True
 # Affects mostly the combobox in round admin interface
 # If you change it, make sure that bonus points are calculated properly!
 # (spoiler: they are not, so switch them to be manual below)
-max_rounds_in_pf = 3
+max_rounds_in_pf = 4
 
 # Personal ranking
 personal_ranking = {
