@@ -758,8 +758,6 @@ def update_bonus_points():
 
 	# the rounds must be saved first !
 	rounds = Round.objects.all()
-	allteams = Team.objects.all()
-
 
 	for round in rounds.filter(round_number=3):
 
@@ -767,7 +765,7 @@ def update_bonus_points():
 		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room)
 		thispfteams = get_involved_teams_dict(thispfrounds).keys()
 		# set the bonus points to zero
-		for team in allteams:
+		for team in thispfteams:
 			bonuspts[team] = 0.0
 
 
