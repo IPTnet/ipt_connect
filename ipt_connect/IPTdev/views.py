@@ -377,6 +377,7 @@ def physics_fight_detail(request, pfid):
 		for team in teams_involved:
 			for r in roomrounds:
 				summary_grades[team].append(
+					# TODO: looks like this is not the fastest way!
 					team.get_scores_for_rounds(rounds=roomrounds.filter(round_number=r.round_number), include_bonus=False)[0]
 				)
 			summary_grades[team].append(sum(summary_grades[team][1:]))
