@@ -111,7 +111,7 @@
                             </th>
                         {% endfor %}
                         <th class="th-center">{% trans 'Sum' %}</th>
-                        {% if roundsgrades.2.finished %}
+                        {% if roundsgrades.2.finished and params.display_pf_summary_bonus_points %}
                             <th class="th-center">{% trans 'Bonus' %}</th>
                         {% endif %}
                     </tr>
