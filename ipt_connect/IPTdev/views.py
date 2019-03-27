@@ -351,7 +351,6 @@ def physics_fight_detail(request, pfid):
 	for room in rooms:
 		roomrounds = rounds.filter(room=room).order_by('round_number')
 
-		finished = False
 		grades = JuryGrade.objects.filter(round__room=room, round__pf_number=pfid).order_by('round__round_number', 'jury__surname')
 		gradesdico = {}
 		for grade in grades:
@@ -373,6 +372,8 @@ def physics_fight_detail(request, pfid):
 			meanroundsgrades.append(meangrades)
 
 		teams_involved = get_involved_teams_dict(roomrounds)
+		finished = (roomrounds.count() == len(teams_involved))
+
 		summary_grades = {team: [team.presentation_coefficients()[int(pfid) - 1]] for team in teams_involved}
 		for team in teams_involved:
 			for r in roomrounds:
@@ -383,6 +384,11 @@ def physics_fight_detail(request, pfid):
 			summary_grades[team].append(sum(summary_grades[team][1:]))
 
 		summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][-1], reverse=True)
+
+		if finished:
+			for team_summary in summary_grades:
+				reporter_round = roomrounds.filter(reporter_team=team_summary[0])[0]
+				team_summary[1].append(reporter_round.bonus_points_reporter)
 
 
 		infos = {"pf": pfid, "room": room.name, "finished": finished}
