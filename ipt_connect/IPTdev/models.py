@@ -53,15 +53,10 @@ def ipt_mean(vec):
 		nlow = int(nreject / 2.0 + 0.5)
 		nhigh = int(nreject / 2.0 - 0.5)
 
-	i = 0
-	while i < nhigh:
-		vec.pop(-1)
-		i += 1
-
-	i = 0
-	while i < nlow:
-		vec.pop(0)
-		i += 1
+	if nhigh == 0:
+		vec = vec[nlow:]
+	else:
+		vec = vec[nlow:-nhigh]
 
 	return float(sum(vec)) / len(vec)
 
