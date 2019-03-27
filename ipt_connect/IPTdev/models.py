@@ -792,7 +792,7 @@ def update_bonus_points():
 		# do not affect the .filter() condition
 		#and, moreover, each round is edited only once
 			for team in team_podium:
-				round_with_report = Round.objects.filter(pf_number=round.pf_number,reporter_team=team)
+				round_with_report = thispfrounds.filter(pf_number=round.pf_number, reporter_team=team)
 				if round_with_report.count() == 1:
 					# We suppose that one team can be a reporter once per PF
 					round_with_report = round_with_report[0]
