@@ -772,16 +772,9 @@ def update_bonus_points():
 		for team in thispfteams:
 			bonuspts[team] = 0.0
 
-
-		# get the points of the physics fight for the 3 teams (without bonuses) in a dictionary
 		points_dict = {}
 		for team in thispfteams:
-			points_dict[team] = 0.0
-		for pfround in thispfrounds :
-			# add the points of each round
-			points_dict[pfround.reporter_team] += pfround.points_reporter
-			points_dict[pfround.opponent_team] += pfround.points_opponent
-			points_dict[pfround.reviewer_team] += pfround.points_reviewer
+			points_dict[team] = team.get_scores_for_rounds(rounds=thispfrounds, include_bonus=False)
 
 		# get teams sorted by total points for the physics fight
 		team_podium = sorted(thispfteams, key = lambda t : points_dict[t], reverse=True)
