@@ -111,6 +111,9 @@
                             </th>
                         {% endfor %}
                         <th class="th-center">{% trans 'Sum' %}</th>
+                        {% if roundsgrades.2.finished %}
+                            <th class="th-center">{% trans 'Bonus' %}</th>
+                        {% endif %}
                     </tr>
                     {% for team in roundsgrades.3 %}
                     <tr>
