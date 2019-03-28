@@ -330,7 +330,10 @@ class Team(models.Model):
 		beforetactical = []
 		netrej = 0
 		for pf in selective_fights_and_semifinals:
-			netrej += len(eternalrejections.filter(round__pf_number=pf))
+			if params.reset_coeff_between_fights:
+				netrej  = len(eternalrejections.filter(round__pf_number=pf))
+			else:
+				netrej += len(eternalrejections.filter(round__pf_number=pf))
 			beforetactical.append(3.0 - params.reject_malus*max(0, (netrej-params.netreject_max)))
 
 		# get all the tactical rejections
@@ -344,8 +347,13 @@ class Team(models.Model):
 			pfrejections = [rejection for rejection in rejections if rejection.round.pf_number == pf]
 			if verbose:
 				print "%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)
+			if params.reset_coeff_between_fights:
+				npenalities = 0
 			if len(pfrejections) > params.npfreject_max:
-				npenalities += len(pfrejections) - params.npfreject_max
+				if params.reset_coeff_between_fights:
+					npenalities  = len(pfrejections) - params.npfreject_max
+				else:
+					npenalities += len(pfrejections) - params.npfreject_max
 			if verbose:
 				if npenalities > 0:
 					print "Penality of %.1f points on the Reporter Coefficient" %  float(params.reject_malus*npenalities)

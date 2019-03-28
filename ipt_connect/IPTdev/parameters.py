@@ -31,6 +31,7 @@ with_final_pf = True    # Is there a Final Fight ?
 reject_malus = 0.2      # Malus for too many rejections
 npfreject_max = 3       # Maximum number of tactical rejection (per fight)
 netreject_max = 1       # Maximum number of eternal rejection
+reset_coeff_between_fights = False
 
 # Should we reset the point sum before semifinals?
 # Does not affect reporter's coeff., rejections nor problems forbidden
