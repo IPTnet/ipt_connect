@@ -482,6 +482,44 @@ def poolranking(request):
 		'semirankteams': semirankteams,
 	})
 
+
+def make_dict_from_csv_row(row):
+	# This is just a map to control numbers of columns which are imported
+	# No logic should be placed here!
+	return {
+		'name': row[1],
+		'surname': row[3],
+		'affiliation': row[4],
+		'team': row[9],
+		'role': row[10],
+		'is_jury': row[11],
+		'email': row[19],
+	}
+
+
+def make_row_importable(row):
+	# All the logic needed to parse the row
+	# Some edition-specific things are hardcoded here
+
+	if row['team'] == 'Organisational Registration (IOC, ExeCom, invited guest, etc.)':
+		# No team reference needed
+		row['team'] = None
+	else:
+		# This also holds automated creation of teams
+		row['team'], created = Team.objects.get_or_create(
+			name=row['team']
+		)
+
+	row['is_jury'] = (row['is_jury'] != '0')
+
+	if row['role'] == 'Team captain':
+		row['role'] = 'TC'
+	elif row['role'] == 'Team member':
+		row['role'] = 'TM'
+	else:
+		row['role'] = None
+
+
 @user_passes_test(lambda u: u.is_superuser)
 @cache_page(cache_duration)
 def upload_csv(request):
@@ -492,11 +530,14 @@ def upload_csv(request):
 			reader = csv.reader(csvfile)
 			next(reader)
 			for row in reader:
-				Participant.objects.get_or_create(
-					gender=row[0],
-					affiliation=row[2],
-					surname=row[3],
-					name=row[4])
+				row = make_dict_from_csv_row(row)
+				make_row_importable(row)
+				print row
+				# Participant.objects.get_or_create(
+				#	gender=row[0],
+				#	affiliation=row[2],
+				#	surname=row[3],
+				#	name=row[4])
 	else:
 		form = UploadForm()
 
