@@ -86,6 +86,13 @@ This command just deletes all the data of current tournament(s).
 If you want to start a new tournament in adition to existent,
 read below.
 
+### What if I have the list of participants somewhere else?
+Then you can avoid inserting the participants and jurors  by hand.
+Log in as superuser and navigate to <a href="http://127.0.0.1:8000/IPTdev/upload_csv/">http://127.0.0.1:8000/IPTdev/upload_csv/</a>.
+Select a CSV file and click `Upload`.
+Note that the format of CSV file is hardcoded in `views.py`.
+Don't hesitate to adjust it for your needs!
+
 ### How to add (clone) a tournament?
 `./clone-instance.sh IPTdev IPT2019`
 `IPTdev` is the name of existing instance.
