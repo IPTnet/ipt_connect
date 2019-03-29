@@ -520,7 +520,7 @@ def make_row_importable(row):
 		row['role'] = None
 
 
-@user_passes_test(lambda u: u.is_superuser)
+@user_passes_test(lambda u: u.is_superuser, login_url='/admin')
 @cache_page(cache_duration)
 def upload_csv(request):
 	if request.method == 'POST':
