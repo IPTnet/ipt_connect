@@ -533,11 +533,24 @@ def upload_csv(request):
 				row = make_dict_from_csv_row(row)
 				make_row_importable(row)
 				print row
-				# Participant.objects.get_or_create(
-				#	gender=row[0],
-				#	affiliation=row[2],
-				#	surname=row[3],
-				#	name=row[4])
+
+				# If a person is not a jury member and has a role,
+				# import him/her as a participant
+				if not row['is_jury'] and row['role']:
+					Participant.objects.get_or_create(
+						name=row['name'],
+						surname=row['surname'],
+						affiliation=row['affiliation'],
+						role=row['role'],
+						team=row['team'],
+					)
+				elif row['is_jury']:
+					Jury.objects.get_or_create(
+						name=row['name'],
+						surname=row['surname'],
+						affiliation=row['affiliation'],
+						team=row['team'],
+					)
 	else:
 		form = UploadForm()
 
