@@ -492,17 +492,11 @@ def upload_csv(request):
 			reader = csv.reader(csvfile)
 			next(reader)
 			for row in reader:
-				try:
-					row[1] = int(row[1])
-				except ValueError:
-					row[1] = 0
 				Participant.objects.get_or_create(
 					gender=row[0],
-					school_class=row[1] if 0 < row[1] < 13 else 0,
 					affiliation=row[2],
 					surname=row[3],
-					name=row[4],
-					patronymic=row[5])
+					name=row[4])
 	else:
 		form = UploadForm()
 
