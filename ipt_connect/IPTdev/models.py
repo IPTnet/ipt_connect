@@ -443,7 +443,7 @@ class Team(models.Model):
 		if currentround !=None:
 			pf_number = currentround.pf_number
 		else: #TODO: remove these stupid 999 values and implement the pf rejection properly
-			round_number = 999
+			pf_number = 999
 
 		# the eternal rejection
 		eternal_rejections = EternalRejection.objects.filter(round__reporter__team=self)
