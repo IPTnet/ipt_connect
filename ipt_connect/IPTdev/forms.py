@@ -20,6 +20,8 @@ from django.http import JsonResponse
 #
 #    veteran = forms.BooleanField(help_text="Have you already participated in the IPT?", required=True)
 
+class UploadForm(forms.Form):
+    csvfile = forms.FileField(label='Select a CSV file:')
 
 def member_for_team(request):
     res = []
