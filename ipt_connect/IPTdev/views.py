@@ -6,6 +6,8 @@ from models import *
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.translation import get_language
+from forms import UploadForm
+import csv
 import parameters as params
 
 
@@ -479,3 +481,29 @@ def poolranking(request):
 		'rankteamsB': rankteamsB,
 		'semirankteams': semirankteams,
 	})
+
+@user_passes_test(lambda u: u.is_superuser)
+@cache_page(cache_duration)
+def upload_csv(request):
+	if request.method == 'POST':
+		form = UploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			csvfile = request.FILES['csvfile']
+			reader = csv.reader(csvfile)
+			next(reader)
+			for row in reader:
+				try:
+					row[1] = int(row[1])
+				except ValueError:
+					row[1] = 0
+				Participant.objects.get_or_create(
+					gender=row[0],
+					school_class=row[1] if 0 < row[1] < 13 else 0,
+					affiliation=row[2],
+					surname=row[3],
+					name=row[4],
+					patronymic=row[5])
+	else:
+		form = UploadForm()
+
+	return render(request, 'IPT%s/upload_csv.html' % params.app_version, {'form': form, 'params': params})

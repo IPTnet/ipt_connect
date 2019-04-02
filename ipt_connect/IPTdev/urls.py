@@ -33,4 +33,5 @@ urlpatterns = [
 	url(r'^trombinoscope$', participants_trombinoscope),
     url(r'^soon', soon),
     url(r'^update_all', update_all),
+	url(r'^upload_csv', upload_csv, name='upload_csv'),
 ]
