@@ -41,8 +41,7 @@ reset_points_before_final = True
 
 # The maximum quantity of rounds
 # Affects mostly the combobox in round admin interface
-# If you change it, make sure that bonus points are calculated properly!
-# (spoiler: they are not, so switch them to be manual below)
+# Bonus points are calculated properly
 max_rounds_in_pf = 4
 
 # Personal ranking
@@ -78,13 +77,12 @@ enable_pools = True
 
 
 # Are the bonus points entered manually?
-# Switch this on in case of problems with bonus points,
-# which may especially occur for 4-round fights
-# As for now, you MUST turn it to True if you have 4-round PFs !!!
+# Switch this on in case of problems with bonus points
 # If True: both global bonuses (the team form) and local bonuses (the round form) are visible and editable
 # If False: both are invisible, global bonuses are not counted to the ranking
 # Switching from False to True: local bonuses are preserved as counted, you can edit them manually
-# Switching from True to False: local bonuses are overwritten, global bonuses are hidden and ignored so far
+# Switching from True to False: local bonuses can be automatically overwritten,
+# global bonuses are hidden and ignored so far
 manual_bonus_points = False
 
 # Do we display coreporters publicly?
