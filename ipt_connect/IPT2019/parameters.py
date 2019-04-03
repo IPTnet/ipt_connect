@@ -12,15 +12,15 @@ app_version = "IPT2019"[3:]     # keyword for url parsing
 
 
 NAME = {
-    'short': 'IPT dev',
-    'full': 'International Physicists\' Tournament - Development Instance',
+    'short': 'IPT 2019',
+    'full': 'International Physicists\' Tournament 2019',
     # ... and the name used in tournament overview
     'front': '11th International Physicists\' Tournament',
 }
 
-poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
+poster_url = 'https://user-images.githubusercontent.com/28351150/55081233-5fdb4480-5097-11e9-9d5b-efaeb1948f34.png'
 
-website_url = 'http://dev.iptnet.info'
+website_url = 'http://2019.iptnet.info/'
 
 repo_url = 'https://github.com/IPTnet/ipt_connect'
 
