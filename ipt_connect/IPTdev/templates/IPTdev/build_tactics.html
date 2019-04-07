@@ -22,15 +22,19 @@
     </div>
 
     {% if tactics %}
-        <h1 class="section">
-            {% trans 'Problems available:' %}
-        </h1>
+        <div class="section">
+            <h1>
+                {% trans 'Problems available:' %}
+            </h1>
+        </div>
         <div class="content container">
            {% include 'IPTdev/includes/list_problems_with_remarks.html' with problems=tactics.1 %}
         </div>
-        <h1 class="section">
-            {% trans 'Problems forbidden:' %}
-        </h1>
+        <div class="section">
+            <h1>
+                {% trans 'Problems forbidden:' %}
+            </h1>
+        </div>
         <div class="content container">
            {% include 'IPTdev/includes/list_problems_with_remarks.html' with problems=tactics.0 %}
         </div>
