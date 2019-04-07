@@ -90,7 +90,7 @@ def sort_raw_tactics_data(problems_dict):
 		'opposed_by_opponent',
 		'reported_by_opponent',
 	]:
-		for problem in list(problems_dict):
+		for problem in list(problems_dict)[::-1]:
 			if len(problems_dict[problem][reason]) > 0:
 				bans.append((problem, problems_dict.pop(problem)))
 
@@ -141,6 +141,7 @@ def build_tactics(request):
 				Team.objects.get(pk=form['reporter_team'].value()),
 				Team.objects.get(pk=form['opponent_team'].value()),
 			))
+			tactics = (tactics[0][::-1], tactics[1])
 			return render(request, 'IPT%s/build_tactics.html' % params.app_version, {
 				'params': params,
 				'form': form,
