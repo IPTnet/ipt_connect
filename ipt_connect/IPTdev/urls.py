@@ -1,6 +1,7 @@
 # coding: utf8
 from django.conf.urls import url
 from views import *
+from tactics import *
 from forms import member_for_team
 
 
@@ -24,6 +25,7 @@ urlpatterns = [
 	url(r'^physics_fights/$', rounds, name="rounds"),
 	url(r'^physics_fights/(?P<pfid>[0-9]+)/$', physics_fight_detail, name='physics_fight_detail'),
     url(r'^ranking$', ranking, name='ranking'),
+	url(r'^build_tactics$', build_tactics),
     url(r'^poolranking$', poolranking, name='poolranking'),
     url(r'^participants_export$', participants_export),
 	url(r'^participants_export_web$', participants_export_web),
