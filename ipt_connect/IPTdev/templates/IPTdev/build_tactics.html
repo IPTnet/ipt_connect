@@ -4,6 +4,14 @@
 
 {% block content %}
     <div class="content container">
+        <div class="section">
+            <h1>
+                {% trans 'This is beta feature, use it at your own risk!' %}
+            </h1>
+        </div>
+    </div>
+
+    <div class="content container">
         <center>
             <form action="build_tactics" method="post">
                 {% csrf_token %}
