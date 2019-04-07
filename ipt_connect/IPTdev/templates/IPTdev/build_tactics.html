@@ -3,22 +3,28 @@
 {% load i18n %}
 
 {% block content %}
-    <center>
-        <form action="build_tactics" method="post">
-            {% csrf_token %}
-            {{ form }}
-            <input type="submit" value="{% trans 'Build tactics!' %}" />
-        </form>
-    </center>
+    <div class="content container">
+        <center>
+            <form action="build_tactics" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="{% trans 'Build tactics!' %}" />
+            </form>
+        </center>
+    </div>
 
     {% if tactics %}
-        <h1>
+        <h1 class="section">
             {% trans 'Problems forbidden:' %}
         </h1>
-       {% include 'IPTdev/includes/list_problems_with_remarks.html' with problems=tactics.0 %}
-        <h1>
+        <div class="content container">
+           {% include 'IPTdev/includes/list_problems_with_remarks.html' with problems=tactics.0 %}
+        </div>
+        <h1 class="section">
             {% trans 'Problems available:' %}
         </h1>
-       {% include 'IPTdev/includes/list_problems_with_remarks.html' with problems=tactics.1 %}
+        <div class="content container">
+           {% include 'IPTdev/includes/list_problems_with_remarks.html' with problems=tactics.1 %}
+        </div>
     {% endif %}
 {% endblock content %}
