@@ -73,7 +73,7 @@ display_pf_summary_bonus_points = True
 # Do we respect pools?
 # If true, then the pool is displayed in ranking table
 # and the 'Ranking' menu item leads to poolranking
-enable_pools = True
+enable_pools = False
 
 
 # Are the bonus points entered manually?
