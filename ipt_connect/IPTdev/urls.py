@@ -31,6 +31,7 @@ urlpatterns = [
 	url(r'^participants_export_web$', participants_export_web),
 	url(r'^participants_all$', participants_all),
 	url(r'^jury_export$', jury_export),
+	url(r'^jury_export_csv$', jury_export_csv),
 	url(r'^jury_export_web$', jury_export_web),
 	url(r'^trombinoscope$', participants_trombinoscope),
     url(r'^soon', soon),

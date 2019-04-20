@@ -71,6 +71,34 @@ def update_all(request):
 	return HttpResponse(list_receivers[0][1])
 
 
+@user_passes_test(lambda u: u.is_staff)
+def jury_export_csv(request):
+	import unicodecsv as csv
+	from django.http import HttpResponse
+
+	# Create the HttpResponse object with the appropriate CSV header.
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="jurors.csv"'
+
+	writer = csv.writer(response)
+
+	for juror in Jury.objects.all():
+		writer.writerow([
+			juror.pk,
+			juror.name,
+			juror.surname,
+			juror.affiliation,
+			juror.team,
+			# TODO: unhardcode PF number!
+			juror.pf1,
+			juror.pf2,
+			juror.pf3,
+			juror.pf4,
+		])
+
+	return response
+
+
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
