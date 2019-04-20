@@ -122,10 +122,14 @@ from django import forms
 
 
 class TacticsForm(forms.Form):
-	all_teams = Team.objects.all()
-	team_choices = map(lambda team : (team.pk, team), all_teams)
-	reporter_team = forms.ChoiceField(label='Reporter team', choices=team_choices)
-	opponent_team = forms.ChoiceField(label='Opponent team', choices=team_choices)
+	try:
+		# This fails if no teams are registered (which is essentially for a new tournament)
+		all_teams = Team.objects.all()
+		team_choices = map(lambda team : (team.pk, team), all_teams)
+		reporter_team = forms.ChoiceField(label='Reporter team', choices=team_choices)
+		opponent_team = forms.ChoiceField(label='Opponent team', choices=team_choices)
+	except:
+		pass
 
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
