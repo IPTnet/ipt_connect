@@ -18,7 +18,7 @@ NAME = {
     'front': '11th International Physicists\' Tournament',
 }
 
-poster_url = 'https://user-images.githubusercontent.com/28351150/55081233-5fdb4480-5097-11e9-9d5b-efaeb1948f34.png'
+poster_url = 'https://habrastorage.org/webt/2_/yd/hb/2_ydhbu1gm4hmbs6fb1wwfg9ong.png'
 
 website_url = 'http://2019.iptnet.info/'
 
