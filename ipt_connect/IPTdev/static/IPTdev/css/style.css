@@ -23,15 +23,15 @@ body {
     margin-right: 0px;
     margin-left: 0px;
     padding: 0px 0px 0px 0px;
-    background: #26275D;
+    background: #10254a;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(left top, #26275D, #0684A0);
+    background: -webkit-linear-gradient(left top, #10254a, #204a7a);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(bottom right, #26275D, #0684A0);
+    background: -o-linear-gradient(bottom right, #10254a, #204a7a);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(bottom right, #26275D, #0684A0);
+    background: -moz-linear-gradient(bottom right, #10254a, #204a7a);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to bottom right, #26275D, #0684A0);
+    background: linear-gradient(to bottom right, #10254a, #204a7a);
     /* Standard syntax */
 }
 
@@ -185,15 +185,15 @@ footer {
     text-align: center;
     margin-top: 80px;
     padding: 20px 0;
-    background: #26275D;
+    background: #10254a;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(right bottom, #26275D, #0684A0);
+    background: -webkit-linear-gradient(right bottom, #10254a, #204a7a);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(top left, #26275D, #0684A0);
+    background: -o-linear-gradient(top left, #10254a, #204a7a);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(top left, #26275D, #0684A0);
+    background: -moz-linear-gradient(top left, #10254a, #204a7a);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to top left, #26275D, #0684A0);
+    background: linear-gradient(to top left, #10254a, #204a7a);
     /* Standard syntax */
 }
 
