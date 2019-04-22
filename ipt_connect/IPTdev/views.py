@@ -433,21 +433,24 @@ def physics_fight_detail(request, pfid):
 		finished = (roomrounds.count() == len(teams_involved))
 
 		if params.display_pf_summary:
-			summary_grades = {team: [team.presentation_coefficients()[int(pfid) - 1]] for team in teams_involved}
-			for team in teams_involved:
-				for r in roomrounds:
-					summary_grades[team].append(
-						# TODO: looks like this is not the fastest way!
-						team.get_scores_for_rounds(rounds=roomrounds.filter(round_number=r.round_number), include_bonus=False)[0]
-					)
-				summary_grades[team].append(sum(summary_grades[team][1:]))
+			try:
+				summary_grades = {team: [team.presentation_coefficients()[int(pfid) - 1]] for team in teams_involved}
+				for team in teams_involved:
+					for r in roomrounds:
+						summary_grades[team].append(
+							# TODO: looks like this is not the fastest way!
+							team.get_scores_for_rounds(rounds=roomrounds.filter(round_number=r.round_number), include_bonus=False)[0]
+						)
+					summary_grades[team].append(sum(summary_grades[team][1:]))
 
-			summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][-1], reverse=True)
+				summary_grades = sorted(summary_grades.items(), key=lambda x: x[1][-1], reverse=True)
 
-			if finished and params.display_pf_summary_bonus_points:
-				for team_summary in summary_grades:
-					reporter_round = roomrounds.filter(reporter_team=team_summary[0])[0]
-					team_summary[1].append(reporter_round.bonus_points_reporter)
+				if finished and params.display_pf_summary_bonus_points:
+					for team_summary in summary_grades:
+						reporter_round = roomrounds.filter(reporter_team=team_summary[0])[0]
+						team_summary[1].append(reporter_round.bonus_points_reporter)
+			except:
+				summary_grades = None
 		else:
 			summary_grades = None
 
