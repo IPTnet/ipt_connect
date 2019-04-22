@@ -227,7 +227,7 @@ def team_detail(request, team_name):
 			round.mygrade = round.score_reporter
 			allrounds.append(round)
 			bonus_points_displayed += round.bonus_points_reporter
-			print team_name, round.pf_number, round.bonus_points_reporter
+			# print team_name, round.pf_number, round.bonus_points_reporter
 	for round in myopprounds:
 		# if len(JuryGrade.objects.filter(round=round)) > 0:
 		if round.score_opponent > 0.:
