@@ -40,12 +40,13 @@
             <th class="th-center">{% trans 'Role' %}</th>
         </tr>
         {% for round in allrounds %}
-        <tr>
-            <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
-            <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
-            <td class="td-center">{{round.myrole}}</td>
-
-        </tr>
+            {% if round.problem_presented %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
+                    <td class="td-center">{{round.myrole}}</td>
+                </tr>
+            {% endif %}
         {% endfor %}
 
     </table>
