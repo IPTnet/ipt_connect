@@ -58,12 +58,12 @@ def ipt_mean(vec):
 	else:
 		vec = vec[nlow:-nhigh]
 
-	return float(sum(vec)) / len(vec)
+	return mean(vec)
 
 
 def iypt_mean(vec):
 	vec.append((vec.pop(0) + vec.pop()) / 2.0)
-	return float(sum(vec)) / len(vec)
+	return mean(vec)
 
 def ttn_mean(vec):
     if len(vec) <= 4:
