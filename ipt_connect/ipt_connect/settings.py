@@ -36,6 +36,7 @@ ALLOWED_HOSTS = [u"XXX", u"127.0.0.1", u"localhost"]
 
 INSTALLED_APPS = (
     'grappelli',
+    'solo.apps.SoloAppConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
