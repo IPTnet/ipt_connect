@@ -15,6 +15,7 @@ from django.core.validators import RegexValidator
 from django.dispatch import Signal
 from django.db import transaction
 from func_bonus import distribute_bonus_points
+from solo.models import SingletonModel
 
 import parameters as params
 import func_mean as means
@@ -672,6 +673,14 @@ def update_points(sender, instance, **kwargs):
 		# and the problem mean scores
 		instance.problem_presented.update_scores()
 
+class SiteConfiguration(SingletonModel):
+    only_staff_access = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        return u"Site Configuration"
+
+    class Meta:
+        verbose_name = "Site Configuration"
 
 def get_involved_teams_dict(round_list):
 	teams_dict = {}
