@@ -131,3 +131,6 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
     }
 }
+
+SOLO_CACHE = 'default'
+SOLO_CACHE_TIMEOUT = 5*60
