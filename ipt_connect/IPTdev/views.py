@@ -22,10 +22,8 @@ def home(request):
 cache_duration_short = 1 * 1
 cache_duration = 20 * 1
 
-ninja_mode = False
-
 def ninja_test(user):
-	return user.is_staff or not ninja_mode
+	return user.is_staff or not SiteConfiguration.get_solo().only_staff_access
 
 @cache_page(cache_duration_short)
 def soon(request):
