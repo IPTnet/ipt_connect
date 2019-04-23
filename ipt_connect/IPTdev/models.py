@@ -14,6 +14,7 @@ from django.db.models import Avg, Sum
 from django.core.validators import RegexValidator
 from django.dispatch import Signal
 from django.db import transaction
+from func_mean import *
 
 import parameters as params
 
@@ -26,53 +27,8 @@ npf_tot = params.npf + params.semifinals_quantity + int(params.with_final_pf)
 final_fight_number = params.npf + params.semifinals_quantity + 1
 grade_choices = [(ind, ind) for ind in range(10+1)]
 
-def mean(vec):
-	if len(vec) != 0:
-		return float(sum(vec)) / len(vec)
-	else:
-		return 0
-
-def ipt_mean(vec):
-	if len(vec) in [5, 6]:
-		nreject = 1
-	elif len(vec) in [7, 8]:
-		nreject = 2
-	else:
-		nreject = round(len(vec) / 4.0)
-
-
-	# TODO: the following code looks messy, but it works.
-	# There was an unsuccessful attempt to refactor it.
-	# The code should be refactored and tested.
-	
-
-	if round(nreject / 2.0) == nreject / 2.0:
-		nlow = int(nreject / 2.0)
-		nhigh = int(nlow)
-	else:
-		nlow = int(nreject / 2.0 + 0.5)
-		nhigh = int(nreject / 2.0 - 0.5)
-
-	if nhigh == 0:
-		vec = vec[nlow:]
-	else:
-		vec = vec[nlow:-nhigh]
-
-	return mean(vec)
-
-
-def iypt_mean(vec):
-	vec.append((vec.pop(0) + vec.pop()) / 2.0)
-	return mean(vec)
-
-def ttn_mean(vec):
-    if len(vec) <= 4:
-        return mean(vec)
-    return iypt_mean(vec)
-
 def special_mean(vec):
 	return globals()[params.mean](vec)
-
 
 def distribute_bonus_points(points_list):
 	if len(points_list) == 3:
