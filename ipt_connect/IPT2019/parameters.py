@@ -60,7 +60,7 @@ mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean
 
 # Is the fight status displayed?
 # Looks like there are some problems with it, so making it switchable
-display_pf_status = True
+display_pf_status = False
 
 # Is the fight summary displayed?
 # Turn it off in case of any problems
