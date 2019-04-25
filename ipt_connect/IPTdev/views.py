@@ -49,6 +49,49 @@ def participants_export_web(request):
 
 	return render(request, 'IPT%s/listing_participants_web.html' % params.app_version, {'participants': participants, 'params': params})
 
+
+@user_passes_test(lambda u: u.is_staff)
+def export_csv_ranking_timeline(request):
+	import unicodecsv as csv
+	from django.http import HttpResponse
+
+	# Create the HttpResponse object with the appropriate CSV header.
+	response = HttpResponse(content_type='text/csv')
+	response['Content-Disposition'] = 'attachment; filename="ranking_timeline.csv"'
+
+	writer = csv.writer(response)
+
+	allteams = list(Team.objects.all())
+	writer.writerow([' ']+allteams)
+
+	previous_scores = {}
+	for team in allteams:
+		previous_scores[team] = 0
+
+	for pf_number in selective_fights_and_semifinals:
+		fight_rounds = Round.objects.filter(pf_number=pf_number)
+		for round_number in range(1,params.max_rounds_in_pf+1):
+			current_rounds = fight_rounds.filter(round_number=round_number)
+			for team in allteams:
+				previous_scores[team] += team.get_scores_for_rounds(rounds=current_rounds, include_bonus=False)[0]
+
+			writer.writerow(
+				[ '%s | Round %s' % (params.fights['names'][pf_number - 1], round_number) ] +
+				[ previous_scores[team] for team in allteams ]
+			)
+
+		for team in allteams:
+			previous_scores[team] += \
+				team.get_scores_for_rounds(rounds=fight_rounds,include_bonus=True)[0] -\
+				team.get_scores_for_rounds(rounds=fight_rounds,include_bonus=False)[0]
+		writer.writerow(
+			['%s | Bonuses' % params.fights['names'][pf_number - 1]] +
+			[previous_scores[team] for team in allteams]
+		)
+
+	return response
+
+
 @user_passes_test(lambda u: u.is_superuser)
 def jury_export(request):
 	jurys = Jury.objects.all().order_by('surname')
