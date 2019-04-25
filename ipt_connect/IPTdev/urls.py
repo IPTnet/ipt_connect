@@ -27,6 +27,7 @@ urlpatterns = [
     url(r'^ranking$', ranking, name='ranking'),
 	url(r'^build_tactics$', build_tactics),
     url(r'^poolranking$', poolranking, name='poolranking'),
+    url(r'^export_csv_ranking_timeline$', export_csv_ranking_timeline),
     url(r'^participants_export$', participants_export),
 	url(r'^participants_export_web$', participants_export_web),
 	url(r'^participants_all$', participants_all),
