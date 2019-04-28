@@ -1,0 +1,101 @@
+{% extends 'IPTdev/head.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{% trans 'Rounds overview' %}</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">{% trans 'Click on a Round to get a detailed summary. Click on a Physics Fight to get a summarized view of all the corresponding Rounds.' %}</p>
+    </div>
+
+    <div class="content container-fluid main-table">
+        <table class="table-borders">
+            <tr>
+                <th></th>
+                {% for selective_fight in selective_fight_names %}
+                    <th class="th-center">
+                        <a href="{% url 'IPTdev:physics_fight_detail' pfid=selective_fight.0 %}">{{selective_fight.1}}</a>
+                    </th>
+                {% endfor %}
+            </tr>
+
+            {% for thisroom in orderedroundsperroom %}
+            <tr>
+                <td ><b>{{thisroom.0.0.room}}</b></td>
+                {% for thispf in thisroom %}
+                <td>
+                    {% include 'IPTdev/includes/list_rounds.html' with roundlist=thispf %}
+                </td>
+                {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+
+    {% if semifinal_data %}
+        <div class="content container">
+            <table>
+                <tr>
+                    {% for sf in semifinal_data %}
+                        {% if sf.1.0 %}
+                            <td class="td-center">
+                                <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=sf.1.0.pf_number %}">
+                                    {{sf.0}}
+                                </a>
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <tr>
+                    {% for sf in semifinal_data %}
+                        {% if sf.1.0 %}
+                            <td>
+                                {% include 'IPTdev/includes/list_rounds.html' with roundlist=sf.1 %}
+                            </td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+                <!--
+                TODO: move the margin to CSS
+                -->
+                <tr><td><p class="emphase"></p></td></tr>
+
+            </table>
+        </div>
+    {% endif %}
+
+    {% if finalrounds %}
+        <div class="content container">
+            <table>
+                <tr>
+                    <!--
+                    TODO: detablize?
+                    -->
+                    <td class="td-center">
+                        <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">
+                            {% trans 'The Grand Finale' %}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {% include 'IPTdev/includes/list_rounds.html' with roundlist=finalrounds %}
+                    </td>
+                </tr>
+                <!--
+                TODO: move the margin to CSS
+                -->
+                <tr><td><p class="emphase"></p></td></tr>
+
+            </table>
+        </div>
+    {% endif %}
+
+
+{% endblock content %}

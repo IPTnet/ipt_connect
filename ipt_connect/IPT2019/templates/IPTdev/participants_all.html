@@ -1,0 +1,24 @@
+{% extends 'IPTdev/head_bis.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">{% trans 'Name' %}</th>
+                <th class="th-center">{% trans 'Team' %}</th>
+                <th class="th-center">{% trans 'Role' %}</th>
+            </tr>
+        {% for participant in participants %}
+            <tr>
+                <td class="td-center">{{participant.fullname}}</td>
+                <td class="td-center">{{participant.team.name}}</td>
+                <td class="td-center">{{participant.role}}</td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+	
+
+{% endblock content %}
