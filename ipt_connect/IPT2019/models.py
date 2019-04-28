@@ -15,6 +15,7 @@ from django.core.validators import RegexValidator
 from django.dispatch import Signal
 from django.db import transaction
 from solo.models import SingletonModel
+from math import *
 
 import parameters as params
 
@@ -39,7 +40,7 @@ def ipt_mean(vec):
 	elif len(vec) in [7, 8]:
 		nreject = 2
 	else:
-		nreject = round(len(vec) / 4.0)
+		nreject = ceil(len(vec) / 4.0)
 
 
 	# TODO: the following code looks messy, but it works.
