@@ -45,6 +45,7 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'IPTdev',
+    'IPT2019',
 )
 
 MIDDLEWARE_CLASSES = (
