@@ -13,63 +13,63 @@
 	{% for problem in problems %}
 		<tr>
 			<td>
-				<a href="{% url 'IPTdev:problem_detail' pk=problem.0.pk %}">{{problem.0}}</a>
+				<a href="{% url 'IPT2019:problem_detail' pk=problem.0.pk %}">{{problem.0}}</a>
 			</td>
 			<td>
 				{% for round in problem.1.eternally_rejected_by_reporter %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'eternally rejected by reporter' %}</a>
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'eternally rejected by reporter' %}</a>
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.reported_by_reporter %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'reported by reporter' %}</a>,
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'reported by reporter' %}</a>,
 					{% trans 'grade:' %}
 					{{round.score_reporter|floatformat:2}}
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.opposed_by_opponent %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'opposed by opponent' %}</a>,
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'opposed by opponent' %}</a>,
 					{% trans 'grade:' %}
 					{{round.score_opponent|floatformat:2}}
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.reported_by_opponent %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'reported by opponent' %}</a>,
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'reported by opponent' %}</a>,
 					{% trans 'grade:' %}
 					{{round.score_reporter|floatformat:2}}
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.tried_by_opponent %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'tried by opponent' %}</a>
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'tried by opponent' %}</a>
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.reviewed_by_opponent %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'reviewed by opponent' %}</a>,
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'reviewed by opponent' %}</a>,
 					{% trans 'grade:' %}
 					{{round.score_reviewer|floatformat:2}}
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.opposed_by_reporter %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'opposed by reporter' %}</a>,
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'opposed by reporter' %}</a>,
 					{% trans 'grade:' %}
 					{{round.score_opponent|floatformat:2}}
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.reviewed_by_reporter %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'reviewed by reporter' %}</a>,
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'reviewed by reporter' %}</a>,
 					{% trans 'grade:' %}
 					{{round.score_reviewer|floatformat:2}}
 					<br/>
 				{% endfor %}
 
 				{% for round in problem.1.tried_by_reporter %}
-					<a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{% trans 'tried by reporter' %}</a>
+					<a href="{% url 'IPT2019:round_detail' pk=round.pk %}">{% trans 'tried by reporter' %}</a>
 					<br/>
 				{% endfor %}
 			</td>

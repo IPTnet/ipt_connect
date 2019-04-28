@@ -5,7 +5,7 @@ from tactics import *
 from forms import member_for_team
 
 
-app_name = 'IPTdev'
+app_name = 'IPT2019'
 
 urlpatterns = [
     url(r'^$', tournament_overview),

@@ -1,4 +1,4 @@
-{% extends 'IPTdev/head.html' %}
+{% extends 'IPT2019/head.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -9,7 +9,7 @@
 
     <div class="content container">
 		{% if participant.team %}
-            <li>{% trans 'Member of the team from' %} <a href="{% url 'IPTdev:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
+            <li>{% trans 'Member of the team from' %} <a href="{% url 'IPT2019:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
 		{% endif %}
 
     </div>
@@ -27,8 +27,8 @@
             {% for average_grade in average_grades %}
                 {% if average_grade.round.problem_presented %}
                     <tr>
-                        <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=average_grade.round.problem_presented.pk %}">{{average_grade.round.problem_presented}}</a></td>
-                        <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=average_grade.round.pk %}">{{average_grade.value|floatformat:2}}</a></td>
+                        <td class="td-center"><a href="{% url 'IPT2019:problem_detail' pk=average_grade.round.problem_presented.pk %}">{{average_grade.round.problem_presented}}</a></td>
+                        <td class="td-center"><a href="{% url 'IPT2019:round_detail' pk=average_grade.round.pk %}">{{average_grade.value|floatformat:2}}</a></td>
                         <td class="td-center">{{average_grade.role}}</td>
                     </tr>
                 {% endif %}

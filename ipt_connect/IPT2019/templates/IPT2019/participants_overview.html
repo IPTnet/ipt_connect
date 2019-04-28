@@ -1,4 +1,4 @@
-{% extends 'IPTdev/head.html' %}
+{% extends 'IPT2019/head.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -27,9 +27,9 @@
             </tr>
         {% for participant in participants %}
             <tr>
-                <td class="td-center"><a href="{% url 'IPTdev:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
+                <td class="td-center"><a href="{% url 'IPT2019:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
                 {% if participant.team %}
-				    <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
+				    <td class="td-center"><a href="{% url 'IPT2019:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
                 {% else %}
 				    <td class="td-center"></td>
                 {% endif %}

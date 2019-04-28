@@ -1,4 +1,4 @@
-{% extends 'IPTdev/head.html' %}
+{% extends 'IPT2019/head.html' %}
 {% load humanize %}
 {% load i18n %}
 
@@ -18,7 +18,7 @@
                 <th></th>
                 {% for selective_fight in selective_fight_names %}
                     <th class="th-center">
-                        <a href="{% url 'IPTdev:physics_fight_detail' pfid=selective_fight.0 %}">{{selective_fight.1}}</a>
+                        <a href="{% url 'IPT2019:physics_fight_detail' pfid=selective_fight.0 %}">{{selective_fight.1}}</a>
                     </th>
                 {% endfor %}
             </tr>
@@ -28,7 +28,7 @@
                 <td ><b>{{thisroom.0.0.room}}</b></td>
                 {% for thispf in thisroom %}
                 <td>
-                    {% include 'IPTdev/includes/list_rounds.html' with roundlist=thispf %}
+                    {% include 'IPT2019/includes/list_rounds.html' with roundlist=thispf %}
                 </td>
                 {% endfor %}
                 </td>
@@ -45,7 +45,7 @@
                     {% for sf in semifinal_data %}
                         {% if sf.1.0 %}
                             <td class="td-center">
-                                <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=sf.1.0.pf_number %}">
+                                <a class="emphase" href="{% url 'IPT2019:physics_fight_detail' pfid=sf.1.0.pf_number %}">
                                     {{sf.0}}
                                 </a>
                             </td>
@@ -56,7 +56,7 @@
                     {% for sf in semifinal_data %}
                         {% if sf.1.0 %}
                             <td>
-                                {% include 'IPTdev/includes/list_rounds.html' with roundlist=sf.1 %}
+                                {% include 'IPT2019/includes/list_rounds.html' with roundlist=sf.1 %}
                             </td>
                         {% endif %}
                     {% endfor %}
@@ -78,14 +78,14 @@
                     TODO: detablize?
                     -->
                     <td class="td-center">
-                        <a class="emphase" href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">
+                        <a class="emphase" href="{% url 'IPT2019:physics_fight_detail' pfid=final_fight_number %}">
                             {% trans 'The Grand Finale' %}
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        {% include 'IPTdev/includes/list_rounds.html' with roundlist=finalrounds %}
+                        {% include 'IPT2019/includes/list_rounds.html' with roundlist=finalrounds %}
                     </td>
                 </tr>
                 <!--

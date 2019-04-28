@@ -1,4 +1,4 @@
-{% extends 'IPTdev/head.html' %}
+{% extends 'IPT2019/head.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -22,7 +22,7 @@
             </tr>
         {% for problem in problems %}
             <tr>
-                <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a></td>
+                <td class="td-center"><a href="{% url 'IPT2019:problem_detail' pk=problem.pk %}">{{problem.name}}</a></td>
                 <td class="td-center">{{problem.npres}}</td>
                 <td class="td-center">{{problem.meangradrep|floatformat:2}}</td>
                 <td class="td-center">{{problem.meangradopp|floatformat:2}}</td>
