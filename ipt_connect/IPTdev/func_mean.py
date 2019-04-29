@@ -4,7 +4,7 @@ def mean(vec):
 	if len(vec) != 0:
 		return float(sum(vec)) / len(vec)
 	else:
-		return 0
+		return 0.0
 
 def ipt_mean(vec):
     if len(vec) in [5, 6]:
