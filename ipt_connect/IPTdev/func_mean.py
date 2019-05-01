@@ -34,7 +34,9 @@ def ipt_mean(vec):
     return mean(vec)
 
 def iypt_mean(vec):
-    vec.append((vec.pop(0) + vec.pop()) / 2.0)
+    if len(vec) > 1 :
+        vec.append((vec.pop(0) + vec.pop()) / 2.0)
+        return mean(vec)
     return mean(vec)
 
 def ttn_mean(vec):
