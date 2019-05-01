@@ -1,4 +1,5 @@
 # All functions for calculating mean value are independent of other models, so don't use import
+import math
 
 def mean(vec):
 	if len(vec) != 0:
@@ -12,7 +13,7 @@ def ipt_mean(vec):
     elif len(vec) in [7, 8]:
         nreject = 2
     else:
-        nreject = round(len(vec) / 4.0)
+        nreject = int(math.ceil(len(vec) / 4.0))
 
 
     # TODO: the following code looks messy, but it works.
