@@ -38,7 +38,7 @@ def distribute_bonus_points_4(points_list):
 	# 3 teams ex-aequo
 	if points_list[0] == points_list[1] and points_list[1] == points_list[2]:
 		return [4.0/3.0, 4.0/3.0, 4.0/3.0, 0.0]
-	if points_list[0] == points_list[1] and points_list[0] == points_list[2]:
+	if points_list[1] == points_list[2] and points_list[2] == points_list[3]:
 		return [2.0, 1.0/3.0, 1.0/3.0, 1.0/3.0]
 	######################
 
