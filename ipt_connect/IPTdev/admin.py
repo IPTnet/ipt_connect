@@ -15,8 +15,11 @@ admin.site.register(SiteConfiguration, SingletonModelAdmin)
 from .models import SiteConfiguration
 # config = SiteConfiguration.objects.get()
 
-# get_solo will create the item if it does not already exist
-config = SiteConfiguration.get_solo()
+try:
+    # get_solo will create the item if it does not already exist
+    config = SiteConfiguration.get_solo()
+except:
+    pass
 
 class JuryGradeInline(admin.TabularInline):
 	model = JuryGrade
