@@ -25,7 +25,7 @@ website_url = 'http://iturnir.ru'
 repo_url = 'https://github.com/IPTnet/ipt_connect'
 
 # Models parameters
-npf = 4                 # Number of selective (qualifying) Physics fights
+npf = 3                 # Number of selective (qualifying) Physics fights
 semifinals_quantity = 0 # Quantity of semifinals. Every semifinal should be a separate fight!
 with_final_pf = True    # Is there a Final Fight ?
 reject_malus = 0.2      # Malus for too many rejections
@@ -105,15 +105,15 @@ fights = {
     # (i.e. like a Final: every team decides what to present)
     # This parameter influences (now) only on visibility of "Forbidden problems" block
     # while rendering the round detail
-    'challenge_procedure': [True, True, True, True, False],
+    'challenge_procedure': [True, True, True, False],
 
     # A situation when a team chooses a problem without challenge,
     # but there are problems which cannot be chosen, is easy to imagine
     # So, we have a separate setting for forbidden problems!
-    'problems_forbidden': [True, True, True, True, False],
+    'problems_forbidden': [True, True, True, False],
 
     # And, finally, you can specify names for all the fights to be displayed
     # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
     # or "Semifinal A", or smth another.
-    'names': ['Научный бой 1','Научный бой 2','Научный бой 3','Научный бой 4','Финал']
+    'names': ['Научный бой 1','Научный бой 2','Научный бой 3','Финал']
 }
