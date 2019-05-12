@@ -587,13 +587,13 @@ def make_dict_from_csv_row(row):
 	# This is just a map to control numbers of columns which are imported
 	# No logic should be placed here!
 	return {
-		'name': row[1],
-		'surname': row[3],
-		'affiliation': row[4],
-		'team': row[9],
-		'role': row[10],
-		'is_jury': row[11],
-		'email': row[19],
+		'name': row[1] + ' ' + row[2],
+		'surname': row[0],
+		'team': row[3],
+		'role': 'Team member',
+		'is_jury': '0',
+		'affiliation': '',
+		'email': '',
 	}
 
 
