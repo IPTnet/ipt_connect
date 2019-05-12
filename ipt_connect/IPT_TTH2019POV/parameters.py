@@ -12,25 +12,25 @@ app_version = "IPT_TTH2019POV"[3:]     # keyword for url parsing
 
 
 NAME = {
-    'short': 'IPT dev',
-    'full': 'International Physicists\' Tournament - Development Instance',
+    'short': 'ТТН 2019 Приволжье',
+    'full': 'Турнир Трёх Наук 2019 - Приволжский этап',
     # ... and the name used in tournament overview
-    'front': '11th International Physicists\' Tournament',
+    'front': 'Приволжский этап Федерального Студенческого Турнира Трёх Наук',
 }
 
-poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
+poster_url = ''
 
-website_url = 'http://dev.iptnet.info'
+website_url = 'http://iturnir.ru'
 
 repo_url = 'https://github.com/IPTnet/ipt_connect'
 
 # Models parameters
-npf = 4                 # Number of selective (qualifying) Physics fights
-semifinals_quantity = 2 # Quantity of semifinals. Every semifinal should be a separate fight!
+npf = 3                 # Number of selective (qualifying) Physics fights
+semifinals_quantity = 0 # Quantity of semifinals. Every semifinal should be a separate fight!
 with_final_pf = True    # Is there a Final Fight ?
 reject_malus = 0.2      # Malus for too many rejections
-npfreject_max = 3       # Maximum number of tactical rejection (per fight)
-netreject_max = 1       # Maximum number of eternal rejection
+npfreject_max = 2       # Maximum number of tactical rejection (per fight)
+netreject_max = 2       # Maximum number of eternal rejection
 
 # Should we reset the point sum before semifinals?
 # Does not affect reporter's coeff., rejections nor problems forbidden
@@ -56,11 +56,11 @@ personal_ranking = {
 }
 
 # Calculating the mean
-mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
+mean = 'ttn_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
 
 # Is the fight status displayed?
 # Looks like there are some problems with it, so making it switchable
-display_pf_status = True
+display_pf_status = False
 
 # Is the fight summary displayed?
 # Turn it off in case of any problems
@@ -73,7 +73,7 @@ display_pf_summary_bonus_points = True
 # Do we respect pools?
 # If true, then the pool is displayed in ranking table
 # and the 'Ranking' menu item leads to poolranking
-enable_pools = True
+enable_pools = False
 
 
 # Are the bonus points entered manually?
@@ -83,7 +83,7 @@ enable_pools = True
 # Switching from False to True: local bonuses are preserved as counted, you can edit them manually
 # Switching from True to False: local bonuses can be automatically overwritten,
 # global bonuses are hidden and ignored so far
-manual_bonus_points = False
+manual_bonus_points = True
 
 # Do we display coreporters publicly?
 display_coreporters = True
@@ -98,22 +98,22 @@ fights = {
     # Bonus points multipliers
     # You can set it to 2 for semifinals or the last selective PFs to emphase the drama.
     # You can also set it to zero for the final with the same purpose!
-    'bonus_multipliers' : [1,1,1,1,2,2,0],
+    'bonus_multipliers' : [0,0,0,0,0],
 
     # Is there challenge procedure at the beginning of each round of the fight?
     # Some tournaments, such as Syberian IYPT, play the last selective PF without the challenge procedure
     # (i.e. like a Final: every team decides what to present)
     # This parameter influences (now) only on visibility of "Forbidden problems" block
     # while rendering the round detail
-    'challenge_procedure': [True, True, True, True, True, True, False],
+    'challenge_procedure': [True, True, True, False],
 
     # A situation when a team chooses a problem without challenge,
     # but there are problems which cannot be chosen, is easy to imagine
     # So, we have a separate setting for forbidden problems!
-    'problems_forbidden': [True, True, True, True, True, True, False],
+    'problems_forbidden': [True, True, True, False],
 
     # And, finally, you can specify names for all the fights to be displayed
     # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
     # or "Semifinal A", or smth another.
-    'names': ['Selective Fight 1','Selective Fight 2','Selective Fight 3','Selective Fight 4','Semifinal 1','Semifinal 2','IPT_TTH2019POV Final']
+    'names': ['Scientific Fight 1','Scientific Fight 2','Scientific Fight 3','The Final']
 }
