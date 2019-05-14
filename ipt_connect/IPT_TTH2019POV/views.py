@@ -23,6 +23,11 @@ cache_duration_short = 1 * 1
 cache_duration = 20 * 1
 
 def ninja_test(user):
+	# TODO: this is a dirty hack to support multi instances with different languages
+	# Firstly, the values from `params` should be used.
+	# Secondly, all the stuff should be moved to a more appropriate place!
+	from django.utils.translation import activate
+	activate('ru-RU')
 	return user.is_staff or not SiteConfiguration.get_solo().only_staff_access
 
 @cache_page(cache_duration_short)
