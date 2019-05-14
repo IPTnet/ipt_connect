@@ -601,7 +601,7 @@ def make_dict_from_csv_row(row):
 		'surname': row[0],
 		'team': row[3],
 		'role': 'Team member',
-		'is_jury': '0',
+		'is_jury': row[4],
 		'affiliation': '',
 		'email': '',
 	}
@@ -611,7 +611,7 @@ def make_row_importable(row):
 	# All the logic needed to parse the row
 	# Some edition-specific things are hardcoded here
 
-	if row['team'] == 'Organisational Registration (IOC, ExeCom, invited guest, etc.)':
+	if row['team'] in ['Organisational Registration (IOC, ExeCom, invited guest, etc.)', '']:
 		# No team reference needed
 		row['team'] = None
 	else:
@@ -620,7 +620,7 @@ def make_row_importable(row):
 			name=row['team']
 		)
 
-	row['is_jury'] = (row['is_jury'] != '0')
+	row['is_jury'] = not (row['is_jury'] in ['0',''])
 
 	if row['role'] == 'Team captain':
 		row['role'] = 'TC'
