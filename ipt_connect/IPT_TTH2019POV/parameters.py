@@ -115,5 +115,5 @@ fights = {
     # And, finally, you can specify names for all the fights to be displayed
     # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
     # or "Semifinal A", or smth another.
-    'names': ['Научный бой 1','Научный бой 2','Научный бой 3','Финал']
+    'names': ['Scientific Fight 1','Scientific Fight 2','Scientific Fight 3','The Final']
 }
