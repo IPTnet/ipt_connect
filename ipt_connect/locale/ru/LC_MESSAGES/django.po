@@ -69,10 +69,59 @@ msgstr "Участники"
 msgid "Jury members"
 msgstr "Члены жюри"
 
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:7
+msgid "Problem"
+msgstr "Задача"
+
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:10
 #: IPTdev/templates/IPTdev/participants_export.html:5
 msgid "Remarks"
 msgstr "Примечания"
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:20
+msgid "eternally rejected by reporter"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:25
+msgid "reported by reporter"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:26
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:33
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:40
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:52
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:59
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:66
+msgid "grade:"
+msgstr "оценка:"
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:32
+msgid "opposed by opponent"
+msgstr "оппонирована Оппонентом"
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:39
+msgid "reported by opponent"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:46
+msgid "tried by opponent"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:51
+msgid "reviewed by opponent"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:58
+msgid "opposed by reporter"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:65
+msgid "reviewed by reporter"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:72
+msgid "tried by reporter"
+msgstr ""
 
 #: IPTdev/templates/IPTdev/includes/list_rounds.html:7
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:29
