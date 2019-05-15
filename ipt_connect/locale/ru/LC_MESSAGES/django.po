@@ -302,10 +302,7 @@ msgid "Mean grade"
 msgstr "Средний балл"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:4
-#: IPTdev/templates/IPTdev/rounds.html:19
 #: IPTdev/templates/IPTdev/rounds.html:20
-#: IPTdev/templates/IPTdev/rounds.html:21
-#: IPTdev/templates/IPTdev/rounds.html:22
 #: IPTdev/templates/IPTdev/team_detail.html:53
 msgid "Physics Fight"
 msgstr "Физические Бой"
