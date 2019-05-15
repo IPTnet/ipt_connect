@@ -69,6 +69,33 @@ msgstr "Участники"
 msgid "Jury members"
 msgstr "Члены жюри"
 
+#: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:10
+#: IPTdev/templates/IPTdev/participants_export.html:5
+msgid "Remarks"
+msgstr "Примечания"
+
+#: IPTdev/templates/IPTdev/includes/list_rounds.html:7
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:29
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:109
+msgid "Round"
+msgstr "Действие"
+
+#: IPTdev/templates/IPTdev/includes/ranking_table.html:6
+msgid "Rank"
+msgstr "Ранг"
+
+#: IPTdev/templates/IPTdev/includes/ranking_table.html:7
+#: IPTdev/templates/IPTdev/participants_all.html:10
+#: IPTdev/templates/IPTdev/participants_export.html:5
+#: IPTdev/templates/IPTdev/participants_overview.html:18
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:105
+msgid "Team"
+msgstr "Команда"
+
+#: IPTdev/templates/IPTdev/includes/ranking_table.html:8
+msgid "Points"
+msgstr "Очки"
+
 #: IPTdev/templates/IPTdev/jury_detail.html:12
 msgid "Team Leader of"
 msgstr "Руководитель"
@@ -167,16 +194,6 @@ msgstr "Оценка"
 msgid "Role"
 msgstr "Роль"
 
-#: IPTdev/templates/IPTdev/participants_all.html:10
-#: IPTdev/templates/IPTdev/participants_export.html:5
-#: IPTdev/templates/IPTdev/participants_overview.html:18
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:102
-#: IPTdev/templates/IPTdev/poolranking.html:16
-#: IPTdev/templates/IPTdev/poolranking.html:65
-#: IPTdev/templates/IPTdev/ranking.html:14
-msgid "Team"
-msgstr "Команда"
-
 #: IPTdev/templates/IPTdev/participants_export.html:5
 msgid "Affiliation"
 msgstr "Присоеденился"
@@ -221,10 +238,6 @@ msgstr "Разнополая комната"
 msgid "Shirt size"
 msgstr "Размер футболки"
 
-#: IPTdev/templates/IPTdev/participants_export.html:5
-msgid "Remarks"
-msgstr "Примечания"
-
 #: IPTdev/templates/IPTdev/participants_overview.html:7
 msgid "Participants overview"
 msgstr "Участники"
@@ -250,13 +263,6 @@ msgstr "Физические Бой"
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:14
 msgid "Room"
 msgstr "Комната"
-
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:26
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:106
-#: IPTdev/templates/IPTdev/rounds.html:32
-#: IPTdev/templates/IPTdev/rounds.html:57
-msgid "Round"
-msgstr "Действие"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:34
 msgid "Jurés"
@@ -311,18 +317,6 @@ msgstr ""
 #: IPTdev/templates/IPTdev/poolranking.html:10
 msgid "Pool A"
 msgstr "Группа A"
-
-#: IPTdev/templates/IPTdev/poolranking.html:15
-#: IPTdev/templates/IPTdev/poolranking.html:64
-#: IPTdev/templates/IPTdev/ranking.html:13
-msgid "Rank"
-msgstr "Ранг"
-
-#: IPTdev/templates/IPTdev/poolranking.html:17
-#: IPTdev/templates/IPTdev/poolranking.html:66
-#: IPTdev/templates/IPTdev/ranking.html:15
-msgid "Points"
-msgstr "Очки"
 
 #: IPTdev/templates/IPTdev/poolranking.html:18
 #: IPTdev/templates/IPTdev/poolranking.html:67
