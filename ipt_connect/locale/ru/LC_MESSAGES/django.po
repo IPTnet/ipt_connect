@@ -424,6 +424,9 @@ msgstr "Нажмите на задачу для подробной информ�
 msgid "# of presentations"
 msgstr "Количество докладов"
 
+#: IPTdev/templates/IPTdev/ranking.html:9
+msgid "Selective Fights Ranking"
+msgstr ""
 
 #: IPTdev/templates/IPTdev/ranking.html:19
 msgid "Pools Ranking"
