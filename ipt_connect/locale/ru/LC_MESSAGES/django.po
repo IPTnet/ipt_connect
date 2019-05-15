@@ -327,12 +327,6 @@ msgstr "Средний балл"
 msgid "Personal ranking"
 msgstr "Личный рейтинг"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:12
-#: IPTdev/templates/IPTdev/rounds.html:20
-#: IPTdev/templates/IPTdev/team_detail.html:53
-msgid "Physics Fight"
-msgstr "Физические Бой"
-
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:14
 msgid "Room"
 msgstr "Комната"
@@ -554,6 +548,10 @@ msgstr "Коэффициент Докладчика"
 #: IPTdev/templates/IPTdev/team_detail.html:53
 msgid "for the Reporter in the"
 msgstr "в"
+
+#: IPTdev/templates/IPTdev/team_detail.html:53
+msgid "Physics Fight"
+msgstr "Физический Бой"
 
 #: IPTdev/templates/IPTdev/team_detail.html:57
 msgid "Bonus points"
