@@ -145,6 +145,10 @@ msgstr "Команда"
 msgid "Points"
 msgstr "Очки"
 
+#: IPTdev/templates/IPTdev/includes/ranking_table.html:10
+msgid "Semifinal points"
+msgstr ""
+
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:13
 msgid "Pool"
 msgstr "Группа"
@@ -160,6 +164,10 @@ msgstr "бой идёт"
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:49
 msgid "fight(s) ended"
 msgstr "боёв завершено"
+
+#: IPTdev/templates/IPTdev/includes/semifinal_ranking.html:6
+msgid "Semifinal Ranking"
+msgstr "Полуфинальный рейтинг"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:12
 msgid "Team Leader of"
