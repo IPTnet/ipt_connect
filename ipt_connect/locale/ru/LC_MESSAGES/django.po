@@ -296,6 +296,10 @@ msgstr "Коэфф. док."
 msgid "Sum"
 msgstr "Сумма"
 
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:115
+msgid "Bonus"
+msgstr "Бонус"
+
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:134
 msgid "No grade registered so far !"
 msgstr ""
