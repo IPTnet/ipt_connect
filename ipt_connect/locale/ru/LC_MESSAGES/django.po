@@ -390,7 +390,7 @@ msgstr "Группа A"
 msgid "ended"
 msgstr "завершено"
 
-#: IPTdev/templates/IPTdev/poolranking.html:58
+#: IPTdev/templates/IPTdev/poolranking.html:19
 msgid "Pool B"
 msgstr "Группа B"
 
