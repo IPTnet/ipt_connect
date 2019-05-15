@@ -28,6 +28,23 @@ msgstr "Немного терпения"
 msgid "Processing the grades..."
 msgstr "Обработка оценок..."
 
+#: IPTdev/templates/IPTdev/build_tactics.html:9
+msgid "This is beta feature, use it at your own risk!"
+msgstr "Это экспериментальный инструмент. "
+"Вы используете его на свой страх и риск!"
+
+#: IPTdev/templates/IPTdev/build_tactics.html:22
+msgid "Build tactics!"
+msgstr "Построить тактику!"
+
+#: IPTdev/templates/IPTdev/build_tactics.html:30
+msgid "Problems available:"
+msgstr "Доступные задачи:"
+
+#: IPTdev/templates/IPTdev/build_tactics.html:38
+msgid "Запрещённые задачи:"
+msgstr "Обзор задач"
+
 #: IPTdev/templates/IPTdev/head.html:25
 msgid "Physics Fights"
 msgstr "Физические Бои"
