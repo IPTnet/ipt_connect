@@ -34,70 +34,10 @@ msgstr "Обработка оценок..."
 msgid "Final"
 msgstr "Финал"
 
-#: IPTdev/templates/IPTdev/finalround_detail.html:10
-#: IPTdev/templates/IPTdev/finalround_detail.html:76
-#: IPTdev/templates/IPTdev/finalround_detail.html:101
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:16
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:93
-#: IPTdev/templates/IPTdev/rounds.html:32
-#: IPTdev/templates/IPTdev/rounds.html:57
-msgid "Round"
-msgstr "Действие"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:14
-#: IPTdev/templates/IPTdev/round_detail.html:71
-msgid "Problem presented"
-msgstr "Доложенная задача"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:22
-#: IPTdev/templates/IPTdev/finalround_detail.html:82
-#: IPTdev/templates/IPTdev/round_detail.html:15
-msgid "Reporter"
-msgstr "Докладчик"
 
 # На всякий случай
 msgid "Coreporter"
 msgstr "Содокладчик"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:23
-#: IPTdev/templates/IPTdev/finalround_detail.html:83
-#: IPTdev/templates/IPTdev/round_detail.html:16
-msgid "Opponent"
-msgstr "Оппонент"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:24
-#: IPTdev/templates/IPTdev/finalround_detail.html:84
-#: IPTdev/templates/IPTdev/round_detail.html:17
-msgid "Reviewer"
-msgstr "Рецензент"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:41
-#: IPTdev/templates/IPTdev/head.html:41
-#: IPTdev/templates/IPTdev/round_detail.html:78
-msgid "Jury members"
-msgstr "Члены жюри"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:42
-#: IPTdev/templates/IPTdev/round_detail.html:79
-msgid "Reporter grade"
-msgstr "Оценка за доклад"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:43
-#: IPTdev/templates/IPTdev/round_detail.html:80
-msgid "Opponent grade"
-msgstr "Оценка за оппонирование"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:44
-#: IPTdev/templates/IPTdev/round_detail.html:81
-msgid "Reviewer grade"
-msgstr "Оценка за рецензирование"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:57
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:67
-#: IPTdev/templates/IPTdev/problem_detail.html:55
-#: IPTdev/templates/IPTdev/round_detail.html:95
-msgid "MEAN"
-msgstr "СРЕДНЕЕ"
 
 #: IPTdev/templates/IPTdev/finalround_detail.html:67
 msgid ""
@@ -107,10 +47,6 @@ msgid ""
 msgstr "Максимальные и минимальные оценки могут быть отброшены "
 "в зависимости от количества членов жюри."
 "Коэффициент роли здесь не учитывается"
-
-#: IPTdev/templates/IPTdev/finalround_detail.html:105
-msgid "This round has not started yet !"
-msgstr "Этот раунд пока не начался!"
 
 #: IPTdev/templates/IPTdev/head.html:25
 msgid "Physics Fights"
@@ -130,6 +66,11 @@ msgstr "Проблемы"
 #: IPTdev/templates/IPTdev/team_detail.html:13
 msgid "Participants"
 msgstr "Участники"
+
+#: IPTdev/templates/IPTdev/head.html:41
+#: IPTdev/templates/IPTdev/round_detail.html:120
+msgid "Jury members"
+msgstr "Члены жюри"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:12
 msgid "Team Leader of"
@@ -313,6 +254,13 @@ msgstr "Физические Бой"
 msgid "Room"
 msgstr "Комната"
 
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:26
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:106
+#: IPTdev/templates/IPTdev/rounds.html:32
+#: IPTdev/templates/IPTdev/rounds.html:57
+msgid "Round"
+msgstr "Действие"
+
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:31
 msgid "Jurés"
 msgstr ""
@@ -328,6 +276,12 @@ msgstr "Опп."
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:43
 msgid "Rev."
 msgstr "Рец."
+
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:78
+#: IPTdev/templates/IPTdev/problem_detail.html:55
+#: IPTdev/templates/IPTdev/round_detail.html:137
+msgid "MEAN"
+msgstr "СРЕДНЕЕ"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:97
 #: IPTdev/templates/IPTdev/round_detail.html:150
@@ -445,7 +399,19 @@ msgstr "Группа"
 msgid "Pools Ranking"
 msgstr "Рейтинг по группам"
 
-#: IPTdev/templates/IPTdev/round_detail.html:47
+#: IPTdev/templates/IPTdev/round_detail.html:29
+msgid "Reporter"
+msgstr "Докладчик"
+
+#: IPTdev/templates/IPTdev/round_detail.html:30
+msgid "Opponent"
+msgstr "Оппонент"
+
+#: IPTdev/templates/IPTdev/round_detail.html:31
+msgid "Reviewer"
+msgstr "Рецензент"
+
+#: IPTdev/templates/IPTdev/round_detail.html:83
 msgid "has already been presented in this Fight."
 msgstr "была ранее доложена в этом Бою"
 
@@ -469,7 +435,23 @@ msgstr "была доложена Оппонентом ранее"
 msgid "No forbidden problems."
 msgstr "Нет запрещённых проблем"
 
-#: IPTdev/templates/IPTdev/round_detail.html:114
+#: IPTdev/templates/IPTdev/round_detail.html:107
+msgid "Problem presented"
+msgstr "Доложенная задача"
+
+#: IPTdev/templates/IPTdev/round_detail.html:121
+msgid "Reporter grade"
+msgstr "Оценка за доклад"
+
+#: IPTdev/templates/IPTdev/round_detail.html:122
+msgid "Opponent grade"
+msgstr "Оценка за оппонирование"
+
+#: IPTdev/templates/IPTdev/round_detail.html:123
+msgid "Reviewer grade"
+msgstr "Оценка за рецензирование"
+
+#: IPTdev/templates/IPTdev/round_detail.html:159
 msgid "Rejection(s)"
 msgstr "Отказы"
 
@@ -488,6 +470,10 @@ msgstr "Вечные отказы"
 #: IPTdev/templates/IPTdev/round_detail.html:175
 msgid "No eternal rejections"
 msgstr "Нет вечных отказов"
+
+#: IPTdev/templates/IPTdev/round_detail.html:185
+msgid "This round has not started yet !"
+msgstr "Этот раунд пока не начался!"
 
 #: IPTdev/templates/IPTdev/rounds.html:8
 msgid "Rounds overview"
