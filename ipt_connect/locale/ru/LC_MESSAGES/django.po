@@ -116,7 +116,7 @@ msgstr "Этот раунд пока не начался!"
 
 #: IPTdev/templates/IPTdev/head.html:22
 msgid "Physics Fights"
-msgstr "Физичекие Бои"
+msgstr "Физические Бои"
 
 #: IPTdev/templates/IPTdev/head.html:25
 #: IPTdev/templates/IPTdev/poolranking.html:9
@@ -511,11 +511,11 @@ msgstr "с"
 #: IPTdev/templates/IPTdev/team_detail.html:8
 #: IPTdev/templates/IPTdev/team_detail.html:16
 msgid "points"
-msgstr "баллами"
+msgstr "баллов"
 
 #: IPTdev/templates/IPTdev/team_detail.html:16
 msgid "gathered"
-msgstr "набрано"
+msgstr " - набрано"
 
 #: IPTdev/templates/IPTdev/team_detail.html:32
 msgid "Problems presented"
@@ -527,11 +527,11 @@ msgstr "Штрафы"
 
 #: IPTdev/templates/IPTdev/team_detail.html:53
 msgid "Multiplicative coefficient of"
-msgstr "Коэффициент"
+msgstr "Коэффициент Докладчика"
 
 #: IPTdev/templates/IPTdev/team_detail.html:53
 msgid "for the Reporter in the"
-msgstr "для Докладчика в"
+msgstr "в"
 
 #: IPTdev/templates/IPTdev/teams_overview.html:6
 msgid "Teams Overview"
