@@ -549,7 +549,7 @@ msgstr "Команды"
 msgid "Welcome!"
 msgstr "Добро пожаловать!"
 
-#: IPTdev/templates/IPTdev/tournament_overview.html:15
+#: IPTdev/templates/IPTdev/tournament_overview.html:20
 msgid "This interface gathers the results of the "
 msgstr "Этот сайт содержит результаты "
 
@@ -557,7 +557,7 @@ msgstr "Этот сайт содержит результаты "
 msgid "9th International Physicists' Tournament"
 msgstr "9-го Международного Турнира по Физике"
 
-#: IPTdev/templates/IPTdev/tournament_overview.html:17
+#: IPTdev/templates/IPTdev/tournament_overview.html:24
 msgid ""
 "Most of the displayed elements can be clicked on. You can access teams, "
 "individual participant or jury member statistics, as well as details of each "
@@ -565,7 +565,7 @@ msgid ""
 msgstr "На большинство элементов можно нажать. Сделайте это для просмотра информации "
 "об участниках, членах жюри, а также детальной информации о каждом Действии, Бое или Задаче."
 
-#: IPTdev/templates/IPTdev/tournament_overview.html:19
+#: IPTdev/templates/IPTdev/tournament_overview.html:27
 #, python-format
 msgid ""
 "The results are updated continuously as the Physics Fights go on, resulting "
@@ -574,11 +574,11 @@ msgid ""
 msgstr "Все результаты обновляются постепенно на протяжении всех Боёв. Поэтому "
 "иногда информация может оказаться не полной. Пожалуйста проверяйте свой E-mail и "
 
-#: IPTdev/templates/IPTdev/tournament_overview.html:19
+#: IPTdev/templates/IPTdev/tournament_overview.html:28
 msgid "the website"
 msgstr "этот сайт"
 
-#: IPTdev/templates/IPTdev/tournament_overview.html:19
+#: IPTdev/templates/IPTdev/tournament_overview.html:29
 msgid " for the official announcements of the results after each Fight."
 msgstr " для получения официальной информации о результатах каждого Боя."
 
