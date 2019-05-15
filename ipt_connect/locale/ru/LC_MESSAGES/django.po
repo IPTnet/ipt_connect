@@ -22,7 +22,7 @@ msgstr ""
 
 #: IPTdev/templates/IPTdev/bebacksoon.html:7
 msgid "A little bit of patience"
-msgstr "Немного терпения"
+msgstr "Спокойствие, только спокойствие!"
 
 #: IPTdev/templates/IPTdev/bebacksoon.html:12
 msgid "Processing the grades..."
