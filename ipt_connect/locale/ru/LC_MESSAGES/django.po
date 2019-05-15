@@ -553,10 +553,6 @@ msgstr "Добро пожаловать!"
 msgid "This interface gathers the results of the "
 msgstr "Этот сайт содержит результаты "
 
-#: IPTdev/templates/IPTdev/tournament_overview.html:15
-msgid "9th International Physicists' Tournament"
-msgstr "9-го Международного Турнира по Физике"
-
 #: IPTdev/templates/IPTdev/tournament_overview.html:24
 msgid ""
 "Most of the displayed elements can be clicked on. You can access teams, "
