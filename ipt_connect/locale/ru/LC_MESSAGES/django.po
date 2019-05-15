@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 16:41+0000\n"
+"POT-Creation-Date: 2019-05-15 17:10+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -33,8 +33,8 @@ msgid "Physics Fights"
 msgstr "Физические Бои"
 
 #: IPTdev/templates/IPTdev/head.html:29 IPTdev/templates/IPTdev/head.html:31
-#: IPTdev/templates/IPTdev/poolranking.html:9
-#: IPTdev/templates/IPTdev/poolranking.html:58
+#: IPTdev/templates/IPTdev/poolranking.html:10
+#: IPTdev/templates/IPTdev/poolranking.html:19
 msgid "Ranking"
 msgstr "Рейтинг"
 
@@ -230,7 +230,7 @@ msgstr "Личный рейтинг"
 msgid "Physics Fight"
 msgstr "Физические Бой"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:12
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:14
 msgid "Room"
 msgstr "Комната"
 
@@ -241,29 +241,29 @@ msgstr "Комната"
 msgid "Round"
 msgstr "Действие"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:31
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:34
 msgid "Jurés"
 msgstr ""
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:37
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:40
 msgid "Rep."
 msgstr "Док."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:40
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:43
 msgid "Opp."
 msgstr "Опп."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:43
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:46
 msgid "Rev."
 msgstr "Рец."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:78
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:81
 #: IPTdev/templates/IPTdev/problem_detail.html:55
 #: IPTdev/templates/IPTdev/round_detail.html:137
 msgid "MEAN"
 msgstr "СРЕДНЕЕ"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:97
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:100
 #: IPTdev/templates/IPTdev/round_detail.html:150
 msgid ""
 "The lowest and highest grade(s) might be discarded according to the number "
@@ -271,23 +271,23 @@ msgid ""
 msgstr "Максимальные и минимальные оценки могут быть отброшены "
 "в зависимости от количества членов жюри."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:103
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:106
 msgid "Rep. mult."
 msgstr "Коэфф. док."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:110
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:113
 msgid "Sum"
 msgstr "Сумма"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:128
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:134
 msgid "No grade registered so far !"
 msgstr ""
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:135
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:142
 msgid "No round played so far !"
 msgstr ""
 
-#: IPTdev/templates/IPTdev/poolranking.html:9
+#: IPTdev/templates/IPTdev/poolranking.html:10
 msgid "Pool A"
 msgstr "Группа A"
 
@@ -332,8 +332,7 @@ msgstr "завершено"
 msgid "Pool B"
 msgstr "Группа B"
 
-#: IPTdev/templates/IPTdev/poolranking.html:104
-#: IPTdev/templates/IPTdev/ranking.html:7
+#: IPTdev/templates/IPTdev/poolranking.html:28
 msgid "General Ranking"
 msgstr "Глобальный рейтинг"
 
@@ -367,7 +366,7 @@ msgstr "Количество докладов"
 msgid "Pool"
 msgstr "Группа"
 
-#: IPTdev/templates/IPTdev/ranking.html:61
+#: IPTdev/templates/IPTdev/ranking.html:19
 msgid "Pools Ranking"
 msgstr "Рейтинг по группам"
 
@@ -458,7 +457,7 @@ msgid ""
 msgstr "Нажмите на Действие для подробной информации. Нажмите на Бой, чтобы получить краткое "
 "представление обо всех действих."
 
-#: IPTdev/templates/IPTdev/rounds.html:52
+#: IPTdev/templates/IPTdev/rounds.html:82
 msgid "The Grand Finale"
 msgstr "Финал"
 
