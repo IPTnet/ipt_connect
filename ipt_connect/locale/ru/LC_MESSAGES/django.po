@@ -587,23 +587,28 @@ msgstr "На большинство элементов можно нажать. 
 #: IPTdev/templates/IPTdev/tournament_overview.html:27
 #, python-format
 msgid ""
-"The results are updated continuously as the Physics Fights go on, resulting "
-"in a display that might not be completely accurate 100%% of the time (due to "
-"grade checking). Please check your emails and "
-msgstr "Все результаты обновляются постепенно на протяжении всех Боёв. Поэтому "
-"иногда информация может оказаться не полной. Пожалуйста проверяйте свой E-mail и "
-
-#: IPTdev/templates/IPTdev/tournament_overview.html:28
-msgid "the website"
-msgstr "этот сайт"
-
-#: IPTdev/templates/IPTdev/tournament_overview.html:29
-msgid " for the official announcements of the results after each Fight."
-msgstr " для получения официальной информации о результатах каждого Боя."
+"The results are updated once after each round - you will be notified via "
+"email once the update has been made."
+msgstr ""
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:21
 msgid ""
 "In case you spot a bug or have any suggestion to improve the software, "
-"please get in touch with us at webmaster (a) iptnet (dot) info."
-msgstr "Если вы нашли ошибку или у вас есть предложения по улучшению программного обеспечения, "
-"пожалуйста свяжитесь с нами: webmaster (a) iptnet (dot) info."
+"please don't hesitate to open an issue"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/tournament_overview.html:32
+msgid "at our repository"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/tournament_overview.html:33
+msgid "or to get in touch with us at webmaster (a) iptnet (dot) info."
+msgstr ""
+
+#: IPTdev/templates/IPTdev/tournament_overview.html:37
+msgid "You can also try"
+msgstr ""
+
+#: IPTdev/templates/IPTdev/tournament_overview.html:38
+msgid "this beta tool to list forbidden problems."
+msgstr ""
