@@ -489,12 +489,7 @@ msgstr "Нет тактических отказов"
 msgid "Eternal rejection(s)"
 msgstr "Вечные отказы"
 
-#: .\IPTdev\templates\IPTdev\round_detail.html:131
-msgid "No eternal rejection"
-msgstr "Нет вечного отказа"
-
-#: .\IPTdev\templates\IPTdev\round_detail.html:131
-# На будущее
+#: IPTdev/templates/IPTdev/round_detail.html:131
 msgid "No eternal rejections"
 msgstr "Нет вечных отказов"
 
