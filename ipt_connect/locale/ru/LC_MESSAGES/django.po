@@ -46,8 +46,9 @@ msgid "Запрещённые задачи:"
 msgstr "Обзор задач"
 
 #: IPTdev/templates/IPTdev/head.html:25
+#iturnir
 msgid "Physics Fights"
-msgstr "Физические Бои"
+msgstr "Научные Бои"
 
 #: IPTdev/templates/IPTdev/head.html:29 IPTdev/templates/IPTdev/head.html:31
 #: IPTdev/templates/IPTdev/poolranking.html:10
