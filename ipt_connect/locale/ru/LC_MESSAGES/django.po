@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 16:35+0000\n"
+"POT-Creation-Date: 2019-05-15 16:41+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -232,7 +232,7 @@ msgstr "Роль"
 #: IPTdev/templates/IPTdev/participants_all.html:10
 #: IPTdev/templates/IPTdev/participants_export.html:5
 #: IPTdev/templates/IPTdev/participants_overview.html:18
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:89
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:102
 #: IPTdev/templates/IPTdev/poolranking.html:16
 #: IPTdev/templates/IPTdev/poolranking.html:65
 #: IPTdev/templates/IPTdev/ranking.html:14
@@ -303,29 +303,29 @@ msgstr "Средний балл"
 msgid "Personal ranking"
 msgstr "Личный рейтинг"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:4
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:12
 #: IPTdev/templates/IPTdev/rounds.html:20
 #: IPTdev/templates/IPTdev/team_detail.html:53
 msgid "Physics Fight"
 msgstr "Физические Бой"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:4
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:12
 msgid "Room"
 msgstr "Комната"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:20
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:31
 msgid "Jurés"
 msgstr ""
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:26
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:37
 msgid "Rep."
 msgstr "Док."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:29
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:40
 msgid "Opp."
 msgstr "Опп."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:32
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:43
 msgid "Rev."
 msgstr "Рец."
 
@@ -337,19 +337,19 @@ msgid ""
 msgstr "Максимальные и минимальные оценки могут быть отброшены "
 "в зависимости от количества членов жюри."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:90
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:103
 msgid "Rep. mult."
 msgstr "Коэфф. док."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:97
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:110
 msgid "Sum"
 msgstr "Сумма"
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:115
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:128
 msgid "No grade registered so far !"
 msgstr ""
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:121
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:135
 msgid "No round played so far !"
 msgstr ""
 
@@ -449,23 +449,23 @@ msgstr "Рейтинг по группам"
 msgid "has already been presented in this Fight."
 msgstr "была ранее доложена в этом Бою"
 
-#: IPTdev/templates/IPTdev/round_detail.html:51
+#: IPTdev/templates/IPTdev/round_detail.html:87
 msgid "has already been permanently rejected."
 msgstr "ранее был дан вечный отказ"
 
-#: IPTdev/templates/IPTdev/round_detail.html:53
+#: IPTdev/templates/IPTdev/round_detail.html:89
 msgid "has been presented earlier by the Reporter"
 msgstr "была доложена Докладчиком ранее"
 
-#: IPTdev/templates/IPTdev/round_detail.html:55
+#: IPTdev/templates/IPTdev/round_detail.html:91
 msgid "has been opposed earlier by the Opponent"
 msgstr "была оппонирована Оппонентом ранее"
 
-#: IPTdev/templates/IPTdev/round_detail.html:57
+#: IPTdev/templates/IPTdev/round_detail.html:93
 msgid "has been presented earlier by the Opponent"
 msgstr "была доложена Оппонентом ранее"
 
-#: IPTdev/templates/IPTdev/round_detail.html:60
+#: IPTdev/templates/IPTdev/round_detail.html:96
 msgid "No forbidden problems."
 msgstr "Нет запрещённых проблем"
 
@@ -473,19 +473,19 @@ msgstr "Нет запрещённых проблем"
 msgid "Rejection(s)"
 msgstr "Отказы"
 
-#: IPTdev/templates/IPTdev/round_detail.html:117
+#: IPTdev/templates/IPTdev/round_detail.html:162
 msgid "Tactical rejection(s)"
 msgstr "Тактические отказы"
 
-#: IPTdev/templates/IPTdev/round_detail.html:120
+#: IPTdev/templates/IPTdev/round_detail.html:166
 msgid "No tactical rejections"
 msgstr "Нет тактических отказов"
 
-#: IPTdev/templates/IPTdev/round_detail.html:125
+#: IPTdev/templates/IPTdev/round_detail.html:171
 msgid "Eternal rejection(s)"
 msgstr "Вечные отказы"
 
-#: IPTdev/templates/IPTdev/round_detail.html:131
+#: IPTdev/templates/IPTdev/round_detail.html:175
 msgid "No eternal rejections"
 msgstr "Нет вечных отказов"
 
