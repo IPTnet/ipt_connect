@@ -385,11 +385,6 @@ msgstr ""
 msgid "Pool A"
 msgstr "Группа A"
 
-
-#: IPTdev/templates/IPTdev/poolranking.html:44
-msgid "ended"
-msgstr "завершено"
-
 #: IPTdev/templates/IPTdev/poolranking.html:19
 msgid "Pool B"
 msgstr "Группа B"
@@ -585,7 +580,6 @@ msgstr "На большинство элементов можно нажать. 
 "об участниках, членах жюри, а также детальной информации о каждом Действии, Бое или Задаче."
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:27
-#, python-format
 msgid ""
 "The results are updated once after each round - you will be notified via "
 "email once the update has been made."
@@ -612,3 +606,21 @@ msgstr ""
 #: IPTdev/templates/IPTdev/tournament_overview.html:38
 msgid "this beta tool to list forbidden problems."
 msgstr ""
+
+#~ msgid "ended"
+#~ msgstr "завершено"
+
+#~ msgid ""
+#~ "The results are updated continuously as the Physics Fights go on, "
+#~ "resulting in a display that might not be completely accurate 100%% of the "
+#~ "time (due to grade checking). Please check your emails and "
+#~ msgstr ""
+#~ "Все результаты обновляются постепенно на протяжении всех Боёв. Поэтому "
+#~ "иногда информация может оказаться не полной. Пожалуйста проверяйте свой E-"
+#~ "mail и "
+
+#~ msgid "the website"
+#~ msgstr "этот сайт"
+
+#~ msgid " for the official announcements of the results after each Fight."
+#~ msgstr " для получения официальной информации о результатах каждого Боя."
