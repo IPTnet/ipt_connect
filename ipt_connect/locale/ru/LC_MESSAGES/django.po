@@ -301,6 +301,10 @@ msgstr "Сумма баллов"
 msgid "Mean grade"
 msgstr "Средний балл"
 
+#: IPTdev/templates/IPTdev/participants_overview.html:25
+msgid "Personal ranking"
+msgstr "Личный рейтинг"
+
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:4
 #: IPTdev/templates/IPTdev/rounds.html:20
 #: IPTdev/templates/IPTdev/team_detail.html:53
@@ -334,6 +338,14 @@ msgid ""
 "of jury members."
 msgstr "Максимальные и минимальные оценки могут быть отброшены "
 "в зависимости от количества членов жюри."
+
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:89
+msgid "Rep. mult."
+msgstr "Коэфф. док."
+
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:96
+msgid "Sum"
+msgstr "Сумма"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:113
 msgid "No grade registered so far !"
