@@ -441,8 +441,8 @@ msgid "Pools Ranking"
 msgstr "Рейтинг по группам"
 
 #: IPTdev/templates/IPTdev/round_detail.html:47
-msgid "has already been presented in this Round."
-msgstr "была ранее доложена в этом бою"
+msgid "has already been presented in this Fight."
+msgstr "была ранее доложена в этом Бою"
 
 #: IPTdev/templates/IPTdev/round_detail.html:51
 msgid "has already been permanently rejected."
