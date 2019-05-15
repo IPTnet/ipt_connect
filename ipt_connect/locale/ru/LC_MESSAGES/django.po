@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-15 15:50+0000\n"
+"POT-Creation-Date: 2019-05-15 16:32+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,7 +74,7 @@ msgid "Reviewer"
 msgstr "Рецензент"
 
 #: IPTdev/templates/IPTdev/finalround_detail.html:41
-#: IPTdev/templates/IPTdev/head.html:34
+#: IPTdev/templates/IPTdev/head.html:41
 #: IPTdev/templates/IPTdev/round_detail.html:78
 msgid "Jury members"
 msgstr "Члены жюри"
@@ -114,21 +114,21 @@ msgstr "Максимальные и минимальные оценки могу
 msgid "This round has not started yet !"
 msgstr "Этот раунд пока не начался!"
 
-#: IPTdev/templates/IPTdev/head.html:22
+#: IPTdev/templates/IPTdev/head.html:25
 msgid "Physics Fights"
 msgstr "Физические Бои"
 
-#: IPTdev/templates/IPTdev/head.html:25
+#: IPTdev/templates/IPTdev/head.html:29 IPTdev/templates/IPTdev/head.html:31
 #: IPTdev/templates/IPTdev/poolranking.html:9
-#: IPTdev/templates/IPTdev/poolranking.html:55
+#: IPTdev/templates/IPTdev/poolranking.html:58
 msgid "Ranking"
 msgstr "Рейтинг"
 
-#: IPTdev/templates/IPTdev/head.html:28
+#: IPTdev/templates/IPTdev/head.html:35
 msgid "Problems"
 msgstr "Проблемы"
 
-#: IPTdev/templates/IPTdev/head.html:31
+#: IPTdev/templates/IPTdev/head.html:38
 #: IPTdev/templates/IPTdev/team_detail.html:13
 msgid "Participants"
 msgstr "Участники"
@@ -236,7 +236,7 @@ msgstr "Роль"
 #: IPTdev/templates/IPTdev/participants_overview.html:18
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:88
 #: IPTdev/templates/IPTdev/poolranking.html:16
-#: IPTdev/templates/IPTdev/poolranking.html:62
+#: IPTdev/templates/IPTdev/poolranking.html:65
 #: IPTdev/templates/IPTdev/ranking.html:14
 msgid "Team"
 msgstr "Команда"
@@ -368,49 +368,47 @@ msgid "Pool A"
 msgstr "Группа A"
 
 #: IPTdev/templates/IPTdev/poolranking.html:15
-#: IPTdev/templates/IPTdev/poolranking.html:61
+#: IPTdev/templates/IPTdev/poolranking.html:64
 #: IPTdev/templates/IPTdev/ranking.html:13
 msgid "Rank"
 msgstr "Ранг"
 
 #: IPTdev/templates/IPTdev/poolranking.html:17
-#: IPTdev/templates/IPTdev/poolranking.html:63
+#: IPTdev/templates/IPTdev/poolranking.html:66
 #: IPTdev/templates/IPTdev/ranking.html:15
 msgid "Points"
 msgstr "Очки"
 
 #: IPTdev/templates/IPTdev/poolranking.html:18
-#: IPTdev/templates/IPTdev/poolranking.html:64
-#: IPTdev/templates/IPTdev/ranking.html:17
+#: IPTdev/templates/IPTdev/poolranking.html:67
+#: IPTdev/templates/IPTdev/ranking.html:20
 msgid "Physics Fights status"
 msgstr "Статус Боя"
 
-#: IPTdev/templates/IPTdev/poolranking.html:28
-#: IPTdev/templates/IPTdev/poolranking.html:39
-#: IPTdev/templates/IPTdev/poolranking.html:74
-#: IPTdev/templates/IPTdev/poolranking.html:85
-#: IPTdev/templates/IPTdev/ranking.html:28
-#: IPTdev/templates/IPTdev/ranking.html:40
+#: IPTdev/templates/IPTdev/poolranking.html:31
+#: IPTdev/templates/IPTdev/poolranking.html:42
+#: IPTdev/templates/IPTdev/poolranking.html:77
+#: IPTdev/templates/IPTdev/poolranking.html:88
+#: IPTdev/templates/IPTdev/ranking.html:45
 msgid "fight ongoing"
 msgstr "бой идёт"
 
-#: IPTdev/templates/IPTdev/poolranking.html:30
-#: IPTdev/templates/IPTdev/poolranking.html:76
-#: IPTdev/templates/IPTdev/poolranking.html:87
-#: IPTdev/templates/IPTdev/ranking.html:30
-#: IPTdev/templates/IPTdev/ranking.html:42
+#: IPTdev/templates/IPTdev/poolranking.html:33
+#: IPTdev/templates/IPTdev/poolranking.html:79
+#: IPTdev/templates/IPTdev/poolranking.html:90
+#: IPTdev/templates/IPTdev/ranking.html:48
 msgid "fight(s) ended"
 msgstr "боёв завершено"
 
-#: IPTdev/templates/IPTdev/poolranking.html:41
+#: IPTdev/templates/IPTdev/poolranking.html:44
 msgid "ended"
 msgstr "завершено"
 
-#: IPTdev/templates/IPTdev/poolranking.html:55
+#: IPTdev/templates/IPTdev/poolranking.html:58
 msgid "Pool B"
 msgstr "Группа B"
 
-#: IPTdev/templates/IPTdev/poolranking.html:101
+#: IPTdev/templates/IPTdev/poolranking.html:104
 #: IPTdev/templates/IPTdev/ranking.html:7
 msgid "General Ranking"
 msgstr "Глобальный рейтинг"
@@ -441,11 +439,11 @@ msgstr "Нажмите на задачу для подробной информ�
 msgid "# of presentations"
 msgstr "Количество докладов"
 
-#: IPTdev/templates/IPTdev/ranking.html:16
+#: IPTdev/templates/IPTdev/ranking.html:17
 msgid "Pool"
 msgstr "Группа"
 
-#: IPTdev/templates/IPTdev/ranking.html:56
+#: IPTdev/templates/IPTdev/ranking.html:61
 msgid "Pools Ranking"
 msgstr "Рейтинг по группам"
 
