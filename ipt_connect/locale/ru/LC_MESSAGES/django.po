@@ -329,8 +329,8 @@ msgstr "Опп."
 msgid "Rev."
 msgstr "Рец."
 
-#: IPTdev/templates/IPTdev/physics_fight_detail.html:84
-#: IPTdev/templates/IPTdev/round_detail.html:108
+#: IPTdev/templates/IPTdev/physics_fight_detail.html:97
+#: IPTdev/templates/IPTdev/round_detail.html:150
 msgid ""
 "The lowest and highest grade(s) might be discarded according to the number "
 "of jury members."
