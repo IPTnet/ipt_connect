@@ -9,6 +9,9 @@
 		{% if display_semi_points %}
 			<th class="th-center">{% trans 'Semifinal points' %}</th>
 		{% endif %}
+		{% if display_final_points %}
+			<th class="th-center">{% trans 'Final points' %}</th>
+		{% endif %}
 		{% if display_pool|default_if_none:params.enable_pools %}
 			<th class="th-center">{% trans 'Pool' %}</th>
 		{% endif %}
@@ -32,6 +35,11 @@
 		{% if display_semi_points %}
 			<td class="td-center">
 				{{team.semi_points|floatformat:2}}
+			</td>
+		{% endif %}
+		{% if display_final_points %}
+			<td class="td-center">
+				{{team.final_points|floatformat:2}}
 			</td>
 		{% endif %}
 		{% if display_pool|default_if_none:params.enable_pools %}

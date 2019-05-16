@@ -519,6 +519,14 @@ def create_ranking(teams):
     return rankteams
 
 
+def create_final_ranking():
+	teams = Team.objects.filter(is_in_final=True).order_by('-final_points')
+	if teams.count() == 0:
+		return None
+
+	return create_ranking(teams)
+
+
 def create_semi_ranking():
 	teams = Team.objects.filter(is_in_semi=True).order_by('-semi_points')
 	if teams.count() == 0:
@@ -535,9 +543,15 @@ def ranking(request):
 
 	semirankteams = create_semi_ranking()
 
+	if SiteConfiguration.get_solo().display_final_ranking_on_ranking_page :
+		finalrankteams = create_final_ranking()
+	else:
+		finalrankteams = None
+
 	return render(request, 'IPT%s/ranking.html' % params.app_version, {
 		'params': params,
 		'final_fight_number': final_fight_number,
+		'finalrankteams': finalrankteams,
 		'rankteams': rankteams,
 		'semirankteams': semirankteams,
 	})
@@ -554,9 +568,15 @@ def poolranking(request):
 
 	semirankteams = create_semi_ranking()
 
+	if SiteConfiguration.get_solo().display_final_ranking_on_ranking_page :
+		finalrankteams = create_final_ranking()
+	else:
+		finalrankteams = None
+
 	return render(request, 'IPT%s/poolranking.html' % params.app_version, {
 		'params': params,
 		'final_fight_number': final_fight_number,
+		'finalrankteams': finalrankteams,
 		'rankteamsA': rankteamsA,
 		'rankteamsB': rankteamsB,
 		'semirankteams': semirankteams,

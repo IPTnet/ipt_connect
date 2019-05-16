@@ -1,22 +1,23 @@
 {% load humanize %}
 {% load i18n %}
-
 {% load solo_tags %}
+
 {% get_solo 'IPTdev.SiteConfiguration' as site_config %}
+
+{% if finalrankteams %}
+    <div class="section">
+        <h1>{% trans 'Final Ranking' %}</h1>
+    </div>
+
+    <div class="content container">
+		{% include 'IPTdev/includes/ranking_table.html' with teams=finalrankteams display_final_points=True display_pf_status=False %}
+    </div>
+{% endif %}
 
 {% if site_config.display_link_to_final_on_ranking_page %}
     <div class="content container">
-        <a href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">{% trans 'Final Fight details...' %}</a>
+        <p class="emphase">
+            <a href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">{% trans 'Final Fight details...' %}</a>
+        </p>
     </div>
 {% endif %}
-<!--
-{% if semirankteams %}
-    <div class="section">
-        <h1>{% trans 'Semifinal Ranking' %}</h1>
-    </div>
-
-    <div class="content container">
-		{% include 'IPTdev/includes/ranking_table.html' with teams=semirankteams display_semi_points=True display_pf_status=False %}
-    </div>
-{% endif %}
--->
