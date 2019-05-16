@@ -1,0 +1,48 @@
+{% extends 'IPTdev/head.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{% trans 'Participants overview' %}</h1>
+    </div>
+
+    <div class="content container">
+        <p class="emphase">{% trans 'Click on the names for detailed statistics. Click on the headers to sort the table.' %}</p>
+    </div>
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center">{% trans 'Name' %}</th>
+                <th class="th-center">{% trans 'Team' %}</th>
+                <th class="th-center">{% trans 'Points (sum)' %}</th>
+                <th class="th-center">{% trans 'Mean grade' %}</th>
+                <th class="th-center">{% trans 'Mean Report grade' %}</th>
+                <th class="th-center">{% trans 'Mean Opposition grade' %}</th>
+                <th class="th-center">{% trans 'Mean Review grade' %}</th>
+                {% if personal_ranking %}
+                <th class="th-center">{% trans 'Personal ranking' %}</th>
+                {% endif %}
+            </tr>
+        {% for participant in participants %}
+            <tr>
+                <td class="td-center"><a href="{% url 'IPTdev:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
+                {% if participant.team %}
+				    <td class="td-center"><a href="{% url 'IPTdev:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
+                {% else %}
+				    <td class="td-center"></td>
+                {% endif %}
+                <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
+                <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_reporter|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_opponent|floatformat:2}}</td>
+                <td class="td-center">{{participant.mean_score_as_reviewer|floatformat:2}}</td>
+                {% if personal_ranking %}
+                <td class="td-center">{{participant.personal_score|floatformat:2}}</th>
+                {% endif %}
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
+{% endblock content %}
