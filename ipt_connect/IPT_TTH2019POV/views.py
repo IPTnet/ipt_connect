@@ -638,7 +638,8 @@ def upload_csv(request):
 		if form.is_valid():
 			csvfile = request.FILES['csvfile']
 			reader = csv.reader(csvfile)
-			next(reader)
+			# Uncomment to skip header
+			# next(reader)
 			for row in reader:
 				row = make_dict_from_csv_row(row)
 				make_row_importable(row)
