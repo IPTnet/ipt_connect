@@ -537,6 +537,7 @@ def ranking(request):
 
 	return render(request, 'IPT%s/ranking.html' % params.app_version, {
 		'params': params,
+		'final_fight_number': final_fight_number,
 		'rankteams': rankteams,
 		'semirankteams': semirankteams,
 	})
@@ -555,6 +556,7 @@ def poolranking(request):
 
 	return render(request, 'IPT%s/poolranking.html' % params.app_version, {
 		'params': params,
+		'final_fight_number': final_fight_number,
 		'rankteamsA': rankteamsA,
 		'rankteamsB': rankteamsB,
 		'semirankteams': semirankteams,
