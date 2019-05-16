@@ -1,0 +1,35 @@
+{% extends 'IPT_TTH2019POV/head.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+
+	{% include 'IPT_TTH2019POV/includes/final_ranking_and_link.html' %}
+
+	{% include 'IPT_TTH2019POV/includes/semifinal_ranking.html' %}
+
+    <div class="section">
+        <h1>{% trans 'Ranking' %} - {% trans 'Pool A' %}</h1>
+    </div>
+
+    <div class="content container">
+		{% include 'IPT_TTH2019POV/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
+    </div>
+
+
+   <div class="section">
+        <h1>{% trans 'Ranking' %} - {% trans 'Pool B' %}</h1>
+    </div>
+
+    <div class="content container">
+		{% include 'IPT_TTH2019POV/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
+    </div>
+
+    <div>
+        <center>
+        <h3><a href="{% url 'IPT_TTH2019POV:ranking' %}">{% trans 'General Ranking' %}</a></h3>
+        </center>
+    </div>
+
+
+{% endblock content %}

@@ -196,7 +196,7 @@ class Participant(models.Model):
 	phone_number = models.CharField(max_length=20,validators=[phone_regex], blank=True,help_text="Compulsory for the Team Leaders.") # validators should be a list
 	passport_number = models.CharField(max_length=50)
 	birthdate = models.DateField(default='1900-01-31',verbose_name='Birthdate')
-	#photo = models.ImageField(upload_to=UploadToPathAndRename('IPTdev/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
+	#photo = models.ImageField(upload_to=UploadToPathAndRename('IPT_TTH2019POV/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
 	affiliation = models.CharField(max_length=50,default='XXX University')
@@ -366,7 +366,7 @@ class Team(models.Model):
 
 	name = models.CharField(max_length=50)
 	surname = models.CharField(max_length=50, null=True, blank=True, default=None)
-	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPTdev',verbose_name="Admin")
+	IOC = models.OneToOneField(User, on_delete=models.SET_NULL, null=True, blank=True,related_name='Team_IPT_TTH2019POV',verbose_name="Admin")
 	pool = models.CharField(max_length=1,choices=POOL_CHOICES,verbose_name='Pool', null=True, blank=True)
 
 	total_points = models.FloatField(default=0.0, editable=False)

@@ -1,4 +1,4 @@
-{% extends 'IPTdev/head.html' %}
+{% extends 'IPT_TTH2019POV/head.html' %}
 {% load humanize %}
 {% load i18n %}
 {% block content %}
@@ -34,32 +34,32 @@ no matter is the round finished or not
 				<tr>
 					<td class="td-center"></td>
 					<td class="td-center">
-						<a href="{% url 'IPTdev:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a>
+						<a href="{% url 'IPT_TTH2019POV:team_detail' team_name=round.reporter_team.name %}">{{round.reporter_team.name}}</a>
 						{% if round.reporter %}
 							--
-							<a href="{% url 'IPTdev:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a>
+							<a href="{% url 'IPT_TTH2019POV:participant_detail' pk=round.reporter.pk %}">{{round.reporter.fullname}}</a>
 						{% endif %}
 						{% if params.display_coreporters %}
 							{% if round.reporter_2 %}
 								{% if round.reporter %}
 									and
 								{% endif %}
-								<a href="{% url 'IPTdev:participant_detail' pk=round.reporter_2.pk %}">{{round.reporter_2.fullname}}</a>
+								<a href="{% url 'IPT_TTH2019POV:participant_detail' pk=round.reporter_2.pk %}">{{round.reporter_2.fullname}}</a>
 							{% endif %}
 						{% endif %}
 					</td>
 					<td class="td-center">
-						<a href="{% url 'IPTdev:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a>
+						<a href="{% url 'IPT_TTH2019POV:team_detail' team_name=round.opponent_team.name %}">{{round.opponent_team.name}}</a>
 						{% if round.opponent %}
 							--
-							<a href="{% url 'IPTdev:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a>
+							<a href="{% url 'IPT_TTH2019POV:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a>
 						{% endif %}
 					</td>
 					<td class="td-center">
-						<a href="{% url 'IPTdev:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a>
+						<a href="{% url 'IPT_TTH2019POV:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a>
 						{% if round.reviewer %}
 							--
-							<a href="{% url 'IPTdev:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a>
+							<a href="{% url 'IPT_TTH2019POV:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a>
 						{% endif %}
 					</td>
 				</tr>
@@ -80,17 +80,17 @@ no matter is the round finished or not
 			{% if round.unavailable_problems.number_of_unavailable_problems > 0 %}
 			{% if round.unavailable_problems.presented_this_pf %}
 			{% for problem in round.unavailable_problems.presented_this_pf %}
-			<li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been presented in this Fight.' %}</li>
+			<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been presented in this Fight.' %}</li>
 			{% endfor %}
 			{% endif %}
 			{% if round.unavailable_problems.eternal_rejection %} {% for problem in round.unavailable_problems.eternal_rejection %}
-			<li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been permanently rejected.' %}</li>
+			<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been permanently rejected.' %}</li>
 			{% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_reporter %} {% for problem in round.unavailable_problems.presented_by_reporter %}
-			<li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Reporter' %}</li>
+			<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Reporter' %}</li>
 			{% endfor %} {% endif %} {% if round.unavailable_problems.opposed_by_opponent %} {% for problem in round.unavailable_problems.opposed_by_opponent %}
-			<li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been opposed earlier by the Opponent' %}</li>
+			<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been opposed earlier by the Opponent' %}</li>
 			{% endfor %} {% endif %} {% if round.unavailable_problems.presented_by_opponent %} {% for problem in round.unavailable_problems.presented_by_opponent %}
-			<li><a href="{% url 'IPTdev:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Opponent' %}</li>
+			<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Opponent' %}</li>
 			{% endfor %} {% endif %}
 			{% else %}
 			<p>{% trans 'No forbidden problems.' %}</p>
@@ -105,7 +105,7 @@ no matter is the round finished or not
 		<div class="content container">
 			<h2>
 				{% trans 'Problem presented' %}:
-				<a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a>
+				<a href="{% url 'IPT_TTH2019POV:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented.name}}</a>
 			</h2>
 		</div>
 	{% endif %}
@@ -125,7 +125,7 @@ no matter is the round finished or not
 
 				{% for jurygrade in jurygrades %}
 				<tr>
-					<td><a href="{% url 'IPTdev:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
+					<td><a href="{% url 'IPT_TTH2019POV:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
 					<td class="td-center">{{jurygrade.grade_reporter}}</td>
 					<td class="td-center">{{jurygrade.grade_opponent}}</td>
 					<td class="td-center">{{jurygrade.grade_reviewer}}</td>
@@ -161,7 +161,7 @@ no matter is the round finished or not
 			<div class="content container">
 				<h3>{% trans 'Tactical rejection(s)' %}:</h3>
 				{% for tacticalrejection in tacticalrejections %}
-					<li><a href="{% url 'IPTdev:problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+					<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
 				{% empty %}
 					<p>{% trans 'No tactical rejections' %}</p>
 				{% endfor %}
@@ -170,7 +170,7 @@ no matter is the round finished or not
 			<div class="content container">
 				<h3>{% trans 'Eternal rejection(s)' %}:</h3>
 				{% for eternalrejection in eternalrejection %}
-					<li><a href="{% url 'IPTdev:problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
+					<li><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
 				{% empty %}
 					<p>{% trans 'No eternal rejections' %}</p>
 				{% endfor %}
