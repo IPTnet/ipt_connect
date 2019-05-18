@@ -5,6 +5,8 @@
 # IPTdev is the name of existing instance
 # IPT2020 is the name of instance to be created
 
+# Checking out to a detached HEAD to prevent branch pollution:
+git checkout `git log --pretty=format:"%h" -1`
 
 mv $2 $2.bak
 cp -r $1 $2
