@@ -36,3 +36,6 @@ git commit -m "Plugged $2 to the Django application index"
 
 python manage.py makemigrations $2
 python manage.py migrate
+
+git add db.sqlite3
+git commit -m "Generic DB migrations for $2"
