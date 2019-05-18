@@ -8,7 +8,7 @@
 # Checking out to a detached HEAD to prevent branch pollution:
 git checkout `git log --pretty=format:"%h" -1`
 
-mv $2 $2.bak
+trash-put $2
 cp -r $1 $2
 
 git add $2
