@@ -11,6 +11,8 @@ git checkout `git log --pretty=format:"%h" -1`
 trash-put $2
 cp -r $1 $2
 
+trash-put $2/migrations
+
 git add $2
 git commit -m "Copied $1 to $2 as is"
 
