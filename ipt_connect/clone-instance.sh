@@ -3,7 +3,7 @@
 # Usage:
 # ./clone-instance.sh IPTdev IPT2020
 # IPTdev is the name of existing instance
-# IPT2019 is the name of instance to be created
+# IPT2020 is the name of instance to be created
 
 
 mv $2 $2.bak
