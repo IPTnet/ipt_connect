@@ -3,33 +3,14 @@ import os
 import sys
 import difflib
 
-dir_repo = os.getcwd()[:-23]
+hash_commit_1 = sys.argv[1]
+hash_commit_2 = sys.argv[2]
+dir_repo = os.getcwd()[:-24]
 dir_path_diff = dir_repo + 'diff'
 dir_path_dump = dir_repo + 'dump'
-dir_path_dump_commit_1 = []
-dir_path_dump_commit_2 = []
-flag_inst = False
-
-try:
-    import tkFileDialog
-    flag_inst = True
-    print 'GUI Python-tk is installed'
-except ImportError:
-    print 'GUI Python-tk not installed'
-
-if flag_inst:
-    dir_1 = tkFileDialog.askdirectory()
-    dir_2 = tkFileDialog.askdirectory()
-    dir_path_diff_commit = dir_path_diff + '/diff_' + dir_1[-7:] + '_' + dir_2[-7:]
-    dir_path_dump_commit_1 = dir_1
-    dir_path_dump_commit_2 = dir_2
-else :
-    print 'Input hash commits'
-    hash_commit_1 = input('First hash: ')
-    hash_commit_2 = input('Second hash: ')
-    dir_path_diff_commit = dir_path_diff + '/diff_' + hash_commit_1 + '_' + hash_commit_2
-    dir_path_dump_commit_1 = dir_path_dump + '/' + hash_commit_1
-    dir_path_dump_commit_2 = dir_path_dump + '/' + hash_commit_2
+dir_path_diff_commit = dir_path_diff + '/diff_' + hash_commit_1 + '_' + hash_commit_2
+dir_path_dump_commit_1 = dir_path_dump + '/' + hash_commit_1
+dir_path_dump_commit_2 = dir_path_dump + '/' + hash_commit_2
 
 list_files_1 = sorted(os.listdir(dir_path_dump_commit_1), key = lambda x: int(os.path.splitext(x.split('_')[1])[0]))
 list_files_2 = sorted(os.listdir(dir_path_dump_commit_2), key = lambda x: int(os.path.splitext(x.split('_')[1])[0]))
@@ -55,6 +36,8 @@ if not_use_url:
     not_use_url.insert(0, 'IN ONE OF COMMIT NOT FOUND URLS:\n')
     not_use_url.append('\n')
 
+d = difflib.Differ()
+
 for i, u in enumerate(urls_dir_1):
     if u in urls_dir_2:
         ind = urls_dir_2.index(u)
@@ -62,15 +45,16 @@ for i, u in enumerate(urls_dir_1):
             old = page.read().split('\n')
         with open(dir_path_dump_commit_2 + '/page_' + str(ind) + '.txt', 'r') as page:
             new = page.read().split('\n')
-        change = list(difflib.unified_diff(old, new))
-        if change:
+        change = list(d.compare(old, new))
+        delta_change = [l for l in change if l.startswith('+') or l.startswith('-') or l.startswith('?')]
+        if delta_change:
             name_page = 'DIFFERENCE IN PAGE_' + str(i) + '\n'
             url_page = u + '\n'
-            change.insert(0, name_page)
-            change.insert(1, url_page)
-            change_in_txt.append(change)
-            change.append('\n')
-    
+            delta_change.insert(0, name_page)
+            delta_change.insert(1, url_page)
+            change_in_txt.append(delta_change)
+            delta_change.append('\n')
+
 diff_txt = []
 
 for i in change_in_txt:
@@ -82,4 +66,4 @@ print 'Diff in {}'.format(dir_path_diff_commit)
 
 with open(dir_path_diff_commit + '.txt', 'w') as page:
     page.writelines(not_use_url)
-    page.writelines(diff_txt)       
+    page.writelines(diff_txt)        
