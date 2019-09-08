@@ -124,13 +124,14 @@ Dumper - utility for collect all pages
 
 * To do dump:
   * Run `python manage.py runserver` 
-  * Run `python manage.py test IPTdev.utils.dumper`
+  * Run `cd IPTdev/utils`
+  * Run `python dumper`
 In terminal you will see path to dump
 
 * Compare dumps:
-  * Run `python manage.py test IPTdev.utils.diff_html`
+  * Run `cd IPTdev/utils`
+  * Run `python diff_html.py hash_commit_1 hash_commit_2`
   (Do not need to run server) 
-  * Select folders with dump (if you have Python-tk) or input hash commits
 In terminal you will see path to difference 
 
 ### How to run tests?
