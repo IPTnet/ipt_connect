@@ -62,3 +62,9 @@ nohup.out
 *_BACKUP_*
 *_BASE_*
 *_REMOTE_*
+
+
+# Dumps generated while testing #
+#################################
+dump/
+diff/
