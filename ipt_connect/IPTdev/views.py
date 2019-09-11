@@ -189,8 +189,15 @@ def team_detail(request, team_name):
 
 	rankedparticipants = participants.order_by('total_points')
 
-	teamleaders = Participant.objects.filter(team=team).filter(role = 'TL')
 	teamleaders_jury = Jury.objects.filter(team=team)
+	val_teamlead = Participant.objects.filter(team=team).filter(role = 'TL').values('name','surname')
+	val_jury = Jury.objects.filter(team=team).values('name','surname')
+	delta_models = val_teamlead.difference(val_jury)
+	if delta_models:
+		teamleaders = delta_models
+	else:
+		teamleaders = Participant.objects.none()
+	
 
 	myreprounds = Round.objects.filter(reporter_team=team)
 	myopprounds = Round.objects.filter(opponent_team=team)

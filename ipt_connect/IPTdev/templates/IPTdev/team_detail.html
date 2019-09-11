@@ -18,14 +18,15 @@
     {% endfor %}
 
 
-    <h2>Team-Leaders:</h2> {% for teamleader in teamleaders %}
+    <h2>{% trans 'Team-Leaders:' %}
+    </h2> {% for teamleader in teamleaders %}
     <div>
         <li>{{teamleader.name}} {{teamleader.surname}}</li>
     </div>
     {% endfor %}
     {% for jury in teamleaders_jury %}
     <div>
-        <li><a href="{% url 'IPTdev:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {{"(jury member)"}}</a></li>
+        <li><a href="{% url 'IPTdev:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {% trans '(jury member)' %}</a></li>
     </div>
     {% endfor %}
 </div>
