@@ -189,7 +189,8 @@ def team_detail(request, team_name):
 
 	rankedparticipants = participants.order_by('total_points')
 
-	teamleaders = Jury.objects.filter(team=team)
+	teamleaders = Participant.objects.filter(team=team).filter(role = 'TL')
+	teamleaders_jury = Jury.objects.filter(team=team)
 
 	myreprounds = Round.objects.filter(reporter_team=team)
 	myopprounds = Round.objects.filter(opponent_team=team)
@@ -230,7 +231,7 @@ def team_detail(request, team_name):
 		if p != 3.0:
 			penalties.append([ind+1, p])
 
-	return render(request, 'IPT%s/team_detail.html' % params.app_version, {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'allrounds': allrounds, 'penalties': penalties, 'bonus_points_displayed': bonus_points_displayed, 'params': params})
+	return render(request, 'IPT%s/team_detail.html' % params.app_version, {'team': team, 'participants': rankedparticipants, 'teamleaders': teamleaders, 'teamleaders_jury':teamleaders_jury, 'allrounds': allrounds, 'penalties': penalties, 'params': params})
 
 @user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
 @cache_page(cache_duration)
