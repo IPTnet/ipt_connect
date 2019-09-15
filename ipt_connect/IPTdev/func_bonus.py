@@ -5,7 +5,7 @@ def distribute_bonus_points(points_list):
 		return distribute_bonus_points_3(points_list)
 	if len(points_list) == 4:
 		return distribute_bonus_points_4(points_list)
-	return [2.0, 1.0, 1.0, 0.0, 0.0]
+	return [2.0, 1.0, 1.0, 1.0, 0.0]
 
 def distribute_bonus_points_3(points_list):
 

@@ -33,8 +33,8 @@ class  Test(TestCase):
             [2.0, 1.0, 1.0, 0.0],
             [2.0, 1.0, 1.0, 0.0],
             [1.5, 1.5, 1.0, 0.0],
-            [2.0, 1.0, 1.0, 0.0, 0.0],
-            [2.0, 1.0, 1.0, 0.0, 0.0],
+            [2.0, 1.0, 1.0, 1.0, 0.0],
+            [2.0, 1.0, 1.0, 1.0, 0.0],
         ]
         for inp, res in zip(input_data, res_data):
             self.assertEqual(distribute_bonus_points(inp), res)
