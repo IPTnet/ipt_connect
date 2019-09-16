@@ -8,6 +8,10 @@
 # Checking out to a detached HEAD to prevent branch pollution:
 git checkout `git log --pretty=format:"%h" -1`
 
+# Commiting a command to be executed on rebase (just for convenience)
+git commit -m "exec cd ipt_connect; ./clone-instance.sh $1 $2" --allow-empty
+
+
 trash-put $2
 cp -r $1 $2
 
