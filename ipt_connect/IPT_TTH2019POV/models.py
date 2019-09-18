@@ -273,7 +273,7 @@ class Problem(models.Model):
 	This model represents one of the 17 problems
 	"""
 	name = models.CharField(max_length=50, default=None)
-	description = models.TextField(max_length=700, default=None)
+	description = models.TextField(max_length=4096, default=None)
 
 	mean_score_of_reporters = models.FloatField(default=0.0, editable=False)
 	mean_score_of_opponents = models.FloatField(default=0.0, editable=False)
