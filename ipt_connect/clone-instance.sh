@@ -9,7 +9,7 @@
 git checkout `git log --pretty=format:"%h" -1`
 
 # Commiting a command to be executed on rebase (just for convenience)
-git commit -m "cd ipt_connect; exec ./clone-instance.sh $1 $2" --allow-empty
+git commit -m "exec cd ipt_connect; ./clone-instance.sh $1 $2" --allow-empty
 
 
 trash-put $2
