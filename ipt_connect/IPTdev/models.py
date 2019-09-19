@@ -677,6 +677,7 @@ class SiteConfiguration(SingletonModel):
     only_staff_access = models.BooleanField(default=False)
     display_link_to_final_on_ranking_page = models.BooleanField(default=False)
     display_final_ranking_on_ranking_page = models.BooleanField(default=False)
+    do_not_display_tactical_rejections = models.BooleanField(default=False)
 
     def __unicode__(self):
         return u"Site Configuration"
