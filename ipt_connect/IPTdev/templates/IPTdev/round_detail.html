@@ -158,14 +158,20 @@ no matter is the round finished or not
 		<div class="content container">
 			<h2>{% trans 'Rejection(s)' %}</h2>
 
-			<div class="content container">
-				<h3>{% trans 'Tactical rejection(s)' %}:</h3>
-				{% for tacticalrejection in tacticalrejections %}
-					<li><a href="{% url 'IPTdev:problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
-				{% empty %}
-					<p>{% trans 'No tactical rejections' %}</p>
-				{% endfor %}
-			</div>
+			{% if not tactical_rej_off %}
+				<div class="content container">
+					<h3>{% trans 'Tactical rejection(s)' %}:</h3>
+					{% for tacticalrejection in tacticalrejections %}
+						<li><a href="{% url 'IPTdev:problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+					{% empty %}
+						<p>{% trans 'No tactical rejections' %}</p>
+					{% endfor %}
+				</div>
+			{% else %}
+				<div>
+					<h3>{% trans 'Tactical rejections are not displayed' %}</h3>
+				</div>
+			{% endif %}
 
 			<div class="content container">
 				<h3>{% trans 'Eternal rejection(s)' %}:</h3>

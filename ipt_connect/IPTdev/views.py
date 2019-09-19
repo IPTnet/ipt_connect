@@ -390,7 +390,8 @@ def round_detail(request, pk):
 
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
-
+	tactical_rej_off = SiteConfiguration.get_solo().dont_display_tactical_rejects
+	
 	return render(
 		request,
 		'IPT%s/round_detail.html' % params.app_version,
@@ -406,7 +407,8 @@ def round_detail(request, pk):
 			'display_room_name': round.pf_number <= params.npf,
 			'display_rejections': params.fights['challenge_procedure'][round.pf_number - 1],
 			'display_problems_forbidden': params.fights['problems_forbidden'][round.pf_number - 1],
-			'physics_fight_name': params.fights['names'][round.pf_number - 1],
+			'physics_fight_name': params.fights['names'][round.pf_number - 1], 
+			'tactical_rej_off': tactical_rej_off,
 		})
 
 
