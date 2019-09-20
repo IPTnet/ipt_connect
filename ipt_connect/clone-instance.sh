@@ -8,12 +8,17 @@
 # Checking out to a detached HEAD to prevent branch pollution:
 git checkout `git log --pretty=format:"%h" -1`
 
-# Commiting a command to be executed on rebase (just for convenience)
-git commit -m "exec cd ipt_connect; ./clone-instance.sh $1 $2" --allow-empty
-
 
 trash-put $2
 cp -r $1 $2
+
+# Commiting a command to be executed on rebase (just for convenience)
+# We don't use --allow-empty anymore,
+# because rebase strips empty commits out
+touch "$2/.clone-instance.lock"
+git add "$2/.clone-instance.lock"
+git commit -m "{{  exec cd ipt_connect; ./clone-instance.sh $1 $2"
+
 
 trash-put $2/migrations
 
@@ -43,3 +48,10 @@ python manage.py migrate
 
 git add db.sqlite3
 git commit -m "Generic DB migrations for $2"
+
+# Finally, we commit the end of auto-commited block
+# We don't use --allow-empty anymore,
+# because rebase strips empty commits out
+rm "$2/.clone-instance.lock"
+git rm "$2/.clone-instance.lock"
+git commit -m "}}  exec cd ipt_connect; ./clone-instance.sh $1 $2"
