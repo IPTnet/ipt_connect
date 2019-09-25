@@ -15,7 +15,8 @@ A python/django web-based interface to track the grades, compute the rankings an
   * [I added new text to the template. How сan I update language files?](#i-added-new-text-to-the-template-how-сan-i-update-language-files)
   * [How to compile language files?](#how-to-compile-language-files)
   * [How to add a new language?](#how-to-add-a-new-language)
-
+  * [How to run tests?](#how-to-run-tests)
+  
 ## Status
 * **Code:** working, v2.0, minor display bugs to fix
 * **Documentation:** work in progress
@@ -111,6 +112,10 @@ Just create the instance locally and look at the commits which wil be created.
 
 Notice: this clones only structure of the tournament,
 i.e. you have an empty table for teams, no registered jurors, etc.
+
+### How to run tests?
+
+* Run `python manage.py test` 
 
 ### Link checking
 * Run `python manage.py test IPTdev.utils.link_parser`

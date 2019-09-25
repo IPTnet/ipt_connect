@@ -14,9 +14,10 @@ from django.db.models import Avg, Sum
 from django.core.validators import RegexValidator
 from django.dispatch import Signal
 from django.db import transaction
+from func_bonus import distribute_bonus_points
 
 import parameters as params
-
+import func_mean as means
 
 # Useful static variables
 selective_fights = [i+1 for i in range(params.npf)]
@@ -25,121 +26,9 @@ semifinals = [i+1 for i in range(params.npf, params.npf + params.semifinals_quan
 npf_tot = params.npf + params.semifinals_quantity + int(params.with_final_pf)
 final_fight_number = params.npf + params.semifinals_quantity + 1
 grade_choices = [(ind, ind) for ind in range(10+1)]
+mean = means.mean
 
-def mean(vec):
-	if len(vec) != 0:
-		return float(sum(vec)) / len(vec)
-	else:
-		return 0
-
-def ipt_mean(vec):
-	if len(vec) in [5, 6]:
-		nreject = 1
-	elif len(vec) in [7, 8]:
-		nreject = 2
-	else:
-		nreject = round(len(vec) / 4.0)
-
-
-	# TODO: the following code looks messy, but it works.
-	# There was an unsuccessful attempt to refactor it.
-	# The code should be refactored and tested.
-	# At least the while loops should be removed if possible.
-
-	if round(nreject / 2.0) == nreject / 2.0:
-		nlow = int(nreject / 2.0)
-		nhigh = int(nlow)
-	else:
-		nlow = int(nreject / 2.0 + 0.5)
-		nhigh = int(nreject / 2.0 - 0.5)
-
-	i = 0
-	while i < nhigh:
-		vec.pop(-1)
-		i += 1
-
-	i = 0
-	while i < nlow:
-		vec.pop(0)
-		i += 1
-
-	return float(sum(vec)) / len(vec)
-
-
-def iypt_mean(vec):
-	vec.append((vec.pop(0) + vec.pop()) / 2.0)
-	return float(sum(vec)) / len(vec)
-
-def ttn_mean(vec):
-    if len(vec) <= 4:
-        return mean(vec)
-    return iypt_mean(vec)
-
-def special_mean(vec):
-	return globals()[params.mean](vec)
-
-
-def distribute_bonus_points(points_list):
-	if len(points_list) == 3:
-		return distribute_bonus_points_3(points_list)
-	if len(points_list) == 4:
-		return distribute_bonus_points_4(points_list)
-	return [2.0, 1.0, 1.0, 0.0, 0.0]
-
-def distribute_bonus_points_3(points_list):
-
-	# If everyone is ex-aequo
-	if points_list[0] == points_list[1] and points_list[0] == points_list[2]:
-		return [1.0, 1.0, 1.0]
-
-	# If 1 and 2 are ex-aequo
-	if points_list[0] == points_list[1]:
-		return [1.5, 1.5, 0.0]
-
-	# If 2 and 3 are ex-aequo
-	if points_list[1] == points_list[2]:
-		return [2.0, 0.5, 0.5]
-
-	# If no ex-aequo
-	return [2.0, 1.0, 0.0]
-
-
-def distribute_bonus_points_4(points_list):
-
-	######################
-	# 4 teams ex-aequo
-	# If everyone is ex-aequo
-	if points_list[0] == points_list[1] and points_list[1] == points_list[2] and points_list[2] == points_list[3]:
-		return [1.0, 1.0, 1.0, 1.0]
-	######################
-
-	######################
-	# 3 teams ex-aequo
-	if points_list[0] == points_list[1] and points_list[1] == points_list[2]:
-		return [4.0/3.0, 4.0/3.0, 4.0/3.0, 0.0]
-	if points_list[0] == points_list[1] and points_list[0] == points_list[2]:
-		return [2.0, 1.0/3.0, 1.0/3.0, 1.0/3.0]
-	######################
-
-	######################
-	# 2 pairs of teams ex-aequo
-	if points_list[0] == points_list[1] and points_list[2] == points_list[3]:
-		return [1.5, 1.5, 0.5, 0.5]
-	######################
-
-	######################
-	# One pair of teams ex-aequo
-	if points_list[0] == points_list[1]:
-		return [1.5, 1.5, 1.0, 0.0]
-	if points_list[1] == points_list[2]:
-		return [2.0, 1.0, 1.0, 0.0]  # Redundant, but let it be
-	if points_list[2] == points_list[3]:
-		return [2.0, 1.0, 0.5, 0.5]
-	######################
-
-	# No ex-aequo
-	return [2.0, 1.0, 1.0, 0.0]
-
+special_mean = getattr(means, params.mean)
 
 @deconstructible
 class UploadToPathAndRename(object):
