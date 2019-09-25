@@ -116,3 +116,13 @@ i.e. you have an empty table for teams, no registered jurors, etc.
 ### How to run tests?
 
 * Run `python manage.py test` 
+
+### Link checking
+* Run `python manage.py test IPTdev.utils.link_parser`
+
+The Internet is constantly changing, new files and pages appear, and old ones are deleted.
+And links can change their address. Broken links can damage the site.
+An internal link may not work due to erroneous address or removed/non-existing page.
+Finally, no one is safe from errors of programmers or administrators.
+Each dead link causes negative reaction from users.
+This utility crawls all the mentioned links and returns the list of non-working ones.

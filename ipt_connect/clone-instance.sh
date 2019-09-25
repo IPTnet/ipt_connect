@@ -3,11 +3,19 @@
 # Usage:
 # ./clone-instance.sh IPTdev IPT2020
 # IPTdev is the name of existing instance
-# IPT2019 is the name of instance to be created
+# IPT2020 is the name of instance to be created
+
+# Checking out to a detached HEAD to prevent branch pollution:
+git checkout `git log --pretty=format:"%h" -1`
+
+# Commiting a command to be executed on rebase (just for convenience)
+git commit -m "exec cd ipt_connect; ./clone-instance.sh $1 $2" --allow-empty
 
 
-mv $2 $2.bak
+trash-put $2
 cp -r $1 $2
+
+trash-put $2/migrations
 
 git add $2
 git commit -m "Copied $1 to $2 as is"
@@ -32,3 +40,6 @@ git commit -m "Plugged $2 to the Django application index"
 
 python manage.py makemigrations $2
 python manage.py migrate
+
+git add db.sqlite3
+git commit -m "Generic DB migrations for $2"
