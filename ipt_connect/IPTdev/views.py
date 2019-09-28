@@ -459,7 +459,8 @@ def create_semi_ranking():
 @cache_page(cache_duration)
 def ranking(request):
 	rankteams = create_ranking(Team.objects.order_by('-total_points'))
-	rankteams[0].emphase = True
+	if rankteams:
+		rankteams[0].emphase = True
 
 	semirankteams = create_semi_ranking()
 
