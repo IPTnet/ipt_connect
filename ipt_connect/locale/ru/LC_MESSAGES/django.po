@@ -512,7 +512,7 @@ msgid ""
 "Click on a Round to get a detailed summary. Click on a Physics Fight to get "
 "a summarized view of all the corresponding Rounds."
 msgstr "Нажмите на Действие для подробной информации. Нажмите на Бой, чтобы получить краткое "
-"представление обо всех действих."
+"представление обо всех действиях."
 
 #: IPTdev/templates/IPTdev/rounds.html:82
 msgid "The Grand Finale"
