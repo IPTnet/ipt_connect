@@ -1,7 +1,11 @@
 {% extends 'IPTdev/head.html' %}
 {% load staticfiles %}
 {% load i18n %}
+{% load solo_tags %}
+
 {% block content %}
+
+{% get_solo 'IPTdev.SiteConfiguration' as site_config %}
 
     <div class="section">
         <h1>{% trans 'A little bit of patience' %}</h1>
@@ -17,11 +21,14 @@
 	<table style="width:100%">
   <tr>
     <td>
-		<!--
-		TODO: should we have this on our own server?
-		-->
-		<a href="http://blueballfixed.ytmnd.com/"><img src="http://i.imgur.com/QH8aoXL.gif"><img src="http://i.imgur.com/QH8aoXL.gif"><img src="http://i.imgur.com/QH8aoXL.gif"><img src="http://i.imgur.com/QH8aoXL.gif"><img src="http://i.imgur.com/QH8aoXL.gif"><img src="http://i.imgur.com/QH8aoXL.gif"></a>
-
+      <!--
+      TODO: should we have this on our own server?
+      -->
+      <a href="{{ site_config.image_link_URL }}">
+        {% for i in ""|rjust:site_config.image_repeat_count %}
+          <img src = "{{ site_config.image_URL }}">
+        {% endfor %}
+      </a>
     </td>
   </tr>
 

@@ -678,6 +678,9 @@ class SiteConfiguration(SingletonModel):
     display_link_to_final_on_ranking_page = models.BooleanField(default=False)
     display_final_ranking_on_ranking_page = models.BooleanField(default=False)
     do_not_display_tactical_rejections = models.BooleanField(default=False)
+    image_link_URL = models.URLField(default="http://blueballfixed.ytmnd.com/")
+    image_URL = models.URLField(default="http://i.imgur.com/QH8aoXL.gif")
+    image_repeat_count = models.IntegerField(default=6)
 
     def __unicode__(self):
         return u"Site Configuration"
