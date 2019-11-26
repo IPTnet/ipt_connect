@@ -659,6 +659,10 @@ class EternalRejection(models.Model):
 
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
+def update_points_condition(sender, instance, **kwargs):
+    if not SiteConfiguration.get_solo().update_scores_manually:
+        update_points(sender, instance)
+
 def update_points(sender, instance, **kwargs):
 	print "Updating Round %s" % instance
 	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) or instance.problem_presented is None :
@@ -678,6 +682,7 @@ class SiteConfiguration(SingletonModel):
     display_link_to_final_on_ranking_page = models.BooleanField(default=False)
     display_final_ranking_on_ranking_page = models.BooleanField(default=False)
     do_not_display_tactical_rejections = models.BooleanField(default=False)
+    update_scores_manually = models.BooleanField(default=False)
     image_link_URL = models.URLField(default="http://blueballfixed.ytmnd.com/")
     image_URL = models.URLField(default="http://i.imgur.com/QH8aoXL.gif")
     image_repeat_count = models.IntegerField(default=6)
