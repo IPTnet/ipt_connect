@@ -92,6 +92,10 @@ body {
     font-size: 18pt;
 }
 
+.stuff-only-link, .stuff-only-link:visited, .stuff-only-link:active, .stuff-only-link:hover {
+    color: #ff4800 !important;
+}
+
 .comment {
     font-size: 80%
 }

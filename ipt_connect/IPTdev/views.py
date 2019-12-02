@@ -347,6 +347,8 @@ def round_detail(request, pk):
 	tacticalrejections = TacticalRejection.objects.filter(round=round)
 	eternalrejection = EternalRejection.objects.filter(round=round)
 
+	link_to_change_round = '/admin/IPT' + str(params.app_version) + '/round/' + str(pk) + '/change'
+
 	return render(
 		request,
 		'IPT%s/round_detail.html' % params.app_version,
@@ -363,6 +365,7 @@ def round_detail(request, pk):
 			'display_rejections': params.fights['challenge_procedure'][round.pf_number - 1],
 			'display_problems_forbidden': params.fights['problems_forbidden'][round.pf_number - 1],
 			'physics_fight_name': params.fights['names'][round.pf_number - 1],
+			'link_to_change_round': link_to_change_round,
 		})
 
 

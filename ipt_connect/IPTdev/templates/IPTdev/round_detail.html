@@ -15,6 +15,9 @@
 				| Room {{round.room}}
 			{% endif %}
 			| Round {{round.round_number}}
+			{% if perms.round.can_change_round %}
+				&emsp;<a href="{{link_to_change_round}}" class="stuff-only-link">{% trans 'Edit' %}</a>
+			{% endif %}
 		{% endblock title %}
 	</h1>
 </div>
