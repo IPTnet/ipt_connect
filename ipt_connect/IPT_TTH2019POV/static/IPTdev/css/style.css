@@ -1,0 +1,212 @@
+h1, h2, h3, h4, .topmenu {
+    font-family: 'Bitter', cursive;
+}
+
+h3 {
+    font-size: 12pt
+}
+
+h2 {
+    padding-top: 10px
+}
+
+body {
+    background: #EFEFEF;
+    margin: 0 !important;
+    padding: 0 !important;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.topmenu {
+    margin-top: 0px;
+    margin-right: 0px;
+    margin-left: 0px;
+    padding: 0px 0px 0px 0px;
+    background: #10254a;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(left top, #10254a, #204a7a);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(bottom right, #10254a, #204a7a);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(bottom right, #10254a, #204a7a);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to bottom right, #10254a, #204a7a);
+    /* Standard syntax */
+}
+
+
+.topmenu, .topmenu a, .topmenu a:visited, .topmenu a:active {
+    color: #ffffff;
+    font-size: 14pt;
+    text-decoration: none;
+    padding: 0px 0px 0px 0px;
+}
+
+.topmenu-wrap {
+    width:100%;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    height:56px;
+    vertical-align:center;
+    align-items: center;
+}
+
+.topmenu-wrap > div {
+    float:left;
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.logo-topmenu {
+	width:50px;
+	height:50px;
+	margin-right:20px;
+	vertical-align: middle;
+}
+
+.page-header {
+    background-color: #BDD4DE;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    margin-right: 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+.page-header h1, .page-header h1 a, .page-header h1 a:visited, .page-header h1 a:active {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+}
+
+.section {
+    background-color: #BDD4DE;
+    margin-top: 5px;
+    margin-right: 0px;
+    padding: 5px 5px 5px 50px;
+}
+
+.section h1, .section h1 a, .section h1 a:visited, .section h1 a:active {
+    color: #000000;
+    font-size: 18pt;
+}
+
+.stuff-only-link, .stuff-only-link:visited, .stuff-only-link:active, .stuff-only-link:hover {
+    color: #ff4800 !important;
+}
+
+.comment {
+    font-size: 80%
+}
+
+.emphase {
+    font-size: 125%
+}
+
+.content * {
+    color: #000000;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.top-menu, .top-menu:hover, .top-menu:visited {
+    color: #ffffff;
+    float: right;
+    font-size: 26pt;
+    margin-right: 0px;
+}
+
+table {
+    width: 100%;
+    table-layout: fixed;
+}
+
+.pf-detail-role-row, .pf-detail-role-row td{
+    color: #EFEFEF;
+	font-weight: 700;
+}
+
+.pf-detail-team-row, .pf-detail-team-row td {
+	word-break:break-word;
+	background-color: #3F5765;
+}
+
+.th-center, .th-center a {
+    text-align: center;
+    padding: 8px;
+    color: #EFEFEF;
+    font-weight: 300;
+}
+
+.td-center {
+    text-align: center;
+    padding: 8px;
+}
+
+.th {
+    text-align: left;
+    padding: 8px;
+    color: #EFEFEF;
+    font-weight: 300;
+}
+
+td {
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #BDD4DE
+}
+
+th {
+    background-color: #3F5765;
+    color: white;
+}
+
+.room-list-of-rounds {
+	display:flex;
+	flex-wrap:wrap;
+	align-items: center;
+}
+
+.room-list-of-rounds div {
+	margin-left:auto;
+	margin-right:auto;
+	text-align:center;
+	padding-left:5px;
+	padding-right:5px;
+}
+
+footer {
+    color: #bbb;
+    font-size: 12pt;
+    text-align: center;
+    margin-top: 80px;
+    padding: 20px 0;
+    background: #10254a;
+    /* For browsers that do not support gradients */
+    background: -webkit-linear-gradient(right bottom, #10254a, #204a7a);
+    /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(top left, #10254a, #204a7a);
+    /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(top left, #10254a, #204a7a);
+    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(to top left, #10254a, #204a7a);
+    /* Standard syntax */
+}
+
+footer a:link, footer a:visited, footer a:active, footer a:hover {
+    color: #eee;
+    text-decoration: none;
+}
+
+footer svg {
+    fill: #eee;
+}
+
+.main-table {
+	margin-left:1%;
+	margin-right:1%;
+}

@@ -1,0 +1,37 @@
+{% extends 'IPTdev/head.html' %}
+{% load humanize %}
+{% load i18n %}
+{% block content %}
+  
+  {% if not rankteams %}
+      <div>
+        <center>
+        <h1>{% trans 'No team registered yet' %}</h1>
+        </center>
+      </div>
+  {% else %}  
+    {% include 'IPTdev/includes/final_ranking_and_link.html' %}
+
+    {% include 'IPTdev/includes/semifinal_ranking.html' %}
+    
+      <div class="section">
+          <h1>{% trans 'Selective Fights Ranking' %}</h1>
+      </div>
+
+      <div class="content container">
+      {% include 'IPTdev/includes/ranking_table.html' with teams=rankteams %}
+      </div>
+
+      {% if params.enable_pools %}
+      <div>
+        <center>
+        <h3><a href="{% url 'IPTdev:poolranking' %}">{% trans 'Pools Ranking' %}</a></h3>
+        </center>
+      </div>
+      {% endif %}
+
+    {% include 'IPTdev/includes/link_update_all_for_superuser.html' %}
+
+  {% endif %}
+
+{% endblock content %}
