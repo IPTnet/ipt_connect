@@ -1,4 +1,4 @@
-{% extends 'IPT_TTH2019POV/head.html' %}
+{% extends 'IPT_TTH2019_FINAL/head.html' %}
 {% load humanize %}
 {% load i18n %}
 
@@ -31,7 +31,7 @@
             </h1>
         </div>
         <div class="content container">
-           {% include 'IPT_TTH2019POV/includes/list_problems_with_remarks.html' with problems=tactics.1 %}
+           {% include 'IPT_TTH2019_FINAL/includes/list_problems_with_remarks.html' with problems=tactics.1 %}
         </div>
         <div class="section">
             <h1>
@@ -39,7 +39,7 @@
             </h1>
         </div>
         <div class="content container">
-           {% include 'IPT_TTH2019POV/includes/list_problems_with_remarks.html' with problems=tactics.0 %}
+           {% include 'IPT_TTH2019_FINAL/includes/list_problems_with_remarks.html' with problems=tactics.0 %}
         </div>
     {% endif %}
 {% endblock content %}

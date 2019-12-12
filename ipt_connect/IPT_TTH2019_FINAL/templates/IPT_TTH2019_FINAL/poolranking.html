@@ -1,4 +1,4 @@
-{% extends 'IPT_TTH2019POV/head.html' %}
+{% extends 'IPT_TTH2019_FINAL/head.html' %}
 {% load humanize %}
 {% load i18n %}
 
@@ -10,16 +10,16 @@
       </center>
     </div>
   {% else %}
-    {% include 'IPT_TTH2019POV/includes/final_ranking_and_link.html' %}
+    {% include 'IPT_TTH2019_FINAL/includes/final_ranking_and_link.html' %}
     
-    {% include 'IPT_TTH2019POV/includes/semifinal_ranking.html' %}
+    {% include 'IPT_TTH2019_FINAL/includes/semifinal_ranking.html' %}
 
       <div class="section">
           <h1>{% trans 'Ranking' %} - {% trans 'Pool A' %}</h1>
       </div>
 
       <div class="content container">
-      {% include 'IPT_TTH2019POV/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
+      {% include 'IPT_TTH2019_FINAL/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
       </div>
 
 
@@ -28,16 +28,16 @@
       </div>
 
       <div class="content container">
-      {% include 'IPT_TTH2019POV/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
+      {% include 'IPT_TTH2019_FINAL/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
       </div>
 
       <div>
           <center>
-          <h3><a href="{% url 'IPT_TTH2019POV:ranking' %}">{% trans 'General Ranking' %}</a></h3>
+          <h3><a href="{% url 'IPT_TTH2019_FINAL:ranking' %}">{% trans 'General Ranking' %}</a></h3>
           </center>
       </div>
 
-    {% include 'IPT_TTH2019POV/includes/link_update_all_for_superuser.html' %}
+    {% include 'IPT_TTH2019_FINAL/includes/link_update_all_for_superuser.html' %}
 
   {% endif %}
 

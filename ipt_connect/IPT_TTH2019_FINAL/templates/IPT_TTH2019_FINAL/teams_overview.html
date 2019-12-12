@@ -1,4 +1,4 @@
-{% extends 'IPT_TTH2019POV/head.html' %}
+{% extends 'IPT_TTH2019_FINAL/head.html' %}
 {% load i18n %}
 {% block content %}
 
@@ -9,7 +9,7 @@
     <div class="content container">
         {% for team in teams %}
             <div>
-                <p><a href="{% url 'IPT_TTH2019POV:team_detail' team_name=team.name %}">{{team.name}}</a></p>
+                <p><a href="{% url 'IPT_TTH2019_FINAL:team_detail' team_name=team.name %}">{{team.name}}</a></p>
             </div>
         {% endfor %}
     </div>

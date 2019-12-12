@@ -4,7 +4,7 @@ from urllib2 import urlopen
 
 head = 'http://127.0.0.1:8000'
 http = 'http:'
-dev =  '/IPT_TTH2019POV/'
+dev =  '/IPT_TTH2019_FINAL/'
 urls = [
         'problems',
         'participants',

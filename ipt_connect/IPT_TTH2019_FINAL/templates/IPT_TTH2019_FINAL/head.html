@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'IPT_TTH2019POV/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'IPT_TTH2019_FINAL/css/style.css' %}"/>
     <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans" rel="stylesheet">
-    <script src="/static/IPT_TTH2019POV/js/sorttable.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IPT_TTH2019POV/IPT_logo.png' %}" />
+    <script src="/static/IPT_TTH2019_FINAL/js/sorttable.js"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IPT_TTH2019_FINAL/IPT_logo.png' %}" />
     <title>{{ params.NAME.full }}</title>
 </head>
 <body>
@@ -17,28 +17,28 @@
             <div class="topmenu-wrap">
                 <div>
                     <a href="//iptnet.info">
-                    	<img src="{% static 'IPT_TTH2019POV/IPT_logo.png' %}" alt="{{ params.NAME.full }}" class="logo-topmenu">
+                    	<img src="{% static 'IPT_TTH2019_FINAL/IPT_logo.png' %}" alt="{{ params.NAME.full }}" class="logo-topmenu">
                     </a>
-                    <a href="//connect.iptnet.info">IPT connect | </a><a href="{% url 'IPT_TTH2019POV:tournament_overview' %}">{{ params.NAME.short }}</a>
+                    <a href="//connect.iptnet.info">IPT connect | </a><a href="{% url 'IPT_TTH2019_FINAL:tournament_overview' %}">{{ params.NAME.short }}</a>
                 </div>
                 <div>
-                    <a href="{% url 'IPT_TTH2019POV:rounds' %}">{% trans 'Physics Fights' %}</a>
+                    <a href="{% url 'IPT_TTH2019_FINAL:rounds' %}">{% trans 'Physics Fights' %}</a>
                 </div>
                 <div>
                     {% if params.enable_pools %}
-						<a href="{% url 'IPT_TTH2019POV:poolranking' %}">{% trans 'Ranking' %}</a>
+						<a href="{% url 'IPT_TTH2019_FINAL:poolranking' %}">{% trans 'Ranking' %}</a>
                     {% else %}
-						<a href="{% url 'IPT_TTH2019POV:ranking' %}">{% trans 'Ranking' %}</a>
+						<a href="{% url 'IPT_TTH2019_FINAL:ranking' %}">{% trans 'Ranking' %}</a>
                     {% endif %}
                 </div>
                 <div>
-                    <a href="{% url 'IPT_TTH2019POV:problems_overview' %}">{% trans 'Problems' %}</a>
+                    <a href="{% url 'IPT_TTH2019_FINAL:problems_overview' %}">{% trans 'Problems' %}</a>
                 </div>
                 <div>
-                    <a href="{% url 'IPT_TTH2019POV:participants_overview' %}">{% trans 'Participants' %}</a>
+                    <a href="{% url 'IPT_TTH2019_FINAL:participants_overview' %}">{% trans 'Participants' %}</a>
                 </div>
                 <div>
-                    <a href="{% url 'IPT_TTH2019POV:jurys_overview' %}">{% trans 'Jury members' %}</a>
+                    <a href="{% url 'IPT_TTH2019_FINAL:jurys_overview' %}">{% trans 'Jury members' %}</a>
                 </div>
            </div>
         </div>

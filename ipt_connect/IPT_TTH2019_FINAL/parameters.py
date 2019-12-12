@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 # Views parameters
-app_version = "IPT_TTH2019POV"[3:]     # keyword for url parsing
+app_version = "IPT_TTH2019_FINAL"[3:]     # keyword for url parsing
 # TODO:
-# The construction `"IPT_TTH2019POV"[3:]` above is a dirty hack.
-# We need to mention `IPT_TTH2019POV` to enable automated cloning,
+# The construction `"IPT_TTH2019_FINAL"[3:]` above is a dirty hack.
+# We need to mention `IPT_TTH2019_FINAL` to enable automated cloning,
 # but we have to set version to `dev` to satisfy some pieces of code.
 # No idea how is it handled for FPT.
 # To be refactored:

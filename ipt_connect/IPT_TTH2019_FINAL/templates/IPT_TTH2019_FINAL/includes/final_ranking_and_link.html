@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load solo_tags %}
 
-{% get_solo 'IPT_TTH2019POV.SiteConfiguration' as site_config %}
+{% get_solo 'IPT_TTH2019_FINAL.SiteConfiguration' as site_config %}
 
 {% if finalrankteams %}
     <div class="section">
@@ -10,14 +10,14 @@
     </div>
 
     <div class="content container">
-		{% include 'IPT_TTH2019POV/includes/ranking_table.html' with teams=finalrankteams display_final_points=True display_pf_status=False %}
+		{% include 'IPT_TTH2019_FINAL/includes/ranking_table.html' with teams=finalrankteams display_final_points=True display_pf_status=False %}
     </div>
 {% endif %}
 
 {% if site_config.display_link_to_final_on_ranking_page %}
     <div class="content container">
         <p class="emphase">
-            <a href="{% url 'IPT_TTH2019POV:physics_fight_detail' pfid=final_fight_number %}">{% trans 'Final Fight details...' %}</a>
+            <a href="{% url 'IPT_TTH2019_FINAL:physics_fight_detail' pfid=final_fight_number %}">{% trans 'Final Fight details...' %}</a>
         </p>
     </div>
 {% endif %}

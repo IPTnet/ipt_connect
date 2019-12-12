@@ -1,5 +1,5 @@
 from django.test import TestCase
-from IPT_TTH2019POV.func_mean import *
+from IPT_TTH2019_FINAL.func_mean import *
 
 # Create your tests here.
 
