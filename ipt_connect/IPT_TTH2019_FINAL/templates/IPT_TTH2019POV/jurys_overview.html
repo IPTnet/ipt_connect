@@ -1,0 +1,41 @@
+{% extends 'IPT_TTH2019POV/head.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+    {% if not jurys %}
+        <div>
+            <center>
+            <h1>{% trans 'No jury member registered yet' %}</h1>
+            </center>
+        </div>
+    {% else %}
+        <div class="section">
+            <h1>{% trans 'Jury overview' %}</h1>
+        </div>
+
+        <div class="content container">
+            <p class="emphase">{% trans 'Click on the names for detailed statistics. Click on the headers to sort the table.' %}</p>
+        </div>
+
+
+        <div class="content container">
+            <table class="sortable">
+                <tr>
+                    <th class="th-center">{% trans 'Name' %}</th>
+                    <th class="th-center">{% trans 'Mean Report grade' %}</th>
+                    <th class="th-center">{% trans 'Mean Opposition grade' %}</th>
+                    <th class="th-center">{% trans 'Mean Review grade' %}</th>
+                </tr>
+            {% for jury in jurys %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'IPT_TTH2019POV:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}}</a></td>
+                    <td class="td-center">{{jury.meanrepgrade|floatformat:2}}</td>
+                    <td class="td-center">{{jury.meanoppgrade|floatformat:2}}</td>
+                    <td class="td-center">{{jury.meanrevgrade|floatformat:2}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+{% endblock content %}

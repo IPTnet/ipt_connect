@@ -1,0 +1,47 @@
+{% extends 'IPT_TTH2019POV/head.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{{jury.name}} {{jury.surname}}</h1>
+    </div>
+
+    <div class="content container">
+        {% if jury.team %}
+            <li class="emphase">{% trans 'Team Leader of' %} {{jury.team.name}}</li>
+        {% else %}
+            {% if jury.affiliation %}
+            <li class="emphase">{% trans 'External jury member' %} - {{jury.affiliation}}</li>
+            {% else %}
+            <li class="emphase">{% trans 'External jury member' %}</li>
+            {% endif %}
+        {% endif %}
+
+    </div>
+
+    <div class="content container">
+
+        <table class="sortable">
+            <tr>
+                <th class="th-center">{% trans 'Problems graded' %}</th>
+                <th class="th-center">{% trans 'Report grade' %}</th>
+                <th class="th-center">{% trans 'Opposition grade' %}</th>
+                <th class="th-center">{% trans 'Review grade' %}</th>
+            </tr>
+            {% for grade in grades %}
+                {% if grade.round.problem_presented %}
+                    <tr>
+                        <td class="td-center"><a href="{% url 'IPT_TTH2019POV:problem_detail' pk=grade.round.problem_presented.pk %}">{{grade.round.problem_presented}}</a></td>
+                        <td class="td-center"><a href="{% url 'IPT_TTH2019POV:round_detail' pk=grade.round.pk %}">{{grade.grade_reporter}} ({{grade.round.reporter_team.name}})</a></td>
+                        <td class="td-center"><a href="{% url 'IPT_TTH2019POV:round_detail' pk=grade.round.pk %}">{{grade.grade_opponent}} ({{grade.round.opponent_team.name}})</a></td>
+                        <td class="td-center"><a href="{% url 'IPT_TTH2019POV:round_detail' pk=grade.round.pk %}">{{grade.grade_reviewer}} ({{grade.round.reviewer_team.name}})</a></td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+        </table>
+    </div>
+
+
+{% endblock content %}

@@ -1,0 +1,11 @@
+{% load i18n %}
+{% for jury in jurys %}
+
+
+{{ jury.name }},{{ jury.surname }},{{ jury.affiliation }},{{ jury.email}} <br>
+
+{% empty %}
+
+    <p>{% trans 'There is no registered jury member' %}.</p>
+
+{% endfor %}

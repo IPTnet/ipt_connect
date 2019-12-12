@@ -1,0 +1,22 @@
+{% load i18n %}
+<h1>{% trans 'Participants of' %} IPT dev</h1>
+
+
+<table><tr>
+{% for participant in participants %}
+   <td align="center">
+   <table>
+   <tr><img src='http://connect.iptnet.info{{ participant.photo.url }}' width='100px'></tr><br>
+   <tr>{{ participant.name }} {{ participant.surname }}</tr><br>
+   <tr>{{ participant.team }}</tr><br>
+   <tr>{{ participant.role }}</tr>
+   </table></td>
+   {% if forloop.last %}
+     </tr>
+   {% else %}
+     {% if forloop.counter|divisibleby:"4" %}
+       </tr><tr>
+     {% endif %}
+   {% endif %}
+{% endfor %}
+</table>
