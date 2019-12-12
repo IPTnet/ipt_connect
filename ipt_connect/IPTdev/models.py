@@ -646,7 +646,7 @@ class TacticalRejection(models.Model):
 	problem = models.ForeignKey(Problem)
 
 	def __unicode__(self):
-		return "Problem rejected : %s" % self.problem
+		return "Problem rejected : %s" % self.problem.pk
 
 class EternalRejection(models.Model):
 
@@ -654,7 +654,7 @@ class EternalRejection(models.Model):
 	problem = models.ForeignKey(Problem)
 
 	def __unicode__(self):
-		return "Problem rejected : %s" % self.problem
+		return "Problem rejected : %s" % self.problem.pk
 
 
 # method for updating Teams and Participants when rounds are saved
