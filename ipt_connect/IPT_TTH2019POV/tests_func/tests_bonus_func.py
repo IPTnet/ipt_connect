@@ -1,5 +1,5 @@
 from django.test import TestCase
-from IPTdev.func_bonus import *
+from IPT_TTH2019POV.func_bonus import *
 
 class  Test(TestCase):
 

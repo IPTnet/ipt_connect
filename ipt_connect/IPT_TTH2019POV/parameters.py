@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 # Views parameters
-app_version = "IPTdev"[3:]     # keyword for url parsing
+app_version = "IPT_TTH2019POV"[3:]     # keyword for url parsing
 # TODO:
-# The construction `"IPTdev"[3:]` above is a dirty hack.
-# We need to mention `IPTdev` to enable automated cloning,
+# The construction `"IPT_TTH2019POV"[3:]` above is a dirty hack.
+# We need to mention `IPT_TTH2019POV` to enable automated cloning,
 # but we have to set version to `dev` to satisfy some pieces of code.
 # No idea how is it handled for FPT.
 # To be refactored:
@@ -115,5 +115,5 @@ fights = {
     # And, finally, you can specify names for all the fights to be displayed
     # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
     # or "Semifinal A", or smth another.
-    'names': ['Selective Fight 1','Selective Fight 2','Selective Fight 3','Selective Fight 4','Semifinal 1','Semifinal 2','IPTdev Final']
+    'names': ['Selective Fight 1','Selective Fight 2','Selective Fight 3','Selective Fight 4','Semifinal 1','Semifinal 2','IPT_TTH2019POV Final']
 }
