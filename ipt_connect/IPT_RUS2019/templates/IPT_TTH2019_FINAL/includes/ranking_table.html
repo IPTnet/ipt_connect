@@ -1,0 +1,65 @@
+{% load humanize %}
+{% load i18n %}
+
+<table>
+	<tr>
+		<th class="th-center">{% trans 'Rank' %}</th>
+		<th class="th-center">{% trans 'Team' %}</th>
+		<th class="th-center">{% trans 'Points' %}</th>
+		{% if display_semi_points %}
+			<th class="th-center">{% trans 'Semifinal points' %}</th>
+		{% endif %}
+		{% if display_final_points %}
+			<th class="th-center">{% trans 'Final points' %}</th>
+		{% endif %}
+		{% if display_pool|default_if_none:params.enable_pools %}
+			<th class="th-center">{% trans 'Pool' %}</th>
+		{% endif %}
+		{% if display_pf_status|default_if_none:params.display_pf_status %}
+			<th class="th-center">{% trans 'Physics Fights status' %}</th>
+		{% endif %}
+	</tr>
+	{% for team in teams %}
+	<tr {% if team.emphase %} class="emphase" {% endif %}>
+		<td class="td-center">
+			{{team.rank|ordinal}}
+		</td>
+		<td class="td-center">
+			<a href="{% url 'IPT_TTH2019_FINAL:team_detail' team_name=team.name %}">
+				{{team.name}}
+			</a>
+		</td>
+		<td class="td-center">
+			{{team.total_points|floatformat:2}}
+		</td>
+		{% if display_semi_points %}
+			<td class="td-center">
+				{{team.semi_points|floatformat:2}}
+			</td>
+		{% endif %}
+		{% if display_final_points %}
+			<td class="td-center">
+				{{team.final_points|floatformat:2}}
+			</td>
+		{% endif %}
+		{% if display_pool|default_if_none:params.enable_pools %}
+			<td class="td-center">
+				{{team.pool}}
+			</td>
+		{% endif %}
+		{% if display_pf_status|default_if_none:params.display_pf_status %}
+			<td class="td-center">
+				{% if team.ongoingpf %}
+					<b>{{team.currentpf|ordinal}}</b>
+					{% trans 'fight ongoing' %}
+				{% else %}
+					<b>{{team.pfsplayed}}</b>
+					{% trans 'fight(s) ended' %}
+				{% endif %}
+			</td>
+		{% endif %}
+	</tr>
+{% endfor %}
+
+</table>
+

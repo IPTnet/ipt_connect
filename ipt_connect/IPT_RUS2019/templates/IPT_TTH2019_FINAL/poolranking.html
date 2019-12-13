@@ -1,0 +1,44 @@
+{% extends 'IPT_TTH2019_FINAL/head.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+  {% if not rankteamsA and not rankteamsB%}
+    <div>
+      <center>
+      <h1>{% trans 'Teams are not registered or not distributed into pools' %}</h1>
+      </center>
+    </div>
+  {% else %}
+    {% include 'IPT_TTH2019_FINAL/includes/final_ranking_and_link.html' %}
+    
+    {% include 'IPT_TTH2019_FINAL/includes/semifinal_ranking.html' %}
+
+      <div class="section">
+          <h1>{% trans 'Ranking' %} - {% trans 'Pool A' %}</h1>
+      </div>
+
+      <div class="content container">
+      {% include 'IPT_TTH2019_FINAL/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
+      </div>
+
+
+    <div class="section">
+          <h1>{% trans 'Ranking' %} - {% trans 'Pool B' %}</h1>
+      </div>
+
+      <div class="content container">
+      {% include 'IPT_TTH2019_FINAL/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
+      </div>
+
+      <div>
+          <center>
+          <h3><a href="{% url 'IPT_TTH2019_FINAL:ranking' %}">{% trans 'General Ranking' %}</a></h3>
+          </center>
+      </div>
+
+    {% include 'IPT_TTH2019_FINAL/includes/link_update_all_for_superuser.html' %}
+
+  {% endif %}
+
+{% endblock content %}

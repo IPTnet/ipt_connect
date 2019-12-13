@@ -1,0 +1,73 @@
+{% extends 'IPT_TTH2019_FINAL/head.html' %} {% load humanize %} {% load i18n %} {% block content %}
+
+<div class="section">
+    <h1>{{team.name}}</h1>
+</div>
+
+<div class="content container">
+    <h1> {{team.rank|ordinal}} {% trans 'with' %} {{team.total_points|floatformat:2}} {% trans 'points' %}.</h1>
+</div>
+
+
+<div class="content container">
+    <h2>{% trans 'Participants' %}:
+    </h2> {% for participant in participants %}
+    <div>
+        <li><a href="{% url 'IPT_TTH2019_FINAL:participant_detail' pk=participant.pk %}">{{participant.fullname}} {% trans 'gathered' %} {{participant.total_points|floatformat:2}} {% trans 'points' %}.</a></li>
+    </div>
+    {% endfor %}
+
+
+    <h2>{% trans 'Team-Leaders:' %}
+    </h2> {% for teamleader in teamleaders %}
+    <div>
+        <li>{{teamleader.name}} {{teamleader.surname}}</li>
+    </div>
+    {% endfor %}
+    {% for jury in teamleaders_jury %}
+    <div>
+        <li><a href="{% url 'IPT_TTH2019_FINAL:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {% trans '(jury member)' %}</a></li>
+    </div>
+    {% endfor %}
+</div>
+
+
+<div class="content container">
+    <table class="sortable">
+        <tr>
+            <th class="th-center">{% trans 'Problems presented' %}</th>
+            <th class="th-center">{% trans 'Grade' %}</th>
+            <th class="th-center">{% trans 'Role' %}</th>
+        </tr>
+        {% for round in allrounds %}
+            {% if round.problem_presented %}
+                <tr>
+                    <td class="td-center"><a href="{% url 'IPT_TTH2019_FINAL:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPT_TTH2019_FINAL:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
+                    <td class="td-center">{{round.myrole}}</td>
+                </tr>
+            {% endif %}
+        {% endfor %}
+
+    </table>
+</div>
+
+<div class="content container">
+    {% if penalties %}
+    <h3>{% trans 'Penalties' %}:</h3>
+    {% for p in penalties %}
+
+    <li>{% trans 'Multiplicative coefficient of' %} {{p.1}} {% trans 'for the Reporter in the' %} {{p.0|ordinal}} {% trans 'Physics Fight' %}.</li>
+
+    {% endfor %} {% endif %}
+
+    <h3>{% trans 'Bonus points' %}:</h3>
+    <p>
+    	{% if bonus_points_displayed %}
+    		{{bonus_points_displayed}}
+    	{% else %}
+    		{% trans 'None' %}
+    	{% endif %}
+    </p>
+</div>
+{% endblock content %}

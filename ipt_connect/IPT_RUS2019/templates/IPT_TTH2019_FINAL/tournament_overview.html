@@ -1,0 +1,49 @@
+{% extends 'IPT_TTH2019_FINAL/head.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{% trans "Welcome!" %}</h1>
+    </div>
+
+	<div class="content container">
+	<table style="width:100%">
+  <tr>
+    {% if params.poster_url %}
+        <td>
+            <img src="{{params.poster_url}}" width=500/>
+        </td>
+    {% endif %}
+    <td>
+        <p class="emphase">
+            {% trans "This interface gathers the results of the " %}
+            <a href="{{ params.website_url }}">{{params.NAME.front}}</a>.
+        </p>
+
+        <p class="emphase">{% trans "Most of the displayed elements can be clicked on. You can access teams, individual participant or jury member statistics, as well as details of each Round, Physics Fights and Problem." %}</p>
+		
+		<p class="emphase">
+            {% trans "The results are updated once after each round - you will be notified via email once the update has been made." %}
+        </p>
+
+        <p class="emphase">
+            {% trans "In case you spot a bug or have any suggestion to improve the software, please don't hesitate to open an issue" %}
+            <a href="{{params.repo_url}}" target="_blank">{% trans "at our repository" %}</a>
+            {% trans "or to get in touch with us at webmaster (a) iptnet (dot) info." %}
+        </p>
+		
+        <p class="emphase">
+            {% trans "You can also try" %}
+            <a href="/IPT{{params.app_version}}/build_tactics">{% trans "this beta tool to list forbidden problems." %}</a>
+        </p>
+
+    </td>
+    
+  </tr>
+  
+</table>
+    </div>
+
+
+{% endblock content %}
