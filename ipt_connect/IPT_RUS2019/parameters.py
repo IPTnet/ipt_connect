@@ -12,15 +12,15 @@ app_version = "IPT_RUS2019"[3:]     # keyword for url parsing
 
 
 NAME = {
-    'short': 'ТТН 2019 - Финальный этап',
-    'full': 'Турнир Трёх Наук 2019 - Финальный этап',
+    'short': 'ВСТФ-2019',
+    'full': 'Всероссийский Студенческий Турнир Физиков - 2019',
     # ... and the name used in tournament overview
-    'front': 'Финального этапа Федерального Студенческого Турнира Трёх Наук',
+    'front': 'Всероссийского Студенческого Турнира Физиков - 2019',
 }
 
-poster_url = ''
+poster_url = 'https://sun9-34.userapi.com/c837222/v837222573/1249f/CAg9-nzsThc.jpg'
 
-website_url = 'http://iturnir.ru'
+website_url = 'https://vk.com/mipt_ipt'
 
 repo_url = 'https://github.com/IPTnet/ipt_connect'
 
@@ -29,7 +29,7 @@ npf = 4                 # Number of selective (qualifying) Physics fights
 semifinals_quantity = 0 # Quantity of semifinals. Every semifinal should be a separate fight!
 with_final_pf = True    # Is there a Final Fight ?
 reject_malus = 0.2      # Malus for too many rejections
-npfreject_max = 2       # Maximum number of tactical rejection (per fight)
+npfreject_max = 3       # Maximum number of tactical rejection (per fight)
 netreject_max = 2       # Maximum number of eternal rejection
 
 # Should we reset the point sum before semifinals?
@@ -56,7 +56,7 @@ personal_ranking = {
 }
 
 # Calculating the mean
-mean = 'ttn_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
+mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
 
 # Is the fight status displayed?
 # Looks like there are some problems with it, so making it switchable
@@ -83,7 +83,7 @@ enable_pools = False
 # Switching from False to True: local bonuses are preserved as counted, you can edit them manually
 # Switching from True to False: local bonuses can be automatically overwritten,
 # global bonuses are hidden and ignored so far
-manual_bonus_points = True
+manual_bonus_points = False
 
 # Do we display coreporters publicly?
 display_coreporters = True
@@ -98,7 +98,7 @@ fights = {
     # Bonus points multipliers
     # You can set it to 2 for semifinals or the last selective PFs to emphase the drama.
     # You can also set it to zero for the final with the same purpose!
-    'bonus_multipliers' : [0,0,0,0,0,0],
+    'bonus_multipliers' : [1,1,1,1,0,0],
 
     # Is there challenge procedure at the beginning of each round of the fight?
     # Some tournaments, such as Syberian IYPT, play the last selective PF without the challenge procedure
