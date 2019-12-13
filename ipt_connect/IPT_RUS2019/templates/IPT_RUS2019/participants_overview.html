@@ -1,4 +1,4 @@
-{% extends 'IPT_TTH2019_FINAL/head.html' %}
+{% extends 'IPT_RUS2019/head.html' %}
 {% load i18n %}
 
 {% block content %}
@@ -33,9 +33,9 @@
                 </tr>
             {% for participant in participants %}
                 <tr>
-                    <td class="td-center"><a href="{% url 'IPT_TTH2019_FINAL:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPT_RUS2019:participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
                     {% if participant.team %}
-                        <td class="td-center"><a href="{% url 'IPT_TTH2019_FINAL:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
+                        <td class="td-center"><a href="{% url 'IPT_RUS2019:team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
                     {% else %}
                         <td class="td-center"></td>
                     {% endif %}

@@ -1,0 +1,9 @@
+{% load i18n %}
+
+{% if user.is_superuser %}
+    <div>
+        <center>
+            <h3><a href = "{% url 'IPT_RUS2019:update_all' %}" class="stuff-only-link">{% trans 'Update all the scores (may take few minutes)' %}</a></h3>
+        </center>
+    </div>
+{% endif %}

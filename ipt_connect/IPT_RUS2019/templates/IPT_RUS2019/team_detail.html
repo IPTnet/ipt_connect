@@ -1,4 +1,4 @@
-{% extends 'IPT_TTH2019_FINAL/head.html' %} {% load humanize %} {% load i18n %} {% block content %}
+{% extends 'IPT_RUS2019/head.html' %} {% load humanize %} {% load i18n %} {% block content %}
 
 <div class="section">
     <h1>{{team.name}}</h1>
@@ -13,7 +13,7 @@
     <h2>{% trans 'Participants' %}:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'IPT_TTH2019_FINAL:participant_detail' pk=participant.pk %}">{{participant.fullname}} {% trans 'gathered' %} {{participant.total_points|floatformat:2}} {% trans 'points' %}.</a></li>
+        <li><a href="{% url 'IPT_RUS2019:participant_detail' pk=participant.pk %}">{{participant.fullname}} {% trans 'gathered' %} {{participant.total_points|floatformat:2}} {% trans 'points' %}.</a></li>
     </div>
     {% endfor %}
 
@@ -26,7 +26,7 @@
     {% endfor %}
     {% for jury in teamleaders_jury %}
     <div>
-        <li><a href="{% url 'IPT_TTH2019_FINAL:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {% trans '(jury member)' %}</a></li>
+        <li><a href="{% url 'IPT_RUS2019:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {% trans '(jury member)' %}</a></li>
     </div>
     {% endfor %}
 </div>
@@ -42,8 +42,8 @@
         {% for round in allrounds %}
             {% if round.problem_presented %}
                 <tr>
-                    <td class="td-center"><a href="{% url 'IPT_TTH2019_FINAL:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
-                    <td class="td-center"><a href="{% url 'IPT_TTH2019_FINAL:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPT_RUS2019:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url 'IPT_RUS2019:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
                     <td class="td-center">{{round.myrole}}</td>
                 </tr>
             {% endif %}

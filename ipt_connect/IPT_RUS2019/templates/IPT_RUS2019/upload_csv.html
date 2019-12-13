@@ -1,9 +1,9 @@
-{% extends 'IPT_TTH2019_FINAL/head.html' %}
+{% extends 'IPT_RUS2019/head.html' %}
 {% load i18n %}
 
 {% block content %}
 
-<form action="{% url "IPT_TTH2019_FINAL:upload_csv" %}" method="post" enctype="multipart/form-data">
+<form action="{% url "IPT_RUS2019:upload_csv" %}" method="post" enctype="multipart/form-data">
     {% csrf_token %}
     <p>{{ form.non_field_errors }}</p>
 
