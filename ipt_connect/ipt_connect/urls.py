@@ -5,6 +5,7 @@ from ipt_connect.views import home
 from IPTdev.views import tournament_overview
 from IPT_TTH2019POV.views import tournament_overview
 from IPT_TTH2019_FINAL.views import tournament_overview
+from IPT_RUS2019.views import tournament_overview
 
 urlpatterns = [
     # Examples:
@@ -19,6 +20,7 @@ urlpatterns = [
     url(r'^IPTdev/', include('IPTdev.urls', namespace='IPTdev')),
     url(r'^IPT_TTH2019POV/', include('IPT_TTH2019POV.urls', namespace='IPT_TTH2019POV')),
     url(r'^IPT_TTH2019_FINAL/', include('IPT_TTH2019_FINAL.urls', namespace='IPT_TTH2019_FINAL')),
+    url(r'^IPT_RUS2019/', include('IPT_RUS2019.urls', namespace='IPT_RUS2019')),
 ]
 
 
