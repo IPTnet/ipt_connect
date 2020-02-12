@@ -50,6 +50,17 @@ class UploadToPathAndRename(object):
 		return os.path.join(self.sub_path, filename)
 
 
+#TODO: possibly that should be incapsulated somehow into Participant class
+
+from django.core.exceptions import ValidationError
+
+def validate_consent(value):
+	if not value :
+		raise ValidationError(
+			'The consent must be given',
+			params={'value': value},
+		)
+
 class Participant(models.Model):
 
 	"""
@@ -93,9 +104,21 @@ class Participant(models.Model):
 	status = models.CharField(max_length=1,choices=STATUS_CHOICES,blank=True,verbose_name='Student status')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the tournament? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
-	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room?",verbose_name='Mixed gender accommodation?')
+	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room? (In case of single-gender rooms you will likely share the room with other teams)",verbose_name='Mixed gender accommodation?')
 	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
+
+
+	physical_disabilities = models.BooleanField(default=False)
+	support_required = models.TextField(blank=True)
+	chronic_disease_or_special_medications_required  = models.TextField(blank=True)
+
 	remark = models.TextField(blank=True,verbose_name='Remarks')
+
+
+
+
+	consent = models.BooleanField(default=False,validators=[validate_consent],verbose_name='I accept the agreement of use of personal data and image for advertisement of the tournament',help_text="Compulsory")
+
 
 	total_points = models.FloatField(default=0.0, editable=False)
 	mean_score_as_reporter = models.FloatField(default=0.0, editable=False)
