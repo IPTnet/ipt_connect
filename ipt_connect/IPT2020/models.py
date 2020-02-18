@@ -68,11 +68,15 @@ class Participant(models.Model):
 	It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
 
 
-	GENDER_CHOICES = ( ('M','Male'), ('F','Female'), ('D','Decline to report'))
+	GENDER_CHOICES = ( ('M','Male'), ('F','Female'), ('D','Prefer not to say'))
 
-	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Accompanying') )
+	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Observer') )
 
-	DIET_CHOICES = ( ('NO','No specific diet'), ('NOPORK','No pork'), ('NOMEAT','No meat'), ('NOFISH','No fish'), ('NOMEAT_NOEGG','No meat, No eggs'), ('OTHER','Other (see remarks)')  )
+	DIET_CHOICES = (
+		('STD','Standart'),
+		('VGT','Vegetarian'),
+		('VGN','Vegan'),
+	)
 
 	SHIRT_SIZES = (
 		('S', 'Small'),
@@ -104,6 +108,7 @@ class Participant(models.Model):
 	status = models.CharField(max_length=1,choices=STATUS_CHOICES,blank=True,verbose_name='Student status')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the tournament? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
+	allergies_or_other_special_requirements = models.TextField(blank=True)
 	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room? (In case of single-gender rooms you will likely share the room with other teams)",verbose_name='Mixed gender accommodation?')
 	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
 
