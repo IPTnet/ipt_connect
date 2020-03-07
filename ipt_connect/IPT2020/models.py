@@ -114,7 +114,7 @@ class Participant(models.Model):
 	team = models.ForeignKey('Team', null=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
 	affiliation = models.CharField(max_length=50,default='XXX University')
-	status = models.CharField(max_length=1,choices=STATUS_CHOICES,blank=True,verbose_name='Student status')
+	status = models.CharField(max_length=1,choices=STATUS_CHOICES,verbose_name='Academic status')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the tournament? (informative only)",verbose_name='Veteran')
 	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
 	allergies_or_other_special_requirements = models.TextField(blank=True)
