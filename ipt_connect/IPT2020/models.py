@@ -95,8 +95,10 @@ class Participant(models.Model):
 	STATUS_CHOICES = (
 		('B', 'Bachelor student'),
 		('M', 'Master student'),
-		('S', 'Specialist student'),
-		('O', 'Other')
+		('P', 'PhD student'),
+		('S', 'Postdoc'),
+		('R', 'Professor'),
+		('O', 'None of the above'),
 	)
 
 	# parameters
