@@ -70,7 +70,14 @@ class Participant(models.Model):
 
 	GENDER_CHOICES = ( ('M','Male'), ('F','Female'), ('D','Prefer not to say'))
 
-	ROLE_CHOICES = ( ('TM','Team Member'), ('TC','Team Captain'), ('TL','Team Leader'), ('ACC','Observer') )
+	ROLE_CHOICES = (
+		('TM',  'Team Member'),
+		('TC',  'Team Captain'),
+		('TL',  'Team Leader'),
+		('ACC', 'Observer'),
+		('ORG', 'Organizer'),
+		('GST', 'Guest'),
+	)
 
 	DIET_CHOICES = (
 		('STD','Standart'),
