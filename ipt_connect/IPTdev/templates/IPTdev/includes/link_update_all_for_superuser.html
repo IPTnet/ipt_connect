@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% if user.is_superuser %}
+{% if perms.IPTdev.update_all %}
     <div>
         <center>
             <h3><a href = "{% url 'IPTdev:update_all' %}" class="stuff-only-link">{% trans 'Update all the scores (may take few minutes)' %}</a></h3>

@@ -607,6 +607,11 @@ class Round(models.Model):
 
 		return unavailable_problems
 
+	class Meta:
+		permissions = (
+			("update_all", "Can see and trigger update_all links"),
+		)
+
 
 class JuryGrade(models.Model):
 
