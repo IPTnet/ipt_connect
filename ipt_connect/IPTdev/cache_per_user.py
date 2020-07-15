@@ -11,7 +11,7 @@ Author: eu@rafaelsdm.com
 
 from django.core.cache import cache
 
-def cache_per_user(ttl=None, prefix=None, cache_post=False):
+def cache_per_user(ttl=None, prefix=None):
     '''Decorador que faz cache da view pra cada usuario
     * ttl - Tempo de vida do cache, não enviar esse parametro significa que o
       cache vai durar até que o servidor reinicie ou decida remove-lo 
@@ -27,29 +27,24 @@ def cache_per_user(ttl=None, prefix=None, cache_post=False):
     '''
     def decorator(function):
         def apply_cache(request, *args, **kwargs):
-            # Gera a parte do usuario que ficara na chave do cache
-            if request.user.is_anonymous():
-                user = 'anonymous'
-            else:
-                user = request.user.id
+
+            # No caching for authorized users:
+            # they have to see the results of their edits immideately!
+
+            can_cache = request.user.is_anonymous() and request.method == 'GET'
 
             # Gera a chave do cache
             if prefix:
-                CACHE_KEY = '%s_%s'%(prefix, user)
+                CACHE_KEY = '%s_%s'%(prefix, 'anonymous')
             else:
-                CACHE_KEY = 'view_cache_%s_%s'%(function.__name__, user)       
+                CACHE_KEY = 'view_cache_%s_%s'%(function.__name__, 'anonymous')
 
-            # Verifica se pode fazer o cache do request
-            if not cache_post and request.method == 'POST':
-                can_cache = False
-            else:
-                can_cache = True
 
             if can_cache:
                 response = cache.get(CACHE_KEY, None)
             else:
                 response = None
-                
+
             if not response:
                 response = function(request, *args, **kwargs)
                 if can_cache:
