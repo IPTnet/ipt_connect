@@ -127,9 +127,10 @@ MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
 MEDIA_URL = '/media/'
 
 CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-    }
+	'default': {
+	#	'BACKEND': 'django.core.cache.backends.dummy.DummyCache', # Switch the cache off
+		'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+	}
 }
 
 SOLO_CACHE = 'default'
