@@ -2,7 +2,7 @@
 from django.http import HttpResponse, Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
-from django.views.decorators.cache import cache_page
+from cache_per_user import cache_per_user as cache_page
 from models import *
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
