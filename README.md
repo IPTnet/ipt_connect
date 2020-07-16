@@ -113,10 +113,10 @@ Just create the instance locally and look at the commits which wil be created.
 Notice: this clones only structure of the tournament,
 i.e. you have an empty table for teams, no registered jurors, etc.
 
-### How to see modifications in html code after new commit?
+### How to see modifications in html code after a new commit?
 
-Sometimes change in backend code of product can affect on frontend part.
-We'll see, have affected on pages?
+Until the proper CI is set, we use this simple tool
+to check how changes in our `python` code affect the real generated HTML code.
 
 Dumper - utility for collect all pages
 
@@ -125,7 +125,7 @@ Dumper - utility for collect all pages
 * To do dump:
   * Run `python manage.py runserver` 
   * Run `cd IPTdev/utils`
-  * Run `python dumper`
+  * Run `python dumper.py`
 In terminal you will see path to dump
 
 * Compare dumps:
