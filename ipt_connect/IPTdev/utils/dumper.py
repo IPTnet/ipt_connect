@@ -1,5 +1,6 @@
 import os
 import git
+import urllib
 from urllib2 import urlopen
 from find_links import unique_url
 
@@ -16,11 +17,6 @@ html_code  = []
 add_url = []
 
 for u in unique_url:
-        add_url.append(u + '\n')
-        add_url.append(urlopen(u).read())
-        html_code.append(list(add_url))
-        add_url = []
-
-for page in range(len(html_code)):
-        with open(dir_path_dump + '/page_' + str(page) + '.txt', 'w') as site:
-            site.writelines(html_code[page])
+	if u[:16] == "http://127.0.0.1": # Avoid external pages
+		with open(dir_path_dump + '/' + urllib.quote(u).replace('/','_') + '.html', 'w') as page:
+			page.writelines(urlopen(u).read())
