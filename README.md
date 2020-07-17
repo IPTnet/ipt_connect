@@ -135,7 +135,11 @@ Path to dump will be printed into the terminal
 
 ### How to run tests?
 
-* Run `python manage.py test` 
+* Run `python manage.py test`
+
+*Note:* as for now (17 Jul 2020), there are some errors related to `grappelli` and `loginas`.
+Just ignore them.
+However, there should be **no** errors related to `ipt_connect` itself.
 
 ### Link checking
 * Run `python manage.py test IPTdev.utils.link_parser`
