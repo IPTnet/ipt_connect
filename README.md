@@ -126,13 +126,12 @@ Dumper - utility for collect all pages
   * Run `python manage.py runserver` 
   * Run `cd IPTdev/utils`
   * Run `python dumper.py`
-In terminal you will see path to dump
+Path to dump will be printed into the terminal
 
 * Compare dumps:
-  * Run `cd IPTdev/utils`
-  * Run `python diff_html.py hash_commit_1 hash_commit_2`
-  (Do not need to run server) 
-In terminal you will see path to difference 
+  * Using `diff -bBwEZ ...`
+  * Using `meld`
+  * Using your another favourite tool to find difference in HTML code :)
 
 ### How to run tests?
 
