@@ -41,12 +41,11 @@ def cache_per_user(ttl=None, prefix=None):
 
             if can_cache:
                 response = cache.get(CACHE_KEY, None)
-                print 'Get from cache: %s'%(CACHE_KEY)
             else:
                 response = None
-                print 'Not in cache: %s'%(CACHE_KEY)
 
             if not response:
+                print 'Not in cache: %s'%(CACHE_KEY)
                 response = function(request, *args, **kwargs)
                 if can_cache:
                     cache.set(CACHE_KEY, response, ttl)
