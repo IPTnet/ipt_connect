@@ -130,3 +130,109 @@ If there are no errors, then just go to the next step.
 
 9. Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/) in your favourite browser!
 If everything went right, you will see a development instance of `ipt_connect` filled  with test data!
+
+## Before changing the code
+
+While changing the code, you should be sure that you're not breaking anything, shouldn't you?
+Thus, please do the following steps **before** you edit anything.
+
+1. Running the tests:
+
+```bash
+cd ipt_connect
+python manage.py test
+cd -
+```
+
+*Note:* as for now (17 Jul 2020), there are some errors related to `grappelli` and `loginas`.
+Just ignore them.
+However, there should be **no** errors related to `ipt_connect` itself.
+
+2. Checking availability of the links and resources:
+
+```bash
+cd ipt_connect
+python manage.py test IPTdev.utils.link_parser
+cd -
+```
+
+The Internet is constantly changing, new files and pages appear, and old ones are deleted.
+And links can change their address. Broken links can damage the site.
+An internal link may not work due to erroneous address or removed/non-existing page.
+Finally, no one is safe from errors of programmers or administrators.
+Each dead link causes negative reaction from users.
+This utility crawls all the mentioned links and returns the list of non-working ones.
+
+If you see a dead link before you've made any changes to the files -
+please [open an issue](https://github.com/IPTnet/ipt_connect/issues/new).
+
+If you see a dead link (that may be either internal or external) after you've changed the code,
+please review your changes :)
+
+3. Creating a dump of HTML code produced:
+
+Until the proper CI is set, we use this simple tool
+to check how changes in our `python` code affect the real generated HTML code.
+
+
+	* In a terminal, start the server:
+	  ```bash
+	  cd ipt_connect
+	  python manage.py test
+	  cd -
+	  ```
+	* In another terminal (i.e. without stopping the server), run:
+	  ```bash
+	  cd ipt_connect/IPTdev/utils
+	  python dumper.py
+	  cd -
+	  ```
+Path to dump will be printed into the terminal
+
+*Note: the dumper uses hash of the last commit to identify the dump.*
+*Thus, the dumper shouldn't be used if there are uncommited changes.*
+
+## Changing the code
+
+The recommendations on how to change the codebase are rather general.
+
+	* Don't commit changes in database if they're not essential.
+	  For example, if you've runned `python manage.py createsuperuser`
+	  to log in and test something, the database will be changed.
+	  This change should not be commited.
+
+	* Always split database changes to a separate commit
+	  and describe the changes in detail.
+	  The database is a binary file, so we will not be able to rebase the changes easily.
+
+	* If your contribution is related to an issue,
+	  don't hesitate to mention it like so:
+	  ```bash
+	  git commit -m "Add 6-round-fights - see #13666"
+	  ```
+	  `see` if for refering, `close` is for closing the issue
+	  (the issue closes when the pullrequest is merged).
+
+## After the code is changed
+
+When the code is changed and the commit is done,
+please check that nothing was broken.
+Namely:
+
+	* Run tests [(see above)](#running-the-tests)
+
+	* Check the site for dead links [(see above)](#checking-availability-of-the-links-and-resources)
+
+	* Create a dump of generated pages [(see above)](#checking-availability-of-the-links-and-resources)э
+
+	* Compare the two dumps (*before* and *after*) your changes
+
+	  * using `diff -bBwEZ ...`
+
+	  * using `meld`
+
+	  * or using your another favourite tool to find difference in HTML code :)
+
+	  Please check the difference carefully.
+
+If everything is OK, your pull request is welcome!
