@@ -15,6 +15,8 @@ This file provides some brief advice on how to contribute properly.
 
 4. Last but not least:
 if you know Python, you can do amazing things implementing [issues](https://github.com/IPTnet/ipt_connect/issues).
+Some of them are marked as ["good first issue"](https://github.com/IPTnet/ipt_connect/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22).
+Such issues are a really good point to start from!
 
 *Also, please don't hesitate to add remarks to this guide.*
 
