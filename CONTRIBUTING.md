@@ -175,18 +175,18 @@ Until the proper CI is set, we use this simple tool
 to check how changes in our `python` code affect the real generated HTML code.
 
 
-	* In a terminal, start the server:
-	  ```bash
-	  cd ipt_connect
-	  python manage.py test
-	  cd -
-	  ```
-	* In another terminal (i.e. without stopping the server), run:
-	  ```bash
-	  cd ipt_connect/IPTdev/utils
-	  python dumper.py
-	  cd -
-	  ```
+* In a terminal, start the server:
+  ```bash
+  cd ipt_connect
+  python manage.py test
+  cd -
+  ```
+* In another terminal (i.e. without stopping the server), run:
+  ```bash
+  cd ipt_connect/IPTdev/utils
+  python dumper.py
+  cd -
+  ```
 Path to dump will be printed into the terminal
 
 *Note: the dumper uses hash of the last commit to identify the dump.*
@@ -196,22 +196,22 @@ Path to dump will be printed into the terminal
 
 The recommendations on how to change the codebase are rather general.
 
-	* Don't commit changes in database if they're not essential.
-	  For example, if you've runned `python manage.py createsuperuser`
-	  to log in and test something, the database will be changed.
-	  This change should not be commited.
+* Don't commit changes in database if they're not essential.
+  For example, if you've runned `python manage.py createsuperuser`
+  to log in and test something, the database will be changed.
+  This change should not be commited.
 
-	* Always split database changes to a separate commit
-	  and describe the changes in detail.
-	  The database is a binary file, so we will not be able to rebase the changes easily.
+* Always split database changes to a separate commit
+  and describe the changes in detail.
+  The database is a binary file, so we will not be able to rebase the changes easily.
 
-	* If your contribution is related to an issue,
-	  don't hesitate to mention it like so:
-	  ```bash
-	  git commit -m "Add 6-round-fights - see #13666"
-	  ```
-	  `see` if for refering, `close` is for closing the issue
-	  (the issue closes when the pullrequest is merged).
+* If your contribution is related to an issue,
+  don't hesitate to mention it like so:
+  ```bash
+  git commit -m "Add 6-round-fights - see #13666"
+  ```
+  `see` if for refering, `close` is for closing the issue
+  (the issue closes when the pullrequest is merged).
 
 ## After the code is changed
 
@@ -219,20 +219,20 @@ When the code is changed and the commit is done,
 please check that nothing was broken.
 Namely:
 
-	* Run tests [(see above)](#running-the-tests)
+* Run tests [(see above)](#running-the-tests)
 
-	* Check the site for dead links [(see above)](#checking-availability-of-the-links-and-resources)
+* Check the site for dead links [(see above)](#checking-availability-of-the-links-and-resources)
 
-	* Create a dump of generated pages [(see above)](#checking-availability-of-the-links-and-resources)э
+* Create a dump of generated pages [(see above)](#checking-availability-of-the-links-and-resources)э
 
-	* Compare the two dumps (*before* and *after*) your changes
+* Compare the two dumps (*before* and *after*) your changes
 
-	  * using `diff -bBwEZ ...`
+  * using `diff -bBwEZ ...`
 
-	  * using `meld`
+  * using `meld`
 
-	  * or using your another favourite tool to find difference in HTML code :)
+  * or using your another favourite tool to find difference in HTML code :)
 
-	  Please check the difference carefully.
+  Please check the difference carefully.
 
 If everything is OK, your pull request is welcome!
