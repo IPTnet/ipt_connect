@@ -68,7 +68,7 @@ sudo apt-get install git
 3. Install useful Git-related tools:
 
 *You may skip this step, but is is recommended that you install them.*
-*In case of skipping, you are able to do it later.*
+*In case of skipping, you will able to do it later whenever you want.*
 
 ```bash
 sudo apt-get install gitk meld
