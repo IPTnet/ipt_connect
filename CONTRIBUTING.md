@@ -99,20 +99,20 @@ git remote add upstream https://github.com/IPTnet/ipt_connect.git
 
 The propagation of changes in `ipt_connect` project works in the following way:
 	
-	* To get changes from the upstream repo (that are changes done by others) to your local computer, use
-	  ```bash
-	  git fetch upstream
-	  ```
-	
-	* To send your local changes to your GitHub repo (and make them public), use
-	  ```bash
-	  git push origin branchname1:branchname2
-	  ```
-	  where `branchname1` is a name of your local branch and `branchname1` is the name of remote branch
-	  (the names often are the same, but in general they can be different).
-	
-	* To suggest the changes from your local repo to be accepted into the main (upstream) repo,
-	  create a pull request
+* To get changes from the upstream repo (that are changes done by others) to your local computer, use
+  ```bash
+  git fetch upstream
+  ```
+
+* To send your local changes to your GitHub repo (and make them public), use
+  ```bash
+  git push origin branchname1:branchname2
+  ```
+  where `branchname1` is a name of your local branch and `branchname1` is the name of remote branch
+  (the names often are the same, but in general they can be different).
+
+* To suggest the changes from your local repo to be accepted into the main (upstream) repo,
+  create a pull request
 	  
 7. Install the reqired libraries:
 ```bash
