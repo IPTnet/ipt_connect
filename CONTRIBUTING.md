@@ -28,7 +28,7 @@ Such issues are a really good point to start from!
 
 * It uses Django 1.11 and some other libraries.
 
-* It uses Git for version control anf GitHub for hosting the [public Git repository](https://github.com/IPTnet/).
+* It uses Git for version control anf GitHub for hosting the [public Git repository](https://github.com/IPTnet/ipt_connect).
 
 ## Useful links
 
