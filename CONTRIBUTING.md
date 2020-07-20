@@ -11,7 +11,7 @@ This file provides some brief advice on how to contribute properly.
 
 2. If you have an idea on how to improve `ipt_connect`, don't hesitate to... yes, [open an issue](https://github.com/IPTnet/ipt_connect/issues/new)!
 
-3. If you want to translate the interface of `ipt_connect` into your language, see [README.md](README.md).
+3. If you want to translate the interface of `ipt_connect` into your language, see [README.md](README.md#how-to-switch-between-languages).
 
 4. Last but not least:
 if you know Python, you can do amazing things implementing [issues](https://github.com/IPTnet/ipt_connect/issues).
