@@ -40,11 +40,11 @@ Such issues are a really good point to start from!
 
 ## Preparing yourself and your PC
 
-1. *Register an account on GitHub*, if you haven't created it yet.
+1. **Register an account on GitHub**, if you haven't created it yet.
 *For some reasons, some people are strictly againt GitHub.
 If you are one of them but want to contribute, contact us at nickkolok[at]mail.ru and/or execom[at]iptnet.info*
 
-2. *Install Linux* either into dual-boot or into a virtual machine (of course, if you haven't installed it yet).
+2. **Install Linux** either into dual-boot or into a virtual machine (of course, if you haven't installed it yet).
 As for Linux distributions, we recommend (L/X/K)Ubuntu or Mint.
 If you choose to use a virtual machine, we strongly recommend [Oracle VirtualBox](https://www.virtualbox.org/).
 
