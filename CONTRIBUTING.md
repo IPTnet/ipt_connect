@@ -74,7 +74,7 @@ sudo apt-get install git
 sudo apt-get install gitk meld
 ```
 
-4. Fork the project on GitHub by pressing the corresponding button (`Ctrl+F` is your friend in case of problems).
+4. Fork [the project](https://github.com/IPTnet/ipt_connect/) on GitHub by pressing the corresponding button (`Ctrl+F` is your friend in case of problems).
 
 5. Clone the forked repository and go to the cloned directory:
 
