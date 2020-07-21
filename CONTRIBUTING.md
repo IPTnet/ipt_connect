@@ -221,11 +221,11 @@ When the code is changed and the commit is done,
 please check that nothing was broken.
 Namely:
 
-* Run tests [(see above)](#running-the-tests)
+* Run tests [(see above)](#before-changing-the-code)
 
-* Check the site for dead links [(see above)](#checking-availability-of-the-links-and-resources)
+* Check the site for dead links [(also see above)](#before-changing-the-code)
 
-* Create a dump of generated pages [(see above)](#checking-availability-of-the-links-and-resources)э
+* Create a dump of generated pages [(also see above)](#before-changing-the-code)
 
 * Compare the two dumps (*before* and *after*) your changes
 
