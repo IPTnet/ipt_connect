@@ -71,6 +71,15 @@ sudo apt-get install git
 sudo apt-get install gitk meld
 ```
 
+3. Tell Git about yourself (if it hasn't been done yet):
+
+```bash
+	git config --global user.name  "YOURNAME"
+	git config --global user.email "you@example.org"
+```
+Here `YOURNAME` is the name of contributor that will be showed in the commit summary (e.g. `John Smith`),
+`you@example.org` is (obviously!) your email.
+
 4. Fork [the project](https://github.com/IPTnet/ipt_connect/) on GitHub by pressing the corresponding button (`Ctrl+F` is your friend in case of problems).
 
 5. Clone the forked repository and go to the cloned directory:
