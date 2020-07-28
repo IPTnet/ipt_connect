@@ -2,6 +2,8 @@
 
 A python/django web-based interface to track the grades, compute the rankings and display a lot of interesting statistics on the [International Physicists' Tournament](https://iptnet.info).
 
+For Contributor's Guide, see [CONTRIBUTING.md](CONTRIBUTING.md).
+
 * [Status](#status)
 * [How to use](#how-to-use)
   * [With Docker](#with-docker)
