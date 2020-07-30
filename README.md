@@ -12,6 +12,7 @@ For Contributor's Guide, see [CONTRIBUTING.md](CONTRIBUTING.md).
     * [Production with nginx](#production-with-nginx)
   * [Without Docker](#without-docker)
 * [F.A.Q.](#faq)
+  * [How to sign in with the default superuser?](#how-to-sign-in-with-the-default-superuser)
   * [How to add superuser and sign in to site?](#how-to-add-superuser-and-sign-in-to-site)
   * [How to switch between languages?](#how-to-switch-between-languages)
   * [I added new text to the template. How сan I update language files?](#i-added-new-text-to-the-template-how-сan-i-update-language-files)
