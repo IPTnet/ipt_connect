@@ -58,6 +58,10 @@ If you haven't any web server you can use [compose-nginx.yml](compose-nginx.yml)
 
 ## F.A.Q:
 
+### How to sign in with the default superuser?
+* Run `python manage.py runserver`
+* Open [127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and sign in with `admin` as user and password.
+
 ### How to add superuser and sign in to site?
 * Run `python manage.py createsuperuser`
 * Set username, email address and password.
