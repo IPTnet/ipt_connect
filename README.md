@@ -12,6 +12,7 @@ For Contributor's Guide, see [CONTRIBUTING.md](CONTRIBUTING.md).
     * [Production with nginx](#production-with-nginx)
   * [Without Docker](#without-docker)
 * [F.A.Q.](#faq)
+  * [How to sign in with the default superuser?](#how-to-sign-in-with-the-default-superuser)
   * [How to add superuser and sign in to site?](#how-to-add-superuser-and-sign-in-to-site)
   * [How to switch between languages?](#how-to-switch-between-languages)
   * [I added new text to the template. How сan I update language files?](#i-added-new-text-to-the-template-how-сan-i-update-language-files)
@@ -57,6 +58,10 @@ If you haven't any web server you can use [compose-nginx.yml](compose-nginx.yml)
 * Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/)
 
 ## F.A.Q:
+
+### How to sign in with the default superuser?
+* Run `python manage.py runserver`
+* Open [127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and sign in with `admin` as user and password.
 
 ### How to add superuser and sign in to site?
 * Run `python manage.py createsuperuser`
