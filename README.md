@@ -12,7 +12,11 @@ For Contributor's Guide, see [CONTRIBUTING.md](CONTRIBUTING.md).
     * [Production with nginx](#production-with-nginx)
   * [Without Docker](#without-docker)
 * [F.A.Q.](#faq)
+<<<<<<< HEAD
   * [How to sign in with the default superuser?](#how-to-sign-in-with-the-default-superuser)
+=======
+  * [How to sign in with the default superuser?](#how-to-add-sign-in-with-the-default-superuser)
+>>>>>>> Creation of  superuser and modification of README.md where are the instructions how to use it
   * [How to add superuser and sign in to site?](#how-to-add-superuser-and-sign-in-to-site)
   * [How to switch between languages?](#how-to-switch-between-languages)
   * [I added new text to the template. How сan I update language files?](#i-added-new-text-to-the-template-how-сan-i-update-language-files)
@@ -59,9 +63,16 @@ If you haven't any web server you can use [compose-nginx.yml](compose-nginx.yml)
 
 ## F.A.Q:
 
+<<<<<<< HEAD
 ### How to sign in with the default superuser?
 * Run `python manage.py runserver`
 * Open [127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and sign in with `admin` as user and password.
+=======
+
+### How to sign in with the default superuser?
+* Run `python manage.py runserver`
+* Open [127.0.0.1:8000/admin/](http://127.0.0.1:8000/admin/) and sign in with `admin` as user adn password.
+>>>>>>> Creation of  superuser and modification of README.md where are the instructions how to use it
 
 ### How to add superuser and sign in to site?
 * Run `python manage.py createsuperuser`
