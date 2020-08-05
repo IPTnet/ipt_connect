@@ -158,11 +158,30 @@ However, there should be **no** errors related to `ipt_connect` itself.
 
 2. Checking availability of the links and resources:
 
-```bash
-cd ipt_connect
-python manage.py test IPTdev.utils.link_parser
-cd -
-```
+* In a terminal, start the server:
+  ```bash
+  cd ipt_connect
+  python manage.py runserver
+  cd -
+  ```
+* In another terminal (i.e. without stopping the server), run:
+  ```bash
+  cd ipt_connect
+  python manage.py test IPTdev.utils.link_parser
+  cd -
+  ```
+*Pro tip*: you can use ` & disown` postfix.
+Then, one terminal will be enough:
+  ```bash
+  cd ipt_connect
+  python manage.py runserver & disown
+  cd -
+  cd ipt_connect
+  python manage.py test IPTdev.utils.link_parser
+  cd -
+  ```
+
+
 
 The Internet is constantly changing, new files and pages appear, and old ones are deleted.
 And links can change their address. Broken links can damage the site.
