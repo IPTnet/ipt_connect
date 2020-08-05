@@ -186,7 +186,7 @@ to check how changes in our `python` code affect the real generated HTML code.
 * In a terminal, start the server:
   ```bash
   cd ipt_connect
-  python manage.py test
+  python manage.py runserver
   cd -
   ```
 * In another terminal (i.e. without stopping the server), run:
