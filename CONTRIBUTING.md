@@ -116,7 +116,7 @@ The propagation of changes in `ipt_connect` project works in the following way:
   ```bash
   git push origin branchname1:branchname2
   ```
-  where `branchname1` is a name of your local branch and `branchname1` is the name of remote branch
+  where `branchname1` is a name of your local branch and `branchname2` is the name of remote branch
   (the names often are the same, but in general they can be different).
 
 * To suggest the changes from your local repo to be accepted into the main (upstream) repo,
