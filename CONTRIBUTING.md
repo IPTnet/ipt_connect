@@ -175,12 +175,11 @@ Then, one terminal will be enough:
   ```bash
   cd ipt_connect
   python manage.py runserver & disown
-  cd -
-  cd ipt_connect
   python manage.py test IPTdev.utils.link_parser
   cd -
   ```
 
+However, in this case messages from the link checker and the server itself will be messed.
 
 
 The Internet is constantly changing, new files and pages appear, and old ones are deleted.
