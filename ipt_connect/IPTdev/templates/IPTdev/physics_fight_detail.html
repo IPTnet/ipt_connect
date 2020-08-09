@@ -50,17 +50,23 @@
                                         {% trans 'Rev.' %}
                                     </td>
                                 </tr>
-                                <tr class="pf-detail-team-row">
-                                    <td class="th-center">
-                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter_team.name %}">{{juryroundsgrade.round.reporter_team.name}}</a>
-                                    </td>
-                                    <td class="th-center">
-                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent_team.name %}">{{juryroundsgrade.round.opponent_team.name}}</a>
-                                    </td>
-                                    <td class="th-center">
-                                        <a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
-                                    </td>
-                                </tr>
+								<tr class="pf-detail-team-row">
+									<td class="th-center">
+										{% if juryroundsgrade.round.reporter_team %}
+											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter_team.name %}">{{juryroundsgrade.round.reporter_team.name}}</a>
+										{% endif %}
+									</td>
+									<td class="th-center">
+										{% if juryroundsgrade.round.opponent_team %}
+											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent_team.name %}">{{juryroundsgrade.round.opponent_team.name}}</a>
+										{% endif %}
+									</td>
+									<td class="th-center">
+										{% if juryroundsgrade.round.reviewer_team %}
+											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
+										{% endif %}
+									</td>
+								</tr>
                             </table>
                         </th>
                     {% endfor %}
