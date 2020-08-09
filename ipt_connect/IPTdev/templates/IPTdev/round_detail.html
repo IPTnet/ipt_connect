@@ -28,14 +28,18 @@ no matter is the round finished or not
 -->
 
 {% block roles_info %}
-	{% if round.reporter_team and round.opponent_team and round.reviewer_team %}
+	{% if round.reporter_team and round.opponent_team %}
+	{% if round.reviewer_team or params.optional_reviewers %}
+	{# Thank Django for lacking complex conditions!!!! #}
 		<div class="content container">
 			<table>
 				<tr>
 					<th class="th-center"></th>
 					<th class="th-center">{% trans 'Reporter' %}</th>
 					<th class="th-center">{% trans 'Opponent' %}</th>
-					<th class="th-center">{% trans 'Reviewer' %}</th>
+					{% if round.reviewer_team or not params.optional_reviewers %}
+						<th class="th-center">{% trans 'Reviewer' %}</th>
+					{% endif %}
 				</tr>
 
 				<tr>
@@ -62,16 +66,19 @@ no matter is the round finished or not
 							<a href="{% url 'IPTdev:participant_detail' pk=round.opponent.pk %}">{{round.opponent.fullname}}</a>
 						{% endif %}
 					</td>
-					<td class="td-center">
-						<a href="{% url 'IPTdev:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a>
-						{% if round.reviewer %}
-							--
-							<a href="{% url 'IPTdev:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a>
-						{% endif %}
-					</td>
+					{% if round.reviewer_team or not params.optional_reviewers %}
+						<td class="td-center">
+							<a href="{% url 'IPTdev:team_detail' team_name=round.reviewer_team.name %}">{{round.reviewer_team.name}}</a>
+							{% if round.reviewer %}
+								--
+								<a href="{% url 'IPTdev:participant_detail' pk=round.reviewer.pk %}">{{round.reviewer.fullname}}</a>
+							{% endif %}
+						</td>
+					{% endif %}
 				</tr>
 			</table>
 		</div>
+	{% endif %}
 	{% endif %}
 {% endblock roles_info %}
 
@@ -127,7 +134,9 @@ no matter is the round finished or not
 					<th class="th-center">{% trans 'Jury members' %}</th>
 					<th class="th-center">{% trans 'Reporter grade' %}</th>
 					<th class="th-center">{% trans 'Opponent grade' %}</th>
-					<th class="th-center">{% trans 'Reviewer grade' %}</th>
+					{% if round.reviewer_team or not params.optional_reviewers %}
+						<th class="th-center">{% trans 'Reviewer grade' %}</th>
+					{% endif %}
 				</tr>
 
 				{% for jurygrade in jurygrades %}
@@ -135,7 +144,9 @@ no matter is the round finished or not
 					<td><a href="{% url 'IPTdev:jury_detail' pk=jurygrade.jury.pk %}">{{jurygrade.jury.name}} {{jurygrade.jury.surname}}</a></td>
 					<td class="td-center">{{jurygrade.grade_reporter}}</td>
 					<td class="td-center">{{jurygrade.grade_opponent}}</td>
-					<td class="td-center">{{jurygrade.grade_reviewer}}</td>
+					{% if round.reviewer_team or not params.optional_reviewers %}
+						<td class="td-center">{{jurygrade.grade_reviewer}}</td>
+					{% endif %}
 				</tr>
 				{% endfor %}
 
