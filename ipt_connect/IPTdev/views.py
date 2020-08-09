@@ -479,10 +479,15 @@ def round_detail(request, pk):
 	meangrades = []
 
 	# has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
-	if None in [round.reporter_team, round.opponent_team, round.reviewer_team]:
-		started = False
-	else:
-		started = True
+
+	started = (
+		 round.reporter_team != None
+		and
+		 round.opponent_team != None
+		and
+		(round.reviewer_team != None or params.optional_reviewers)
+	)
+
 
 	# participants mean grades. If the fight is finished, then at least some jurygrades must exists
 	if len(jurygrades) != 0:
