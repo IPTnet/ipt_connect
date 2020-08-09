@@ -89,6 +89,13 @@ manual_bonus_points = False
 display_coreporters = True
 
 
+# There are at least 3 tournaments where rounds without a reviewer may (or must) appear:
+# 1) Selective (qualifying) fights of virtual IPT 2020 (the main reason to open this issue)
+# 2) The final fight of Russian National Selection (if this shit can be named a "selection") stage of IYPT.
+# 3) Theoretically, at Three Science Tournament, we can encounter such a situation, but that is rather exotic.
+# Set this option to True if reviewers may be absent
+optional_reviewers = True
+
 
 # Maybe a Fight should be a separate model in the database
 # However, it looks like the fight structure is defined far before the tournament starts,
