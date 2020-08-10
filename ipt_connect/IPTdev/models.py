@@ -185,9 +185,12 @@ class Problem(models.Model):
 		reviewers = []
 		for round in rounds:
 			if len(JuryGrade.objects.filter(round=round)) > 0:
-				reporters.append({"name": round.reporter_team.name, "round": round, "value": round.score_reporter})
-				opponents.append({"name": round.opponent_team.name, "round": round, "value": round.score_opponent})
-				reviewers.append({"name": round.reviewer_team.name, "round": round, "value": round.score_reviewer})
+				if round.reporter_team and round.score_reporter:
+					reporters.append({"name": round.reporter_team.name, "round": round, "value": round.score_reporter})
+				if round.opponent_team and round.score_opponent:
+					opponents.append({"name": round.opponent_team.name, "round": round, "value": round.score_opponent})
+				if round.reviewer_team and round.score_reviewer:
+					reviewers.append({"name": round.reviewer_team.name, "round": round, "value": round.score_reviewer})
 
 		# TODO: replace "value" with "score" for better readability
 		# TODO: the algorithm looks EXTRA WEIRD. Probably all this code should be refactored
