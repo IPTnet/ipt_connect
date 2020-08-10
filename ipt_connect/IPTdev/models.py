@@ -189,6 +189,8 @@ class Problem(models.Model):
 				opponents.append({"name": round.opponent_team.name, "round": round, "value": round.score_opponent})
 				reviewers.append({"name": round.reviewer_team.name, "round": round, "value": round.score_reviewer})
 
+		# TODO: replace "value" with "score" for better readability
+		# TODO: the algorithm looks EXTRA WEIRD. Probably all this code should be refactored
 		# use this to compute the mean grades
                 if 0 in [len(reporters), len(opponents), len(reviewers)]:
                         meangrades = {"report": 0, "opposition": 0, "review": 0}
