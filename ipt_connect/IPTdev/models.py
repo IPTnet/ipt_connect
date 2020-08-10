@@ -195,10 +195,7 @@ class Problem(models.Model):
 		# TODO: replace "value" with "score" for better readability
 		# TODO: the algorithm looks EXTRA WEIRD. Probably all this code should be refactored
 		# use this to compute the mean grades
-                if 0 in [len(reporters), len(opponents), len(reviewers)]:
-                        meangrades = {"report": 0, "opposition": 0, "review": 0}
-                else:
-                        meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
+                meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
 
 
 		if meangradesonly==False:
