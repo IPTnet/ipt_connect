@@ -559,6 +559,11 @@ def physics_fight_detail(request, pfid):
 			meanroundsgrades.append(meangrades)
 
 		teams_involved = get_involved_teams_dict(roomrounds)
+
+		#If a team (probably a reviewer) is not stated - just omit it
+		if params.optional_reviewers:
+			teams_involved.pop(None, None);
+
 		finished = (roomrounds.count() == len(teams_involved))
 
 		if params.display_pf_summary:
