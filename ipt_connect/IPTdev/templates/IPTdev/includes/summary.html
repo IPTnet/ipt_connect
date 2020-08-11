@@ -1,0 +1,31 @@
+{% load humanize %}
+{% load i18n %}
+
+<table class="table-borders">
+	<tr>
+		<th class="th-center">{% trans 'Team' %}</th>
+		<th class="th-center">{% trans 'Rep. mult.' %}</th>
+		{% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
+			<th class="th-center">
+				<p><a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a></p>
+				{% if juryroundsgrade.round.problem_presented %}
+					<a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
+				{% endif %}
+			</th>
+		{% endfor %}
+		<th class="th-center">{% trans 'Sum' %}</th>
+		{% if roundsgrades.2.finished and params.display_pf_summary_bonus_points %}
+			<th class="th-center">{% trans 'Bonus' %}</th>
+		{% endif %}
+	</tr>
+	{% for team in roundsgrades.3 %}
+	<tr>
+		<td class="td-center">
+			<a href="{% url 'IPTdev:team_detail' team_name=team.0 %}">{{ team.0 }}</a>
+		</td>
+		{% for grade in team.1 %}
+			<td class="td-center">{{ grade|floatformat:2 }}</td>
+		{% endfor %}
+	{% endfor %}
+	</tr>
+</table>
