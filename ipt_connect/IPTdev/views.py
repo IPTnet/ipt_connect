@@ -548,7 +548,8 @@ def physics_fight_detail(request, pfid):
 			meangrades = []
 			meangrades.append(round.score_reporter)
 			meangrades.append(round.score_opponent)
-			meangrades.append(round.score_reviewer)
+			if round.reviewer_team or not params.optional_reviewers:
+				meangrades.append(round.score_reviewer)
 			meanroundsgrades.append(meangrades)
 
 		teams_involved = get_involved_teams_dict(roomrounds)

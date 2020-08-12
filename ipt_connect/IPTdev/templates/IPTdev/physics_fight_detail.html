@@ -46,9 +46,11 @@
                                     <td class="th-center">
                                         {% trans 'Opp.' %}
                                     </td>
-                                    <td class="th-center">
-                                        {% trans 'Rev.' %}
-                                    </td>
+									{% if juryroundsgrade.round.reviewer_team or not params.optional_reviewers %}
+										<td class="th-center">
+											{% trans 'Rev.' %}
+										</td>
+									{% endif %}
                                 </tr>
 								<tr class="pf-detail-team-row">
 									<td class="th-center">
@@ -61,11 +63,13 @@
 											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent_team.name %}">{{juryroundsgrade.round.opponent_team.name}}</a>
 										{% endif %}
 									</td>
-									<td class="th-center">
-										{% if juryroundsgrade.round.reviewer_team %}
-											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
-										{% endif %}
-									</td>
+									{% if juryroundsgrade.round.reviewer_team or not params.optional_reviewers %}
+										<td class="th-center">
+											{% if juryroundsgrade.round.reviewer_team %}
+												<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
+											{% endif %}
+										</td>
+									{% endif %}
 								</tr>
                             </table>
                         </th>
@@ -79,7 +83,9 @@
                                 <table>
                                     <td class="td-center">{{juryroundsgrade.grade_reporter}}</td>
                                     <td class="td-center">{{juryroundsgrade.grade_opponent}}</td>
-                                    <td class="td-center">{{juryroundsgrade.grade_reviewer}}</td>
+									{% if juryroundsgrade.round.reviewer_team or not params.optional_reviewers %}
+										<td class="td-center">{{juryroundsgrade.grade_reviewer}}</td>
+									{% endif %}
                                 </table>
                             </td>
                         {% endfor %}
