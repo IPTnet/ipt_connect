@@ -1,1 +1,5 @@
-<a href="{% url 'IPTdev:team_detail' team_name=team_name %}">{{ team_name }}</a>
+{% if team_name == '' or team_name == None %}
+	<!-- There should be a team -->
+{% else %}
+	<a href="{% url 'IPTdev:team_detail' team_name=team_name %}">{{ team_name }}</a>
+{% endif %}
