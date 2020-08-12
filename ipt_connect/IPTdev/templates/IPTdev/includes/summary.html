@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load i18n %}
+{% load predefined_ipt_links %}
 
 <table class="table-borders">
 	<tr>
@@ -21,7 +22,7 @@
 	{% for team in roundsgrades.3 %}
 	<tr>
 		<td class="td-center">
-			<a href="{% url 'IPTdev:team_detail' team_name=team.0 %}">{{ team.0 }}</a>
+			{% team_link team.0 %}
 		</td>
 		{% for grade in team.1 %}
 			<td class="td-center">{{ grade|floatformat:2 }}</td>

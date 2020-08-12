@@ -1,5 +1,6 @@
 {% load humanize %}
 {% load i18n %}
+{% load predefined_ipt_links %}
 
 <table>
 	<tr>
@@ -25,9 +26,7 @@
 			{{team.rank|ordinal}}
 		</td>
 		<td class="td-center">
-			<a href="{% url 'IPTdev:team_detail' team_name=team.name %}">
-				{{team.name}}
-			</a>
+			{% team_link team %}
 		</td>
 		<td class="td-center">
 			{{team.total_points|floatformat:2}}
