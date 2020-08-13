@@ -4,8 +4,9 @@ from views import *
 from tactics import *
 from forms import member_for_team
 
+import parameters
 
-app_name = 'IPTdev'
+app_name = parameters.instance_name
 
 urlpatterns = [
     url(r'^$', tournament_overview),
