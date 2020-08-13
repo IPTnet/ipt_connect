@@ -1,4 +1,7 @@
-{% extends 'IPTdev/head.html' %} {% load humanize %} {% load i18n %} {% block content %}
+{% extends params.instance_name|add:'/head.html' %}
+{% load humanize %}
+{% load i18n %}
+{% block content %}
 
 <div class="section">
     <h1>{{team.name}}</h1>

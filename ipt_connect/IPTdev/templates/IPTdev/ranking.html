@@ -1,4 +1,4 @@
-{% extends 'IPTdev/head.html' %}
+{% extends params.instance_name|add:'/head.html' %}
 {% load humanize %}
 {% load i18n %}
 {% block content %}
