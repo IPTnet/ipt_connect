@@ -5,7 +5,7 @@
 
 {% block content %}
 
-{% get_solo 'IPTdev.SiteConfiguration' as site_config %}
+{% get_solo params.instance_name|add:'.SiteConfiguration' as site_config %}
 
 <div class="section">
 	<h1>

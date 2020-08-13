@@ -2,7 +2,7 @@
 {% load i18n %}
 {% load solo_tags %}
 
-{% get_solo 'IPTdev.SiteConfiguration' as site_config %}
+{% get_solo params.instance_name|add:'.SiteConfiguration' as site_config %}
 
 {% if finalrankteams %}
     <div class="section">
