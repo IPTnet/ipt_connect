@@ -22,6 +22,9 @@
 					class="stuff-only-link"
 				>{% trans 'Edit' %}</a>
 			{% endif %}
+			{% if params.instance_name|add:'.add_round' in perms and round.can_add_next %}
+				&emsp;<a href="{% url params.instance_name|add:':round_add_next' pk=round.pk %}" class="stuff-only-link">{% trans 'Add next' %}</a>
+			{% endif %}
 		{% endblock title %}
 	</h1>
 </div>

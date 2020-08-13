@@ -547,6 +547,76 @@ class Round(models.Model):
 	def ident(self):
 		return "%s%s%s" %(self.pf_number, self.round_number, self.room.ident())
 
+	def can_add_next(self):
+		# We don't want to create the next Round, if...
+
+		# ...maximal quantity of Rounds has been already reached, i.e. current Round is the last one
+		if self.round_number >= params.max_rounds_in_pf:
+			return False
+
+		# ...current Round has no number
+		if self.round_number == None:
+			return False
+
+		roomrounds = Round.objects.filter(pf_number=self.pf_number,room=self.room)
+
+		# ...the next Round already exists
+		if len(roomrounds.filter(round_number=self.round_number+1)) > 0:
+			return False
+
+		teams_involved = get_involved_teams_dict(roomrounds)
+
+		#If a team (probably a reviewer) is not stated - just omit it
+		if params.optional_reviewers:
+			teams_involved.pop(None, None);
+
+		# ... each team has already done a report (approximately)
+		if self.round_number >= len(teams_involved):
+			return False
+
+		return True
+
+	def add_next(self):
+
+		# Create a whole new Round
+		next_round = Round()
+
+		# Basic properties of the new Round
+		next_round.pf_number = self.pf_number
+		next_round.room = self.room
+		next_round.round_number = self.round_number + 1
+
+		# The Teams undercome a loop
+		# TODO: 4-fights and 2-fights
+		next_round.reporter_team = self.opponent_team
+		next_round.opponent_team = self.reviewer_team
+		next_round.reviewer_team = self.reporter_team
+
+		# Jurors! They are the same
+		jurygrades = JuryGrade.objects.filter(round=self)
+
+		# We have to save the round twice to be able to link jury grades to it
+		# See also https://github.com/IPTnet/ipt_connect/issues/89
+		next_round.save()
+
+
+		for grade in jurygrades:
+			empty_grade = JuryGrade()
+			empty_grade.round = next_round
+			empty_grade.jury = grade.jury
+
+			# Set the grades to 0 - otherwise we run into a crash
+			empty_grade.grade_reporter = 0
+			empty_grade.grade_opponent = 0
+			empty_grade.grade_reviewer = 0
+
+			empty_grade.save()
+
+		next_round.save()
+
+
+		return next_round
+
 	def unavailable_problems(self, verbose=False):
 		"""
 		From the rules:

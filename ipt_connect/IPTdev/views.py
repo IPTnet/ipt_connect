@@ -108,6 +108,24 @@ def update_all(request):
 
 	return HttpResponse(list_receivers[0][1])
 
+@user_passes_test(lambda u: u.has_perm(params.instance_name + '.add_round'))
+def round_add_next(request, pk):
+	try:
+		current_round = Round.objects.get(pk=pk)
+	except ObjectDoesNotExist:
+		raise Http404()
+
+	if not current_round.can_add_next():
+		raise Http404()
+		# TODO: 500? 403? More informative error?
+
+	next_round = current_round.add_next()
+
+	# TODO: a more sane URL!
+	return round_detail(request, next_round.pk)
+
+
+
 
 @user_passes_test(lambda u: u.is_staff)
 def jury_export_csv(request):
