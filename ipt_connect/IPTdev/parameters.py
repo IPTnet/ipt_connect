@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 # Views parameters
-app_version = "IPTdev"[3:]     # keyword for url parsing
+instance_name = "IPTdev"
+app_version = instance_name[3:]     # keyword for url parsing
 # TODO:
 # The construction `"IPTdev"[3:]` above is a dirty hack.
 # We need to mention `IPTdev` to enable automated cloning,
