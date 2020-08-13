@@ -1,5 +1,5 @@
 {% if team_name == '' or team_name == None %}
 	<!-- There should be a team -->
 {% else %}
-	<a href="{% url 'IPTdev:team_detail' team_name=team_name %}">{{ team_name }}</a>
+	<a href="{% url params.instance_name|add:':team_detail' team_name=team_name %}">{{ team_name }}</a>
 {% endif %}

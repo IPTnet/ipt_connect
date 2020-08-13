@@ -1,5 +1,6 @@
 from django import template
-from IPTdev.models import *
+from ..models import *
+from .. import parameters as params
 
 register = template.Library()
 
@@ -22,4 +23,7 @@ The refactoring is not finished yet :(
 def team_link(team):
 	if isinstance(team, Team):
 		team = team.name
-	return { 'team_name' : team }
+	return {
+		'team_name' : team,
+		'params' : params,
+	}
