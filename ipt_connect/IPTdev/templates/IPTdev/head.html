@@ -6,10 +6,10 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'IPTdev/css/style.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static params.instance_name|add:'/css/style.css' %}"/>
     <link href="https://fonts.googleapis.com/css?family=Bitter|Open+Sans" rel="stylesheet">
-    <script src="/static/IPTdev/js/sorttable.js"></script>
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'IPTdev/IPT_logo.png' %}" />
+    <script src="{% static params.instance_name|add:'/js/sorttable.js' %}"></script>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static params.instance_name|add:'/IPT_logo.png' %}" />
     <title>{{ params.NAME.full }}</title>
 </head>
 <body>
@@ -17,7 +17,7 @@
             <div class="topmenu-wrap">
                 <div>
                     <a href="//iptnet.info">
-                    	<img src="{% static 'IPTdev/IPT_logo.png' %}" alt="{{ params.NAME.full }}" class="logo-topmenu">
+                    	<img src="{% static params.instance_name|add:'/IPT_logo.png' %}" alt="{{ params.NAME.full }}" class="logo-topmenu">
                     </a>
                     <a href="//connect.iptnet.info">IPT connect | </a><a href="{% url 'IPTdev:tournament_overview' %}">{{ params.NAME.short }}</a>
                 </div>
