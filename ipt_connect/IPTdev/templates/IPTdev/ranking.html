@@ -10,16 +10,16 @@
         </center>
       </div>
   {% else %}  
-    {% include 'IPTdev/includes/final_ranking_and_link.html' %}
+    {% include 'includes/final_ranking_and_link.html' %}
 
-    {% include 'IPTdev/includes/semifinal_ranking.html' %}
+    {% include 'includes/semifinal_ranking.html' %}
     
       <div class="section">
           <h1>{% trans 'Selective Fights Ranking' %}</h1>
       </div>
 
       <div class="content container">
-      {% include 'IPTdev/includes/ranking_table.html' with teams=rankteams %}
+      {% include 'includes/ranking_table.html' with teams=rankteams %}
       </div>
 
       {% if params.enable_pools %}
@@ -30,7 +30,7 @@
       </div>
       {% endif %}
 
-    {% include 'IPTdev/includes/link_update_all_for_superuser.html' %}
+    {% include 'includes/link_update_all_for_superuser.html' %}
 
   {% endif %}
 

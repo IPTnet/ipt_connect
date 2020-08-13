@@ -10,16 +10,16 @@
       </center>
     </div>
   {% else %}
-    {% include 'IPTdev/includes/final_ranking_and_link.html' %}
+    {% include 'includes/final_ranking_and_link.html' %}
     
-    {% include 'IPTdev/includes/semifinal_ranking.html' %}
+    {% include 'includes/semifinal_ranking.html' %}
 
       <div class="section">
           <h1>{% trans 'Ranking' %} - {% trans 'Pool A' %}</h1>
       </div>
 
       <div class="content container">
-      {% include 'IPTdev/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
+      {% include 'includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
       </div>
 
 
@@ -28,7 +28,7 @@
       </div>
 
       <div class="content container">
-      {% include 'IPTdev/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
+      {% include 'includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
       </div>
 
       <div>
@@ -37,7 +37,7 @@
           </center>
       </div>
 
-    {% include 'IPTdev/includes/link_update_all_for_superuser.html' %}
+    {% include 'includes/link_update_all_for_superuser.html' %}
 
   {% endif %}
 

@@ -18,7 +18,7 @@ The refactoring is not finished yet :(
 """
 
 
-@register.inclusion_tag('IPTdev/includes/team_link.html')
+@register.inclusion_tag('includes/team_link.html')
 def team_link(team):
 	if isinstance(team, Team):
 		team = team.name
