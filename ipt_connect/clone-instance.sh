@@ -37,10 +37,9 @@ mv $2/static/$1 $2/static/$2
 git add $2
 git commit -m "Replaced $1 with $2 in $2"
 
-sed -ni "p; s/$1/$2/gp" ipt_connect/urls.py
 sed -ni "p; s/$1/$2/gp" ipt_connect/settings.py
 
-git add ipt_connect/urls.py ipt_connect/settings.py
+git add ipt_connect/settings.py
 git commit -m "Plugged $2 to the Django application index"
 
 python manage.py makemigrations $2

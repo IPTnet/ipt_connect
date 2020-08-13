@@ -1,8 +1,14 @@
+from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.generic import TemplateView
 from ipt_connect.views import home
-from IPTdev.views import tournament_overview
+
+import importlib
+tournament_overview = importlib.import_module(
+	settings.INSTALLED_TOURNAMENTS[0]+'.views'
+).tournament_overview
+
 
 urlpatterns = [
     # Examples:
@@ -14,8 +20,12 @@ urlpatterns = [
     url(r'^$', tournament_overview),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^admin/', include('loginas.urls')),
-    url(r'^IPTdev/', include('IPTdev.urls', namespace='IPTdev')),
 ]
+
+for tournament in settings.INSTALLED_TOURNAMENTS:
+	urlpatterns.append(
+		url(r'^' + tournament + '/', include(tournament + '.urls', namespace=tournament)),
+	)
 
 
 admin.site.site_header = 'IPT administration'

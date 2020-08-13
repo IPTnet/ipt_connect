@@ -32,6 +32,14 @@ ADMINS = (('XXX', 'XXX@XXX'),)
 ALLOWED_HOSTS = [u"XXX", u"127.0.0.1", u"localhost"]
 
 
+
+# Place all the names of the tournaments here
+# Default tournament (i.e. the one displayed on the main page) should be the first
+
+INSTALLED_TOURNAMENTS = (
+    'IPTdev',
+)
+
 # Application definition
 
 INSTALLED_APPS = (
@@ -44,8 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
-    'IPTdev',
-)
+) + INSTALLED_TOURNAMENTS
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
