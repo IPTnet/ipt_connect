@@ -90,7 +90,7 @@ display_coreporters = True
 
 
 # There are at least 3 tournaments where rounds without a reviewer may (or must) appear:
-# 1) Selective (qualifying) fights of virtual IPT 2020 (the main reason to open this issue)
+# 1) Selective (qualifying) fights of virtual IPT 2020 (the main reason to add this option)
 # 2) The final fight of Russian National Selection (if this shit can be named a "selection") stage of IYPT.
 # 3) Theoretically, at Three Science Tournament, we can encounter such a situation, but that is rather exotic.
 # Set this option to True if reviewers may be absent
