@@ -30,7 +30,7 @@ One of the numerous contestants
 :param role : is the participant a contestant, IOC, team-leader, etc...
 :param passport_number : passport number
 :param affiliation : university affiliation of the participant
-:param veteran : has the participant already participated before in the IPT
+:param veteran : has the participant already participated before in the tournament
 :param diet : has the participant a specific diet
 :param tourism : would the participant like to stay longer in the hotel after the tournament.
 :param shirt_size : size of the shirt
@@ -46,7 +46,7 @@ One of the numerous contestants
 
 Problem
 -------
-One of the 17 Problems of IPT2016.
+One of the 17 (usually) Problems of the tournament.
 :param name : name of the problem
 :param description : description of the problem
 
