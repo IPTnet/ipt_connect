@@ -1,10 +1,19 @@
 # -*- coding: utf-8 -*-
 
-# Views parameters
-instance_name = "IPTdev"
+from get_script_dir import get_script_dir
+
+# Here we get the name of the folder in which THIS FILE is located.
+# It is probably NOT the current working directory.
+# This trick is needed to simplify cloning the tournament,
+# and, moreover, will (hopefully!) allow creating two tournaments with common parameters
+# but different data by a simple symlink creation
+# (don't forget to plug the new application to django).
+instance_name = get_script_dir(False)
+instance_name = list(reversed(instance_name.rsplit('/' ,1)))[0];
+instance_name = list(reversed(instance_name.rsplit('\\',1)))[0];
 app_version = instance_name[3:]     # keyword for url parsing
 # TODO:
-# The construction `"IPTdev"[3:]` above is a dirty hack.
+# The construction `[3:]` above is a dirty hack.
 # We need to mention `IPTdev` to enable automated cloning,
 # but we have to set version to `dev` to satisfy some pieces of code.
 # No idea how is it handled for FPT.
