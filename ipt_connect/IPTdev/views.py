@@ -14,7 +14,7 @@ import parameters as params
 
 def home(request):
 
-	text = """<h1>IPT</h1>
+	text = """<h1>""" + params.NAME.full + """</h1>
 
 			  <p>Starting soon !</p>"""
 
@@ -100,7 +100,7 @@ def jury_export_web(request):
 		}
 	)
 
-@user_passes_test(lambda u: u.has_perm('IPTdev.update_all'))
+@user_passes_test(lambda u: u.has_perm(params.instance_name + '.update_all'))
 def update_all(request):
 	list_receivers = update_signal.send(sender=Round)
 

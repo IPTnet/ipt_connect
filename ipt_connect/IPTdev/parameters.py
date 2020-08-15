@@ -123,5 +123,5 @@ fights = {
     # And, finally, you can specify names for all the fights to be displayed
     # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
     # or "Semifinal A", or smth another.
-    'names': ['Selective Fight 1','Selective Fight 2','Selective Fight 3','Selective Fight 4','Semifinal 1','Semifinal 2','IPTdev Final']
+    'names': ['Selective Fight 1','Selective Fight 2','Selective Fight 3','Selective Fight 4','Semifinal 1','Semifinal 2',instance_name+' Final']
 }
