@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% if perms.IPTdev.update_all %}
+{% if params.instance_name|add:'.update_all' in perms %}
     <div>
         <center>
             <h3><a href = "{% url params.instance_name|add:':update_all' %}" class="stuff-only-link">{% trans 'Update all the scores (may take few minutes)' %}</a></h3>
