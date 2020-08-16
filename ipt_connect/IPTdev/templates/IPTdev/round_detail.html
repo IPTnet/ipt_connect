@@ -16,7 +16,11 @@
 			{% endif %}
 			| Round {{round.round_number}}
 			{% if params.instance_name|add:'.change_round' in perms %}
-				&emsp;<a href="{{link_to_change_round}}" class="stuff-only-link">{% trans 'Edit' %}</a>
+				&emsp;
+				<a
+					href="../../../admin/{{ params.instance_name }}/round/{{ round.pk }}/change"
+					class="stuff-only-link"
+				>{% trans 'Edit' %}</a>
 			{% endif %}
 		{% endblock title %}
 	</h1>
