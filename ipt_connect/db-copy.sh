@@ -2,10 +2,6 @@
 
 # Usage: ./db-copy.sh copy-from.sqlite3 copy-to.sqlite3 IPT_NAME
 
-# Theoretically, another name for a new tournament can be provided,
-# but the application will probably fail
-# (except some edge cases when only problems are filled)
-
 FROM=$1
 TO=$2
 
@@ -13,9 +9,7 @@ TO=$2
 
 NAME=$3
 
-NEWNAME=${4:-$NAME}
-
-echo "Copying from  $FROM/$NAME  to  $TO/$NEWNAME ..."
+echo "Copying from $NAME from $FROM to $TO..."
 
 TABLES=""
 
@@ -40,11 +34,9 @@ TABLES=$TABLES" eternalrejection tacticalrejection jurygrade "
 QUERY="ATTACH DATABASE '$FROM' AS other; \n"
 #QUERY=$QUERY $'\n'
 
+echo "Start deleting old tables..."
 for TABLE in $TABLES; do
-	QUERY=$QUERY"DELETE FROM main.${NEWNAME}_${TABLE};\n"
-	QUERY=$QUERY"INSERT INTO main.${NEWNAME}_${TABLE} SELECT "
-	QUERY=$QUERY"\x2A"
-	QUERY=$QUERY" FROM other.${NAME}_${TABLE};\n";
+	QUERY=$QUERY"DROP TABLE IF EXISTS main.${NAME}_${TABLE};\n"
 done
 
 QUERY=$QUERY" DETACH other; "
@@ -53,3 +45,9 @@ echo -e $QUERY
 
 echo -e $QUERY | sqlite3 $TO
 
+echo "Old tables have been deleted!"
+
+for TABLE in $TABLES; do
+	echo "${NAME}_${TABLE}"
+	sqlite3 $FROM ".dump '${NAME}_${TABLE}'" | sqlite3 $TO
+done
