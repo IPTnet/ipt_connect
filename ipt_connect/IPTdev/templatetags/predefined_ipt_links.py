@@ -1,6 +1,5 @@
 from django import template
 from ..models import *
-from .. import parameters as params
 
 register = template.Library()
 
@@ -19,11 +18,11 @@ The refactoring is not finished yet :(
 """
 
 
-@register.inclusion_tag('includes/team_link.html')
-def team_link(team):
+@register.inclusion_tag('includes/team_link.html', takes_context=True)
+def team_link(context, team):
 	if isinstance(team, Team):
 		team = team.name
 	return {
 		'team_name' : team,
-		'params' : params,
+		'params' : context['params'],
 	}
