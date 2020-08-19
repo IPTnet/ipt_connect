@@ -18,7 +18,7 @@ from django.http import JsonResponse
 #
 #    email = forms.EmailField(label="Email address")
 #
-#    veteran = forms.BooleanField(help_text="Have you already participated in the IPT?", required=True)
+#    veteran = forms.BooleanField(help_text="Have you already participated in the tournament?", required=True)
 
 class UploadForm(forms.Form):
     csvfile = forms.FileField(label='Select a CSV file:')
