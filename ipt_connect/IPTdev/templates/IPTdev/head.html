@@ -19,7 +19,8 @@
                     <a href="//iptnet.info">
                     	<img src="{% static params.instance_name|add:'/IPT_logo.png' %}" alt="{{ params.NAME.full }}" class="logo-topmenu">
                     </a>
-                    <a href="//connect.iptnet.info">IPT connect | </a><a href="{% url params.instance_name|add:':tournament_overview' %}">{{ params.NAME.short }}</a>
+                    <a href="//connect.iptnet.info">IPT connect |</a>
+                    <a href="{% url params.instance_name|add:':tournament_overview' %}">{{ params.NAME.short }}</a>
                 </div>
                 <div>
                     <a href="{% url params.instance_name|add:':rounds' %}">{% trans 'Physics Fights' %}</a>
