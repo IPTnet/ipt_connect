@@ -26,10 +26,10 @@
                     {% for juryroundsgrade in roundsgrades.0.0.juryroundsgrades %}
                         <th class="th-center">
                             <p>
-                                <a href="{% url 'IPTdev:round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a>
+                                <a href="{% url params.instance_name|add:':round_detail' pk=juryroundsgrade.round.pk %}">{% trans 'Round' %} {{juryroundsgrade.round.round_number}}</a>
                             </p>
                             {% if juryroundsgrade.round.problem_presented %}
-                                <a href="{% url 'IPTdev:problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
+                                <a href="{% url params.instance_name|add:':problem_detail' pk=juryroundsgrade.round.problem_presented.pk %}">{{juryroundsgrade.round.problem_presented.name}}</a>
                             {% endif %}
                         </th>
                     {% endfor %}
@@ -55,18 +55,18 @@
 								<tr class="pf-detail-team-row">
 									<td class="th-center">
 										{% if juryroundsgrade.round.reporter_team %}
-											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reporter_team.name %}">{{juryroundsgrade.round.reporter_team.name}}</a>
+											<a href="{% url params.instance_name|add:':team_detail' team_name=juryroundsgrade.round.reporter_team.name %}">{{juryroundsgrade.round.reporter_team.name}}</a>
 										{% endif %}
 									</td>
 									<td class="th-center">
 										{% if juryroundsgrade.round.opponent_team %}
-											<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.opponent_team.name %}">{{juryroundsgrade.round.opponent_team.name}}</a>
+											<a href="{% url params.instance_name|add:':team_detail' team_name=juryroundsgrade.round.opponent_team.name %}">{{juryroundsgrade.round.opponent_team.name}}</a>
 										{% endif %}
 									</td>
 									{% if juryroundsgrade.round.reviewer_team or not params.optional_reviewers %}
 										<td class="th-center">
 											{% if juryroundsgrade.round.reviewer_team %}
-												<a href="{% url 'IPTdev:team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
+												<a href="{% url params.instance_name|add:':team_detail' team_name=juryroundsgrade.round.reviewer_team.name %}">{{juryroundsgrade.round.reviewer_team.name}}</a>
 											{% endif %}
 										</td>
 									{% endif %}
@@ -77,7 +77,7 @@
                 </tr>
                 {% for juryallgrade in roundsgrades.0 %}
                     <tr>
-                        <td><a href="{% url 'IPTdev:jury_detail' pk=juryallgrade.juryroundsgrades.0.jury.pk %}">{{juryallgrade.name}}</a></td>
+                        <td><a href="{% url params.instance_name|add:':jury_detail' pk=juryallgrade.juryroundsgrades.0.jury.pk %}">{{juryallgrade.name}}</a></td>
                         {% for juryroundsgrade in juryallgrade.juryroundsgrades %}
                             <td>
                                 <table>

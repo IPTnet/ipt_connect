@@ -33,7 +33,7 @@
 
       <div>
           <center>
-          <h3><a href="{% url 'IPTdev:ranking' %}">{% trans 'General Ranking' %}</a></h3>
+          <h3><a href="{% url params.instance_name|add:':ranking' %}">{% trans 'General Ranking' %}</a></h3>
           </center>
       </div>
 

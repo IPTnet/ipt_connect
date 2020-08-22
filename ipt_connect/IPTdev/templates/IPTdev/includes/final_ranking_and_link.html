@@ -17,7 +17,7 @@
 {% if site_config.display_link_to_final_on_ranking_page %}
     <div class="content container">
         <p class="emphase">
-            <a href="{% url 'IPTdev:physics_fight_detail' pfid=final_fight_number %}">{% trans 'Final Fight details...' %}</a>
+            <a href="{% url params.instance_name|add:':physics_fight_detail' pfid=final_fight_number %}">{% trans 'Final Fight details...' %}</a>
         </p>
     </div>
 {% endif %}

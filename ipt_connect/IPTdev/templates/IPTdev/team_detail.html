@@ -16,7 +16,7 @@
     <h2>{% trans 'Participants' %}:
     </h2> {% for participant in participants %}
     <div>
-        <li><a href="{% url 'IPTdev:participant_detail' pk=participant.pk %}">{{participant.fullname}} {% trans 'gathered' %} {{participant.total_points|floatformat:2}} {% trans 'points' %}.</a></li>
+        <li><a href="{% url params.instance_name|add:':participant_detail' pk=participant.pk %}">{{participant.fullname}} {% trans 'gathered' %} {{participant.total_points|floatformat:2}} {% trans 'points' %}.</a></li>
     </div>
     {% endfor %}
 
@@ -29,7 +29,7 @@
     {% endfor %}
     {% for jury in teamleaders_jury %}
     <div>
-        <li><a href="{% url 'IPTdev:jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {% trans '(jury member)' %}</a></li>
+        <li><a href="{% url params.instance_name|add:':jury_detail' pk=jury.pk %}">{{jury.name}} {{jury.surname}} {% trans '(jury member)' %}</a></li>
     </div>
     {% endfor %}
 </div>
@@ -45,8 +45,8 @@
         {% for round in allrounds %}
             {% if round.problem_presented %}
                 <tr>
-                    <td class="td-center"><a href="{% url 'IPTdev:problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
-                    <td class="td-center"><a href="{% url 'IPTdev:round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
+                    <td class="td-center"><a href="{% url params.instance_name|add:':problem_detail' pk=round.problem_presented.pk %}">{{round.problem_presented}}</a></td>
+                    <td class="td-center"><a href="{% url params.instance_name|add:':round_detail' pk=round.pk %}">{{round.mygrade|floatformat:2}}</a></td>
                     <td class="td-center">{{round.myrole}}</td>
                 </tr>
             {% endif %}
