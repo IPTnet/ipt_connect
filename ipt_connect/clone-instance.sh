@@ -46,7 +46,7 @@ python manage.py makemigrations $2
 python manage.py migrate
 
 git add db.sqlite3
-git commit -m "Generic DB migrations for $2"
+git commit -m "[DB] Generic DB migrations for $2"
 
 # Finally, we commit the end of auto-commited block
 # We don't use --allow-empty anymore,
