@@ -1,22 +1,44 @@
 {% load humanize %}
 {% load i18n %}
 
-			{% if forbidden_problems.number_of_unavailable_problems > 0 %}
-			{% if forbidden_problems.presented_this_pf %}
-			{% for problem in forbidden_problems.presented_this_pf %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been presented in this Fight.' %}</li>
-			{% endfor %}
-			{% endif %}
-			{% if forbidden_problems.eternal_rejection %} {% for problem in forbidden_problems.eternal_rejection %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been permanently rejected.' %}</li>
-			{% endfor %} {% endif %} {% if forbidden_problems.presented_by_reporter %} {% for problem in forbidden_problems.presented_by_reporter %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Reporter' %}</li>
-			{% endfor %} {% endif %} {% if forbidden_problems.opposed_by_opponent %} {% for problem in forbidden_problems.opposed_by_opponent %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been opposed earlier by the Opponent' %}</li>
-			{% endfor %} {% endif %} {% if forbidden_problems.presented_by_opponent %} {% for problem in forbidden_problems.presented_by_opponent %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Opponent' %}</li>
-			{% endfor %} {% endif %}
-			{% else %}
-			<p>{% trans 'No forbidden problems.' %}</p>
-			 {% endif %}
+{% if forbidden_problems.number_of_unavailable_problems > 0 %}
+
+	{% for problem in forbidden_problems.presented_this_pf %}
+		<li>
+			<a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a>
+			{% trans 'has already been presented in this Fight.' %}
+		</li>
+	{% endfor %}
+	
+	{% for problem in forbidden_problems.eternal_rejection %}
+		<li>
+			<a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a>
+			{% trans 'has already been permanently rejected.' %}
+		</li>
+	{% endfor %}
+	
+	{% for problem in forbidden_problems.presented_by_reporter %}
+		<li>
+			<a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a>
+			{% trans 'has been presented earlier by the Reporter' %}
+		</li>
+	{% endfor %}
+	
+	{% for problem in forbidden_problems.opposed_by_opponent %}
+		<li>
+			<a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a>
+			{% trans 'has been opposed earlier by the Opponent' %}
+		</li>
+	{% endfor %}
+	
+	{% for problem in forbidden_problems.presented_by_opponent %}
+		<li>
+			<a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a>
+			{% trans 'has been presented earlier by the Opponent' %}
+		</li>
+	{% endfor %}
+	
+{% else %}
+	<p>{% trans 'No forbidden problems.' %}</p>
+{% endif %}
 
