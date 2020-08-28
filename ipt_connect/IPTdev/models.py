@@ -742,6 +742,15 @@ class EternalRejection(models.Model):
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem.pk
 
+class AprioriRejection(models.Model):
+
+	team = models.ForeignKey(Team, null=True)
+	problem = models.ForeignKey(Problem)
+
+	def __unicode__(self):
+		# TODO: also print the Team
+		return "Problem rejected : %s" % self.problem.pk
+
 
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
