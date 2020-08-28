@@ -11,14 +11,6 @@ from get_script_dir import get_script_dir
 instance_name = get_script_dir(False)
 instance_name = list(reversed(instance_name.rsplit('/' ,1)))[0];
 instance_name = list(reversed(instance_name.rsplit('\\',1)))[0];
-app_version = instance_name[3:]     # keyword for url parsing
-# TODO:
-# The construction `[3:]` above is a dirty hack.
-# We need to mention `IPTdev` to enable automated cloning,
-# but we have to set version to `dev` to satisfy some pieces of code.
-# No idea how is it handled for FPT.
-# To be refactored:
-# grep "app_version"
 
 
 NAME = {
@@ -28,11 +20,13 @@ NAME = {
     'front': '11th International Physicists\' Tournament',
 }
 
+
 poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
 
 website_url = 'http://dev.iptnet.info'
 
 repo_url = 'https://github.com/IPTnet/ipt_connect'
+
 
 # Models parameters
 npf = 4                 # Number of selective (qualifying) Physics fights
@@ -42,17 +36,21 @@ reject_malus = 0.2      # Malus for too many rejections
 npfreject_max = 3       # Maximum number of tactical rejection (per fight)
 netreject_max = 1       # Maximum number of eternal rejection
 
+
 # Should we reset the point sum before semifinals?
 # Does not affect reporter's coeff., rejections nor problems forbidden
 reset_points_before_semi = False
 
+
 # The same thing for the final - for the most pathological cases!
 reset_points_before_final = True
+
 
 # The maximum quantity of rounds
 # Affects mostly the combobox in round admin interface
 # Bonus points are calculated properly
 max_rounds_in_pf = 4
+
 
 # Personal ranking
 personal_ranking = {
@@ -65,16 +63,20 @@ personal_ranking = {
     'rev_coeff': 1
 }
 
+
 # Calculating the mean
 mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
+
 
 # Is the fight status displayed?
 # Looks like there are some problems with it, so making it switchable
 display_pf_status = True
 
+
 # Is the fight summary displayed?
 # Turn it off in case of any problems
 display_pf_summary = True
+
 
 # Are the bonus points displayed in the fight summary?
 display_pf_summary_bonus_points = True
@@ -94,6 +96,7 @@ enable_pools = True
 # Switching from True to False: local bonuses can be automatically overwritten,
 # global bonuses are hidden and ignored so far
 manual_bonus_points = False
+
 
 # Do we display coreporters publicly?
 display_coreporters = True
