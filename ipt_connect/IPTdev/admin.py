@@ -36,6 +36,11 @@ class EternalRejectionInline(admin.TabularInline):
 	extra = 0
 
 
+class AprioriRejectionInline(admin.TabularInline):
+	model = AprioriRejection
+	extra = 0
+
+
 class Roundadmin(admin.ModelAdmin):
 
 	list_display = ('pf_number', 'round_number', 'room')
@@ -92,6 +97,8 @@ class TeamAdmin(admin.ModelAdmin):
 	else:
 		list_display = ('name','surname','IOC')
 	search_fields = ('name','IOC')
+
+	inlines = [AprioriRejectionInline]
 
 
 class ParticipantAdmin(admin.ModelAdmin):
