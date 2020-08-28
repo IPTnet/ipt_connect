@@ -11,14 +11,6 @@ from get_script_dir import get_script_dir
 instance_name = get_script_dir(False)
 instance_name = list(reversed(instance_name.rsplit('/' ,1)))[0];
 instance_name = list(reversed(instance_name.rsplit('\\',1)))[0];
-app_version = instance_name[3:]     # keyword for url parsing
-# TODO:
-# The construction `[3:]` above is a dirty hack.
-# We need to mention `IPTdev` to enable automated cloning,
-# but we have to set version to `dev` to satisfy some pieces of code.
-# No idea how is it handled for FPT.
-# To be refactored:
-# grep "app_version"
 
 
 NAME = {
