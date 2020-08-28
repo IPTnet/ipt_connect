@@ -132,7 +132,7 @@ class TacticsForm(forms.Form):
 		pass
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def build_tactics(request):
 	# if this is a POST request we need to process the form data
@@ -146,7 +146,7 @@ def build_tactics(request):
 				Team.objects.get(pk=form['opponent_team'].value()),
 			))
 			tactics = (tactics[0][::-1], tactics[1])
-			return render(request, 'IPT%s/build_tactics.html' % params.app_version, {
+			return render(request, '%s/build_tactics.html' % params.instance_name, {
 				'params': params,
 				'form': form,
 				'tactics': tactics,
@@ -156,4 +156,4 @@ def build_tactics(request):
 	else:
 		form = TacticsForm()
 
-	return render(request, 'IPT%s/build_tactics.html' % params.app_version, {'params': params, 'form': form})
+	return render(request, '%s/build_tactics.html' % params.instance_name, {'params': params, 'form': form})
