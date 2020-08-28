@@ -14,6 +14,8 @@ trash-put $2/static/$2
 ln -s $1 $2/static/$2
 
 git add $2
+git add $2/templates/$2
+git add $2/static/$2
 git commit -m "Create $2 as a shadow copy of $1"
 
 
