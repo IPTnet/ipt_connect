@@ -532,6 +532,7 @@ def round_detail(request, pk):
 			'eternalrejection': eternalrejection,
 			'started': started,
 			'finished': finished,
+			'unavailable_problems':round.unavailable_problems(),
 			'display_room_name': round.pf_number <= params.npf,
 			'display_rejections': params.fights['challenge_procedure'][round.pf_number - 1],
 			'display_problems_forbidden': params.fights['problems_forbidden'][round.pf_number - 1],
