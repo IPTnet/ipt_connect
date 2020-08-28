@@ -415,6 +415,8 @@ def team_detail(request, team_name):
 		if p != 3.0:
 			penalties.append([ind+1, p])
 
+	apriori_rejections = AprioriRejection.objects.filter(team=team).order_by('problem')
+
 	return render(
 		request,
 		'%s/team_detail.html' % params.instance_name,
@@ -425,6 +427,7 @@ def team_detail(request, team_name):
 			'teamleaders_jury':teamleaders_jury,
 			'allrounds': allrounds,
 			'penalties': penalties,
+			'apriori_rejections': apriori_rejections,
 			'bonus_points_displayed' : bonus_points_displayed,
 			'params': params,
 		}
