@@ -11,14 +11,6 @@ from get_script_dir import get_script_dir
 instance_name = get_script_dir(False)
 instance_name = list(reversed(instance_name.rsplit('/' ,1)))[0];
 instance_name = list(reversed(instance_name.rsplit('\\',1)))[0];
-app_version = instance_name[3:]     # keyword for url parsing
-# TODO:
-# The construction `[3:]` above is a dirty hack.
-# We need to mention `IPTdev` to enable automated cloning,
-# but we have to set version to `dev` to satisfy some pieces of code.
-# No idea how is it handled for FPT.
-# To be refactored:
-# grep "app_version"
 
 
 NAME = {
@@ -85,7 +77,6 @@ display_pf_summary_bonus_points = True
 # and the 'Ranking' menu item leads to poolranking
 enable_pools = True
 
-
 # Are the bonus points entered manually?
 # Switch this on in case of problems with bonus points
 # If True: both global bonuses (the team form) and local bonuses (the round form) are visible and editable
@@ -98,14 +89,12 @@ manual_bonus_points = False
 # Do we display coreporters publicly?
 display_coreporters = True
 
-
 # There are at least 3 tournaments where rounds without a reviewer may (or must) appear:
 # 1) Selective (qualifying) fights of virtual IPT 2020 (the main reason to add this option)
 # 2) The final fight of Russian National Selection (if this shit can be named a "selection") stage of IYPT.
 # 3) Theoretically, at Three Science Tournament, we can encounter such a situation, but that is rather exotic.
 # Set this option to True if reviewers may be absent
 optional_reviewers = True
-
 
 # Maybe a Fight should be a separate model in the database
 # However, it looks like the fight structure is defined far before the tournament starts,
