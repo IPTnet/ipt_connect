@@ -97,25 +97,7 @@ no matter is the round finished or not
 	{% if display_problems_forbidden and round.reporter_team and round.opponent_team %}
 		<div class="content container">
 			<h2>Problem(s) forbidden:</h2>
-
-			{% if unavailable_problems.number_of_unavailable_problems > 0 %}
-			{% if unavailable_problems.presented_this_pf %}
-			{% for problem in unavailable_problems.presented_this_pf %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been presented in this Fight.' %}</li>
-			{% endfor %}
-			{% endif %}
-			{% if unavailable_problems.eternal_rejection %} {% for problem in unavailable_problems.eternal_rejection %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has already been permanently rejected.' %}</li>
-			{% endfor %} {% endif %} {% if unavailable_problems.presented_by_reporter %} {% for problem in unavailable_problems.presented_by_reporter %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Reporter' %}</li>
-			{% endfor %} {% endif %} {% if unavailable_problems.opposed_by_opponent %} {% for problem in unavailable_problems.opposed_by_opponent %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been opposed earlier by the Opponent' %}</li>
-			{% endfor %} {% endif %} {% if unavailable_problems.presented_by_opponent %} {% for problem in unavailable_problems.presented_by_opponent %}
-			<li><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a> {% trans 'has been presented earlier by the Opponent' %}</li>
-			{% endfor %} {% endif %}
-			{% else %}
-			<p>{% trans 'No forbidden problems.' %}</p>
-			 {% endif %}
+		{% include 'includes/list_forbidden_problems.html' with forbidden_problems=unavailable_problems %}
 		</div>
 	{% endif %}
 {% endblock problems_forbidden %}
