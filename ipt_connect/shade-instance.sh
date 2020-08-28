@@ -26,6 +26,12 @@ git commit -m "Plug $2 to the Django application index"
 cp db.sqlite3   db.sqlite3.shading-$1-to-$2.bak
 
 
+python manage.py makemigrations $2
+
+git add -f $2/migrations/$2/__init.py__
+git commit -m "Create generic migrations for $2"
+
+
 #python manage.py makemigrations $2
 #python manage.py migrate
 
