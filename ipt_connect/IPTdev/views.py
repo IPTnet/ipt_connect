@@ -30,7 +30,7 @@ def ninja_test(user):
 def soon(request):
 	return render(
 		request,
-		'IPT%s/bebacksoon.html' % params.app_version,
+		'%s/bebacksoon.html' % params.instance_name,
 		{
 			'params': params,
 		}
@@ -44,7 +44,7 @@ def participants_trombinoscope(request):
 
 	return render(
 		request,
-		'IPT%s/participants_trombinoscope.html' % params.app_version,
+		'%s/participants_trombinoscope.html' % params.instance_name,
 		{
 			'participants': participants,
 		}
@@ -56,7 +56,7 @@ def participants_export(request):
 
 	return render(
 		request,
-		'IPT%s/participants_export.html' % params.app_version,
+		'%s/participants_export.html' % params.instance_name,
 		{
 			'participants': participants,
 			'params': params,
@@ -69,7 +69,7 @@ def participants_export_web(request):
 
 	return render(
 		request,
-		'IPT%s/listing_participants_web.html' % params.app_version,
+		'%s/listing_participants_web.html' % params.instance_name,
 		{
 			'participants': participants,
 			'params': params,
@@ -82,7 +82,7 @@ def jury_export(request):
 
 	return render(
 		request,
-		'IPT%s/listing_jurys.html' % params.app_version,
+		'%s/listing_jurys.html' % params.instance_name,
 		{
 			'jurys': jurys,
 		}
@@ -94,7 +94,7 @@ def jury_export_web(request):
 
 	return render(
 		request,
-		'IPT%s/listing_jurys_web.html' % params.app_version,
+		'%s/listing_jurys_web.html' % params.instance_name,
 		{
 			'jurys': jurys,
 		}
@@ -156,7 +156,7 @@ def jury_export_csv(request):
 
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def participants_overview(request):
 	participants = Participant.objects.filter(role='TM') | Participant.objects.filter(role='TC')
@@ -175,7 +175,7 @@ def participants_overview(request):
 
 	return render(
 		request,
-		'IPT%s/participants_overview.html' % params.app_version,
+		'%s/participants_overview.html' % params.instance_name,
 		{
 			'participants': participants,
 			'params': params,
@@ -183,21 +183,21 @@ def participants_overview(request):
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def participants_all(request):
 	participants = Participant.objects.all().order_by('team','surname')
 
 	return render(
 		request,
-		'IPT%s/participants_all.html' % params.app_version,
+		'%s/participants_all.html' % params.instance_name,
 		{
 			'participants': participants,
 		}
 	)
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def participant_detail(request, pk):
 	try:
@@ -225,7 +225,7 @@ def participant_detail(request, pk):
 
 	return render(
 		request,
-		'IPT%s/participant_detail.html' % params.app_version,
+		'%s/participant_detail.html' % params.instance_name,
 		{
 			'participant': participant,
 			"average_grades": average_grades,
@@ -233,7 +233,7 @@ def participant_detail(request, pk):
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def jurys_overview(request):
 	jurys = Jury.objects.all().order_by('name')
@@ -254,7 +254,7 @@ def jurys_overview(request):
 			jury.meanrevgrade = 0.0
 	return render(
 		request,
-		'IPT%s/jurys_overview.html' % params.app_version,
+		'%s/jurys_overview.html' % params.instance_name,
 		{
 			'jurys': jurys,
 			'params': params,
@@ -262,7 +262,7 @@ def jurys_overview(request):
 	)
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def jury_detail(request, pk):
 	try:
@@ -273,7 +273,7 @@ def jury_detail(request, pk):
 	mygrades = JuryGrade.objects.filter(jury=jury)
 	return render(
 		request,
-		'IPT%s/jury_detail.html' % params.app_version,
+		'%s/jury_detail.html' % params.instance_name,
 		{
 			'jury': jury,
 			'grades': mygrades,
@@ -281,32 +281,32 @@ def jury_detail(request, pk):
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def tournament_overview(request):
 	return render(
 		request,
-		'IPT%s/tournament_overview.html' % params.app_version,
+		'%s/tournament_overview.html' % params.instance_name,
 		{
 			'params': params,
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def teams_overview(request):
 	teams = Team.objects.all()
 	teams = sorted(teams, key=lambda team: team.name)
 	return render(
 		request,
-		'IPT%s/teams_overview.html' % params.app_version,
+		'%s/teams_overview.html' % params.instance_name,
 		{
 			'teams': teams,
 			'params': params,
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def team_detail(request, team_name):
 	try:
@@ -374,7 +374,7 @@ def team_detail(request, team_name):
 
 	return render(
 		request,
-		'IPT%s/team_detail.html' % params.app_version,
+		'%s/team_detail.html' % params.instance_name,
 		{
 			'team': team,
 			'participants': rankedparticipants,
@@ -387,7 +387,7 @@ def team_detail(request, team_name):
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def problems_overview(request):
 	problems = Problem.objects.all()
@@ -400,14 +400,14 @@ def problems_overview(request):
 
 	return render(
 		request,
-		'IPT%s/problems_overview.html' % params.app_version,
+		'%s/problems_overview.html' % params.instance_name,
 		{
 			'problems': problems,
 			'params': params,
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def problem_detail(request, pk):
 	try:
@@ -419,7 +419,7 @@ def problem_detail(request, pk):
 
 	return render(
 		request,
-		'IPT%s/problem_detail.html' % params.app_version,
+		'%s/problem_detail.html' % params.instance_name,
 		{
 			'problem': problem,
 			'meangrades': meangrades,
@@ -428,7 +428,7 @@ def problem_detail(request, pk):
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def rounds(request):
 	rounds = Round.objects.all()
@@ -480,12 +480,12 @@ def rounds(request):
 
 	return render(
 		request,
-		'IPT%s/rounds.html' % params.app_version,
+		'%s/rounds.html' % params.instance_name,
 		render_data,
 	)
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def round_detail(request, pk):
 	try:
@@ -522,7 +522,7 @@ def round_detail(request, pk):
 
 	return render(
 		request,
-		'IPT%s/round_detail.html' % params.app_version,
+		'%s/round_detail.html' % params.instance_name,
 		{
 			'params': params,
 			'round': round,
@@ -540,7 +540,7 @@ def round_detail(request, pk):
 	)
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):
 	if float(pfid) not in range(1, npf_tot + 1):
@@ -593,7 +593,7 @@ def physics_fight_detail(request, pfid):
 
 	return render(
 		request,
-		'IPT%s/physics_fight_detail.html' % params.app_version,
+		'%s/physics_fight_detail.html' % params.instance_name,
 		{
 			'params': params,
 			'roomgrades': roomgrades,
@@ -693,7 +693,7 @@ def create_semi_ranking():
 	return create_ranking(teams)
 
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def ranking(request):
 	rankteams = create_ranking(Team.objects.order_by('-total_points'))
@@ -709,7 +709,7 @@ def ranking(request):
 
 	return render(
 		request,
-		'IPT%s/ranking.html' % params.app_version,
+		'%s/ranking.html' % params.instance_name,
 		{
 			'params': params,
 			'final_fight_number': final_fight_number,
@@ -719,7 +719,7 @@ def ranking(request):
 		}
 	)
 
-@user_passes_test(ninja_test, redirect_field_name=None, login_url='/IPT%s/soon' % params.app_version)
+@user_passes_test(ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name)
 @cache_page(cache_duration)
 def poolranking(request):
 
@@ -738,7 +738,7 @@ def poolranking(request):
 
 	return render(
 		request,
-		'IPT%s/poolranking.html' % params.app_version,
+		'%s/poolranking.html' % params.instance_name,
 		{
 			'params': params,
 			'final_fight_number': final_fight_number,
@@ -823,7 +823,7 @@ def upload_csv(request):
 
 	return render(
 		request,
-		'IPT%s/upload_csv.html' % params.app_version,
+		'%s/upload_csv.html' % params.instance_name,
 		{
 			'form': form,
 			'params': params,
