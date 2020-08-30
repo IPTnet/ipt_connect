@@ -10,6 +10,12 @@ def build_tactics_for_two_teams(reporter_team, opponent_team, current_round=None
 	# For given reporter and opponent, forbidden problems are listed
 	# and some additional information is collected
 
+	# This function carries out all the heavy work,
+	# that is mostly a bunch of DB queries.
+	# All the other tactics-related functions should call this one once
+	# and the operated with the returned result,
+	# which is a simple and lightweight dictionary-of-dictionaries.
+
 	# The rules state:
 	# The Opponent may challenge the Reporter on any problem with the exception of a problem that:
 	# a) was permanently rejected by the Reporter earlier;
