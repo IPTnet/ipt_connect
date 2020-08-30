@@ -37,9 +37,9 @@ reject_malus = 0.2      # Malus for too many rejections
 
 # Tactical rejections
 enable_tactical_rejections = True # False e.g. for IYPT - TODO
-npfreject_max = 3       # Maximum number of tactical rejection (per fight)
+npfreject_max = 3       # Maximum number of free tactical rejections (per fight)
 enable_eternal_rejections = True # False e.g. for IPT 2020 - TODO
-netreject_max = 1       # Maximum number of eternal rejection
+netreject_max = 1       # Maximum number of free eternal rejections
 enable_apriori_rejections = True # False in most cases - TODO
 
 
