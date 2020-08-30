@@ -75,14 +75,15 @@
 </div>
 
 
-<div class="content container">
-	<h3>{% trans 'Apriori rejection(s)' %}:</h3>
-	{% for apriori_rejection in apriori_rejections %}
-		<li><a href="{% url params.instance_name|add:':problem_detail' pk=apriori_rejection.problem.pk %}">{{apriori_rejection.problem.name}}</a></li>
-	{% empty %}
-		<p>{% trans 'No apriori rejections' %}</p>
-	{% endfor %}
-</div>
-
+{% if params.enable_apriori_rejections %}
+	<div class="content container">
+		<h3>{% trans 'Apriori rejection(s)' %}:</h3>
+		{% for apriori_rejection in apriori_rejections %}
+			<li><a href="{% url params.instance_name|add:':problem_detail' pk=apriori_rejection.problem.pk %}">{{apriori_rejection.problem.name}}</a></li>
+		{% empty %}
+			<p>{% trans 'No apriori rejections' %}</p>
+		{% endfor %}
+	</div>
+{% endif %}
 
 {% endblock content %}

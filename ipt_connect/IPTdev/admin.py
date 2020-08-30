@@ -98,7 +98,8 @@ class TeamAdmin(admin.ModelAdmin):
 		list_display = ('name','surname','IOC')
 	search_fields = ('name','IOC')
 
-	inlines = [AprioriRejectionInline]
+	if params.enable_apriori_rejections:
+		inlines = [AprioriRejectionInline]
 
 
 class ParticipantAdmin(admin.ModelAdmin):

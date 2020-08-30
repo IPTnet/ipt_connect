@@ -372,7 +372,10 @@ def team_detail(request, team_name):
 		if p != 3.0:
 			penalties.append([ind+1, p])
 
-	apriori_rejections = AprioriRejection.objects.filter(team=team).order_by('problem')
+	if params.enable_apriori_rejections:
+		apriori_rejections = AprioriRejection.objects.filter(team=team).order_by('problem')
+	else:
+		apriori_rejections = ()
 
 	return render(
 		request,
