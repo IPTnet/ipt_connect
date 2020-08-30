@@ -626,68 +626,6 @@ class Round(models.Model):
 
 		return next_round
 
-	def unavailable_problems(self, verbose=False):
-		"""
-		From the rules:
-
-		The Opponent may challenge the Reporter on any problem with the exception of a problem that:
-		a) was permanently rejected by the Reporter earlier;
-		b) was presented by the Reporter earlier;
-		c) was opposed by the Opponent earlier;
-		d) was presented by the Opponent earlier.
-		If there are no problems left to challenge, the bans d), c), b), a) are successively removed, in that order.
-
-		:param verbose: verbosity flag
-		:return: return a tuple with five lists : ([already_presented_this_round], [a], [b], [c], [d])
-		"""
-
-		# remind that these below are ([eternal rejection], [presented], [opposed])
-		reporter_problems = self.reporter_team.problems(verbose=False, currentround=self)
-		opponent_problems = self.opponent_team.problems(verbose=False, currentround=self)
-		eternal_rejection = sorted(reporter_problems[0], lambda x: x.pk)
-
-		if verbose:
-			print "="*10, "Problem rejection for %s" % self, "="*10
-			if len(eternal_rejection) != 0:
-				print "Team %s eternally rejected problem \n\t%s" % (self.reporter_team, eternal_rejection[0])
-		presented_by_reporter = sorted(reporter_problems[1], lambda x: x.pk)
-		if verbose:
-			msg = "Team %s already presented the following problems:" % self.reporter_team
-			for problem in presented_by_reporter:
-				msg += "\n\t%s" % problem
-			print msg
-		opposed_by_opponent = sorted(opponent_problems[2], lambda x: x.pk)
-		if verbose:
-			msg = "Team %s already opposed the following problems:" % self.opponent_team
-			for problem in opposed_by_opponent:
-				msg += "\n\t%s" % problem
-			print msg
-		presented_by_opponent = sorted(opponent_problems[1], lambda x: x.pk)
-		if verbose:
-			msg = "Team %s already presented the following problems:" % self.opponent_team
-			for problem in presented_by_opponent:
-				msg += "\n\t%s" % problem
-			print msg
-
-		# Finally, problems already presented in this Fight, in the current room
-		thispfrounds = Round.objects.filter(pf_number=self.pf_number).filter(room=self.room)
-		presented_this_pf = [round.problem_presented for round in thispfrounds if round.round_number < self.round_number]
-		if verbose:
-			msg = "In this fight, problems already presented are:"
-			for problem in presented_this_pf:
-				msg += "\n\t%s" % problem
-			print msg
-
-		unavailable_problems = {}
-		unavailable_problems["presented_this_pf"] = [p for p in presented_this_pf if p != None]
-		unavailable_problems["eternal_rejection"] = [p for p in eternal_rejection if p != None]
-		unavailable_problems["presented_by_reporter"] = [p for p in presented_by_reporter if p != None]
-		unavailable_problems["opposed_by_opponent"] = [p for p in opposed_by_opponent if p != None]
-		unavailable_problems["presented_by_opponent"] = [p for p in presented_by_opponent if p != None]
-		unavailable_problems["number_of_unavailable_problems"] = sum([len(unavailable_problems[k]) for k in unavailable_problems.keys()])
-
-		return unavailable_problems
-
 	class Meta:
 		permissions = (
 			("update_all", "Can see and trigger update_all links"),
