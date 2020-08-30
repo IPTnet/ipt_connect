@@ -30,9 +30,18 @@ repo_url = 'https://github.com/IPTnet/ipt_connect'
 npf = 4                 # Number of selective (qualifying) Physics fights
 semifinals_quantity = 2 # Quantity of semifinals. Every semifinal should be a separate fight!
 with_final_pf = True    # Is there a Final Fight ?
+
+
+## Rejections
 reject_malus = 0.2      # Malus for too many rejections
+
+# Tactical rejections
+enable_tactical_rejections = True # False e.g. for IYPT - TODO
 npfreject_max = 3       # Maximum number of tactical rejection (per fight)
+enable_eternal_rejections = True # False e.g. for IPT 2020 - TODO
 netreject_max = 1       # Maximum number of eternal rejection
+enable_apriori_rejections = True # False in most cases - TODO
+
 
 # Should we reset the point sum before semifinals?
 # Does not affect reporter's coeff., rejections nor problems forbidden
