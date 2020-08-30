@@ -539,6 +539,9 @@ def round_detail(request, pk):
 	except ObjectDoesNotExist:
 		raise Http404()
 
+	# TODO: rewrite the following in pythonish way!!!
+	from tactics import make_old_fashioned_list_from_tactics_data
+
 	jurygrades = JuryGrade.objects.filter(round=round).order_by('jury__name')
 	meangrades = []
 
@@ -578,7 +581,7 @@ def round_detail(request, pk):
 			'eternalrejection': eternalrejection,
 			'started': started,
 			'finished': finished,
-			'unavailable_problems':round.unavailable_problems(),
+			'unavailable_problems':make_old_fashioned_list_from_tactics_data(round),
 			'display_room_name': round.pf_number <= params.npf,
 			'display_rejections': params.fights['challenge_procedure'][round.pf_number - 1],
 			'display_problems_forbidden': params.fights['problems_forbidden'][round.pf_number - 1],
