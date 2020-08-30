@@ -644,25 +644,25 @@ class Round(models.Model):
 		# remind that these below are ([eternal rejection], [presented], [opposed])
 		reporter_problems = self.reporter_team.problems(verbose=False, currentround=self)
 		opponent_problems = self.opponent_team.problems(verbose=False, currentround=self)
-		eternal_rejection = reporter_problems[0]
+		eternal_rejection = sorted(reporter_problems[0], key=lambda x: x.pk)
 
 		if verbose:
 			print "="*10, "Problem rejection for %s" % self, "="*10
 			if len(eternal_rejection) != 0:
 				print "Team %s eternally rejected problem \n\t%s" % (self.reporter_team, eternal_rejection[0])
-		presented_by_reporter = reporter_problems[1]
+		presented_by_reporter = sorted(reporter_problems[1], key=lambda x: x.pk)
 		if verbose:
 			msg = "Team %s already presented the following problems:" % self.reporter_team
 			for problem in presented_by_reporter:
 				msg += "\n\t%s" % problem
 			print msg
-		opposed_by_opponent = opponent_problems[2]
+		opposed_by_opponent = sorted(opponent_problems[2], key=lambda x: x.pk)
 		if verbose:
 			msg = "Team %s already opposed the following problems:" % self.opponent_team
 			for problem in opposed_by_opponent:
 				msg += "\n\t%s" % problem
 			print msg
-		presented_by_opponent = opponent_problems[1]
+		presented_by_opponent = sorted(opponent_problems[1], key=lambda x: x.pk)
 		if verbose:
 			msg = "Team %s already presented the following problems:" % self.opponent_team
 			for problem in presented_by_opponent:
