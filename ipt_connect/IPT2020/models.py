@@ -79,18 +79,6 @@ class Participant(models.Model):
 		('GST', 'Guest'),
 	)
 
-	DIET_CHOICES = (
-		('STD','Standart'),
-		('VGT','Vegetarian'),
-		('VGN','Vegan'),
-	)
-
-	SHIRT_SIZES = (
-		('S', 'Small'),
-		('M', 'Medium'),
-		('L', 'Large'),
-		('XL', 'Extra Large'),
-	)
 
 	STATUS_CHOICES = (
 		('B', 'Bachelor student'),
@@ -104,27 +92,16 @@ class Participant(models.Model):
 	# parameters
 	name = models.CharField(max_length=50,default=None,verbose_name='Name')
 	surname = models.CharField(max_length=50,default=None,verbose_name='Surname')
-	gender = models.CharField(max_length=1,choices=GENDER_CHOICES,verbose_name='Gender')
+	timezone = models.CharField(max_length=50,default=None,help_text='E.g. UTC+4',verbose_name='Timezone')
 	email = models.EmailField(help_text='This address will be used to send the participant every important infos about the tournament.',verbose_name='Email')
 	phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.")
 	phone_number = models.CharField(max_length=20,validators=[phone_regex], blank=True,help_text="Compulsory for the Team Leaders.") # validators should be a list
-	passport_number = models.CharField(blank=True,null=True,max_length=50,default='NO', editable=False)
-	birthdate = models.DateField(default='1900-01-31',verbose_name='Birthdate')
 	#photo = models.ImageField(upload_to=UploadToPathAndRename(params.instance_name+'/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
 	team = models.ForeignKey('Team', null=True,blank=True,verbose_name='Team')
 	role = models.CharField(max_length=20,choices=ROLE_CHOICES,help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!", default="TM",verbose_name='Role')
 	affiliation = models.CharField(max_length=50,default='XXX University')
 	status = models.CharField(max_length=1,choices=STATUS_CHOICES,verbose_name='Academic status')
 	veteran = models.BooleanField(default=False,help_text="Has the participant already participated in the tournament? (informative only)",verbose_name='Veteran')
-	diet = models.CharField(max_length=20,choices=DIET_CHOICES,help_text='Does the participant have a specific diet?')
-	allergies_or_other_special_requirements = models.TextField(blank=True)
-	mixed_gender_accommodation = models.BooleanField(default=True,help_text="Is it ok for the participant to be in a mixed gender hotel room? (In case of single-gender rooms you will likely share the room with other teams)",verbose_name='Mixed gender accommodation?')
-	shirt_size = models.CharField(max_length=2,choices=SHIRT_SIZES)
-
-
-	physical_disabilities = models.BooleanField(default=False)
-	support_required = models.TextField(blank=True)
-	chronic_disease_or_special_medications_required  = models.TextField(blank=True)
 
 	remark = models.TextField(blank=True,verbose_name='Remarks')
 

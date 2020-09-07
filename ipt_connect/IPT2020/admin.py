@@ -123,9 +123,9 @@ class TeamAdmin(admin.ModelAdmin):
 
 class ParticipantAdmin(admin.ModelAdmin):
 
-	list_display = ('surname','name','team','affiliation','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
+	list_display = ('surname','name','team','affiliation','email','timezone','role','veteran','remark')
 	search_fields = ('surname','name')
-	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
+	list_filter = ('team','role','veteran')
 
 	def save_model(self, request, obj, form, change):
 		if not(request.user.is_superuser) and not(request.user.username == 'magnusson'):
