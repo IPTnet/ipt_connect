@@ -19,22 +19,21 @@ tags = [
         '//svg/@xmlns',
         ]
 
-links_error = []
-links_static = []
-links_other = []
-
-for ur in urls:
-        r = urlopen(head + dev + ur)
-        page = lxml.html.fromstring(r.read())
-        for tag in tags:
-                for link in page.xpath(tag):
-                        if not link.startswith('http'):
-                                if link.startswith('//'):
-                                        links_other.append(http + link)
-                                elif link.startswith('/static/'):
-                                        links_static.append(link)
-                                else: 
-                                        links_other.append(head + link)
-                        else: 
-                                links_other.append(link)
-unique_url = list(set(links_other)) # delete duplicate log lines
+def construct_links_list():
+        links_error = links_static = links_other = []
+        for ur in urls:
+                r = urlopen(head + dev + ur)
+                page = lxml.html.fromstring(r.read())
+                for tag in tags:
+                        for link in page.xpath(tag):
+                                if not link.startswith('http'):
+                                        if link.startswith('//'):
+                                                links_other.append(http + link)
+                                        elif link.startswith('/static/'):
+                                                links_static.append(link)
+                                        else:
+                                                links_other.append(head + link)
+                                else:
+                                        links_other.append(link)
+        unique_url = list(set(links_other))  # delete duplicate log lines
+        return [links_error, links_static, unique_url]
