@@ -13,10 +13,10 @@ urls = [
         'rounds',
         ]
 tags = [
-        '//a/@href', 
-        '//link/@href', 
-        '//img/@src', 
-        '//svg/@xmlns', 
+        '//a/@href',
+        '//link/@href',
+        '//img/@src',
+        '//svg/@xmlns',
         ]
 
 links_error = []
