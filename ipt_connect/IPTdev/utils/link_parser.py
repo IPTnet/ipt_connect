@@ -1,6 +1,4 @@
-import lxml.html
 import requests
-from urllib2 import urlopen
 from find_links import *
 
 links_for_check_404_error = [
