@@ -58,7 +58,16 @@ class Roundadmin(admin.ModelAdmin):
 		('problem_presented',"bonus_points_reporter") if params.manual_bonus_points else ('problem_presented'),
 	]})
 	]
-	inlines = [TacticalRejectionInline, EternalRejectionInline, JuryGradeInline]
+
+	# Jury grades. We always have them!
+	inlines = [JuryGradeInline]
+
+	# Round-based rejections (if supported)
+	if params.enable_eternal_rejections:
+		inlines = [EternalRejectionInline] + inlines
+
+	if params.enable_tactical_rejections:
+		inlines = [TacticalRejectionInline] + inlines
 
 	# Saving the round triggers the computation of the scores, so we need to save the
 	# JuryGrade's first in order to use up-to-date grades. The solution used here is to
