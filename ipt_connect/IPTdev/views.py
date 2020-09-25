@@ -526,8 +526,15 @@ def round_detail(request, pk):
 	else:
 		finished = False
 
-	tacticalrejections = TacticalRejection.objects.filter(round=round)
-	eternalrejection = EternalRejection.objects.filter(round=round)
+	if params.enable_tactical_rejections:
+		tacticalrejections = TacticalRejection.objects.filter(round=round)
+	else:
+		tacticalrejections = []
+
+	if params.enable_eternal_rejections:
+		eternalrejection = EternalRejection.objects.filter(round=round)
+	else:
+		eternalrejection = []
 
 	return render(
 		request,
