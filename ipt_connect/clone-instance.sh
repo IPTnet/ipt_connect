@@ -7,12 +7,17 @@
 
 echo "Cloning $1 into $2..."
 
+echo "Current directory:"
+pwd
+
 git status
 
 # Checking out to a detached HEAD to prevent branch pollution:
 #git checkout `git log --pretty=format:"%h" -1`
 
 git status
+
+echo "Trashing the old directory $2 if it exists..."
 
 trash-put $2
 cp -r $1 $2
