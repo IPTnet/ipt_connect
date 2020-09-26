@@ -715,14 +715,20 @@ def update_points_condition(sender, instance, **kwargs):
 
 def update_points(sender, instance, **kwargs):
 	print "Updating Round %s" % instance
-	if (instance.reporter_team is None) or (instance.opponent_team is None) or (instance.reviewer_team is None) or instance.problem_presented is None :
+	if (
+		(instance.reporter_team is None) or
+		(instance.opponent_team is None) or
+		(instance.reviewer_team is None and not params.optional_reviewers) or
+		instance.problem_presented is None
+	):
 		# then all teams aren't yet defined, there is no need to compute scores
 		pass
 	else :
 		teams = [instance.reporter_team, instance.opponent_team, instance.reviewer_team]
 		# then compute teams (and participants) scores
 		for team in teams:
-			team.update_scores()
+			if team != None:
+				team.update_scores()
 
 		# and the problem mean scores
 		instance.problem_presented.update_scores()
