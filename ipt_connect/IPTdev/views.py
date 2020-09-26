@@ -4,6 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render
 from cache_per_user import cache_per_user as cache_page
 from models import *
+from model_SupplementaryMaterial import SupplementaryMaterial
+
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.admin.views.decorators import staff_member_required
 from django.utils.translation import get_language
@@ -377,6 +379,9 @@ def team_detail(request, team_name):
 	else:
 		apriori_rejections = ()
 
+
+	supplementary_materials = SupplementaryMaterial.objects.filter(team=team).order_by('problem')
+
 	return render(
 		request,
 		'%s/team_detail.html' % params.instance_name,
@@ -385,6 +390,7 @@ def team_detail(request, team_name):
 			'participants': rankedparticipants,
 			'teamleaders': teamleaders,
 			'teamleaders_jury':teamleaders_jury,
+			'supplementary_materials':supplementary_materials,
 			'allrounds': allrounds,
 			'penalties': penalties,
 			'apriori_rejections': apriori_rejections,

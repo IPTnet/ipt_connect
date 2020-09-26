@@ -26,3 +26,11 @@ def team_link(context, team):
 		'team_name' : team,
 		'params' : context['params'],
 	}
+
+@register.inclusion_tag('includes/supplementary_material_link.html', takes_context=True)
+def supplementary_material_link(context, supplementary_material):
+	return {
+		'name' : supplementary_material.name,
+		'link' : supplementary_material.link,
+		'params' : context['params'],
+	}

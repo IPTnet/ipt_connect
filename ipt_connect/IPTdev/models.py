@@ -17,6 +17,7 @@ from django.db import transaction
 from func_bonus import distribute_bonus_points
 from solo.models import SingletonModel
 
+
 import parameters as params
 import func_mean as means
 
@@ -630,6 +631,8 @@ class Round(models.Model):
 		permissions = (
 			("update_all", "Can see and trigger update_all links"),
 		)
+
+import model_SupplementaryMaterial
 
 
 class JuryGrade(models.Model):

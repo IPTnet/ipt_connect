@@ -2,6 +2,8 @@
 from django.contrib import admin
 from django.contrib.auth.models import User
 from models import *
+from model_SupplementaryMaterial import *
+
 from django import forms
 from django.forms import widgets
 import parameters as params
@@ -20,6 +22,12 @@ try:
     config = SiteConfiguration.get_solo()
 except:
     pass
+
+
+class SupplementaryMaterialInline(admin.TabularInline):
+	model = SupplementaryMaterial
+	extra = 0
+
 
 class JuryGradeInline(admin.TabularInline):
 	model = JuryGrade
@@ -107,9 +115,11 @@ class TeamAdmin(admin.ModelAdmin):
 		list_display = ('name','surname','IOC')
 	search_fields = ('name','IOC')
 
+	inlines = []
 	if params.enable_apriori_rejections:
 		inlines = [AprioriRejectionInline]
 
+	inlines += [SupplementaryMaterialInline]
 
 class ParticipantAdmin(admin.ModelAdmin):
 
