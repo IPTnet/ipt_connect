@@ -38,6 +38,7 @@ ALLOWED_HOSTS = [u"XXX", u"127.0.0.1", u"localhost"]
 
 INSTALLED_TOURNAMENTS = (
     'IPTdev',
+    'IPT2020',
     'IPTdev_pf2',
 )
 
