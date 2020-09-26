@@ -17,7 +17,7 @@ NAME = {
     'short': 'IPT2020',
     'full': 'International Physicists\' Tournament 2020',
     # ... and the name used in tournament overview
-    'front': '12th International Physicists\' Tournament Online',
+    'front': '12th International Physicists\' Tournament Online Edition',
 }
 
 poster_url = ''
