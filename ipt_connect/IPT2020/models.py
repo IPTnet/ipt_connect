@@ -765,11 +765,18 @@ def update_bonus_points():
 	# the rounds must be saved first !
 	rounds = Round.objects.all()
 
-	for round in rounds.filter(round_number=3):
+	for round in rounds.filter(round_number=2):
 
 		bonuspts = {}
 		thispfrounds = Round.objects.filter(pf_number=round.pf_number).filter(room=round.room)
-		thispfteams = get_involved_teams_dict(thispfrounds).keys()
+		thispfteams = get_involved_teams_dict(thispfrounds)
+
+		#If a team (probably a reviewer) is not stated - just omit it
+		if params.optional_reviewers:
+			thispfteams.pop(None, None)	
+
+		thispfteams = thispfteams.keys()
+
 
 		if thispfrounds.count() != len(thispfteams):
 			continue
