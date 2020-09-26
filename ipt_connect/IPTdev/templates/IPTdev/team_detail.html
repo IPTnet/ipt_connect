@@ -1,9 +1,10 @@
 {% extends params.instance_name|add:'/head.html' %}
 {% load humanize %}
 {% load i18n %}
+{% load predefined_ipt_links %}
+
 {% block content %}
 
-{% load predefined_ipt_links %}
 
 <div class="section">
     <h1>{{team.name}}</h1>
