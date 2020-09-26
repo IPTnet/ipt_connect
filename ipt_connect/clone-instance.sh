@@ -42,6 +42,15 @@ sed -ni "p; s/'$1'/'$2'/gp" ipt_connect/settings.py
 git add ipt_connect/settings.py
 git commit -m "Plugged $2 to the Django application index"
 
+mkdir -p   $2/migrations/$2
+touch      $2/migrations/$2/__init__.py
+touch      $2/migrations/__init__.py
+
+git add -f $2/migrations/$2/__init__.py
+git add -f $2/migrations/__init__.py
+
+git commit -m "Create empty migrations module for $2"
+
 python manage.py makemigrations $2
 python manage.py migrate
 
