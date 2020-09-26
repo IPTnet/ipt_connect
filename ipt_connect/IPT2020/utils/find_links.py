@@ -3,7 +3,7 @@ from urllib2 import urlopen
 
 head = 'http://127.0.0.1:8000'
 http = 'http:'
-dev =  '/IPTdev/'
+dev =  '/IPT2020/'
 urls = [
         'problems',
         'participants',
