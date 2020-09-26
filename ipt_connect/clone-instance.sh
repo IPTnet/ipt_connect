@@ -10,7 +10,7 @@ echo "Cloning $1 into $2..."
 git status
 
 # Checking out to a detached HEAD to prevent branch pollution:
-git checkout `git log --pretty=format:"%h" -1`
+#git checkout `git log --pretty=format:"%h" -1`
 
 git status
 
