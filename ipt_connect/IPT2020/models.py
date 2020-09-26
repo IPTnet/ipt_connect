@@ -557,6 +557,8 @@ class Round(models.Model):
 			self.points_opponent = self.score_opponent * 2.0
 			self.points_reviewer = self.score_reviewer
 
+			print "Scores for Round %s counted" % self
+
 		super(Round, self).save(*args, **kwargs)
 
 	def ident(self):
