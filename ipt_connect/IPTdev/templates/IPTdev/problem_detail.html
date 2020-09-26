@@ -1,6 +1,7 @@
 {% extends params.instance_name|add:'/head.html' %}
 {% load humanize %}
 {% load i18n %}
+{% load predefined_ipt_links %}
 
 {% block content %}
 
@@ -61,6 +62,18 @@
 
         </table>
     </div>
+
+{% if supplementary_materials %}
+	<div class="content container">
+		<h3>{% trans 'Supplementary Materials' %}:</h3>
+			{% for supmat in supplementary_materials %}
+				{% supplementary_material_link supmat %}
+				by
+				{% team_link supmat.team %}
+			{% endfor %}
+	</div>
+{% endif %}
+
 
 
 {% endblock content %}
