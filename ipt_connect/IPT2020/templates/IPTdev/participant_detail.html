@@ -1,0 +1,41 @@
+{% extends params.instance_name|add:'/head.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    <div class="section">
+        <h1>{{participant.fullname}}</h1>
+    </div>
+
+    <div class="content container">
+		{% if participant.team %}
+            <li>{% trans 'Member of the team from' %} <a href="{% url params.instance_name|add:':team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></li>
+		{% endif %}
+
+    </div>
+
+
+    <!-- TODO: unify with team_detail -->
+    <div class="content container">
+
+        <table class="sortable">
+            <tr>
+                <th class="th-center">{% trans 'Problem(s) presented' %}</th>
+                <th class="th-center">{% trans 'Grade' %}</th>
+                <th class="th-center">{% trans 'Role' %}</th>
+            </tr>
+            {% for average_grade in average_grades %}
+                {% if average_grade.round.problem_presented %}
+                    <tr>
+                        <td class="td-center"><a href="{% url params.instance_name|add:':problem_detail' pk=average_grade.round.problem_presented.pk %}">{{average_grade.round.problem_presented}}</a></td>
+                        <td class="td-center"><a href="{% url params.instance_name|add:':round_detail' pk=average_grade.round.pk %}">{{average_grade.value|floatformat:2}}</a></td>
+                        <td class="td-center">{{average_grade.role}}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+
+        </table>
+    </div>
+
+    </div>
+{% endblock content %}

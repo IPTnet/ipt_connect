@@ -1,0 +1,44 @@
+{% extends params.instance_name|add:'/head.html' %}
+{% load i18n %}
+
+{% block content %}
+
+    {% if not problems %}
+        <div>
+            <center>
+            <h1>{% trans 'No problem registered yet' %}</h1>
+            </center>
+        </div>
+    {% else %}
+
+        <div class="section">
+            <h1>{% trans 'Problems overview' %}</h1>
+        </div>
+
+        <div class="content container">
+            <p class="emphase">{% trans 'Click on the problem names for detailed statistics. Click on the headers to sort the table.' %}</p>
+        </div>
+
+        <div class="content container">
+            <table class="sortable">
+                <tr>
+                    <th class="th-center">{% trans 'Name' %}</th>
+                    <th class="th-center">{% trans '# of presentations' %}</th>
+                    <th class="th-center">{% trans 'Mean Report grade' %}</th>
+                    <th class="th-center">{% trans 'Mean Opposition grade' %}</th>
+                    <th class="th-center">{% trans 'Mean Review grade' %}</th>
+                </tr>
+            {% for problem in problems %}
+                <tr>
+                    <td class="td-center"><a href="{% url params.instance_name|add:':problem_detail' pk=problem.pk %}">{{problem.name}}</a></td>
+                    <td class="td-center">{{problem.npres}}</td>
+                    <td class="td-center">{{problem.meangradrep|floatformat:2}}</td>
+                    <td class="td-center">{{problem.meangradopp|floatformat:2}}</td>
+                    <td class="td-center">{{problem.meangradrev|floatformat:2}}</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    {% endif %}
+
+{% endblock content %}

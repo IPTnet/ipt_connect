@@ -1,0 +1,12 @@
+{% load humanize %}
+{% load i18n %}
+
+{% if semirankteams %}
+    <div class="section">
+        <h1>{% trans 'Semifinal Ranking' %}</h1>
+    </div>
+
+    <div class="content container">
+		{% include 'includes/ranking_table.html' with teams=semirankteams display_semi_points=True display_pf_status=False %}
+    </div>
+{% endif %}

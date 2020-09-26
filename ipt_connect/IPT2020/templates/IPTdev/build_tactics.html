@@ -1,0 +1,45 @@
+{% extends params.instance_name|add:'/head.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+    <div class="content container">
+        <div class="section">
+            <h1>
+                {% trans 'This is beta feature, use it at your own risk!' %}
+            </h1>
+        </div>
+        <p>
+            If a weird behaviour is spotted, feedback to us is appreciated :)
+        </p>
+    </div>
+
+    <div class="content container">
+        <center>
+            <form action="build_tactics" method="post">
+                {% csrf_token %}
+                {{ form }}
+                <input type="submit" value="{% trans 'Build tactics!' %}" />
+            </form>
+        </center>
+    </div>
+
+    {% if tactics %}
+        <div class="section">
+            <h1>
+                {% trans 'Problems available:' %}
+            </h1>
+        </div>
+        <div class="content container">
+           {% include 'includes/list_problems_with_remarks.html' with problems=tactics.1 %}
+        </div>
+        <div class="section">
+            <h1>
+                {% trans 'Problems forbidden:' %}
+            </h1>
+        </div>
+        <div class="content container">
+           {% include 'includes/list_problems_with_remarks.html' with problems=tactics.0 %}
+        </div>
+    {% endif %}
+{% endblock content %}

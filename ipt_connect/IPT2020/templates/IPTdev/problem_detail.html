@@ -1,0 +1,79 @@
+{% extends params.instance_name|add:'/head.html' %}
+{% load humanize %}
+{% load i18n %}
+{% load predefined_ipt_links %}
+
+{% block content %}
+
+
+
+
+    <div class="section">
+        <h1>{{problem.name}}</h1>
+    </div>
+
+    <div class="content container">
+        <div>
+            <p>{{problem.description}}</p>
+        </div>
+    </div>
+
+
+    <div class="content container">
+        <table class="sortable">
+            <tr>
+                <th class="th-center"></th>
+                <th class="th-center">{% trans 'Report' %}</th>
+                <th class="th-center">{% trans 'Opposition' %}</th>
+                <th class="th-center">{% trans 'Review' %}</th>
+            </tr>
+
+            {% for teamresult in teamresults %}
+                <tr>
+                    <td><a href="{% url params.instance_name|add:':team_detail' team_name=teamresult.name %}">{{teamresult.name}}</a></td>
+                    <td class="td-center">
+                    {% for report in teamresult.reports%}
+                        <p><a href="{% url params.instance_name|add:':round_detail' pk=report.round.pk %}">{{report.value|floatformat:2}}</a></p>
+                    {% endfor %}
+                    </td>
+                    <td class="td-center">
+                    {% for opposition in teamresult.oppositions%}
+                        <p><a href="{% url params.instance_name|add:':round_detail' pk=opposition.round.pk %}">{{opposition.value|floatformat:2}}</a></p>
+                    {% endfor %}
+                    </td>
+                    <td class="td-center">
+                    {% for review in teamresult.reviews%}
+                        <p><a href="{% url params.instance_name|add:':round_detail' pk=review.round.pk %}">{{review.value|floatformat:2}}</a></p>
+                    {% endfor %}
+                    </td>
+                </tr>
+            {% endfor %}
+
+        </table>
+        <table>
+            {% if meangrades %}
+            <tr>
+                <td><p class="emphase">{% trans 'MEAN' %}</p></td>
+                <td class="td-center"><p class="emphase">{{meangrades.report|floatformat:2}}</p></td>
+                <td class="td-center"><p class="emphase">{{meangrades.opposition|floatformat:2}}</p></td>
+                <td class="td-center"><p class="emphase">{{meangrades.review|floatformat:2}}</p></td>
+            </tr>
+            {% endif %}
+
+        </table>
+    </div>
+
+{% if supplementary_materials %}
+	<div class="content container">
+		<h3>{% trans 'Supplementary Materials' %}:</h3>
+			{% for supmat in supplementary_materials %}
+				{% supplementary_material_link supmat %}
+				by
+				{% team_link supmat.team %}
+			{% endfor %}
+	</div>
+{% endif %}
+
+
+
+{% endblock content %}
