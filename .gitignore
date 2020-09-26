@@ -5,6 +5,7 @@
 .vscode
 *.*~
 *.mo
+*.bak
 
 # General Ignore Rules
 
