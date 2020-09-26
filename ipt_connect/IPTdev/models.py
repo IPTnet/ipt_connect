@@ -592,6 +592,15 @@ class Round(models.Model):
 		next_round.opponent_team = self.reviewer_team
 		next_round.reviewer_team = self.reporter_team
 
+		# 2-fights
+		if params.optional_reviewers and next_round.round_number == 2:
+			if   next_round.reviewer_team != None and next_round.reporter_team == None:
+				 next_round.reporter_team = next_round.reviewer_team
+				 next_round.reviewer_team = None
+			elif next_round.reviewer_team != None and next_round.opponent_team == None:
+				 next_round.opponent_team = next_round.reviewer_team
+				 next_round.reviewer_team = None
+
 		# Jurors! They are the same
 		jurygrades = JuryGrade.objects.filter(round=self)
 
