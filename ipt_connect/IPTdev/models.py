@@ -631,6 +631,8 @@ class Round(models.Model):
 			("update_all", "Can see and trigger update_all links"),
 		)
 
+import model_SupplementaryMaterial
+
 
 class JuryGrade(models.Model):
 

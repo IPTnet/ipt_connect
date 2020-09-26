@@ -1,7 +1,10 @@
 {% extends params.instance_name|add:'/head.html' %}
 {% load humanize %}
 {% load i18n %}
+{% load predefined_ipt_links %}
+
 {% block content %}
+
 
 <div class="section">
     <h1>{{team.name}}</h1>
@@ -83,6 +86,17 @@
 		{% empty %}
 			<p>{% trans 'No apriori rejections' %}</p>
 		{% endfor %}
+	</div>
+{% endif %}
+
+{% if supplementary_materials %}
+	<div class="content container">
+		<h3>{% trans 'Supplementary Materials' %}:</h3>
+			{% for supmat in supplementary_materials %}
+				{% supplementary_material_link supmat %}
+				for Problem:
+				<a href="{% url params.instance_name|add:':problem_detail' pk=supmat.problem.pk %}">{{supmat.problem.name}}</a>
+			{% endfor %}
 	</div>
 {% endif %}
 
