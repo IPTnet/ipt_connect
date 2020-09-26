@@ -429,6 +429,8 @@ def problem_detail(request, pk):
 
 	(meangrades, teamresults) = problem.status(verbose=False)
 
+	supplementary_materials = SupplementaryMaterial.objects.filter(problem=problem).order_by('team')
+
 	return render(
 		request,
 		'%s/problem_detail.html' % params.instance_name,
@@ -436,6 +438,7 @@ def problem_detail(request, pk):
 			'problem': problem,
 			'meangrades': meangrades,
 			'teamresults': teamresults,
+			'supplementary_materials':supplementary_materials,
 			'params': params,
 		}
 	)
