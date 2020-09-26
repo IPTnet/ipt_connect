@@ -20,7 +20,7 @@ NAME = {
     'front': '12th International Physicists\' Tournament Online Edition',
 }
 
-poster_url = ''
+poster_url = 'https://habrastorage.org/webt/da/we/ab/daweabq6k_o3raxhr5bbbwngtg8.png'
 
 website_url = 'http://2020.iptnet.info'
 
