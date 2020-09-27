@@ -67,7 +67,7 @@
 	<div class="content container">
 		<h3>{% trans 'Supplementary Materials' %}:</h3>
 			{% for supmat in supplementary_materials %}
-				{% supplementary_material_link supmat %}
+				<a href="{{supmat.link}}" class="supplementary-material-link">{{ supmat.name }}</a>
 				by
 				{% team_link supmat.team %}
 			{% endfor %}
