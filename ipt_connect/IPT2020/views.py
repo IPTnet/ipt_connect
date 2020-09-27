@@ -26,7 +26,7 @@ cache_duration_short = 1 * 1
 cache_duration = 20 * 1
 
 def ninja_test(user):
-	return user.is_staff or not SiteConfiguration.get_solo().only_staff_access
+	return user.has_perm(params.instance_name+'.see_ninjas') or not SiteConfiguration.get_solo().only_staff_access
 
 @cache_page(cache_duration_short)
 def soon(request):

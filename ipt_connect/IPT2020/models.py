@@ -646,6 +646,7 @@ class Round(models.Model):
 	class Meta:
 		permissions = (
 			("update_all", "Can see and trigger update_all links"),
+			("see_ninjas", "Can see the results even in Ninja Mode"),
 		)
 
 import model_SupplementaryMaterial
