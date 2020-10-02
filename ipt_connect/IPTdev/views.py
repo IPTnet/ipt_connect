@@ -650,9 +650,14 @@ def rounds(request):
 
 	orderedroundsperroom=[]
 	for room in rooms:
-		thisroom = []
+		room_round_list = []
 		for pf in selective_fights:
-			thisroom.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
+			room_round_list.append(Round.objects.filter(pf_number=pf).filter(room=room).order_by('round_number'))
+		thisroom = {
+			"name": room.name,
+			"link": room.get_link,
+			"rounds": room_round_list
+		}
 		orderedroundsperroom.append(thisroom)
 
 	render_data = {
