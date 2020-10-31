@@ -882,7 +882,7 @@ def update_all(sender, **kwargs):
 		print "="*15
 		for team in allteams:
 			#print "----"
-			print team.name, team.total_points
+			#print team.name, team.total_points
 			team.save()
 
 
