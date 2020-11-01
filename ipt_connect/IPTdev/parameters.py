@@ -86,6 +86,18 @@ display_pf_summary = True
 display_pf_summary_bonus_points = True
 
 
+## Options for participants overview
+display_participants_avg_grade_tot = True # Mean grade
+display_participants_avg_grade_rep = True # Mean Rep. grade
+display_participants_avg_grade_opp = True # Mean Opp. grade
+display_participants_avg_grade_rev = True # Mean Rev. grade
+display_participants_max_grade_tot = True # Best grade
+display_participants_max_grade_rep = True # Best Rep. grade
+display_participants_max_grade_opp = True # Best Opp. grade
+display_participants_max_grade_rev = True # Best Rev. grade
+display_participants_sum_grade_tot = True # Total points
+
+
 # Do we respect pools?
 # If true, then the pool is displayed in ranking table
 # and the 'Ranking' menu item leads to poolranking
