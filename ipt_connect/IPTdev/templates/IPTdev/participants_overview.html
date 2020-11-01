@@ -1,6 +1,8 @@
 {% extends params.instance_name|add:'/head.html' %}
 {% load i18n %}
 
+{% load predefined_ipt_links %}
+
 {% block content %}
     {% if not participants %}
         <div>
@@ -34,11 +36,7 @@
             {% for participant in participants %}
                 <tr>
                     <td class="td-center"><a href="{% url params.instance_name|add:':participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
-                    {% if participant.team %}
-                        <td class="td-center"><a href="{% url params.instance_name|add:':team_detail' team_name=participant.team.name %}">{{participant.team.name}}</a></td>
-                    {% else %}
-                        <td class="td-center"></td>
-                    {% endif %}
+                    <td class="td-center">{% team_link participant.team %}</td>
                     <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
                     <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
                     <td class="td-center">{{participant.mean_score_as_reporter|floatformat:2}}</td>
