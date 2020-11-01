@@ -365,6 +365,7 @@ def participants_overview(request):
 			'participants': participants,
 			'params': params,
 			'personal_ranking': pr['active'],
+			'sister_tournament_postfix':'participants',
 		}
 	)
 
@@ -413,6 +414,7 @@ def participant_detail(request, pk):
 		'%s/participant_detail.html' % params.instance_name,
 		{
 			'participant': participant,
+			'sister_tournament_postfix':'participants',
 			"average_grades": average_grades,
 			'params': params,
 		}
@@ -442,6 +444,7 @@ def jurys_overview(request):
 		'%s/jurys_overview.html' % params.instance_name,
 		{
 			'jurys': jurys,
+			'sister_tournament_postfix':'jurys',
 			'params': params,
 		}
 	)
@@ -462,6 +465,7 @@ def jury_detail(request, pk):
 		{
 			'jury': jury,
 			'grades': mygrades,
+			'sister_tournament_postfix':'jurys',
 			'params': params,
 		}
 	)
@@ -577,6 +581,7 @@ def team_detail(request, team_name):
 			'allrounds': allrounds,
 			'penalties': penalties,
 			'apriori_rejections': apriori_rejections,
+			'sister_tournament_postfix':'ranking',
 			'bonus_points_displayed' : bonus_points_displayed,
 			'params': params,
 		}
@@ -597,6 +602,7 @@ def problems_overview(request):
 		request,
 		'%s/problems_overview.html' % params.instance_name,
 		{
+			'sister_tournament_postfix':'problems',
 			'problems': problems,
 			'params': params,
 		}
@@ -622,6 +628,7 @@ def problem_detail(request, pk):
 			'meangrades': meangrades,
 			'teamresults': teamresults,
 			'supplementary_materials':supplementary_materials,
+			'sister_tournament_postfix':'problems',
 			'params': params,
 		}
 	)
@@ -643,6 +650,7 @@ def rounds(request):
 		'params': params,
 		'orderedroundsperroom': orderedroundsperroom,
 		'selective_fight_names': zip(selective_fights,params.fights['names'][:params.npf]),
+		'sister_tournament_postfix':'physics_fights',
 	}
 
 	if params.with_final_pf :
@@ -745,6 +753,7 @@ def round_detail(request, pk):
 			'display_rejections': params.fights['challenge_procedure'][round.pf_number - 1] and (params.enable_tactical_rejections or params.enable_eternal_rejections),
 			'display_problems_forbidden': params.fights['problems_forbidden'][round.pf_number - 1],
 			'physics_fight_name': params.fights['names'][round.pf_number - 1],
+			'sister_tournament_postfix':'physics_fights',
 		}
 	)
 
@@ -808,6 +817,7 @@ def physics_fight_detail(request, pfid):
 			'roomgrades': roomgrades,
 			'ignore_rooms': int(pfid) > params.npf,
 			'fight_name': params.fights['names'][int(pfid) - 1],
+			'sister_tournament_postfix':'physics_fights',
 			'no_round_played': rounds.count() == 0,
 		}
 	)
@@ -925,6 +935,7 @@ def ranking(request):
 			'finalrankteams': finalrankteams,
 			'rankteams': rankteams,
 			'semirankteams': semirankteams,
+			'sister_tournament_postfix':'ranking',
 		}
 	)
 
@@ -954,6 +965,7 @@ def poolranking(request):
 			'finalrankteams': finalrankteams,
 			'rankteamsA': rankteamsA,
 			'rankteamsB': rankteamsB,
+			'sister_tournament_postfix':'ranking',
 			'semirankteams': semirankteams,
 		}
 	)
