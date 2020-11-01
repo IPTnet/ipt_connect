@@ -208,8 +208,10 @@ def participants_overview(request):
 	pr = params.personal_ranking
 	for participant in participants:
 		participant.allpoints = participant.tot_score_as_reporter + participant.tot_score_as_opponent + participant.tot_score_as_reviewer
+
+		rounds_for_participant = Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)
 		try:
-			participant.avggrade = participant.allpoints / len(Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant))
+			participant.avggrade = participant.allpoints / len(rounds_for_participant)
 		except:
 			participant.avggrade = 0.0
 			print "PLOP"
