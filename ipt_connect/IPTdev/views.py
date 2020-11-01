@@ -209,12 +209,22 @@ def participants_overview(request):
 	for participant in participants:
 		participant.allpoints = participant.tot_score_as_reporter + participant.tot_score_as_opponent + participant.tot_score_as_reviewer
 
-		rounds_for_participant = Round.objects.filter(reporter=participant) | Round.objects.filter(opponent=participant) | Round.objects.filter(reviewer=participant)
-		try:
-			participant.avggrade = participant.allpoints / len(rounds_for_participant)
-		except:
+		rounds_as_reporter = Round.objects.filter(reporter=participant)
+		rounds_as_opponent = Round.objects.filter(opponent=participant)
+		rounds_as_reviewer = Round.objects.filter(reviewer=participant)
+		rounds_as_participant = rounds_as_reporter | rounds_as_opponent | rounds_as_reviewer
+
+		if len(rounds_as_participant) == 0:
 			participant.avggrade = 0.0
-			print "PLOP"
+		else:
+			#TODO: all these computations should be performed when a round is saved
+			participant.avggrade = participant.allpoints / len(rounds_as_participant)
+			participant.max_grade_rep = max([r.score_reporter for r in rounds_as_reporter]+[0.0])
+			participant.max_grade_opp = max([r.score_opponent for r in rounds_as_opponent]+[0.0])
+			participant.max_grade_rev = max([r.score_reviewer for r in rounds_as_reviewer]+[0.0])
+
+			participant.max_grade_tot = max(participant.max_grade_rep, participant.max_grade_opp, participant.max_grade_rev)
+
 		if pr['active']:
 			participant.set_personal_score()
 
