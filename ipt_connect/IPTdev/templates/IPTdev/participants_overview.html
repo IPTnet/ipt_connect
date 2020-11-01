@@ -24,27 +24,99 @@
                 <tr>
                     <th class="th-center">{% trans 'Name' %}</th>
                     <th class="th-center">{% trans 'Team' %}</th>
-                    <th class="th-center">{% trans 'Points (sum)' %}</th>
-                    <th class="th-center">{% trans 'Mean grade' %}</th>
-                    <th class="th-center">{% trans 'Mean Report grade' %}</th>
-                    <th class="th-center">{% trans 'Mean Opposition grade' %}</th>
-                    <th class="th-center">{% trans 'Mean Review grade' %}</th>
-                    {% if personal_ranking %}
-                    <th class="th-center">{% trans 'Personal ranking' %}</th>
-                    {% endif %}
+
+					{% if params.display_participants_sum_grade_tot %}
+						<th class="th-center">{% trans 'Points (sum)' %}</th>
+					{% endif %}
+
+					<!-- Average grades -->
+					{% if params.display_participants_avg_grade_tot %}
+						<th class="th-center">{% trans 'Mean grade' %}</th>
+					{% endif %}
+
+					{% if params.display_participants_avg_grade_rep %}
+						<th class="th-center">{% trans 'Mean Rep. grade' %}</th>
+					{% endif %}
+
+					{% if params.display_participants_avg_grade_opp %}
+						<th class="th-center">{% trans 'Mean Opp. grade' %}</th>
+					{% endif %}
+
+					{% if params.display_participants_avg_grade_rev %}
+						<th class="th-center">{% trans 'Mean Rev. grade' %}</th>
+					{% endif %}
+
+					<!-- Maximal grades -->
+					{% if params.display_participants_max_grade_rep %}
+						<th class="th-center">{% trans 'Best Rep. grade' %}</th>
+					{% endif %}
+
+					{% if params.display_participants_max_grade_opp %}
+						<th class="th-center">{% trans 'Best Opp. grade' %}</th>
+					{% endif %}
+
+					{% if params.display_participants_max_grade_rev %}
+						<th class="th-center">{% trans 'Best Rev. grade' %}</th>
+					{% endif %}
+
+					{% if params.display_participants_max_grade_tot %}
+						<th class="th-center">{% trans 'Best grade' %}</th>
+					{% endif %}
+
+
+					{% if personal_ranking %}
+						<th class="th-center">{% trans 'Personal ranking' %}</th>
+					{% endif %}
+
                 </tr>
             {% for participant in participants %}
                 <tr>
                     <td class="td-center"><a href="{% url params.instance_name|add:':participant_detail' pk=participant.pk %}">{{participant.fullname}}</a></td>
                     <td class="td-center">{% team_link participant.team %}</td>
-                    <td class="td-center">{{participant.allpoints|floatformat:2}}</td>
-                    <td class="td-center">{{participant.avggrade|floatformat:2}}</td>
-                    <td class="td-center">{{participant.mean_score_as_reporter|floatformat:2}}</td>
-                    <td class="td-center">{{participant.mean_score_as_opponent|floatformat:2}}</td>
-                    <td class="td-center">{{participant.mean_score_as_reviewer|floatformat:2}}</td>
-                    {% if personal_ranking %}
-                    <td class="td-center">{{participant.personal_score|floatformat:2}}</th>
-                    {% endif %}
+
+					{% if params.display_participants_sum_grade_tot %}
+						<td class="td-center">{{participant.allpoints|floatformat:2}}</td>
+					{% endif %}
+
+					<!-- Average grades -->
+					{% if params.display_participants_avg_grade_tot %}
+						<td class="td-center">{{participant.avggrade|floatformat:2}}</td>
+					{% endif %}
+
+					{% if params.display_participants_avg_grade_rep %}
+						<td class="td-center">{{participant.mean_score_as_reporter|floatformat:2}}</td>
+					{% endif %}
+
+					{% if params.display_participants_avg_grade_opp %}
+						<td class="td-center">{{participant.mean_score_as_opponent|floatformat:2}}</td>
+					{% endif %}
+
+					{% if params.display_participants_avg_grade_rev %}
+						<td class="td-center">{{participant.mean_score_as_reviewer|floatformat:2}}</td>
+					{% endif %}
+
+					<!-- Maximal grades -->
+					{% if params.display_participants_max_grade_rep %}
+						<td class="td-center">{{participant.max_grade_rep|floatformat:2}}</td>
+					{% endif %}
+
+					{% if params.display_participants_max_grade_opp %}
+						<td class="td-center">{{participant.max_grade_opp|floatformat:2}}</td>
+					{% endif %}
+
+					{% if params.display_participants_max_grade_rev %}
+						<td class="td-center">{{participant.max_grade_rev|floatformat:2}}</td>
+					{% endif %}
+
+					{% if params.display_participants_max_grade_tot %}
+						<td class="td-center">{{participant.max_grade_tot|floatformat:2}}</td>
+					{% endif %}
+
+
+
+					{% if personal_ranking %}
+						<td class="td-center">{{participant.personal_score|floatformat:2}}</th>
+					{% endif %}
                 </tr>
             {% endfor %}
             </table>
