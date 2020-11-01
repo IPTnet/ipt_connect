@@ -542,6 +542,12 @@ class Round(models.Model):
 			self.points_opponent = self.score_opponent * 2.0
 			self.points_reviewer = self.score_reviewer
 
+			if params.score_precision != None:
+				self.points_reporter = round(self.points_reporter, params.score_precision)
+				self.points_opponent = round(self.points_opponent, params.score_precision)
+				self.points_reviewer = round(self.points_reviewer, params.score_precision)
+
+
 		super(Round, self).save(*args, **kwargs)
 
 	def ident(self):
