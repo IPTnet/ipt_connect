@@ -34,7 +34,7 @@
                     <td ><b>{{thisroom.0.0.room}}</b></td>
                     {% for thispf in thisroom %}
                     <td>
-                        {% include 'includes/list_rounds.html' with roundlist=thispf %}
+                        {% include params.instance_name|add:'/includes/list_rounds.html' with roundlist=thispf %}
                     </td>
                     {% endfor %}
                     </td>
@@ -62,7 +62,7 @@
                         {% for sf in semifinal_data %}
                             {% if sf.1.0 %}
                                 <td>
-                                    {% include 'includes/list_rounds.html' with roundlist=sf.1 %}
+                                    {% include params.instance_name|add:'/includes/list_rounds.html' with roundlist=sf.1 %}
                                 </td>
                             {% endif %}
                         {% endfor %}
@@ -91,7 +91,7 @@
                     </tr>
                     <tr>
                         <td>
-                            {% include 'includes/list_rounds.html' with roundlist=finalrounds %}
+                            {% include params.instance_name|add:'/includes/list_rounds.html' with roundlist=finalrounds %}
                         </td>
                     </tr>
                     <!--

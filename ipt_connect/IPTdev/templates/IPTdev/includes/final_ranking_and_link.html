@@ -10,7 +10,7 @@
     </div>
 
     <div class="content container">
-		{% include 'includes/ranking_table.html' with teams=finalrankteams display_final_points=True display_pf_status=False %}
+		{% include params.instance_name|add:'/includes/ranking_table.html' with teams=finalrankteams display_final_points=True display_pf_status=False %}
     </div>
 {% endif %}
 

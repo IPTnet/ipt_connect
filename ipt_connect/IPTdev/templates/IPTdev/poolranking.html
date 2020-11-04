@@ -10,16 +10,16 @@
       </center>
     </div>
   {% else %}
-    {% include 'includes/final_ranking_and_link.html' %}
+    {% include params.instance_name|add:'/includes/final_ranking_and_link.html' %}
     
-    {% include 'includes/semifinal_ranking.html' %}
+    {% include params.instance_name|add:'/includes/semifinal_ranking.html' %}
 
       <div class="section">
           <h1>{% trans 'Ranking' %} - {% trans 'Pool A' %}</h1>
       </div>
 
       <div class="content container">
-      {% include 'includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
+      {% include params.instance_name|add:'/includes/ranking_table.html' with teams=rankteamsA display_pool=False %}
       </div>
 
 
@@ -28,7 +28,7 @@
       </div>
 
       <div class="content container">
-      {% include 'includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
+      {% include params.instance_name|add:'/includes/ranking_table.html' with teams=rankteamsB display_pool=False %}
       </div>
 
       <div>
@@ -37,7 +37,7 @@
           </center>
       </div>
 
-    {% include 'includes/link_update_all_for_superuser.html' %}
+    {% include params.instance_name|add:'/includes/link_update_all_for_superuser.html' %}
 
   {% endif %}
 
