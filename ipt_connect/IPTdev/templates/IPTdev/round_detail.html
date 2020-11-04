@@ -165,29 +165,33 @@ no matter is the round finished or not
 		<div class="content container">
 			<h2>{% trans 'Rejection(s)' %}</h2>
 
-			{% if not site_config.do_not_display_tactical_rejections %}
-				<div class="content container">
-					<h3>{% trans 'Tactical rejection(s)' %}:</h3>
-					{% for tacticalrejection in tacticalrejections %}
-						<li><a href="{% url params.instance_name|add:':problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
-					{% empty %}
-						<p>{% trans 'No tactical rejections' %}</p>
-					{% endfor %}
-				</div>
-			{% else %}
-				<div>
-					<h3>{% trans 'Tactical rejections are not displayed' %}</h3>
-				</div>
+			{% if params.enable_tactical_rejections %}
+				{% if not site_config.do_not_display_tactical_rejections %}
+					<div class="content container">
+						<h3>{% trans 'Tactical rejection(s)' %}:</h3>
+						{% for tacticalrejection in tacticalrejections %}
+							<li><a href="{% url params.instance_name|add:':problem_detail' pk=tacticalrejection.problem.pk %}">{{tacticalrejection.problem.name}}</a></li>
+						{% empty %}
+							<p>{% trans 'No tactical rejections' %}</p>
+						{% endfor %}
+					</div>
+				{% else %}
+					<div>
+						<h3>{% trans 'Tactical rejections are not displayed' %}</h3>
+					</div>
+				{% endif %}
 			{% endif %}
 
-			<div class="content container">
-				<h3>{% trans 'Eternal rejection(s)' %}:</h3>
-				{% for eternalrejection in eternalrejection %}
-					<li><a href="{% url params.instance_name|add:':problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
-				{% empty %}
-					<p>{% trans 'No eternal rejections' %}</p>
-				{% endfor %}
-			</div>
+			{% if params.enable_eternal_rejections %}
+				<div class="content container">
+					<h3>{% trans 'Eternal rejection(s)' %}:</h3>
+					{% for eternalrejection in eternalrejection %}
+						<li><a href="{% url params.instance_name|add:':problem_detail' pk=eternalrejection.problem.pk %}">{{eternalrejection.problem.name}}</a></li>
+					{% empty %}
+						<p>{% trans 'No eternal rejections' %}</p>
+					{% endfor %}
+				</div>
+			{% endif %}
 		</div>
 	{% endif %}
 {% endblock rejections %}
