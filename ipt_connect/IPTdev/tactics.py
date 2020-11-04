@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import user_passes_test
 import parameters as params
 from views import *
 
-def build_tactics_for_two_teams(reporter_team, opponent_team):
+def build_tactics_for_two_teams(reporter_team, opponent_team, current_round=None):
 	# A "challenge simulation" function.
 	# For given reporter and opponent, forbidden problems are listed
 	# and some additional information is collected
@@ -22,12 +22,31 @@ def build_tactics_for_two_teams(reporter_team, opponent_team):
 	all_problems = Problem.objects.all()
 	all_rounds = Round.objects.all()
 
+	previous_rounds = ()
+	if current_round:
+		previous_rounds = all_rounds.filter(
+			pf_number        = current_round.pf_number,
+			room             = current_round.room,
+			round_number__lt = current_round.round_number
+		)
+
 	for problem in all_problems:
+		apri_rej =  AprioriRejection.objects.filter(problem=problem)
 		eter_rej =  EternalRejection.objects.filter(problem=problem)
 		tact_rej = TacticalRejection.objects.filter(problem=problem)
 		atrounds = all_rounds.filter(problem_presented=problem)
 		problems_dict[problem] = {
 			# Forbidden
+			'presented_in_this_match':
+				(
+					# Will be filled later
+					# TODO: is it possible to cast a lambda here?
+				),
+			'apriori_rejected_by_reporter':
+				map(
+					lambda rejection: None,
+					list(apri_rej.filter(team=reporter_team)),
+				),
 			'eternally_rejected_by_reporter':
 				map(
 					lambda rejection: rejection.round,
@@ -75,6 +94,11 @@ def build_tactics_for_two_teams(reporter_team, opponent_team):
 				),
 		}
 
+		for round in previous_rounds:
+			if(round.problem_presented == problem):
+				problems_dict[problem]['presented_in_this_match'] += (round,)
+				#break # Cannot be presented twice? TODO: remove or uncomment
+
 	return problems_dict
 
 
@@ -85,6 +109,8 @@ def sort_raw_tactics_data(problems_dict):
 
 	bans = []
 	for reason in [
+		'presented_in_this_match',
+		'apriori_rejected_by_reporter',
 		'eternally_rejected_by_reporter',
 		'reported_by_reporter',
 		'opposed_by_opponent',

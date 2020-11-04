@@ -16,6 +16,16 @@
 				<a href="{% url params.instance_name|add:':problem_detail' pk=problem.0.pk %}">{{problem.0}}</a>
 			</td>
 			<td>
+				{% for round in problem.1.presented_in_this_match %}
+					<a href="{% url params.instance_name|add:':round_detail' pk=round.pk %}">{% trans 'just presented' %}</a>
+					<br/>
+				{% endfor %}
+
+				{% for round in problem.1.apriori_rejected_by_reporter %}
+					{% trans 'apriori rejected by reporter' %}
+					<br/>
+				{% endfor %}
+
 				{% for round in problem.1.eternally_rejected_by_reporter %}
 					<a href="{% url params.instance_name|add:':round_detail' pk=round.pk %}">{% trans 'eternally rejected by reporter' %}</a>
 					<br/>
