@@ -169,7 +169,11 @@ def make_old_fashioned_list_from_tactics_data(current_round):
 					round == None
 				) or (
 					# The reasons comes from the previous Rounds of the same Fight
-					round.pf_number == current_round.pf_number and round.round_number < current_round.round_number
+					round.pf_number == current_round.pf_number
+					and
+					round.round_number < current_round.round_number
+					and
+					reason == 'presented_in_this_match'
 				) or (
 					# The reason comes from the previous Fights
 					round.pf_number < current_round.pf_number
