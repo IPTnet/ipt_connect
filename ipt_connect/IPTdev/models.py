@@ -722,7 +722,10 @@ class SiteConfiguration(SingletonModel):
     only_staff_access = models.BooleanField(default=False)
     display_link_to_final_on_ranking_page = models.BooleanField(default=False)
     display_final_ranking_on_ranking_page = models.BooleanField(default=False)
-    do_not_display_tactical_rejections = models.BooleanField(default=False)
+
+    if params.enable_tactical_rejections:
+        do_not_display_tactical_rejections = models.BooleanField(default=False)
+
     update_scores_manually = models.BooleanField(default=False)
     image_link_URL = models.URLField(default="http://blueballfixed.ytmnd.com/")
     image_URL = models.URLField(default="http://i.imgur.com/QH8aoXL.gif")
