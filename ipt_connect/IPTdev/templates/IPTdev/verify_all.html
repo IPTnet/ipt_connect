@@ -1,0 +1,67 @@
+{% extends params.instance_name|add:'/head.html' %}
+{% load humanize %}
+{% load i18n %}
+
+{% block content %}
+
+	{% trans 'This interface reports about some situations that are not normal when a Fight has been just completed.' %}
+
+
+	<div class="section">
+		<h1>
+			{% trans 'Errors' %}
+		</h1>
+	</div>
+	{% for check in checks_with_errors %}
+		<div class="error-check-info check-info">
+			{% trans check.0 %}
+			<ul>
+				{% for r in check.1 %}
+					<li>
+						<a href="{% url params.instance_name|add:':round_detail' pk=r.pk %}">{{ r }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+			{{ check.2 }}
+		</div>
+	{% empty %}
+		{% trans 'No errors encountered' %}
+	{% endfor %}
+
+
+	<div class="section">
+		<h1>
+			{% trans 'Warnings' %}
+		</h1>
+	</div>
+	{% for check in checks_with_warnings %}
+		<div class="warning-check-info check-info">
+			{% trans check.0 %}
+			<ul>
+				{% for r in check.1 %}
+					<li>
+						<a href="{% url params.instance_name|add:':round_detail' pk=r.pk %}">{{ r }}</a>
+					</li>
+				{% endfor %}
+			</ul>
+			{{ check.2 }}
+		</div>
+	{% empty %}
+		{% trans 'No warnings encountered' %}
+	{% endfor %}
+
+
+	<div class="section">
+		<h1>
+			{% trans 'Successful checks' %}
+		</h1>
+	</div>
+	{% for check in checks_successful %}
+		<div class="successful-check-info check-info">
+			{% trans check %}
+		</div>
+	{% empty %}
+		{% trans 'No successful checks' %}
+	{% endfor %}
+
+{% endblock content %}

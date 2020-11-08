@@ -171,6 +171,133 @@ def round_add_next(request, pk):
 
 
 
+@user_passes_test(lambda u: u.has_perm(params.instance_name + '.update_all'))
+def verify_all(request):
+	all_rounds = Round.objects.all()
+	checks_successful = []
+	checks_with_warnings = []
+	checks_with_errors = []
+
+	rounds_with_reporter_team_mismatch=[]
+	rounds_with_opponent_team_mismatch=[]
+	rounds_with_reviewer_team_mismatch=[]
+	rounds_with_reporter_2_team_mismatch=[]
+
+	for r in all_rounds:
+		if r.reporter and r.reporter.team != r.reporter_team:
+			rounds_with_reporter_team_mismatch.append(r)
+		if r.opponent and r.opponent.team != r.opponent_team:
+			rounds_with_opponent_team_mismatch.append(r)
+		if r.reviewer and r.reviewer.team != r.reviewer_team:
+			rounds_with_reviewer_team_mismatch.append(r)
+		if r.reporter_2 and r.reporter_2.team != r.reporter_team:
+			rounds_with_reporter_2_team_mismatch.append(r)
+
+
+	simple_checks_for_rounds = [
+		(
+			all_rounds.filter(pf_number__gt=npf_tot),
+			'Some Rounds have unexpected Fight number',
+			'Each Round has a sane Fight number',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(problem_presented=None),
+			'Some Rounds have no Problem presented',
+			'Each Round has a presented Problem',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(reporter=None).exclude(reporter_2=None),
+			'Some Rounds have no Reporter specified but a Coreporter specified',
+			'If a Round has a Coreporter, it has a Reporter',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(reporter=None),
+			'Some Rounds have no Reporter specified',
+			'Each Round has a Reporter',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(opponent=None),
+			'Some Rounds have no Opponent specified',
+			'Each Round has an Opponent',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(reviewer=None),
+			'Some Rounds have no Reviewer specified',
+			'Each Round has a Reviewer',
+			checks_with_errors if not params.optional_reviewers else checks_with_warnings,
+		),
+		(
+			all_rounds.filter(reporter_team=None),
+			'Some Rounds have no Reporter Team specified',
+			'Each Round has a Reporter Team',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(opponent_team=None),
+			'Some Rounds have no Opponent Team specified',
+			'Each Round has an Opponent Team',
+			checks_with_errors,
+		),
+		(
+			all_rounds.filter(reviewer_team=None),
+			'Some Rounds have no Reviewer Team specified',
+			'Each Round has an Reviewer Team',
+			checks_with_errors if not params.optional_reviewers else checks_with_warnings,
+		),
+		(
+			rounds_with_reporter_team_mismatch,
+			'Some Rounds have a Reporter that is not a member of Reporter Team',
+			'For each Round a Reporter (if any) is a member of Reporter Team',
+			checks_with_errors,
+		),
+		(
+			rounds_with_opponent_team_mismatch,
+			'Some Rounds have an Opponent that is not a member of Opponent Team',
+			'For each Round an Opponent (if any) is a member of Opponent Team',
+			checks_with_errors,
+		),
+		(
+			rounds_with_reviewer_team_mismatch,
+			'Some Rounds have a Reviewer that is not a member of Reviewer Team',
+			'For each Round a Reviewer (if any) is a member of Reviewer Team',
+			checks_with_errors,
+		),
+		(
+			rounds_with_reporter_2_team_mismatch,
+			'Some Rounds have a Coreporter that is not a member of Reporter Team',
+			'For each Round a Coreporter (if any) is a member of Reporter Team',
+			checks_with_errors,
+		),
+	]
+
+
+	for check in simple_checks_for_rounds:
+		rounds_with_the_issue = check[0]
+
+		if rounds_with_the_issue:
+			check[3].append((
+				check[1],
+				list(rounds_with_the_issue),
+			))
+		else:
+			checks_successful.append(check[2])
+
+	return render(
+		request,
+		'%s/verify_all.html' % params.instance_name,
+		{
+			'params': params,
+			'checks_successful': checks_successful,
+			'checks_with_warnings': checks_with_warnings,
+			'checks_with_errors': checks_with_errors,
+		}
+	)
+
 
 @user_passes_test(lambda u: u.is_staff)
 def jury_export_csv(request):
