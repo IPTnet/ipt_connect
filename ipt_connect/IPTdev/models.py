@@ -516,9 +516,14 @@ class Round(models.Model):
 	bonus_points_reporter = models.FloatField(default=0.0, editable=params.manual_bonus_points)
 
 	def __unicode__(self):
+		try:
+			fight_name = params.fights['names'][self.pf_number - 1]
+		except:
+			#TODO: send a report to the admins!
+			fight_name = 'Unknown Fight (possibly an error!)'
 
 		return \
-			params.fights['names'][self.pf_number - 1] +\
+			 fight_name +\
 			" | Round %i" % self.round_number +\
 			(" | Room " + self.room.name if self.pf_number <= params.npf else "")
 
