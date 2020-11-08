@@ -22,6 +22,9 @@ TABLES=$TABLES" room problem team "
 # Depend only on teams
 TABLES=$TABLES" participant jury "
 
+# Depend only on teams and problems
+TABLES=$TABLES" apriorirejection supplementarymaterial "
+
 # Rounds depend on rooms etc.
 TABLES=$TABLES" round "
 
