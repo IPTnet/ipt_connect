@@ -19,7 +19,7 @@ git add $1/static/$2
 git commit -m "Create $2 as a shadow copy of $1"
 
 
-sed -ni "p; s/$1/$2/gp" ipt_connect/settings.py
+sed -ni "p; s/'$1'/'$2'/gp" ipt_connect/settings.py
 
 git add ipt_connect/settings.py
 git commit -m "Plug $2 to the Django application index"
