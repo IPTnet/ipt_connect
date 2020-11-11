@@ -871,13 +871,8 @@ def rank_ordinal(value):
     except ValueError:
         return value
     lang = get_language()
-    if lang == 'ru':
-        t = ('-ый', '-ый', '-ой', '-ий', '-ый', '-ый', '-ой', '-ой', '-ой', '-ый')
-        if not value:
-            return "0-ой"
-        if value in range(10, 20):
-            return "%d-ый" % (value)
-        return '%d%s' % (value, t[value % 10])
+    if lang in ('ru','ruttn') :
+        return "%dй" % (value)
     else:
         t = ('th', 'st', 'nd', 'rd') + ('th',) * 6
         if value % 100 in (11, 12, 13):
