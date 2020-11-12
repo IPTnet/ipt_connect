@@ -46,6 +46,10 @@ function defer() {
             $("#id_reporter_team").change(function() { fill_participant($(this).val(),"#id_reporter"); });
             $("#id_reporter_team").change(function() { fill_participant($(this).val(),"#id_reporter_2"); });
             $("#id_reviewer_team").change(function() { fill_participant($(this).val(),"#id_reviewer"); });
+
+            $("#id_reporter_team").change();
+            $("#id_opponent_team").change();
+            $("#id_reviewer_team").change();
         });
     else
         setTimeout(function() { defer() }, 50);
