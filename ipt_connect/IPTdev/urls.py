@@ -41,4 +41,5 @@ urlpatterns = [
     url(r'^update_all', update_all, name='update_all'),
     url(r'^verify_all', verify_all, name='verify_all'),
 	url(r'^upload_csv', upload_csv, name='upload_csv'),
+	url(r'^upload_problems', upload_problems, name='upload_problems'),
 ]

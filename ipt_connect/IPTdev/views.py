@@ -1050,3 +1050,35 @@ def upload_csv(request):
 			'params': params,
 		}
 	)
+
+
+@user_passes_test(lambda u: u.is_staff, login_url='/admin')
+def upload_problems(request):
+	if request.method == 'POST':
+		form = UploadForm(request.POST, request.FILES)
+		if form.is_valid():
+			csvfile = request.FILES['csvfile']
+			reader = csv.reader(csvfile)
+			# Uncomment to skip header
+			# next(reader)
+			for row in reader:
+				name = row[0]
+				text = row[1] if len(row) > 1 else ''
+				auth = row[2] if len(row) > 2 else ''
+				Problem.objects.get_or_create(
+					name=name,
+					description=text,
+					author=auth,
+				)
+				
+	else:
+		form = UploadForm()
+
+	return render(
+		request,
+		'%s/upload_problems.html' % params.instance_name,
+		{
+			'form': form,
+			'params': params,
+		}
+	)
