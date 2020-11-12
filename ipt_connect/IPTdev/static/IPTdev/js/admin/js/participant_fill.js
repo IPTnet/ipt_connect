@@ -16,14 +16,24 @@ function fill_participant(team_id,field) {
         if(model != "" ) {
             $.getJSON("/"+model+"/member_for_team", {team_id: team_id},
                   function(ret, textStatus) {
-                      //var options = '<option value="" selected="selected">---------</option>';                                                               
-                      var options = '';
-                      for (var i in ret['res']) {
-                          options += '<option value="' + ret['res'][i].id + '">'
-                              + ret['res'][i].name + '</option>';
-                      }
-                      response_cache[team_id] = options;
-                      $(field).html(options);
+					  var options = '<option value="">---------</option>';
+					  var current_value = $(field).val();
+					  var preserve_current_value = !current_value;
+					  for (var i in ret['res']) {
+						  options += '<option value="' + ret['res'][i].id + '">'
+							  + ret['res'][i].name + '</option>';
+						  if (ret['res'][i].id == current_value) {
+							preserve_current_value = true;
+						  }
+					  }
+					  response_cache[team_id] = options;
+					  $(field).html(options);
+
+					  if (preserve_current_value) {
+						  $(field).val(current_value)
+					  } else {
+						  $(field).val("")
+					  }
                   });
         }
     }
