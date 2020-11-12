@@ -8,7 +8,7 @@ from uuid import uuid4
 from django.utils.encoding import iri_to_uri
 from string import replace
 from django.utils.deconstruct import deconstructible
-from django.db.models.signals import post_save, pre_save
+from django.db.models.signals import post_save, pre_save, post_delete
 from django.dispatch import receiver
 from django.db.models import Avg, Sum
 from django.core.validators import RegexValidator
@@ -700,6 +700,7 @@ class AprioriRejection(models.Model):
 
 # method for updating Teams and Participants when rounds are saved
 @receiver(post_save, sender=Round, dispatch_uid="update_participant_team_points")
+@receiver(post_delete, sender=Round, dispatch_uid="update_participant_team_points")
 def update_points_condition(sender, instance, **kwargs):
     if not SiteConfiguration.get_solo().update_scores_manually:
         update_points(sender, instance)
