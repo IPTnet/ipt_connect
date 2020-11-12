@@ -103,7 +103,7 @@ class Roundadmin(admin.ModelAdmin):
 	# 	form.instance.save() # form.instance is the parent (ie the Round)
 
 	class Media:
-		js = ('admin/js/jquery.js','admin/js/participant_fill.js',)
+		js = (params.instance_name + '/js/admin/js/jquery.js', params.instance_name + '/js/admin/js/participant_fill.js', )
 	# TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
 
 
