@@ -34,6 +34,7 @@ function defer() {
         $(document).ready(function() {
             $("#id_opponent_team").change(function() { fill_participant($(this).val(),"#id_opponent"); });
             $("#id_reporter_team").change(function() { fill_participant($(this).val(),"#id_reporter"); });
+            $("#id_reporter_team").change(function() { fill_participant($(this).val(),"#id_reporter_2"); });
             $("#id_reviewer_team").change(function() { fill_participant($(this).val(),"#id_reviewer"); });
         });
     else
