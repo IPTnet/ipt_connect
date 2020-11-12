@@ -163,6 +163,7 @@ class Problem(models.Model):
 	"""
 	name = models.CharField(max_length=50, default=None)
 	description = models.TextField(max_length=4096, default=None)
+	author = models.CharField(blank=True, max_length=128, default='')
 
 	mean_score_of_reporters = models.FloatField(default=0.0, editable=False)
 	mean_score_of_opponents = models.FloatField(default=0.0, editable=False)

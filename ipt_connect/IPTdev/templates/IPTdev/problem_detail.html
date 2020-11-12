@@ -12,6 +12,14 @@
         <h1>{{problem.name}}</h1>
     </div>
 
+	{% if problem.author %}
+		<div class="content container">
+			<div>
+				<i>({{problem.author}})</i>
+			</div>
+		</div>		
+	{% endif %}
+
     <div class="content container">
         <div>
             <p>{{problem.description}}</p>
