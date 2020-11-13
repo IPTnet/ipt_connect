@@ -9,6 +9,9 @@ function get_model_name() {
 }
 
 function fill_participant(team_id,field) {
+	if (!team_id){
+		return;
+	}
     if (response_cache[team_id]) {
         $(field).html(response_cache[team_id]);
     } else {
