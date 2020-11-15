@@ -45,10 +45,9 @@ body {
 
 .topmenu-wrap {
     width:100%;
-    overflow: hidden;
     display: flex;
     flex-wrap: wrap;
-    height:56px;
+    min-height:56px;
     vertical-align:center;
     align-items: center;
 }
