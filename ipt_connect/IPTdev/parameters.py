@@ -20,6 +20,14 @@ NAME = {
     'front': '11th International Physicists\' Tournament',
 }
 
+# Tournaments to switch to by the menu
+# Usually you should set it to None
+# This is useful only for development and first stages of Three Science Tournament
+sister_tournaments = (
+	('IPT dev','/IPT'+'dev/'),
+	('IPT dev (pf2)','/IPT'+'dev_pf2/'),
+)
+
 poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
 
 website_url = 'http://dev.iptnet.info'

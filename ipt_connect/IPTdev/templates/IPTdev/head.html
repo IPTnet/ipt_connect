@@ -20,7 +20,27 @@
                     	<img src="{% static params.instance_name|add:'/IPT_logo.png' %}" alt="{{ params.NAME.full }}" class="logo-topmenu">
                     </a>
                     <a href="//connect.iptnet.info">IPT connect |</a>
-                    <a href="{% url params.instance_name|add:':tournament_overview' %}">{{ params.NAME.short }}</a>
+                    {% if params.sister_tournaments %}
+						<div class="dropdown">
+							<span class="dropbtn" href="{% url params.instance_name|add:':tournament_overview' %}"> {{ params.NAME.short }}
+							&nbsp;
+							<svg width="12" height="8" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+								<!-- Created with SVG-edit - https://github.com/SVG-Edit/svgedit-->
+								<g class="layer">
+									<path d="m6.82723,4.01144l-4.75259,-5.99496l3.12996,0l4.75259,5.99496l-4.75259,5.99496l-3.12996,0l4.75259,-5.99496z" fill="#ffffff" id="svg_3" stroke="#ffffff" stroke-width="0" transform="rotate(90, 6.01592, 4.01144)"/>
+								</g>
+							</svg>
+							&nbsp;
+							</span>
+							<div class="dropdown-content">
+								{% for tournament in params.sister_tournaments %}
+									<a href="{{tournament.1}}{{sister_tournament_postfix}}">{{tournament.0}}</a>
+								{% endfor %}
+							</div>
+						</div>
+                    {% else %}
+						<a href="{% url params.instance_name|add:':tournament_overview' %}">{{ params.NAME.short }}</a>
+                    {% endif %}
                 </div>
                 <div>
                     <a href="{% url params.instance_name|add:':rounds' %}">{% trans 'Physics Fights' %}</a>
