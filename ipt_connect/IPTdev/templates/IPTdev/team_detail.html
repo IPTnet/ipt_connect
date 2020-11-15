@@ -89,6 +89,23 @@
 	</div>
 {% endif %}
 
+
+{% if display_eternal_rejections %}
+	<div class="content container">
+		<h3>{% trans 'Eternal rejection(s)' %}:</h3>
+		{% for eternal_rejection in eternal_rejections %}
+			<li>
+				<a href="{% url params.instance_name|add:':problem_detail' pk=eternal_rejection.problem.pk %}">{{eternal_rejection.problem.name}}</a>
+				:
+				<a href="{% url params.instance_name|add:':round_detail' pk=eternal_rejection.round.pk %}">{{eternal_rejection.round}}</a>			
+			</li>
+		{% empty %}
+			<p>{% trans 'No eternal rejections' %}</p>
+		{% endfor %}
+	</div>
+{% endif %}
+
+
 {% if supplementary_materials %}
 	<div class="content container">
 		<h3>{% trans 'Supplementary Materials' %}:</h3>

@@ -738,6 +738,9 @@ class SiteConfiguration(SingletonModel):
     if params.enable_tactical_rejections:
         do_not_display_tactical_rejections = models.BooleanField(default=False)
 
+    if params.enable_eternal_rejections:
+        display_eternal_rejections_on_team_page = models.BooleanField(default=True)
+
     update_scores_manually = models.BooleanField(default=False)
     image_link_URL = models.URLField(default="http://blueballfixed.ytmnd.com/")
     image_URL = models.URLField(default="http://i.imgur.com/QH8aoXL.gif")

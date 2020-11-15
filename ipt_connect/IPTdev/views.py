@@ -566,6 +566,13 @@ def team_detail(request, team_name):
 	else:
 		apriori_rejections = ()
 
+	display_eternal_rejections = params.enable_eternal_rejections and SiteConfiguration.get_solo().display_eternal_rejections_on_team_page
+
+	if display_eternal_rejections:
+		eternal_rejections = EternalRejection.objects.filter(round__reporter_team=team).order_by('problem')
+	else:
+		eternal_rejections = ()
+
 
 	supplementary_materials = SupplementaryMaterial.objects.filter(team=team).order_by('problem')
 
@@ -580,6 +587,8 @@ def team_detail(request, team_name):
 			'supplementary_materials':supplementary_materials,
 			'allrounds': allrounds,
 			'penalties': penalties,
+			'eternal_rejections': eternal_rejections,
+			'display_eternal_rejections': display_eternal_rejections,
 			'apriori_rejections': apriori_rejections,
 			'sister_tournament_postfix':'ranking',
 			'bonus_points_displayed' : bonus_points_displayed,
