@@ -57,7 +57,7 @@ msgstr "Рейтинг"
 
 #: IPTdev/templates/IPTdev/head.html:35
 msgid "Problems"
-msgstr "Проблемы"
+msgstr "Задачи"
 
 #: IPTdev/templates/IPTdev/head.html:38
 #: IPTdev/templates/IPTdev/team_detail.html:13
@@ -67,7 +67,7 @@ msgstr "Участники"
 #: IPTdev/templates/IPTdev/head.html:41
 #: IPTdev/templates/IPTdev/round_detail.html:120
 msgid "Jury members"
-msgstr "Члены жюри"
+msgstr "Жюри"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:7
 msgid "Problem"
