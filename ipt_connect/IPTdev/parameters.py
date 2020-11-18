@@ -70,13 +70,14 @@ score_precision = None #TODO: use the same precision when displaying the results
 
 # Personal ranking
 personal_ranking = {
-    'active': False,
+    'active': True,
     'rep_threshold': 5,
     'opp_threshold': 5,
     'rev_threshold': 5,
     'rep_coeff': 3,
     'opp_coeff': 2,
-    'rev_coeff': 1
+    'rev_coeff': 1,
+    'up_to_fight': npf, # to exclude Final and Semifinal grades; may be an arbitrary integer
 }
 
 # Calculating the mean
