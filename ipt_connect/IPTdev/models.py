@@ -743,11 +743,9 @@ class SiteConfiguration(SingletonModel):
     display_link_to_final_on_ranking_page = models.BooleanField(default=False)
     display_final_ranking_on_ranking_page = models.BooleanField(default=False)
 
-    if params.enable_tactical_rejections:
-        do_not_display_tactical_rejections = models.BooleanField(default=False)
+    do_not_display_tactical_rejections = models.BooleanField(default=False, editable=params.enable_tactical_rejections)
 
-    if params.enable_eternal_rejections:
-        display_eternal_rejections_on_team_page = models.BooleanField(default=True)
+    display_eternal_rejections_on_team_page = models.BooleanField(default=True, editable=params.enable_eternal_rejections)
 
     update_scores_manually = models.BooleanField(default=False)
     image_link_URL = models.URLField(default="http://blueballfixed.ytmnd.com/")
