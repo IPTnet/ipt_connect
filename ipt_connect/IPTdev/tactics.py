@@ -43,7 +43,7 @@ def build_tactics_for_two_teams(reporter_team, opponent_team, current_round=None
 
 		# If the tactical rejections are hidden, we should not take them into account
 		# See also https://github.com/IPTnet/ipt_connect/issues/258
-		if SiteConfiguration.get_solo().do_not_display_tactical_rejections:
+		if (not params.enable_tactical_rejections) or SiteConfiguration.get_solo().do_not_display_tactical_rejections:
 			tact_rej = TacticalRejection.objects.none()
 
 		atrounds = all_rounds.filter(problem_presented=problem)
