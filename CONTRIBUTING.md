@@ -134,17 +134,19 @@ sudo apt-get install gettext
 
 *Note: sometimes this should be also done after updating the code from the upstream.*
 
-(You may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265),so use such command):
+8. Eventually, run the server!
+
+```bash
+cd ipt_connect # Again: it is a subdirectory!
+python manage.py runserver
+```
+
+(You may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265), so use such command):
 ```bash
 #This is juat an example
 python manage.py makemigrations IPTdev_errors
 ```
 
-8. Eventually, run the server!
-```bash
-cd ipt_connect # Again: it is a subdirectory!
-python manage.py runserver
-```
 Some messages may be shown.
 If there are no errors, then just go to the next step.
 
