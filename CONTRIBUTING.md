@@ -57,9 +57,9 @@ sudo apt-get install python2 pip2
 ```
 
 (Consider that Ubuntu 20.04 or higher versions doesn't include pip for Python2 so visit this source to sort out with this problem):
- ```[https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/]
- (https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/)
- ```
+
+[(https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/)](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/)
+
  Also install gettext:
 ```bash
 sudo apt-get install gettext
