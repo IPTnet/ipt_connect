@@ -56,15 +56,14 @@ Depending on your distribution, it should be smth like that (for `deb`-based):
 sudo apt-get install python2 pip2
 ```
 
-(Consider that Ubuntu 20.04 or higher versions doesn't include pip for Python2 so visit this source to sort out with this problem:
- ```bash
- https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/
+(Consider that Ubuntu 20.04 or higher versions doesn't include pip for Python2 so visit this source to sort out with this problem):
+ ```[https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/]
+ (https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/)
  ```
  Also install gettext:
 ```bash
 sudo apt-get install gettext
 ```
- )
 
 (here, and below, and forever - Google is your friend!)
 
@@ -148,11 +147,11 @@ python manage.py runserver
 Some messages may be shown.
 If there are no errors, then just go to the next step.
 
-(If you ran into IPTdev_"your case" error, just use this command:
+(If you ran into IPTdev_"your case" error, just use this command):
 ```bash
 python manage.py makemigrations IPTdev_"your case"
 ```
-)
+
 9. Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/) in your favourite browser!
 If everything went right, you will see a development instance of `ipt_connect` filled  with test data!
 
