@@ -56,7 +56,7 @@ Depending on your distribution, it should be smth like that (for `deb`-based):
 sudo apt-get install python2 pip2
 ```
 
-Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2, so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
+Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2 so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
 
 (here, and below, and forever - Google is your friend!)
 
@@ -66,12 +66,7 @@ Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2, 
 sudo apt-get install git
 ```
 
-3. Install gettext to avoid CommandErrors:
-```bash
-sudo apt-get install gettext
-```
-
-4. Install useful Git-related tools:
+3. Install useful Git-related tools:
 
 *You may skip this step, but is is recommended that you install them.*
 *In case of skipping, you will able to do it later whenever you want.*
@@ -131,10 +126,12 @@ The propagation of changes in `ipt_connect` project works in the following way:
 * To suggest the changes from your local repo to be accepted into the main (upstream) repo,
   create a pull request
 	  
-7. Install the reqired libraries:
+7. Install the reqired libraries and gettext to avoid CommandErrors:
 ```bash
 pip install -r requirements.txt
+sudo apt-get install gettext
 ```
+
 *Note: sometimes this should be also done after updating the code from the upstream.*
 
 (You may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265),so use such command):
