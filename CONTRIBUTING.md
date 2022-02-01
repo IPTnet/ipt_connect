@@ -141,9 +141,9 @@ cd ipt_connect # Again: it is a subdirectory!
 python manage.py runserver
 ```
 
-(You may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265), so use such command):
+(While launching you may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265), so use such command):
 ```bash
-#This is juat an example
+#This is just an example
 python manage.py makemigrations IPTdev_errors
 ```
 
