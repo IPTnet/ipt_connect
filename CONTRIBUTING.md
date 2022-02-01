@@ -56,7 +56,7 @@ Depending on your distribution, it should be smth like that (for `deb`-based):
 sudo apt-get install python2 pip2
 ```
 
-Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2 so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
+Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2, so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
 
 (here, and below, and forever - Google is your friend!)
 
