@@ -56,12 +56,7 @@ Depending on your distribution, it should be smth like that (for `deb`-based):
 sudo apt-get install python2 pip2
 ```
 
-Consider that Ubuntu 20.04 or higher versions doesn't include pip for Python2 so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem
-
- Also install gettext:
-```bash
-sudo apt-get install gettext
-```
+Consider that Ubuntu 20.04 or higher versions doesn't include pip for Python2 so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
 
 (here, and below, and forever - Google is your friend!)
 
@@ -71,7 +66,12 @@ sudo apt-get install gettext
 sudo apt-get install git
 ```
 
-3. Install useful Git-related tools:
+3. Install gettext to avoid CommandErrors:
+```bash
+sudo apt-get install gettext
+```
+
+4. Install useful Git-related tools:
 
 *You may skip this step, but is is recommended that you install them.*
 *In case of skipping, you will able to do it later whenever you want.*
@@ -137,6 +137,12 @@ pip install -r requirements.txt
 ```
 *Note: sometimes this should be also done after updating the code from the upstream.*
 
+(You may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265),so use such command):
+```bash
+#This is juat an example
+python manage.py makemigrations IPTdev_errors
+```
+
 8. Eventually, run the server!
 ```bash
 cd ipt_connect # Again: it is a subdirectory!
@@ -144,11 +150,6 @@ python manage.py runserver
 ```
 Some messages may be shown.
 If there are no errors, then just go to the next step.
-
-(If you ran into IPTdev_"your case" error, just use this command):
-```bash
-python manage.py makemigrations IPTdev_"your case"
-```
 
 9. Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/) in your favourite browser!
 If everything went right, you will see a development instance of `ipt_connect` filled  with test data!
