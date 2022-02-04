@@ -55,7 +55,11 @@ Depending on your distribution, it should be smth like that (for `deb`-based):
 ```bash
 sudo apt-get install python2 pip2
 ```
+
+Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2 so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
+
 (here, and below, and forever - Google is your friend!)
+
 
 2. Install Git VCS:
 ```bash
@@ -122,17 +126,27 @@ The propagation of changes in `ipt_connect` project works in the following way:
 * To suggest the changes from your local repo to be accepted into the main (upstream) repo,
   create a pull request
 	  
-7. Install the reqired libraries:
+7. Install the reqired libraries and gettext to avoid CommandErrors:
 ```bash
 pip install -r requirements.txt
+sudo apt-get install gettext
 ```
+
 *Note: sometimes this should be also done after updating the code from the upstream.*
 
 8. Eventually, run the server!
+
 ```bash
 cd ipt_connect # Again: it is a subdirectory!
 python manage.py runserver
 ```
+
+(While launching you may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265), so use such command):
+```bash
+#This is just an example
+python manage.py makemigrations IPTdev_errors
+```
+
 Some messages may be shown.
 If there are no errors, then just go to the next step.
 
