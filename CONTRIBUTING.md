@@ -56,7 +56,7 @@ Depending on your distribution, it should be smth like that (for `deb`-based):
 sudo apt-get install python2 pip2
 ```
 
-Consider that `Ubuntu 20.04` or higher versions don't include pip for python 2 so visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem.
+*`Ubuntu 20.04` or higher doesn't include `pip` for Python 2.7. Visit [this source](https://linuxize.com/post/how-to-install-pip-on-ubuntu-20.04/) to solve this problem*
 
 (here, and below, and forever - Google is your friend!)
 
@@ -110,7 +110,7 @@ git remote add upstream https://github.com/IPTnet/ipt_connect.git
 ```
 
 The propagation of changes in `ipt_connect` project works in the following way:
-	
+
 * To get changes from the upstream repo (that are changes done by others) to your local computer, use
   ```bash
   git fetch upstream
@@ -125,11 +125,11 @@ The propagation of changes in `ipt_connect` project works in the following way:
 
 * To suggest the changes from your local repo to be accepted into the main (upstream) repo,
   create a pull request
-	  
-7. Install the reqired libraries and gettext to avoid CommandErrors:
+
+7. Install the reqired libraries and `gettext` to avoid `CommandError`s:
 ```bash
 pip install -r requirements.txt
-sudo apt-get install gettext
+sudo apt-get install gettext # Or equivalent for your distro
 ```
 
 *Note: sometimes this should be also done after updating the code from the upstream.*
@@ -141,14 +141,15 @@ cd ipt_connect # Again: it is a subdirectory!
 python manage.py runserver
 ```
 
-(While launching you may run into ImportError such as IPTdev_errors or [alike ones](https://github.com/IPTnet/ipt_connect/issues/265), so use such command):
+Some messages may be shown.
+If there are no errors, then just go to the next step.
+
+
+*Нou may get `ImportError`s about `IPTdev_errors` or smth [like this](https://github.com/IPTnet/ipt_connect/issues/265), so use such command:*
 ```bash
 #This is just an example
 python manage.py makemigrations IPTdev_errors
 ```
-
-Some messages may be shown.
-If there are no errors, then just go to the next step.
 
 9. Open [127.0.0.1:8000/IPTdev/](http://127.0.0.1:8000/IPTdev/) in your favourite browser!
 If everything went right, you will see a development instance of `ipt_connect` filled  with test data!
