@@ -3,6 +3,7 @@
 *migrations*
 .venv
 .vscode
+.idea
 *.*~
 *.mo
 *.bak
