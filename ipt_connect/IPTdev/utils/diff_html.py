@@ -64,7 +64,7 @@ for i in change_in_txt:
 
 if not os.path.exists(dir_path_diff):
         os.mkdir(dir_path_diff)
-print 'Diff in {}'.format(dir_path_diff_commit)
+print('Diff in {}'.format(dir_path_diff_commit))
 
 with open(dir_path_diff_commit + '.txt', 'w') as page:
     page.writelines(not_use_url)

@@ -311,18 +311,18 @@ class Team(models.Model):
 		prescoeffs = []
 		npenalities = 0
 		if verbose:
-			print "="*20, "Tactical Rejection Penalites for Team %s" % self.name, "="*20
+			print(("="*20, "Tactical Rejection Penalites for Team %s" % self.name, "="*20))
 		for ind, pf in enumerate(selective_fights_and_semifinals):
 			pfrejections = [rejection for rejection in rejections if rejection.round.pf_number == pf]
 			if verbose:
-				print "%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)
+				print(("%i tactical rejections by Team %s in Physics Fight %i" % (len(pfrejections), self, pf)))
 			if len(pfrejections) > params.npfreject_max:
 				npenalities += len(pfrejections) - params.npfreject_max
 			if verbose:
 				if npenalities > 0:
-					print "Penality of %.1f points on the Reporter Coefficient" %  float(params.reject_malus*npenalities)
+					print(("Penality of %.1f points on the Reporter Coefficient" %  float(params.reject_malus*npenalities)))
 				else:
-					print "No penality"
+					print("No penality")
 			prescoeffs.append(beforetactical[ind] - params.reject_malus * npenalities)
 
 		# add the coeff for the final, 3.0 by default
@@ -409,7 +409,7 @@ class Team(models.Model):
 		"""
 
 		if verbose:
-			print "="*20, "Problems of Team %s" % self.name, "="*20
+			print(("="*20, "Problems of Team %s" % self.name, "="*20))
 		noproblems=[]
 
 		if currentround !=None:
@@ -426,7 +426,7 @@ class Team(models.Model):
 		for eternal_rejection in eternal_rejections:
 			if eternal_rejection.round.pf_number < pf_number:
 				if verbose:
-					print "Team %s rejected eternally problem %s" %(self.name, eternal_rejection.problem.name)
+					print(("Team %s rejected eternally problem %s" %(self.name, eternal_rejection.problem.name)))
 				reject.append(eternal_rejection.problem)
 
 		noproblems.append(reject)
@@ -437,7 +437,7 @@ class Team(models.Model):
 		presented = []
 		for round in rounds:
 			if verbose:
-				print "In %s, I presented problem %s" % (round, round.problem_presented)
+				print(("In %s, I presented problem %s" % (round, round.problem_presented)))
 			presented.append(round.problem_presented)
 		noproblems.append(presented)
 
@@ -447,7 +447,7 @@ class Team(models.Model):
 		opposed = []
 		for round in rounds:
 			if verbose:
-				print "In %s, I opposed problem %s" % (round, round.problem_presented)
+				print(("In %s, I opposed problem %s" % (round, round.problem_presented)))
 			opposed.append(round.problem_presented)
 		noproblems.append(opposed)
 
@@ -549,7 +549,7 @@ class Round(models.Model):
 
 	def save(self, *args, **kwargs):
 		jurygrades = JuryGrade.objects.filter(round=self)
-		print "Update scores for", self
+		print(("Update scores for", self))
 
 		reporter_grades = list(sorted([jurygrade.grade_reporter for jurygrade in jurygrades]))
 		opponent_grades = list(sorted([jurygrade.grade_opponent for jurygrade in jurygrades]))
@@ -689,12 +689,12 @@ class JuryGrade(models.Model):
 		return "Grade of %s" % self.jury.name
 
 	def info(self):
-		print "=" * 36
-		print u"Grade of %s" % self.jury.name
-		print self.round
-		print "Reporter %s from %s : %i" % (self.round.name_reporter, self.round.reporter, self.grade_reporter)
-		print "Opponent %s from %s : %i" % (self.round.name_opponent, self.round.opponent, self.grade_opponent)
-		print "Reviewer %s from %s : %i" % (self.round.name_reviewer, self.round.reviewer, self.grade_reviewer)
+		print(("=" * 36))
+		print(("Grade of %s" % self.jury.name))
+		print((self.round))
+		print(("Reporter %s from %s : %i" % (self.round.name_reporter, self.round.reporter, self.grade_reporter)))
+		print(("Opponent %s from %s : %i" % (self.round.name_opponent, self.round.opponent, self.grade_opponent)))
+		print(("Reviewer %s from %s : %i" % (self.round.name_reviewer, self.round.reviewer, self.grade_reviewer)))
 
 
 class TacticalRejection(models.Model):
@@ -731,7 +731,7 @@ def update_points_condition(sender, instance, **kwargs):
         update_points(sender, instance)
 
 def update_points(sender, instance, **kwargs):
-	print "Updating Round %s" % instance
+	print(("Updating Round %s" % instance))
 	if (
 		(instance.reporter_team is None) or
 		(instance.opponent_team is None) or
@@ -850,7 +850,7 @@ def remove_phantom_grades():
 		if grade not in rgrades:
 			i += 1
 			grade.delete()
-	print "I removed %i phantom grades..." % i
+	print("I removed %i phantom grades..." % i)
 
 
 update_signal = Signal()
@@ -862,9 +862,9 @@ def update_all(sender, **kwargs):
 	remove_phantom_grades()
 
 	if not params.manual_bonus_points :
-		print "Updating bonus points..."
+		print("Updating bonus points...")
 		update_bonus_points()
-		print "Done!"
+		print("Done!")
 
 	# The query must be refreshed: update_bonus_points() changed rounds and saved them
 	allrounds = Round.objects.all()
@@ -881,7 +881,7 @@ def update_all(sender, **kwargs):
 			round.save()
 			#sys.exit()
 
-		print "="*15
+		print(("="*15))
 		for team in allteams:
 			#print "----"
 			#print team.name, team.total_points
