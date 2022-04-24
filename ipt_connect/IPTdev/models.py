@@ -206,7 +206,9 @@ class Problem(models.Model):
 		# TODO: replace "value" with "score" for better readability
 		# TODO: the algorithm looks EXTRA WEIRD. Probably all this code should be refactored
 		# use this to compute the mean grades
-                meangrades = {"report": mean([reporter["value"] for reporter in reporters]), "opposition": mean([opponent["value"] for opponent in opponents]), "review": mean([reviewer["value"] for reviewer in reviewers])}
+		meangrades = {"report": mean([reporter["value"] for reporter in reporters]),
+		              "opposition": mean([opponent["value"] for opponent in opponents]),
+		              "review": mean([reviewer["value"] for reviewer in reviewers])}
 
 
 		if meangradesonly==False:
@@ -461,7 +463,7 @@ class Room(models.Model):
 
 	def __unicode__(self):
 		return self.name
-		
+
 	@property
 	def get_link(self):
 		return self.link
