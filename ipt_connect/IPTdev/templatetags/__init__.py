@@ -12,8 +12,4 @@ __author__ = "Vivien Bonvin and Maxime Harazi"
 __copyright__ = "2016"
 __version__ = "0.2dev"
 
-
 __all__ = []
-
-
-

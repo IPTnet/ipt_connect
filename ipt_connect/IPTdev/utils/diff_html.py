@@ -1,9 +1,8 @@
 # NOT WORKING
 
-import git
+import difflib
 import os
 import sys
-import difflib
 
 hash_commit_1 = sys.argv[1]
 hash_commit_2 = sys.argv[2]
@@ -14,8 +13,8 @@ dir_path_diff_commit = dir_path_diff + '/diff_' + hash_commit_1 + '_' + hash_com
 dir_path_dump_commit_1 = dir_path_dump + '/' + hash_commit_1
 dir_path_dump_commit_2 = dir_path_dump + '/' + hash_commit_2
 
-list_files_1 = sorted(os.listdir(dir_path_dump_commit_1), key = lambda x: int(os.path.splitext(x.split('_')[1])[0]))
-list_files_2 = sorted(os.listdir(dir_path_dump_commit_2), key = lambda x: int(os.path.splitext(x.split('_')[1])[0]))
+list_files_1 = sorted(os.listdir(dir_path_dump_commit_1), key=lambda x: int(os.path.splitext(x.split('_')[1])[0]))
+list_files_2 = sorted(os.listdir(dir_path_dump_commit_2), key=lambda x: int(os.path.splitext(x.split('_')[1])[0]))
 
 change_in_txt = []
 
@@ -63,9 +62,9 @@ for i in change_in_txt:
     diff_txt.append('\n'.join(i))
 
 if not os.path.exists(dir_path_diff):
-        os.mkdir(dir_path_diff)
+    os.mkdir(dir_path_diff)
 print 'Diff in {}'.format(dir_path_diff_commit)
 
 with open(dir_path_diff_commit + '.txt', 'w') as page:
     page.writelines(not_use_url)
-    page.writelines(diff_txt)        
+    page.writelines(diff_txt)

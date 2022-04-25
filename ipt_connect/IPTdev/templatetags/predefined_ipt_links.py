@@ -1,4 +1,5 @@
 from django import template
+
 from ..models import *
 
 register = template.Library()
@@ -18,20 +19,25 @@ The refactoring is not finished yet :(
 """
 
 
-@register.inclusion_tag(params.instance_name + '/includes/supplementary_material_link.html', takes_context=True)
+@register.inclusion_tag(
+    params.instance_name + "/includes/supplementary_material_link.html",
+    takes_context=True,
+)
 def supplementary_material_link(context, supplementary_material):
-	return {
-		'name' : supplementary_material.name,
-		'link' : supplementary_material.link,
-		'params' : context['params'],
-	}
+    return {
+        "name": supplementary_material.name,
+        "link": supplementary_material.link,
+        "params": context["params"],
+    }
 
 
-@register.inclusion_tag(params.instance_name + '/includes/team_link.html', takes_context=True)
+@register.inclusion_tag(
+    params.instance_name + "/includes/team_link.html", takes_context=True
+)
 def team_link(context, team):
-	if isinstance(team, Team):
-		team = team.name
-	return {
-		'team_name' : team,
-		'params' : context['params'],
-	}
+    if isinstance(team, Team):
+        team = team.name
+    return {
+        "team_name": team,
+        "params": context["params"],
+    }

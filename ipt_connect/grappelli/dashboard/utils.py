@@ -6,6 +6,7 @@ Admin ui common utilities.
 
 # PYTHON IMPORTS
 from __future__ import unicode_literals
+
 from fnmatch import fnmatch
 from importlib import import_module
 
@@ -17,18 +18,18 @@ from django.core.urlresolvers import reverse
 
 def _get_dashboard_cls(dashboard_cls, context):
     if isinstance(dashboard_cls, dict):
-        curr_url = context.get('request').path
+        curr_url = context.get("request").path
         for key in dashboard_cls:
-            admin_site_mod, admin_site_inst = key.rsplit('.', 1)
+            admin_site_mod, admin_site_inst = key.rsplit(".", 1)
             admin_site_mod = import_module(admin_site_mod)
             admin_site = getattr(admin_site_mod, admin_site_inst)
-            admin_url = reverse('%s:index' % admin_site.name)
+            admin_url = reverse("%s:index" % admin_site.name)
             if curr_url.startswith(admin_url):
-                mod, inst = dashboard_cls[key].rsplit('.', 1)
+                mod, inst = dashboard_cls[key].rsplit(".", 1)
                 mod = import_module(mod)
                 return getattr(mod, inst)
     else:
-        mod, inst = dashboard_cls.rsplit('.', 1)
+        mod, inst = dashboard_cls.rsplit(".", 1)
         mod = import_module(mod)
         return getattr(mod, inst)
     raise ValueError('Dashboard matching "%s" not found' % dashboard_cls)
@@ -39,29 +40,32 @@ def get_index_dashboard(context):
     Returns the admin dashboard defined in settings (or the default one).
     """
 
-    return _get_dashboard_cls(getattr(
-        settings,
-        'GRAPPELLI_INDEX_DASHBOARD',
-        'grappelli.dashboard.dashboards.DefaultIndexDashboard'
-    ), context)()
+    return _get_dashboard_cls(
+        getattr(
+            settings,
+            "GRAPPELLI_INDEX_DASHBOARD",
+            "grappelli.dashboard.dashboards.DefaultIndexDashboard",
+        ),
+        context,
+    )()
 
 
 def get_admin_site(context=None, request=None):
     dashboard_cls = getattr(
         settings,
-        'GRAPPELLI_INDEX_DASHBOARD',
-        'grappelli.dashboard.dashboards.DefaultIndexDashboard'
+        "GRAPPELLI_INDEX_DASHBOARD",
+        "grappelli.dashboard.dashboards.DefaultIndexDashboard",
     )
 
     if isinstance(dashboard_cls, dict):
         if context:
-            request = context.get('request')
+            request = context.get("request")
         curr_url = request.path
         for key in dashboard_cls:
-            mod, inst = key.rsplit('.', 1)
+            mod, inst = key.rsplit(".", 1)
             mod = import_module(mod)
             admin_site = getattr(mod, inst)
-            admin_url = reverse('%s:index' % admin_site.name)
+            admin_url = reverse("%s:index" % admin_site.name)
             if curr_url.startswith(admin_url):
                 return admin_site
     else:
@@ -74,7 +78,7 @@ def get_admin_site_name(context):
 
 
 def get_avail_models(request):
-    """ Returns (model, perm,) for all models user can possibly see """
+    """Returns (model, perm,) for all models user can possibly see"""
     items = []
     admin_site = get_admin_site(request=request)
 
@@ -82,7 +86,12 @@ def get_avail_models(request):
         perms = model_admin.get_model_perms(request)
         if True not in perms.values():
             continue
-        items.append((model, perms,))
+        items.append(
+            (
+                model,
+                perms,
+            )
+        )
     return items
 
 
@@ -93,7 +102,7 @@ def filter_models(request, models, exclude):
     """
     items = get_avail_models(request)
     included = []
-    full_name = lambda model: '%s.%s' % (model.__module__, model.__name__)
+    full_name = lambda model: "%s.%s" % (model.__module__, model.__name__)
 
     # I beleive that that implemented
     # O(len(patterns)*len(matched_patterns)*len(all_models))
@@ -110,7 +119,9 @@ def filter_models(request, models, exclude):
                 model, perms = item
                 if fnmatch(full_name(model), pattern) and item not in included:
                     pattern_items.append(item)
-            pattern_items.sort(key=lambda x: str(x[0]._meta.verbose_name_plural.encode('utf-8')))
+            pattern_items.sort(
+                key=lambda x: str(x[0]._meta.verbose_name_plural.encode("utf-8"))
+            )
             included.extend(pattern_items)
 
     result = included[:]
@@ -143,23 +154,24 @@ class AppListElementMixin(object):
         Returns the admin change url.
         """
         app_label = model._meta.app_label
-        return reverse('%s:app_list' % get_admin_site_name(context),
-                       args=(app_label,))
+        return reverse("%s:app_list" % get_admin_site_name(context), args=(app_label,))
 
     def _get_admin_change_url(self, model, context):
         """
         Returns the admin change url.
         """
         app_label = model._meta.app_label
-        return reverse('%s:%s_%s_changelist' % (get_admin_site_name(context),
-                                                app_label,
-                                                model.__name__.lower()))
+        return reverse(
+            "%s:%s_%s_changelist"
+            % (get_admin_site_name(context), app_label, model.__name__.lower())
+        )
 
     def _get_admin_add_url(self, model, context):
         """
         Returns the admin add url.
         """
         app_label = model._meta.app_label
-        return reverse('%s:%s_%s_add' % (get_admin_site_name(context),
-                                         app_label,
-                                         model.__name__.lower()))
+        return reverse(
+            "%s:%s_%s_add"
+            % (get_admin_site_name(context), app_label, model.__name__.lower())
+        )

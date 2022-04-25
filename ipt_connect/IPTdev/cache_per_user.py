@@ -11,6 +11,7 @@ Author: eu@rafaelsdm.com
 
 from django.core.cache import cache
 
+
 def cache_per_user(ttl=None, prefix=None):
     '''Decorador que faz cache da view pra cada usuario
     * ttl - Tempo de vida do cache, não enviar esse parametro significa que o
@@ -25,6 +26,7 @@ def cache_per_user(ttl=None, prefix=None):
         'view_cache_%s_%s'%(function.__name__, user.id)
         'view_cache_%s_anonymous'%(function.__name__)
     '''
+
     def decorator(function):
         def apply_cache(request, *args, **kwargs):
 
@@ -35,9 +37,9 @@ def cache_per_user(ttl=None, prefix=None):
 
             # Gera a chave do cache
             if prefix:
-                CACHE_KEY = '%s_%s'%(prefix, 'anonymous')
+                CACHE_KEY = '%s_%s' % (prefix, 'anonymous')
             else:
-                CACHE_KEY = 'view_cache_%s_%s_%s'%(function.__name__, request.get_full_path(), 'anonymous')
+                CACHE_KEY = 'view_cache_%s_%s_%s' % (function.__name__, request.get_full_path(), 'anonymous')
 
             if can_cache:
                 response = cache.get(CACHE_KEY, None)
@@ -45,10 +47,12 @@ def cache_per_user(ttl=None, prefix=None):
                 response = None
 
             if not response:
-                print 'Not in cache: %s'%(CACHE_KEY)
+                print 'Not in cache: %s' % (CACHE_KEY)
                 response = function(request, *args, **kwargs)
                 if can_cache:
                     cache.set(CACHE_KEY, response, ttl)
             return response
+
         return apply_cache
+
     return decorator

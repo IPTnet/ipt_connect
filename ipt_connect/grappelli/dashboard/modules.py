@@ -4,10 +4,11 @@
 Module where grappelli dashboard modules classes are defined.
 """
 
+from django.apps import apps as django_apps
+
 # DJANGO IMPORTS
 from django.utils.text import capfirst
 from django.utils.translation import ugettext_lazy as _
-from django.apps import apps as django_apps
 
 # GRAPPELLI IMPORTS
 from grappelli.dashboard.utils import AppListElementMixin
@@ -52,11 +53,11 @@ class DashboardModule(object):
         Default value: 'grappelli/dashboard/module.html'.
     """
 
-    template = 'grappelli/dashboard/module.html'
+    template = "grappelli/dashboard/module.html"
     collapsible = True
     column = None
     show_title = True
-    title = ''
+    title = ""
     title_url = None
     css_classes = None
     pre_content = None
@@ -112,20 +113,27 @@ class DashboardModule(object):
         Return True if the module has no content and False otherwise.
         """
 
-        return self.pre_content is None and self.post_content is None and len(self.children) == 0
+        return (
+            self.pre_content is None
+            and self.post_content is None
+            and len(self.children) == 0
+        )
 
     def render_css_classes(self):
         """
         Return a string containing the css classes for the module.
         """
 
-        ret = ['grp-dashboard-module']
+        ret = ["grp-dashboard-module"]
         if self.collapsible:
-            ret.append('grp-collapse')
-            if "grp-open" not in self.css_classes and "grp-closed" not in self.css_classes:
-                ret.append('grp-open')
+            ret.append("grp-collapse")
+            if (
+                "grp-open" not in self.css_classes
+                and "grp-closed" not in self.css_classes
+            ):
+                ret.append("grp-open")
         ret += self.css_classes
-        return ' '.join(ret)
+        return " ".join(ret)
 
 
 class Group(DashboardModule):
@@ -155,7 +163,7 @@ class Group(DashboardModule):
 
     """
 
-    template = 'grappelli/dashboard/modules/group.html'
+    template = "grappelli/dashboard/modules/group.html"
 
     def init_with_context(self, context):
         if self._initialized:
@@ -183,20 +191,26 @@ class LinkList(DashboardModule):
     A module that displays a list of links.
     """
 
-    title = _('Links')
-    template = 'grappelli/dashboard/modules/link_list.html'
+    title = _("Links")
+    template = "grappelli/dashboard/modules/link_list.html"
 
     def init_with_context(self, context):
         if self._initialized:
             return
         new_children = []
         for link in self.children:
-            if isinstance(link, (tuple, list,)):
-                link_dict = {'title': link[0], 'url': link[1]}
+            if isinstance(
+                link,
+                (
+                    tuple,
+                    list,
+                ),
+            ):
+                link_dict = {"title": link[0], "url": link[1]}
                 if len(link) >= 3:
-                    link_dict['external'] = link[2]
+                    link_dict["external"] = link[2]
                 if len(link) >= 4:
-                    link_dict['description'] = link[3]
+                    link_dict["description"] = link[3]
                 new_children.append(link_dict)
             else:
                 new_children.append(link)
@@ -209,43 +223,43 @@ class AppList(DashboardModule, AppListElementMixin):
     Module that lists installed apps and their models.
     """
 
-    title = _('Applications')
-    template = 'grappelli/dashboard/modules/app_list.html'
+    title = _("Applications")
+    template = "grappelli/dashboard/modules/app_list.html"
     models = None
     exclude = None
 
     def __init__(self, title=None, **kwargs):
-        self.models = list(kwargs.pop('models', []))
-        self.exclude = list(kwargs.pop('exclude', []))
+        self.models = list(kwargs.pop("models", []))
+        self.exclude = list(kwargs.pop("exclude", []))
         super(AppList, self).__init__(title, **kwargs)
 
     def init_with_context(self, context):
         if self._initialized:
             return
-        items = self._visible_models(context['request'])
+        items = self._visible_models(context["request"])
         apps = {}
         for model, perms in items:
             app_label = model._meta.app_label
             if app_label not in apps:
                 apps[app_label] = {
-                    'name': django_apps.get_app_config(app_label).verbose_name,
-                    'title': capfirst(app_label.title()),
-                    'url': self._get_admin_app_list_url(model, context),
-                    'models': []
+                    "name": django_apps.get_app_config(app_label).verbose_name,
+                    "title": capfirst(app_label.title()),
+                    "url": self._get_admin_app_list_url(model, context),
+                    "models": [],
                 }
             model_dict = {}
-            model_dict['title'] = capfirst(model._meta.verbose_name_plural)
-            if perms['change']:
-                model_dict['admin_url'] = self._get_admin_change_url(model, context)
-            if perms['add']:
-                model_dict['add_url'] = self._get_admin_add_url(model, context)
-            apps[app_label]['models'].append(model_dict)
+            model_dict["title"] = capfirst(model._meta.verbose_name_plural)
+            if perms["change"]:
+                model_dict["admin_url"] = self._get_admin_change_url(model, context)
+            if perms["add"]:
+                model_dict["add_url"] = self._get_admin_add_url(model, context)
+            apps[app_label]["models"].append(model_dict)
 
         apps_sorted = list(apps.keys())
         apps_sorted.sort()
         for app in apps_sorted:
             # sort model list alphabetically
-            apps[app]['models'].sort(key=lambda i: i['title'])
+            apps[app]["models"].sort(key=lambda i: i["title"])
             self.children.append(apps[app])
         self._initialized = True
 
@@ -255,7 +269,7 @@ class ModelList(DashboardModule, AppListElementMixin):
     Module that lists a set of models.
     """
 
-    template = 'grappelli/dashboard/modules/model_list.html'
+    template = "grappelli/dashboard/modules/model_list.html"
     models = None
     exclude = None
 
@@ -267,16 +281,16 @@ class ModelList(DashboardModule, AppListElementMixin):
     def init_with_context(self, context):
         if self._initialized:
             return
-        items = self._visible_models(context['request'])
+        items = self._visible_models(context["request"])
         if not items:
             return
         for model, perms in items:
             model_dict = {}
-            model_dict['title'] = capfirst(model._meta.verbose_name_plural)
-            if perms['change']:
-                model_dict['admin_url'] = self._get_admin_change_url(model, context)
-            if perms['add']:
-                model_dict['add_url'] = self._get_admin_add_url(model, context)
+            model_dict["title"] = capfirst(model._meta.verbose_name_plural)
+            if perms["change"]:
+                model_dict["admin_url"] = self._get_admin_change_url(model, context)
+            if perms["add"]:
+                model_dict["add_url"] = self._get_admin_add_url(model, context)
             self.children.append(model_dict)
         self._initialized = True
 
@@ -286,17 +300,18 @@ class RecentActions(DashboardModule):
     Module that lists the recent actions for the current user.
     """
 
-    title = _('Recent Actions')
-    template = 'grappelli/dashboard/modules/recent_actions.html'
+    title = _("Recent Actions")
+    template = "grappelli/dashboard/modules/recent_actions.html"
     limit = 10
     include_list = None
     exclude_list = None
 
-    def __init__(self, title=None, limit=10, include_list=None,
-                 exclude_list=None, **kwargs):
+    def __init__(
+        self, title=None, limit=10, include_list=None, exclude_list=None, **kwargs
+    ):
         self.include_list = include_list or []
         self.exclude_list = exclude_list or []
-        kwargs.update({'limit': limit})
+        kwargs.update({"limit": limit})
         super(RecentActions, self).__init__(title, **kwargs)
 
     def init_with_context(self, context):
@@ -305,22 +320,22 @@ class RecentActions(DashboardModule):
         from django.db.models import Q
         from django.contrib.admin.models import LogEntry
 
-        request = context['request']
+        request = context["request"]
 
         def get_qset(list):
             from django.contrib.contenttypes.models import ContentType
+
             qset = None
             for contenttype in list:
                 if isinstance(contenttype, ContentType):
                     current_qset = Q(content_type__id=contenttype.id)
                 else:
                     try:
-                        app_label, model = contenttype.split('.')
+                        app_label, model = contenttype.split(".")
                     except:
                         raise ValueError('Invalid contenttype: "%s"' % contenttype)
                     current_qset = Q(
-                        content_type__app_label=app_label,
-                        content_type__model=model
+                        content_type__app_label=app_label, content_type__model=model
                     )
                 if qset is None:
                     qset = current_qset
@@ -338,7 +353,7 @@ class RecentActions(DashboardModule):
         if self.exclude_list:
             qs = qs.exclude(get_qset(self.exclude_list))
 
-        self.children = qs.select_related('content_type', 'user')[:self.limit]
+        self.children = qs.select_related("content_type", "user")[: self.limit]
         self._initialized = True
 
 
@@ -347,35 +362,38 @@ class Feed(DashboardModule):
     Class that represents a feed dashboard module.
     """
 
-    title = _('RSS Feed')
-    template = 'grappelli/dashboard/modules/feed.html'
+    title = _("RSS Feed")
+    template = "grappelli/dashboard/modules/feed.html"
     feed_url = None
     limit = None
 
     def __init__(self, title=None, feed_url=None, limit=None, **kwargs):
-        kwargs.update({'feed_url': feed_url, 'limit': limit})
+        kwargs.update({"feed_url": feed_url, "limit": limit})
         super(Feed, self).__init__(title, **kwargs)
 
     def init_with_context(self, context):
         if self._initialized:
             return
         import datetime
+
         if self.feed_url is None:
-            raise ValueError('You must provide a valid feed URL')
+            raise ValueError("You must provide a valid feed URL")
         try:
             import feedparser
         except ImportError:
-            self.children.append({
-                'title': ('You must install the FeedParser python module'),
-                'warning': True,
-            })
+            self.children.append(
+                {
+                    "title": ("You must install the FeedParser python module"),
+                    "warning": True,
+                }
+            )
             return
 
         feed = feedparser.parse(self.feed_url)
         if self.limit is not None:
-            entries = feed['entries'][:self.limit]
+            entries = feed["entries"][: self.limit]
         else:
-            entries = feed['entries']
+            entries = feed["entries"]
         for entry in entries:
             entry.url = entry.link
             try:

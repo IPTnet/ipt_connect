@@ -5,16 +5,21 @@ class Registry(object):
     """
     Registry for application dashboards.
     """
+
     registry = {}
 
     def register(cls, klass, app_name):
         from grappelli.dashboard.dashboards import Dashboard
+
         if not issubclass(klass, Dashboard):
-            raise ValueError('%s is not an instance of Dashboard' % klass)
+            raise ValueError("%s is not an instance of Dashboard" % klass)
         if app_name in cls.registry:
-            raise ValueError('A dashboard has already been registered for '
-                             'the application "%s"', app_name)
+            raise ValueError(
+                "A dashboard has already been registered for " 'the application "%s"',
+                app_name,
+            )
         cls.registry[app_name] = klass
+
     register = classmethod(register)
 
 
@@ -35,8 +40,8 @@ def autodiscover(blacklist=[]):
     from importlib import import_module
     from django.conf import settings
 
-    blacklist.append('grappelli')
-    blacklist.append('grappelli.dashboard')
+    blacklist.append("grappelli")
+    blacklist.append("grappelli.dashboard")
 
     for app in settings.INSTALLED_APPS:
         # skip blacklisted apps
@@ -51,9 +56,9 @@ def autodiscover(blacklist=[]):
 
         # try to find a app.dashboard module
         try:
-            imp.find_module('dashboard', app_path)
+            imp.find_module("dashboard", app_path)
         except ImportError:
             continue
 
         # looks like we found it so import it !
-        import_module('%s.dashboard' % app)
+        import_module("%s.dashboard" % app)

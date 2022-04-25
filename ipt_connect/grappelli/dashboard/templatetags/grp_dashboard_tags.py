@@ -16,10 +16,10 @@ from django.core.urlresolvers import reverse
 from grappelli.dashboard.utils import get_admin_site_name, get_index_dashboard
 
 register = template.Library()
-tag_func = register.inclusion_tag('grappelli/dashboard/dummy.html', takes_context=True)
+tag_func = register.inclusion_tag("grappelli/dashboard/dummy.html", takes_context=True)
 
 
-def grp_render_dashboard(context, location='index', dashboard=None):
+def grp_render_dashboard(context, location="index", dashboard=None):
     """
     Template tag that renders the dashboard, it takes two optional arguments:
 
@@ -39,12 +39,16 @@ def grp_render_dashboard(context, location='index', dashboard=None):
 
     dashboard.init_with_context(context)
 
-    context.update({
-        'template': dashboard.template,
-        'dashboard': dashboard,
-        'admin_url': reverse('%s:index' % get_admin_site_name(context)),
-    })
+    context.update(
+        {
+            "template": dashboard.template,
+            "dashboard": dashboard,
+            "admin_url": reverse("%s:index" % get_admin_site_name(context)),
+        }
+    )
     return context
+
+
 grp_render_dashboard = tag_func(grp_render_dashboard)
 
 
@@ -56,12 +60,16 @@ def grp_render_dashboard_module(context, module, index=None, subindex=None):
     """
 
     module.init_with_context(context)
-    context.update({
-        'template': module.template,
-        'module': module,
-        'index': index,
-        'subindex': subindex,
-        'admin_url': reverse('%s:index' % get_admin_site_name(context)),
-    })
+    context.update(
+        {
+            "template": module.template,
+            "module": module,
+            "index": index,
+            "subindex": subindex,
+            "admin_url": reverse("%s:index" % get_admin_site_name(context)),
+        }
+    )
     return context
+
+
 grp_render_dashboard_module = tag_func(grp_render_dashboard_module)

@@ -1,9 +1,10 @@
 # coding: utf-8
 
+from django.conf import settings
+from django.contrib.auth.models import User
+
 # DJANGO IMPORTS
 from django.db import models
-from django.contrib.auth.models import User
-from django.conf import settings
 from django.utils.encoding import python_2_unicode_compatible
 
 
@@ -21,7 +22,10 @@ class Category(models.Model):
 
     @staticmethod
     def autocomplete_search_fields():
-        return ("id__iexact", "name__icontains",)
+        return (
+            "id__iexact",
+            "name__icontains",
+        )
 
     def related_label(self):
         return "%s (%s)" % (self.name, self.id)
@@ -30,10 +34,14 @@ class Category(models.Model):
 @python_2_unicode_compatible
 class Entry(models.Model):
     title = models.CharField("Title", max_length=200)
-    category = models.ForeignKey(Category, related_name="entries", blank=True, null=True)
+    category = models.ForeignKey(
+        Category, related_name="entries", blank=True, null=True
+    )
     date = models.DateTimeField("Date")
     body = models.TextField("Body", blank=True)
-    user = models.ForeignKey(getattr(settings, 'AUTH_USER_MODEL', User), related_name="entries")
+    user = models.ForeignKey(
+        getattr(settings, "AUTH_USER_MODEL", User), related_name="entries"
+    )
     createdate = models.DateField("Date (Create)", auto_now_add=True)
     updatedate = models.DateField("Date (Update)", auto_now=True)
 
@@ -48,4 +56,7 @@ class Entry(models.Model):
 
     @staticmethod
     def autocomplete_search_fields():
-        return ("id__iexact", "title__icontains",)
+        return (
+            "id__iexact",
+            "title__icontains",
+        )

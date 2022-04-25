@@ -10,12 +10,20 @@ site = admin.AdminSite(name="Admin Site")
 
 
 class CategoryOptions(admin.ModelAdmin):
-    list_display = ("id", "name",)
+    list_display = (
+        "id",
+        "name",
+    )
     list_display_links = ("name",)
 
 
 class EntryOptions(admin.ModelAdmin):
-    list_display = ("id", "title", "category", "user",)
+    list_display = (
+        "id",
+        "title",
+        "category",
+        "user",
+    )
     list_display_links = ("title",)
 
     def get_queryset(self, request):
