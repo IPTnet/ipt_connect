@@ -295,7 +295,7 @@ class Team(models.Model):
 		:return: Return a list with the coefficient for every round
 		"""
 
-		eternalrejections = EternalRejection.objects.filter(round__reporter_team=self)
+		eternalrejections = EternalRejection.objects.filter(round__reporter_team=self,extra_free=False)
 
 		beforetactical = []
 		netrej = 0
@@ -304,7 +304,7 @@ class Team(models.Model):
 			beforetactical.append(3.0 - params.reject_malus*max(0, (netrej-params.netreject_max)))
 
 		# get all the tactical rejections
-		rejections = TacticalRejection.objects.filter(round__reporter_team=self)
+		rejections = TacticalRejection.objects.filter(round__reporter_team=self,extra_free=False)
 
 		prescoeffs = []
 		npenalities = 0
@@ -461,7 +461,7 @@ class Room(models.Model):
 
 	def __unicode__(self):
 		return self.name
-		
+
 	@property
 	def get_link(self):
 		return self.link
@@ -699,6 +699,7 @@ class TacticalRejection(models.Model):
 
 	round = models.ForeignKey(Round, null=True)
 	problem = models.ForeignKey(Problem)
+	extra_free = models.BooleanField(default=False,verbose_name='Extra free rejection')
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem.pk
@@ -707,6 +708,7 @@ class EternalRejection(models.Model):
 
 	round = models.ForeignKey(Round, null=True)
 	problem = models.ForeignKey(Problem)
+	extra_free = models.BooleanField(default=False,verbose_name='Extra free rejection')
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem.pk
