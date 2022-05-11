@@ -807,7 +807,7 @@ def update_bonus_points():
 
 		# get teams sorted by total points for the physics fight
 		team_podium = sorted(thispfteams, key = lambda t : points_dict[t], reverse=True)
-		points_list = [points_dict[t] for t in team_podium]
+		points_list = [points_dict[t][0] for t in team_podium]
 
 		bonus_list = distribute_bonus_points(points_list)
 
