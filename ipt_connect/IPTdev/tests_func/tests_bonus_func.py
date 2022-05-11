@@ -24,6 +24,7 @@ class  Test(TestCase):
             [50, 50, 50, 50, 50, 50],
             [50, 40, 40, 30, 30, 20],
             [50, 45, 40, 35, 30, 25],
+            [50+0.1+0.2, 50+0.3, 45],
         ]
         res_data = [
             [1.0, 1.0],
@@ -45,6 +46,7 @@ class  Test(TestCase):
             [1.0, 1.0, 1.0, 1.0, 1.0, 1.0],
             [2.0, 1.0, 1.0, 1.0, 1.0, 0.0],
             [2.0, 1.0, 1.0, 1.0, 1.0, 0.0],
+            [1.5, 1.5, 0.0],
         ]
         for inp, res in zip(input_data, res_data):
             self.assertEqual(distribute_bonus_points(inp), res)

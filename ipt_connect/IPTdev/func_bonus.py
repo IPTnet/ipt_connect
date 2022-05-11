@@ -3,6 +3,7 @@
 
 def distribute_bonus_points(points_list):
     max_points = len(points_list)
+    points_list = [round(num, 4) for num in points_list]
     # 'equal_count' is a variable that contain the count of coincident elements in 'points_list'
     equal_count = points_list.count(points_list[0])
     if max_points == equal_count:
