@@ -819,7 +819,7 @@ def update_bonus_points():
 		# It is safe to use atomic transaction here,
 		# because the changes which are saved to the rounds
 		# do not affect the .filter() condition
-		#and, moreover, each round is edited only once
+		# and, moreover, each round is edited only once
 			for team in team_podium:
 				round_with_report = thispfrounds.filter(pf_number=round.pf_number, reporter_team=team)
 				if round_with_report.count() == 1:
