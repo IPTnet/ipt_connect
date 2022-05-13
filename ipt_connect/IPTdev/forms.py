@@ -1,9 +1,9 @@
 from django import forms
+from django.http import JsonResponse
+from django.utils.encoding import smart_unicode
+
 from models import Participant
 
-from django.http import HttpResponse
-from django.utils.encoding import smart_unicode
-from django.http import JsonResponse
 
 # class RegisterForm(forms.ModelForm):
 #     class Meta:
@@ -20,14 +20,16 @@ from django.http import JsonResponse
 #
 #    veteran = forms.BooleanField(help_text="Have you already participated in the tournament?", required=True)
 
+
 class UploadForm(forms.Form):
-    csvfile = forms.FileField(label='Select a CSV file:')
+    csvfile = forms.FileField(label="Select a CSV file:")
+
 
 def member_for_team(request):
     res = []
     if request.user.is_authenticated():
-        if request.GET and 'team_id' in request.GET:
-            objs = Participant.objects.filter(team=request.GET['team_id'])
+        if request.GET and "team_id" in request.GET:
+            objs = Participant.objects.filter(team=request.GET["team_id"])
             for o in objs:
                 res.append({'id':o.id,'name':smart_unicode(o)})
         
