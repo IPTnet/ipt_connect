@@ -792,7 +792,7 @@ def physics_fight_detail(request, pfid):
 			gradesdico[grade.jury].append(grade)
 
 		juryallgrades = [{'juryroundsgrades': gradesdico[jury], 'name': jury.name+" "+jury.surname} for jury in gradesdico.keys()]
-		print juryallgrades
+		print(juryallgrades)
 
 		# meangrades and summary grades
 		meanroundsgrades = []
@@ -1029,7 +1029,7 @@ def upload_csv(request):
 			for row in reader:
 				row = make_dict_from_csv_row(row)
 				make_row_importable(row)
-				print row
+				print(row)
 
 				# If a person is not a jury member and has a role,
 				# import him/her as a participant

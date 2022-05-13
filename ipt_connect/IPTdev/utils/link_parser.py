@@ -50,7 +50,7 @@ for ur in urls:
                                 links_all.append(link)
 unique_url = list(set(links_all)) # delete duplicate log lines
 
-print 'Link checking ...'
+print('Link checking ...')
 
 for li in unique_url:
         status_code = requests.get(li).status_code
@@ -63,11 +63,11 @@ for li in links_for_check_404_error:
         if status_code != 404:
                 links_error.append((link, status_code))
 
-print 'Finished'
-print 'Static files'
+print('Finished')
+print('Static files')
 for i in set(links_static):
-        print i
-print 'Error links'
+        print(i)
+print('Error links')
 for i in links_error:
-        print i
+        print(i)
         

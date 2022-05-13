@@ -11,7 +11,7 @@ dir_path_dump = dir_path_repo[:-24] + 'dump/' + last_commit
 
 if not os.path.exists(dir_path_dump):
         os.makedirs(dir_path_dump)
-print 'Dump in {}'.format(dir_path_dump)
+print('Dump in {}'.format(dir_path_dump))
 
 for u in unique_url:
 	if u[:16] == "http://127.0.0.1": # Avoid external pages
