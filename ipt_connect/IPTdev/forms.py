@@ -10,7 +10,7 @@ from models import Participant
 #         model = Participant
 #         exclude = ('country',)
 
-#class RegisterForm(forms.Form):
+# class RegisterForm(forms.Form):
 #
 #    name = forms.CharField(max_length=20)
 #
@@ -31,7 +31,7 @@ def member_for_team(request):
         if request.GET and "team_id" in request.GET:
             objs = Participant.objects.filter(team=request.GET["team_id"])
             for o in objs:
-                res.append({'id':o.id,'name':smart_unicode(o)})
-        
-        #return HttpResponse(json.dumps(res), content_type="application/json")
-    return JsonResponse({'res':res})
+                res.append({"id": o.id, "name": smart_unicode(o)})
+
+        # return HttpResponse(json.dumps(res), content_type="application/json")
+    return JsonResponse({"res": res})
