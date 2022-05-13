@@ -1,24 +1,6 @@
-import lxml.html
 import requests
-from urllib2 import urlopen
+from find_links import *
 
-head = 'http://127.0.0.1:8000'
-http = 'http:'
-dev =  '/IPTdev/'
-urls = [
-        'problems',
-        'participants',
-        'jurys',
-        'tournament',
-        'teams',
-        'rounds',
-        ]
-tags = [
-        '//a/@href', 
-        '//link/@href', 
-        '//img/@src', 
-        '//svg/@xmlns', 
-        ]
 links_for_check_404_error = [
         'roundss',
         'rounds/-1/',
@@ -30,25 +12,7 @@ links_for_check_404_error = [
         'jurys/-1/',
         ]
 
-links_error = []
-links_static = []
-links_all = []
-
-for ur in urls:
-        r = urlopen(head + dev + ur)
-        page = lxml.html.fromstring(r.read())
-        for tag in tags:
-                for link in page.xpath(tag):
-                        if not link.startswith('http'):
-                                if link.startswith('//'):
-                                        links_all.append(http + link)
-                                elif link.startswith('/static/'):
-                                        links_static.append(link)
-                                else: 
-                                        links_all.append(head + link)
-                        else: 
-                                links_all.append(link)
-unique_url = list(set(links_all)) # delete duplicate log lines
+links_error, links_static, unique_url = construct_links_list()
 
 print 'Link checking ...'
 
