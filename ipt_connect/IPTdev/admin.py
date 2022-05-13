@@ -108,18 +108,18 @@ class Roundadmin(admin.ModelAdmin):
 
 
 class TeamAdmin(admin.ModelAdmin):
+    if params.manual_bonus_points:
+        list_display = ("name", "surname", "IOC", "bonus_points")
+    else:
+        list_display = ("name", "surname", "IOC")
+    search_fields = ("name", "IOC")
 
-	if params.manual_bonus_points:
-		list_display = ('name','surname','IOC','bonus_points')
-	else:
-		list_display = ('name','surname','IOC')
-	search_fields = ('name','IOC')
+    inlines = []
+    if params.enable_apriori_rejections:
+        inlines = [AprioriRejectionInline]
 
-	inlines = []
-	if params.enable_apriori_rejections:
-		inlines = [AprioriRejectionInline]
+    inlines += [SupplementaryMaterialInline]
 
-	inlines += [SupplementaryMaterialInline]
 
 class ParticipantAdmin(admin.ModelAdmin):
 
