@@ -64,7 +64,7 @@ class  Test(TestCase):
             9.0,
             6.0,
             9.25,
-            11. / 3,
+            11.0 / 3,
             5.75,
             7.25,
             8.0,
@@ -172,9 +172,9 @@ class  Test(TestCase):
             7.2,
             6.8,
             8.2,
-            41. / 6,
+            41.0 / 6,
             6.0,
-            35. / 6,
+            35.0 / 6,
             6.5,
             7.0,
         ]
@@ -305,10 +305,10 @@ class  Test(TestCase):
             7.0,
             5.8,
             6.0,
-            29. / 6,
+            29.0 / 6,
             5.0,
-            38. / 6,
-            35. / 6,
+            38.0 / 6,
+            35.0 / 6,
         ]
         for inp, res in zip(input_data, res_data):
             self.assertEqual(mean(inp), res)
