@@ -9,15 +9,15 @@ from get_script_dir import get_script_dir
 # but different data by a simple symlink creation
 # (don't forget to plug the new application to django).
 instance_name = get_script_dir(False)
-instance_name = list(reversed(instance_name.rsplit('/' ,1)))[0];
-instance_name = list(reversed(instance_name.rsplit('\\',1)))[0];
+instance_name = list(reversed(instance_name.rsplit("/", 1)))[0]
+instance_name = list(reversed(instance_name.rsplit("\\", 1)))[0]
 
 
 NAME = {
-    'short': 'IPT dev',
-    'full': 'International Physicists\' Tournament - Development Instance',
+    "short": "IPT dev",
+    "full": "International Physicists' Tournament - Development Instance",
     # ... and the name used in tournament overview
-    'front': '11th International Physicists\' Tournament',
+    "front": "11th International Physicists' Tournament",
 }
 
 # Tournaments to switch to by the menu
@@ -28,11 +28,11 @@ sister_tournaments = (
 	('IPT dev (pf2)','/IPT'+'dev_pf2/'),
 )
 
-poster_url = 'https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png'
+poster_url = "https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png"
 
-website_url = 'http://dev.iptnet.info'
+website_url = "http://dev.iptnet.info"
 
-repo_url = 'https://github.com/IPTnet/ipt_connect'
+repo_url = "https://github.com/IPTnet/ipt_connect"
 
 # Models parameters
 npf = 4                 # Number of selective (qualifying) Physics fights
@@ -79,18 +79,18 @@ score_precision = None #TODO: use the same precision when displaying the results
 
 # Personal ranking
 personal_ranking = {
-    'active': True,
-    'rep_threshold': 5,
-    'opp_threshold': 5,
-    'rev_threshold': 5,
-    'rep_coeff': 3,
-    'opp_coeff': 2,
-    'rev_coeff': 1,
-    'up_to_fight': npf, # to exclude Final and Semifinal grades; may be an arbitrary integer
+    "active": True,
+    "rep_threshold": 5,
+    "opp_threshold": 5,
+    "rev_threshold": 5,
+    "rep_coeff": 3,
+    "opp_coeff": 2,
+    "rev_coeff": 1,
+    "up_to_fight": npf,  # to exclude Final and Semifinal grades; may be an arbitrary integer
 }
 
 # Calculating the mean
-mean = 'ipt_mean'  # String with name of function for calculating mean (ipt_mean or iypt_mean)
+mean = "ipt_mean"  # String with name of function for calculating mean (ipt_mean or iypt_mean)
 
 # Is the fight status displayed?
 # Looks like there are some problems with it, so making it switchable
@@ -105,15 +105,15 @@ display_pf_summary_bonus_points = True
 
 
 ## Options for participants overview
-display_participants_avg_grade_tot = True # Mean grade
-display_participants_avg_grade_rep = True # Mean Rep. grade
-display_participants_avg_grade_opp = True # Mean Opp. grade
-display_participants_avg_grade_rev = True # Mean Rev. grade
-display_participants_max_grade_tot = True # Best grade
-display_participants_max_grade_rep = True # Best Rep. grade
-display_participants_max_grade_opp = True # Best Opp. grade
-display_participants_max_grade_rev = True # Best Rev. grade
-display_participants_sum_grade_tot = True # Total points
+display_participants_avg_grade_tot = True  # Mean grade
+display_participants_avg_grade_rep = True  # Mean Rep. grade
+display_participants_avg_grade_opp = True  # Mean Opp. grade
+display_participants_avg_grade_rev = True  # Mean Rev. grade
+display_participants_max_grade_tot = True  # Best grade
+display_participants_max_grade_rep = True  # Best Rep. grade
+display_participants_max_grade_opp = True  # Best Opp. grade
+display_participants_max_grade_rev = True  # Best Rev. grade
+display_participants_sum_grade_tot = True  # Total points
 
 
 # Do we respect pools?
@@ -158,15 +158,21 @@ fights = {
     # (i.e. like a Final: every team decides what to present)
     # This parameter influences (now) only on visibility of "Forbidden problems" block
     # while rendering the round detail
-    'challenge_procedure': [True, True, True, True, True, True, False],
-
+    "challenge_procedure": [True, True, True, True, True, True, False],
     # A situation when a team chooses a problem without challenge,
     # but there are problems which cannot be chosen, is easy to imagine
     # So, we have a separate setting for forbidden problems!
-    'problems_forbidden': [True, True, True, True, True, True, False],
-
+    "problems_forbidden": [True, True, True, True, True, True, False],
     # And, finally, you can specify names for all the fights to be displayed
     # Sometimes it is useful to name fights like "Day 1 - Fight 2", or "Fight By Choice",
     # or "Semifinal A", or smth another.
-    'names': ['Selective Fight 1','Selective Fight 2','Selective Fight 3','Selective Fight 4','Semifinal 1','Semifinal 2',instance_name+' Final']
+    "names": [
+        "Selective Fight 1",
+        "Selective Fight 2",
+        "Selective Fight 3",
+        "Selective Fight 4",
+        "Semifinal 1",
+        "Semifinal 2",
+        instance_name + " Final",
+    ],
 }
