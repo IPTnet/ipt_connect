@@ -122,36 +122,84 @@ class TeamAdmin(admin.ModelAdmin):
 
 
 class ParticipantAdmin(admin.ModelAdmin):
+    list_display = (
+        "surname",
+        "name",
+        "team",
+        "affiliation",
+        "email",
+        "phone_number",
+        "role",
+        "gender",
+        "birthdate",
+        "veteran",
+        "diet",
+        "shirt_size",
+        "mixed_gender_accommodation",
+        "remark",
+    )
+    search_fields = ("surname", "name")
+    list_filter = (
+        "team",
+        "gender",
+        "role",
+        "veteran",
+        "diet",
+        "shirt_size",
+        "mixed_gender_accommodation",
+    )
 
-	list_display = ('surname','name','team','affiliation','email','phone_number','role','gender','birthdate','veteran','diet','shirt_size','mixed_gender_accommodation','remark')
-	search_fields = ('surname','name')
-	list_filter = ('team','gender','role','veteran','diet','shirt_size','mixed_gender_accommodation')
+    def save_model(self, request, obj, form, change):
+        if not (request.user.is_superuser) and not (
+            request.user.username == "magnusson"
+        ):
+            u = User.objects.get(username=request.user.username)
+            obj.team = getattr(u, "Team_" + params.instance_name)
+            obj.save()
+        obj.save()
 
-	def save_model(self, request, obj, form, change):
-		if not(request.user.is_superuser) and not(request.user.username == 'magnusson'):
-			u = User.objects.get(username = request.user.username)
-			obj.team = getattr(u,'Team_'+params.instance_name)
-			obj.save()
-		obj.save()
+    def get_queryset(self, request):
+        qs = super(ParticipantAdmin, self).get_queryset(request)
+        u = User.objects.get(username=request.user.username)
+        if request.user.is_superuser or request.user.username == "magnusson":
+            return qs
+        return qs.filter(team=getattr(u, "Team_" + params.instance_name))
 
-	def get_queryset(self,request):
-		qs = super(ParticipantAdmin,self).get_queryset(request)
-		u = User.objects.get(username = request.user.username)
-		if request.user.is_superuser or request.user.username == 'magnusson':
-			return qs
-		return qs.filter(team = getattr(u,'Team_'+params.instance_name))
 
 class JuryAdmin(admin.ModelAdmin):
+    # TODO: unhardcode PF quantity!!...
+    list_display = (
+        "surname",
+        "name",
+        "team",
+        "affiliation",
+        "pf1",
+        "pf2",
+        "pf3",
+        "pf4",
+        "final",
+        "email",
+        "remark",
+    )
+    list_filter = (
+        "team",
+        "pf1",
+        "pf2",
+        "pf3",
+        "pf4",
+        "final",
+    )
+    search_fields = (
+        "surname",
+        "name",
+        "affiliation",
+    )
 
-	#TODO: unhardcode PF quantity!!...
-	list_display = ('surname','name','team','affiliation','pf1','pf2','pf3','pf4','final','email','remark',)
-	list_filter = ('team','pf1','pf2','pf3','pf4','final',)
-	search_fields = ('surname','name','affiliation',)
 
 # Register your models here.
-admin.site.register(Team,TeamAdmin)
-admin.site.register(Participant,ParticipantAdmin)
+admin.site.register(Team, TeamAdmin)
+admin.site.register(Participant, ParticipantAdmin)
 admin.site.register(Round, Roundadmin)
 admin.site.register(Problem)
 admin.site.register(Room)
-admin.site.register(Jury,JuryAdmin)
+admin.site.register(Jury, JuryAdmin)
