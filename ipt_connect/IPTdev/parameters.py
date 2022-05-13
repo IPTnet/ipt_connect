@@ -50,6 +50,15 @@ enable_eternal_rejections = True # False e.g. for IPT 2020 - TODO
 netreject_max = 1       # Maximum number of free eternal rejections
 enable_apriori_rejections = True # False in most cases - TODO
 
+# Extra free rejections
+# A weird thing added for the 1st Selective PF of IPT2022
+# An extra free rejection is displayed (if all the other rejections of that type are),
+# but it does not affect the presenter coefficient
+# If the staff that uses ipt_connect on the tournament, is not trianed enough
+# and you have no such weird mechanisms that IPT2022 had,
+# it's better to switch it off to False
+enable_extra_free_tactical_rejections = True
+enable_extra_free_eternal_rejections = True
 
 # Should we reset the point sum before semifinals?
 # Does not affect reporter's coeff., rejections nor problems forbidden

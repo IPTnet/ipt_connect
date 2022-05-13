@@ -699,7 +699,7 @@ class TacticalRejection(models.Model):
 
 	round = models.ForeignKey(Round, null=True)
 	problem = models.ForeignKey(Problem)
-	extra_free = models.BooleanField(default=False,verbose_name='Extra free rejection')
+	extra_free = models.BooleanField(default=False,verbose_name='Extra free rejection',editable=params.enable_extra_free_tactical_rejections)
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem.pk
@@ -708,7 +708,7 @@ class EternalRejection(models.Model):
 
 	round = models.ForeignKey(Round, null=True)
 	problem = models.ForeignKey(Problem)
-	extra_free = models.BooleanField(default=False,verbose_name='Extra free rejection')
+	extra_free = models.BooleanField(default=False,verbose_name='Extra free rejection',editable=params.enable_extra_free_eternal_rejections)
 
 	def __unicode__(self):
 		return "Problem rejected : %s" % self.problem.pk
