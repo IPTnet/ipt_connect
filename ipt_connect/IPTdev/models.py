@@ -60,7 +60,6 @@ class UploadToPathAndRename(object):
 
 
 class Participant(models.Model):
-
     """
     This class represent the basic model of our program, a participant.
     It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
@@ -654,7 +653,6 @@ class Jury(models.Model):
 
 
 class Round(models.Model):
-
     pf_number = models.IntegerField(
         choices=(((ind + 1, params.fights["names"][ind]) for ind in range(npf_tot))),
         default=None,
@@ -849,7 +847,6 @@ import model_SupplementaryMaterial
 
 
 class JuryGrade(models.Model):
-
     round = models.ForeignKey(Round, null=True)
     jury = models.ForeignKey(Jury)
 
@@ -887,7 +884,6 @@ class JuryGrade(models.Model):
 
 
 class TacticalRejection(models.Model):
-
     round = models.ForeignKey(Round, null=True)
     problem = models.ForeignKey(Problem)
     extra_free = models.BooleanField(
@@ -901,7 +897,6 @@ class TacticalRejection(models.Model):
 
 
 class EternalRejection(models.Model):
-
     round = models.ForeignKey(Round, null=True)
     problem = models.ForeignKey(Problem)
     extra_free = models.BooleanField(
@@ -915,7 +910,6 @@ class EternalRejection(models.Model):
 
 
 class AprioriRejection(models.Model):
-
     team = models.ForeignKey(Team, null=True)
     problem = models.ForeignKey(Problem)
 
@@ -988,7 +982,6 @@ def get_involved_teams_dict(round_list):
 
 
 def update_bonus_points():
-
     # the rounds must be saved first !
     rounds = Round.objects.all()
 
@@ -1055,7 +1048,6 @@ def update_bonus_points():
 
 
 def remove_phantom_grades():
-
     allrounds = Round.objects.all()
     allgrades = JuryGrade.objects.all()
 
@@ -1079,7 +1071,6 @@ update_signal = Signal()
 
 @receiver(update_signal, sender=Round, dispatch_uid="update_all")
 def update_all(sender, **kwargs):
-
     old_time = time.time()
 
     remove_phantom_grades()

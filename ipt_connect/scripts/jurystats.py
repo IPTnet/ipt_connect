@@ -45,7 +45,6 @@ ax.set_yticklabels([jury.name for jury in jurys])
 for i in np.arange(len(jurys)):
     ax.axhline(i, ls="--", alpha=0.5, color="grey")
 
-
 for indt, team in enumerate(teams):
     team.jurys = []
     mygrades = (
@@ -174,7 +173,6 @@ plt.show()
 sys.exit()
 # first easy thing, look at the mean, median and std of every jury grade distrbution
 for jury in jurys:
-
     mygrades = JuryGrade.objects.filter(jury__name=jury.name)
 
     # if len(mygrades) == 0:
@@ -200,7 +198,6 @@ for jury in jurys:
     jury.med_rev = np.median(grades_rev)
     jury.med_all = np.median(grades_all)
 
-
 meds_rep = [jury.med_rep for jury in jurys if not math.isnan(jury.med_rep)]
 meds_opp = [jury.med_opp for jury in jurys if not math.isnan(jury.med_opp)]
 meds_rev = [jury.med_rev for jury in jurys if not math.isnan(jury.med_rev)]
@@ -210,7 +207,6 @@ stds_rep = [jury.std_rep for jury in jurys if not math.isnan(jury.std_rep)]
 stds_opp = [jury.std_opp for jury in jurys if not math.isnan(jury.std_opp)]
 stds_rev = [jury.std_rev for jury in jurys if not math.isnan(jury.std_rev)]
 stds_all = [jury.std_all for jury in jurys if not math.isnan(jury.std_all)]
-
 
 if 0:
     # medians
@@ -278,6 +274,5 @@ if 0:
     plt.xlabel("Median of jury member grades", fontsize=14)
     plt.ylabel("Std", fontsize=14)
     plt.legend()
-
 
 plt.show()

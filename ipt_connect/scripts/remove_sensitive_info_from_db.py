@@ -10,12 +10,10 @@ os.environ["DJANGO_SETTINGS_MODULE"] = "ipt_connect.settings"
 
 django.setup()
 
-
 from IPT2016 import models as m16
 from IPT2017 import models as m17
 from FPT2017 import models as f17
 from IPT2018 import models as m18
-
 
 # IPT2016
 
@@ -40,7 +38,6 @@ for p in participants:
 
         p.save()
 
-
 # IPT2017
 participants = m17.Participant.objects.all()
 
@@ -64,7 +61,6 @@ for p in participants:
         p.check_in = "True"
 
         p.save()
-
 
 # IPT2018
 participants = m18.Participant.objects.all()
@@ -93,7 +89,6 @@ for p in participants:
 
         p.save()
 
-
 # FPT2017
 
 participants = f17.Participant.objects.all()
@@ -112,7 +107,6 @@ for p in participants:
         p.remark = "hohoho"
 
         p.save()
-
 
 # Jurys
 jurys = f17.Jury.objects.all()

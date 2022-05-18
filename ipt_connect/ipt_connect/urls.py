@@ -10,7 +10,6 @@ tournament_overview = importlib.import_module(
     settings.INSTALLED_TOURNAMENTS[0] + ".views"
 ).tournament_overview
 
-
 urlpatterns = [
     # Examples:
     # url(r'^$', 'ipt_connect.views.home', name='home'),
@@ -28,6 +27,5 @@ for tournament in settings.INSTALLED_TOURNAMENTS:
             r"^" + tournament + "/", include(tournament + ".urls", namespace=tournament)
         )
     )
-
 
 admin.site.site_header = "IPT administration"

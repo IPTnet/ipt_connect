@@ -5,7 +5,6 @@ import os, sys
 os.environ["DJANGO_SETTINGS_MODULE"] = "ipt_connect.settings"
 django.setup()
 
-
 populate_db = False  # If you start from a fresh or flushed db and want to repopulate it quickly with test data.
 
 from IPT2016.models import *
@@ -41,7 +40,6 @@ if not populate_db:
     sys.exit()
 
     sys.exit()
-
 
 if populate_db:  # populating the database
 

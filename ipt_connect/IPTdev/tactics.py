@@ -98,7 +98,6 @@ def build_tactics_for_two_teams(reporter_team, opponent_team, current_round=None
 
 
 def sort_raw_tactics_data(problems_dict):
-
     # The first list consists of banned problems
     # sorted in reverse order on when the bans are removed
 

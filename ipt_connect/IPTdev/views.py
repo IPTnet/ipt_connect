@@ -15,7 +15,6 @@ import parameters as params
 
 
 def home(request):
-
     text = (
         """<h1>"""
         + params.NAME.full
@@ -1064,7 +1063,6 @@ def ranking(request):
 )
 @cache_page(cache_duration)
 def poolranking(request):
-
     # Pool A
     rankteamsA = create_ranking(Team.objects.filter(pool="A").order_by("-total_points"))
 

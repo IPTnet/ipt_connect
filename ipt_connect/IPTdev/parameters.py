@@ -12,7 +12,6 @@ instance_name = get_script_dir(False)
 instance_name = list(reversed(instance_name.rsplit("/", 1)))[0]
 instance_name = list(reversed(instance_name.rsplit("\\", 1)))[0]
 
-
 NAME = {
     "short": "IPT dev",
     "full": "International Physicists' Tournament - Development Instance",
@@ -40,7 +39,6 @@ semifinals_quantity = (
     2  # Quantity of semifinals. Every semifinal should be a separate fight!
 )
 with_final_pf = True  # Is there a Final Fight ?
-
 
 ## Rejections
 reject_malus = 0.2  # Malus for too many rejections
@@ -105,7 +103,6 @@ display_pf_summary = True
 # Are the bonus points displayed in the fight summary?
 display_pf_summary_bonus_points = True
 
-
 ## Options for participants overview
 display_participants_avg_grade_tot = True  # Mean grade
 display_participants_avg_grade_rep = True  # Mean Rep. grade
@@ -117,12 +114,10 @@ display_participants_max_grade_opp = True  # Best Opp. grade
 display_participants_max_grade_rev = True  # Best Rev. grade
 display_participants_sum_grade_tot = True  # Total points
 
-
 # Do we respect pools?
 # If true, then the pool is displayed in ranking table
 # and the 'Ranking' menu item leads to poolranking
 enable_pools = True
-
 
 # Are the bonus points entered manually?
 # Switch this on in case of problems with bonus points
@@ -136,14 +131,12 @@ manual_bonus_points = False
 # Do we display coreporters publicly?
 display_coreporters = True
 
-
 # There are at least 3 tournaments where rounds without a reviewer may (or must) appear:
 # 1) Selective (qualifying) fights of virtual IPT 2020 (the main reason to add this option)
 # 2) The final fight of Russian National Selection (if this shit can be named a "selection") stage of IYPT.
 # 3) Theoretically, at Three Science Tournament, we can encounter such a situation, but that is rather exotic.
 # Set this option to True if reviewers may be absent
 optional_reviewers = True
-
 
 # Maybe a Fight should be a separate model in the database
 # However, it looks like the fight structure is defined far before the tournament starts,

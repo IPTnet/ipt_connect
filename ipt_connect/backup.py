@@ -8,7 +8,6 @@ import shutil
 
 
 class Backup(object):
-
     now = datetime.datetime.now()
     CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
     BACKUPS_DIR = os.path.join(CURRENT_DIR, "backups", str(now.year), str(now.month))
