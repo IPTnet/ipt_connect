@@ -25,22 +25,17 @@ SECRET_KEY = 'XXX'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SERVER_EMAIL='XXX'
+SERVER_EMAIL = 'XXX'
 
 ADMINS = (('XXX', 'XXX@XXX'),)
 
 ALLOWED_HOSTS = [u"XXX", u"127.0.0.1", u"localhost"]
 
 
-
 # Place all the names of the tournaments here
 # Default tournament (i.e. the one displayed on the main page) should be the first
 
-INSTALLED_TOURNAMENTS = (
-    'IPTdev',
-    'IPTdev_errors',
-    'IPTdev_pf2',
-)
+INSTALLED_TOURNAMENTS = ('IPTdev', 'IPTdev_errors', 'IPTdev_pf2')
 
 # Application definition
 
@@ -56,7 +51,9 @@ INSTALLED_APPS = (
     'django.contrib.humanize',
 ) + INSTALLED_TOURNAMENTS
 
-MIGRATION_MODULES = dict([(app, app + '.migrations.' + app) for app in INSTALLED_TOURNAMENTS])
+MIGRATION_MODULES = dict(
+    [(app, app + '.migrations.' + app) for app in INSTALLED_TOURNAMENTS]
+)
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -66,8 +63,8 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-#    'django.middleware.security.SecurityMiddleware',
-    'ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware'
+    #    'django.middleware.security.SecurityMiddleware',
+    'ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware',
 )
 
 ROOT_URLCONF = 'ipt_connect.urls'
@@ -78,7 +75,7 @@ TEMPLATES = [
         # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
         # Always use forward slashes, even on Windows.
         # Don't forget to use absolute paths, not relative paths.
-        'DIRS': [os.path.join(BASE_DIR, 'templates').replace('\\','/')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates').replace('\\', '/')],
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -87,13 +84,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
             # List of callables that know how to import templates from various sources.
-            'loaders' : (
+            'loaders': (
                 'django.template.loaders.filesystem.Loader',
                 'django.template.loaders.app_directories.Loader',
                 # 'django.template.loaders.eggs.Loader',
-            )
+            ),
         },
-    },
+    }
 ]
 
 
@@ -116,9 +113,7 @@ DATABASES = {
 
 LANGUAGE_CODE = 'en-us'
 
-LOCALE_PATHS = (
-    os.path.join('locale'),
-)
+LOCALE_PATHS = (os.path.join('locale'),)
 
 TIME_ZONE = 'UTC'
 
@@ -138,11 +133,11 @@ MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
 MEDIA_URL = '/media/'
 
 CACHES = {
-	'default': {
-	#	'BACKEND': 'django.core.cache.backends.dummy.DummyCache', # Switch the cache off
-		'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-	}
+    'default': {
+        # 	'BACKEND': 'django.core.cache.backends.dummy.DummyCache', # Switch the cache off
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+    }
 }
 
 SOLO_CACHE = 'default'
-SOLO_CACHE_TIMEOUT = 5*60
+SOLO_CACHE_TIMEOUT = 5 * 60

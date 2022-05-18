@@ -9,12 +9,14 @@ from django.forms import widgets
 import parameters as params
 
 from solo.admin import SingletonModelAdmin
-#from config.models import SiteConfiguration
+
+# from config.models import SiteConfiguration
 
 admin.site.register(SiteConfiguration, SingletonModelAdmin)
 
 # There is only one item in the table, you can get it this way:
 from .models import SiteConfiguration
+
 # config = SiteConfiguration.objects.get()
 
 try:
@@ -25,86 +27,104 @@ except:
 
 
 class SupplementaryMaterialInline(admin.TabularInline):
-	model = SupplementaryMaterial
-	extra = 0
+    model = SupplementaryMaterial
+    extra = 0
 
 
 class JuryGradeInline(admin.TabularInline):
-	model = JuryGrade
-	extra = 0
+    model = JuryGrade
+    extra = 0
 
 
 class TacticalRejectionInline(admin.TabularInline):
-	model = TacticalRejection
-	extra = 0
+    model = TacticalRejection
+    extra = 0
 
 
 class EternalRejectionInline(admin.TabularInline):
-	model = EternalRejection
-	extra = 0
+    model = EternalRejection
+    extra = 0
 
 
 class AprioriRejectionInline(admin.TabularInline):
-	model = AprioriRejection
-	extra = 0
+    model = AprioriRejection
+    extra = 0
 
 
 class Roundadmin(admin.ModelAdmin):
 
-	list_display = ('pf_number', 'round_number', 'room')
-	list_filter = ('pf_number', 'round_number', 'room')
-	fieldsets = [
-	('General Information', {'fields': [
-	 ('pf_number', "round_number", "room"), ("reporter_team", "opponent_team", "reviewer_team")]}),
-	(None, {'fields': [
-		("reporter"),
-		("reporter_2"),
-		('opponent'),
-		('reviewer'),
-		# ('problem_presented'),
-		# TODO: do the same in python-ish way
-		('problem_presented',"bonus_points_reporter") if params.manual_bonus_points else ('problem_presented'),
-	]})
-	]
+    list_display = ('pf_number', 'round_number', 'room')
+    list_filter = ('pf_number', 'round_number', 'room')
+    fieldsets = [
+        (
+            'General Information',
+            {
+                'fields': [
+                    ('pf_number', "round_number", "room"),
+                    ("reporter_team", "opponent_team", "reviewer_team"),
+                ]
+            },
+        ),
+        (
+            None,
+            {
+                'fields': [
+                    ("reporter"),
+                    ("reporter_2"),
+                    ('opponent'),
+                    ('reviewer'),
+                    # ('problem_presented'),
+                    # TODO: do the same in python-ish way
+                    ('problem_presented', "bonus_points_reporter")
+                    if params.manual_bonus_points
+                    else ('problem_presented'),
+                ]
+            },
+        ),
+    ]
 
-	# Jury grades. We always have them!
-	inlines = [JuryGradeInline]
+    # Jury grades. We always have them!
+    inlines = [JuryGradeInline]
 
-	# Round-based rejections (if supported)
-	if params.enable_eternal_rejections:
-		inlines = [EternalRejectionInline] + inlines
+    # Round-based rejections (if supported)
+    if params.enable_eternal_rejections:
+        inlines = [EternalRejectionInline] + inlines
 
-	if params.enable_tactical_rejections:
-		inlines = [TacticalRejectionInline] + inlines
+    if params.enable_tactical_rejections:
+        inlines = [TacticalRejectionInline] + inlines
 
-	# Saving the round triggers the computation of the scores, so we need to save the
-	# JuryGrade's first in order to use up-to-date grades. The solution used here is to
-	# use the save_related function, which will first save the inline models, and then
-	# call round.save() in there
-	def save_model(self, request, obj, form, change):
-		pass  # don't actually save the parent instance
+    # Saving the round triggers the computation of the scores, so we need to save the
+    # JuryGrade's first in order to use up-to-date grades. The solution used here is to
+    # use the save_related function, which will first save the inline models, and then
+    # call round.save() in there
+    def save_model(self, request, obj, form, change):
+        pass  # don't actually save the parent instance
 
-	def save_related(self, request, form, formsets, change):
-		# First save iteration to prevent errors
-		form.instance.save()
-		# first save the inlines
-		for formset in formsets:
-			self.save_formset(request, form, formset, change=change)
-		# then save the round once, triggerring the update_scores methods
-		form.instance.save()
+    def save_related(self, request, form, formsets, change):
+        # First save iteration to prevent errors
+        form.instance.save()
+        # first save the inlines
+        for formset in formsets:
+            self.save_formset(request, form, formset, change=change)
+        # then save the round once, triggerring the update_scores methods
+        form.instance.save()
 
-	# def save_formset(self, request, form, formset, change):
-	# 	# print self
-	# 	# print request
-	# 	# print form
-	# 	# print formset
-	# 	# print change
-	# 	formset.save() # this will save the children (the JuryGrade)
-	# 	form.instance.save() # form.instance is the parent (ie the Round)
+    # def save_formset(self, request, form, formset, change):
+    # 	# print self
+    # 	# print request
+    # 	# print form
+    # 	# print formset
+    # 	# print change
+    # 	formset.save() # this will save the children (the JuryGrade)
+    # 	form.instance.save() # form.instance is the parent (ie the Round)
 
-	class Media:
-		js = (params.instance_name + '/js/admin/js/jquery.js', params.instance_name + '/js/admin/js/participant_fill.js', )
-	# TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
+    class Media:
+        js = (
+            params.instance_name + '/js/admin/js/jquery.js',
+            params.instance_name + '/js/admin/js/participant_fill.js',
+        )
+
+    # TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view
 
 
 class TeamAdmin(admin.ModelAdmin):
@@ -181,19 +201,8 @@ class JuryAdmin(admin.ModelAdmin):
         "email",
         "remark",
     )
-    list_filter = (
-        "team",
-        "pf1",
-        "pf2",
-        "pf3",
-        "pf4",
-        "final",
-    )
-    search_fields = (
-        "surname",
-        "name",
-        "affiliation",
-    )
+    list_filter = ("team", "pf1", "pf2", "pf3", "pf4", "final")
+    search_fields = ("surname", "name", "affiliation")
 
 
 # Register your models here.

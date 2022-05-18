@@ -24,8 +24,8 @@ NAME = {
 # Usually you should set it to None
 # This is useful only for development and first stages of Three Science Tournament
 sister_tournaments = (
-	('IPT dev','/IPT'+'dev/'),
-	('IPT dev (pf2)','/IPT'+'dev_pf2/'),
+    ('IPT dev', '/IPT' + 'dev/'),
+    ('IPT dev (pf2)', '/IPT' + 'dev_pf2/'),
 )
 
 poster_url = "https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png"
@@ -35,20 +35,22 @@ website_url = "http://dev.iptnet.info"
 repo_url = "https://github.com/IPTnet/ipt_connect"
 
 # Models parameters
-npf = 4                 # Number of selective (qualifying) Physics fights
-semifinals_quantity = 2 # Quantity of semifinals. Every semifinal should be a separate fight!
-with_final_pf = True    # Is there a Final Fight ?
+npf = 4  # Number of selective (qualifying) Physics fights
+semifinals_quantity = (
+    2  # Quantity of semifinals. Every semifinal should be a separate fight!
+)
+with_final_pf = True  # Is there a Final Fight ?
 
 
 ## Rejections
-reject_malus = 0.2      # Malus for too many rejections
+reject_malus = 0.2  # Malus for too many rejections
 
 # Tactical rejections
-enable_tactical_rejections = True # False e.g. for IYPT - TODO
-npfreject_max = 3       # Maximum number of free tactical rejections (per fight)
-enable_eternal_rejections = True # False e.g. for IPT 2020 - TODO
-netreject_max = 1       # Maximum number of free eternal rejections
-enable_apriori_rejections = True # False in most cases - TODO
+enable_tactical_rejections = True  # False e.g. for IYPT - TODO
+npfreject_max = 3  # Maximum number of free tactical rejections (per fight)
+enable_eternal_rejections = True  # False e.g. for IPT 2020 - TODO
+netreject_max = 1  # Maximum number of free eternal rejections
+enable_apriori_rejections = True  # False in most cases - TODO
 
 # Extra free rejections
 # A weird thing added for the 1st Selective PF of IPT2022
@@ -75,7 +77,7 @@ max_rounds_in_pf = 4
 # The precision of scores
 # If 'None', no round up is made
 # If an integer N, then the scores for each Round are rounded up to 10^(-N)
-score_precision = None #TODO: use the same precision when displaying the results (as for now, it is always 2)
+score_precision = None  # TODO: use the same precision when displaying the results (as for now, it is always 2)
 
 # Personal ranking
 personal_ranking = {
@@ -151,8 +153,7 @@ fights = {
     # Bonus points multipliers
     # You can set it to 2 for semifinals or the last selective PFs to emphase the drama.
     # You can also set it to zero for the final with the same purpose!
-    'bonus_multipliers' : [1,1,1,1,2,2,0],
-
+    'bonus_multipliers': [1, 1, 1, 1, 2, 2, 0],
     # Is there challenge procedure at the beginning of each round of the fight?
     # Some tournaments, such as Syberian IYPT, play the last selective PF without the challenge procedure
     # (i.e. like a Final: every team decides what to present)
