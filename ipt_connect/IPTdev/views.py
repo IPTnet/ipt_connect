@@ -38,7 +38,7 @@ def ninja_test(user):
 @cache_page(cache_duration_short)
 def soon(request):
     return render(
-        request, '%s/bebacksoon.html' % params.instance_name, {'params': params}
+        request, "%s/bebacksoon.html" % params.instance_name, {"params": params}
     )
 
 
@@ -46,36 +46,36 @@ def soon(request):
 ################# SUPER USERS VIEWS #################
 @user_passes_test(lambda u: u.is_superuser)
 def participants_trombinoscope(request):
-    participants = Participant.objects.all().order_by('team', 'surname')
+    participants = Participant.objects.all().order_by("team", "surname")
 
     return render(
         request,
-        '%s/participants_trombinoscope.html' % params.instance_name,
-        {'participants': participants},
+        "%s/participants_trombinoscope.html" % params.instance_name,
+        {"participants": participants},
     )
 
 
-@user_passes_test(lambda u: u.is_superuser or u.username == 'magnusson')
+@user_passes_test(lambda u: u.is_superuser or u.username == "magnusson")
 def participants_export(request):
-    participants = Participant.objects.all().order_by('team', 'role', 'name')
+    participants = Participant.objects.all().order_by("team", "role", "name")
 
     return render(
         request,
-        '%s/participants_export.html' % params.instance_name,
-        {'participants': participants, 'params': params},
+        "%s/participants_export.html" % params.instance_name,
+        {"participants": participants, "params": params},
     )
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def participants_export_web(request):
-    participants = Participant.objects.exclude(role='ACC').order_by(
-        'team', 'role', 'surname'
+    participants = Participant.objects.exclude(role="ACC").order_by(
+        "team", "role", "surname"
     )
 
     return render(
         request,
-        '%s/listing_participants_web.html' % params.instance_name,
-        {'participants': participants, 'params': params},
+        "%s/listing_participants_web.html" % params.instance_name,
+        {"participants": participants, "params": params},
     )
 
 
@@ -85,13 +85,13 @@ def export_csv_ranking_timeline(request):
     from django.http import HttpResponse
 
     # Create the HttpResponse object with the appropriate CSV header.
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="ranking_timeline.csv"'
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="ranking_timeline.csv"'
 
     writer = csv.writer(response)
 
     allteams = list(Team.objects.all())
-    writer.writerow([' '] + allteams)
+    writer.writerow([" "] + allteams)
 
     previous_scores = {}
     for team in allteams:
@@ -108,8 +108,8 @@ def export_csv_ranking_timeline(request):
 
             writer.writerow(
                 [
-                    '%s | Round %s'
-                    % (params.fights['names'][pf_number - 1], round_number)
+                    "%s | Round %s"
+                    % (params.fights["names"][pf_number - 1], round_number)
                 ]
                 + [previous_scores[team] for team in allteams]
             )
@@ -122,7 +122,7 @@ def export_csv_ranking_timeline(request):
                 ]
             )
         writer.writerow(
-            ['%s | Bonuses' % params.fights['names'][pf_number - 1]]
+            ["%s | Bonuses" % params.fights["names"][pf_number - 1]]
             + [previous_scores[team] for team in allteams]
         )
 
@@ -131,23 +131,23 @@ def export_csv_ranking_timeline(request):
 
 @user_passes_test(lambda u: u.is_superuser)
 def jury_export(request):
-    jurys = Jury.objects.all().order_by('surname')
+    jurys = Jury.objects.all().order_by("surname")
 
     return render(
-        request, '%s/listing_jurys.html' % params.instance_name, {'jurys': jurys}
+        request, "%s/listing_jurys.html" % params.instance_name, {"jurys": jurys}
     )
 
 
 @user_passes_test(lambda u: u.is_superuser)
 def jury_export_web(request):
-    jurys = Jury.objects.filter(team=None).order_by('surname')
+    jurys = Jury.objects.filter(team=None).order_by("surname")
 
     return render(
-        request, '%s/listing_jurys_web.html' % params.instance_name, {'jurys': jurys}
+        request, "%s/listing_jurys_web.html" % params.instance_name, {"jurys": jurys}
     )
 
 
-@user_passes_test(lambda u: u.has_perm(params.instance_name + '.update_all'))
+@user_passes_test(lambda u: u.has_perm(params.instance_name + ".update_all"))
 def update_all(request):
     list_receivers = update_signal.send(sender=Round)
 
@@ -156,7 +156,7 @@ def update_all(request):
     return HttpResponse(list_receivers[0][1])
 
 
-@user_passes_test(lambda u: u.has_perm(params.instance_name + '.add_round'))
+@user_passes_test(lambda u: u.has_perm(params.instance_name + ".add_round"))
 def round_add_next(request, pk):
     try:
         current_round = Round.objects.get(pk=pk)
@@ -173,7 +173,7 @@ def round_add_next(request, pk):
     return round_detail(request, next_round.pk)
 
 
-@user_passes_test(lambda u: u.has_perm(params.instance_name + '.update_all'))
+@user_passes_test(lambda u: u.has_perm(params.instance_name + ".update_all"))
 def verify_all(request):
     all_rounds = Round.objects.all()
     checks_successful = []
@@ -198,84 +198,84 @@ def verify_all(request):
     simple_checks_for_rounds = [
         (
             all_rounds.filter(pf_number__gt=npf_tot),
-            'Some Rounds have unexpected Fight number',
-            'Each Round has a sane Fight number',
+            "Some Rounds have unexpected Fight number",
+            "Each Round has a sane Fight number",
             checks_with_errors,
         ),
         (
             all_rounds.filter(problem_presented=None),
-            'Some Rounds have no Problem presented',
-            'Each Round has a presented Problem',
+            "Some Rounds have no Problem presented",
+            "Each Round has a presented Problem",
             checks_with_errors,
         ),
         (
             all_rounds.filter(reporter=None).exclude(reporter_2=None),
-            'Some Rounds have no Reporter specified but a Coreporter specified',
-            'If a Round has a Coreporter, it has a Reporter',
+            "Some Rounds have no Reporter specified but a Coreporter specified",
+            "If a Round has a Coreporter, it has a Reporter",
             checks_with_errors,
         ),
         (
             all_rounds.filter(reporter=None),
-            'Some Rounds have no Reporter specified',
-            'Each Round has a Reporter',
+            "Some Rounds have no Reporter specified",
+            "Each Round has a Reporter",
             checks_with_errors,
         ),
         (
             all_rounds.filter(opponent=None),
-            'Some Rounds have no Opponent specified',
-            'Each Round has an Opponent',
+            "Some Rounds have no Opponent specified",
+            "Each Round has an Opponent",
             checks_with_errors,
         ),
         (
             all_rounds.filter(reviewer=None),
-            'Some Rounds have no Reviewer specified',
-            'Each Round has a Reviewer',
+            "Some Rounds have no Reviewer specified",
+            "Each Round has a Reviewer",
             checks_with_errors
             if not params.optional_reviewers
             else checks_with_warnings,
         ),
         (
             all_rounds.filter(reporter_team=None),
-            'Some Rounds have no Reporter Team specified',
-            'Each Round has a Reporter Team',
+            "Some Rounds have no Reporter Team specified",
+            "Each Round has a Reporter Team",
             checks_with_errors,
         ),
         (
             all_rounds.filter(opponent_team=None),
-            'Some Rounds have no Opponent Team specified',
-            'Each Round has an Opponent Team',
+            "Some Rounds have no Opponent Team specified",
+            "Each Round has an Opponent Team",
             checks_with_errors,
         ),
         (
             all_rounds.filter(reviewer_team=None),
-            'Some Rounds have no Reviewer Team specified',
-            'Each Round has an Reviewer Team',
+            "Some Rounds have no Reviewer Team specified",
+            "Each Round has an Reviewer Team",
             checks_with_errors
             if not params.optional_reviewers
             else checks_with_warnings,
         ),
         (
             rounds_with_reporter_team_mismatch,
-            'Some Rounds have a Reporter that is not a member of Reporter Team',
-            'For each Round a Reporter (if any) is a member of Reporter Team',
+            "Some Rounds have a Reporter that is not a member of Reporter Team",
+            "For each Round a Reporter (if any) is a member of Reporter Team",
             checks_with_errors,
         ),
         (
             rounds_with_opponent_team_mismatch,
-            'Some Rounds have an Opponent that is not a member of Opponent Team',
-            'For each Round an Opponent (if any) is a member of Opponent Team',
+            "Some Rounds have an Opponent that is not a member of Opponent Team",
+            "For each Round an Opponent (if any) is a member of Opponent Team",
             checks_with_errors,
         ),
         (
             rounds_with_reviewer_team_mismatch,
-            'Some Rounds have a Reviewer that is not a member of Reviewer Team',
-            'For each Round a Reviewer (if any) is a member of Reviewer Team',
+            "Some Rounds have a Reviewer that is not a member of Reviewer Team",
+            "For each Round a Reviewer (if any) is a member of Reviewer Team",
             checks_with_errors,
         ),
         (
             rounds_with_reporter_2_team_mismatch,
-            'Some Rounds have a Coreporter that is not a member of Reporter Team',
-            'For each Round a Coreporter (if any) is a member of Reporter Team',
+            "Some Rounds have a Coreporter that is not a member of Reporter Team",
+            "For each Round a Coreporter (if any) is a member of Reporter Team",
             checks_with_errors,
         ),
     ]
@@ -290,12 +290,12 @@ def verify_all(request):
 
     return render(
         request,
-        '%s/verify_all.html' % params.instance_name,
+        "%s/verify_all.html" % params.instance_name,
         {
-            'params': params,
-            'checks_successful': checks_successful,
-            'checks_with_warnings': checks_with_warnings,
-            'checks_with_errors': checks_with_errors,
+            "params": params,
+            "checks_successful": checks_successful,
+            "checks_with_warnings": checks_with_warnings,
+            "checks_with_errors": checks_with_errors,
         },
     )
 
@@ -306,8 +306,8 @@ def jury_export_csv(request):
     from django.http import HttpResponse
 
     # Create the HttpResponse object with the appropriate CSV header.
-    response = HttpResponse(content_type='text/csv')
-    response['Content-Disposition'] = 'attachment; filename="jurors.csv"'
+    response = HttpResponse(content_type="text/csv")
+    response["Content-Disposition"] = 'attachment; filename="jurors.csv"'
 
     writer = csv.writer(response)
 
@@ -331,12 +331,12 @@ def jury_export_csv(request):
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def participants_overview(request):
-    participants = Participant.objects.filter(role='TM') | Participant.objects.filter(
-        role='TC'
+    participants = Participant.objects.filter(role="TM") | Participant.objects.filter(
+        role="TC"
     )
     pr = params.personal_ranking
     for participant in participants:
@@ -375,7 +375,7 @@ def participants_overview(request):
             # TODO: all these computations should be performed when a round is saved
             participant.avggrade = participant.allpoints / len(rounds_as_participant)
 
-        if pr['active']:
+        if pr["active"]:
             participant.set_personal_score()
 
     participants = sorted(
@@ -384,32 +384,32 @@ def participants_overview(request):
 
     return render(
         request,
-        '%s/participants_overview.html' % params.instance_name,
+        "%s/participants_overview.html" % params.instance_name,
         {
-            'participants': participants,
-            'params': params,
-            'personal_ranking': pr['active'],
-            'sister_tournament_postfix': 'participants',
+            "participants": participants,
+            "params": params,
+            "personal_ranking": pr["active"],
+            "sister_tournament_postfix": "participants",
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def participants_all(request):
-    participants = Participant.objects.all().order_by('team', 'surname')
+    participants = Participant.objects.all().order_by("team", "surname")
 
     return render(
         request,
-        '%s/participants_all.html' % params.instance_name,
-        {'participants': participants},
+        "%s/participants_all.html" % params.instance_name,
+        {"participants": participants},
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def participant_detail(request, pk):
@@ -423,7 +423,7 @@ def participant_detail(request, pk):
         | Round.objects.filter(reporter_2=participant)
         | Round.objects.filter(opponent=participant)
         | Round.objects.filter(reviewer=participant)
-    ).order_by('pf_number', 'round_number')
+    ).order_by("pf_number", "round_number")
 
     # TODO: refactor to use each filter separately
     average_grades = []
@@ -455,22 +455,22 @@ def participant_detail(request, pk):
 
     return render(
         request,
-        '%s/participant_detail.html' % params.instance_name,
+        "%s/participant_detail.html" % params.instance_name,
         {
-            'participant': participant,
-            'sister_tournament_postfix': 'participants',
+            "participant": participant,
+            "sister_tournament_postfix": "participants",
             "average_grades": average_grades,
-            'params': params,
+            "params": params,
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def jurys_overview(request):
-    jurys = Jury.objects.all().order_by('name')
+    jurys = Jury.objects.all().order_by("name")
 
     for jury in jurys:
         mygrades = JuryGrade.objects.filter(jury=jury)
@@ -488,13 +488,13 @@ def jurys_overview(request):
             jury.meanrevgrade = 0.0
     return render(
         request,
-        '%s/jurys_overview.html' % params.instance_name,
-        {'jurys': jurys, 'sister_tournament_postfix': 'jurys', 'params': params},
+        "%s/jurys_overview.html" % params.instance_name,
+        {"jurys": jurys, "sister_tournament_postfix": "jurys", "params": params},
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def jury_detail(request, pk):
@@ -506,30 +506,30 @@ def jury_detail(request, pk):
     mygrades = JuryGrade.objects.filter(jury=jury)
     return render(
         request,
-        '%s/jury_detail.html' % params.instance_name,
+        "%s/jury_detail.html" % params.instance_name,
         {
-            'jury': jury,
-            'grades': mygrades,
-            'sister_tournament_postfix': 'jurys',
-            'params': params,
+            "jury": jury,
+            "grades": mygrades,
+            "sister_tournament_postfix": "jurys",
+            "params": params,
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def tournament_overview(request):
     return render(
         request,
-        '%s/tournament_overview.html' % params.instance_name,
-        {'params': params},
+        "%s/tournament_overview.html" % params.instance_name,
+        {"params": params},
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def teams_overview(request):
@@ -537,13 +537,13 @@ def teams_overview(request):
     teams = sorted(teams, key=lambda team: team.name)
     return render(
         request,
-        '%s/teams_overview.html' % params.instance_name,
-        {'teams': teams, 'params': params},
+        "%s/teams_overview.html" % params.instance_name,
+        {"teams": teams, "params": params},
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def team_detail(request, team_name):
@@ -552,24 +552,24 @@ def team_detail(request, team_name):
     except ObjectDoesNotExist:
         raise Http404()
 
-    ranking = Team.objects.order_by('-total_points')
+    ranking = Team.objects.order_by("-total_points")
     for i, t in enumerate(ranking):
         if t == team:
             team.rank = i + 1
     # team.rank = ranking.index(team) + 1
     participants = Participant.objects.filter(team=team).filter(
-        role='TM'
-    ) | Participant.objects.filter(team=team).filter(role='TC')
+        role="TM"
+    ) | Participant.objects.filter(team=team).filter(role="TC")
 
-    rankedparticipants = participants.order_by('total_points')
+    rankedparticipants = participants.order_by("total_points")
 
     teamleaders_jury = Jury.objects.filter(team=team)
     val_teamlead = (
         Participant.objects.filter(team=team)
-        .filter(role='TL')
-        .values('name', 'surname')
+        .filter(role="TL")
+        .values("name", "surname")
     )
-    val_jury = Jury.objects.filter(team=team).values('name', 'surname')
+    val_jury = Jury.objects.filter(team=team).values("name", "surname")
     delta_models = val_teamlead.difference(val_jury)
     if delta_models:
         teamleaders = delta_models
@@ -617,7 +617,7 @@ def team_detail(request, team_name):
 
     if params.enable_apriori_rejections:
         apriori_rejections = AprioriRejection.objects.filter(team=team).order_by(
-            'problem'
+            "problem"
         )
     else:
         apriori_rejections = ()
@@ -630,37 +630,37 @@ def team_detail(request, team_name):
     if display_eternal_rejections:
         eternal_rejections = EternalRejection.objects.filter(
             round__reporter_team=team
-        ).order_by('problem')
+        ).order_by("problem")
     else:
         eternal_rejections = ()
 
     supplementary_materials = SupplementaryMaterial.objects.filter(team=team).order_by(
-        'problem'
+        "problem"
     )
 
     return render(
         request,
-        '%s/team_detail.html' % params.instance_name,
+        "%s/team_detail.html" % params.instance_name,
         {
-            'team': team,
-            'participants': rankedparticipants,
-            'teamleaders': teamleaders,
-            'teamleaders_jury': teamleaders_jury,
-            'supplementary_materials': supplementary_materials,
-            'allrounds': allrounds,
-            'penalties': penalties,
-            'eternal_rejections': eternal_rejections,
-            'display_eternal_rejections': display_eternal_rejections,
-            'apriori_rejections': apriori_rejections,
-            'sister_tournament_postfix': 'ranking',
-            'bonus_points_displayed': bonus_points_displayed,
-            'params': params,
+            "team": team,
+            "participants": rankedparticipants,
+            "teamleaders": teamleaders,
+            "teamleaders_jury": teamleaders_jury,
+            "supplementary_materials": supplementary_materials,
+            "allrounds": allrounds,
+            "penalties": penalties,
+            "eternal_rejections": eternal_rejections,
+            "display_eternal_rejections": display_eternal_rejections,
+            "apriori_rejections": apriori_rejections,
+            "sister_tournament_postfix": "ranking",
+            "bonus_points_displayed": bonus_points_displayed,
+            "params": params,
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def problems_overview(request):
@@ -674,17 +674,17 @@ def problems_overview(request):
 
     return render(
         request,
-        '%s/problems_overview.html' % params.instance_name,
+        "%s/problems_overview.html" % params.instance_name,
         {
-            'sister_tournament_postfix': 'problems',
-            'problems': problems,
-            'params': params,
+            "sister_tournament_postfix": "problems",
+            "problems": problems,
+            "params": params,
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def problem_detail(request, pk):
@@ -697,29 +697,29 @@ def problem_detail(request, pk):
 
     supplementary_materials = SupplementaryMaterial.objects.filter(
         problem=problem
-    ).order_by('team')
+    ).order_by("team")
 
     return render(
         request,
-        '%s/problem_detail.html' % params.instance_name,
+        "%s/problem_detail.html" % params.instance_name,
         {
-            'problem': problem,
-            'meangrades': meangrades,
-            'teamresults': teamresults,
-            'supplementary_materials': supplementary_materials,
-            'sister_tournament_postfix': 'problems',
-            'params': params,
+            "problem": problem,
+            "meangrades": meangrades,
+            "teamresults": teamresults,
+            "supplementary_materials": supplementary_materials,
+            "sister_tournament_postfix": "problems",
+            "params": params,
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def rounds(request):
     rounds = Round.objects.all()
-    rooms = Room.objects.order_by('name')
+    rooms = Room.objects.order_by("name")
 
     orderedroundsperroom = []
     for room in rooms:
@@ -728,18 +728,18 @@ def rounds(request):
             room_round_list.append(
                 Round.objects.filter(pf_number=pf)
                 .filter(room=room)
-                .order_by('round_number')
+                .order_by("round_number")
             )
         thisroom = {"name": room.name, "link": room.get_link, "rounds": room_round_list}
         orderedroundsperroom.append(thisroom)
 
     render_data = {
-        'params': params,
-        'orderedroundsperroom': orderedroundsperroom,
-        'selective_fight_names': zip(
-            selective_fights, params.fights['names'][: params.npf]
+        "params": params,
+        "orderedroundsperroom": orderedroundsperroom,
+        "selective_fight_names": zip(
+            selective_fights, params.fights["names"][: params.npf]
         ),
-        'sister_tournament_postfix': 'physics_fights',
+        "sister_tournament_postfix": "physics_fights",
     }
 
     if params.with_final_pf:
@@ -765,9 +765,9 @@ def rounds(request):
 
         render_data.update(
             {
-                'final_fight_number': final_fight_number,
-                'finalrounds': finalrounds,
-                'finalranking': finalranking,
+                "final_fight_number": final_fight_number,
+                "finalrounds": finalrounds,
+                "finalranking": finalranking,
             }
         )
 
@@ -775,12 +775,12 @@ def rounds(request):
         semifinal_rounds = []
         for pf in semifinals:
             semifinal_rounds.append(
-                Round.objects.filter(pf_number=pf).order_by('round_number')
+                Round.objects.filter(pf_number=pf).order_by("round_number")
             )
         render_data.update(
             {
-                'semifinal_data': zip(
-                    params.fights['names'][
+                "semifinal_data": zip(
+                    params.fights["names"][
                         params.npf : params.npf + params.semifinals_quantity
                     ],
                     semifinal_rounds,
@@ -788,11 +788,11 @@ def rounds(request):
             }
         )
 
-    return render(request, '%s/rounds.html' % params.instance_name, render_data)
+    return render(request, "%s/rounds.html" % params.instance_name, render_data)
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def round_detail(request, pk):
@@ -804,7 +804,7 @@ def round_detail(request, pk):
     # TODO: rewrite the following in pythonish way!!!
     from tactics import make_old_fashioned_list_from_tactics_data
 
-    jurygrades = JuryGrade.objects.filter(round=round).order_by('jury__name')
+    jurygrades = JuryGrade.objects.filter(round=round).order_by("jury__name")
     meangrades = []
 
     # has the round started ? If so, then reporter_team, opponent_team and reviewer_team must be defined
@@ -837,48 +837,48 @@ def round_detail(request, pk):
 
     return render(
         request,
-        '%s/round_detail.html' % params.instance_name,
+        "%s/round_detail.html" % params.instance_name,
         {
-            'params': params,
-            'round': round,
-            'jurygrades': jurygrades,
-            'meangrades': meangrades,
-            'tacticalrejections': tacticalrejections,
-            'eternalrejection': eternalrejection,
-            'started': started,
-            'finished': finished,
-            'unavailable_problems': make_old_fashioned_list_from_tactics_data(round),
-            'display_room_name': round.pf_number <= params.npf,
-            'display_rejections': params.fights['challenge_procedure'][
+            "params": params,
+            "round": round,
+            "jurygrades": jurygrades,
+            "meangrades": meangrades,
+            "tacticalrejections": tacticalrejections,
+            "eternalrejection": eternalrejection,
+            "started": started,
+            "finished": finished,
+            "unavailable_problems": make_old_fashioned_list_from_tactics_data(round),
+            "display_room_name": round.pf_number <= params.npf,
+            "display_rejections": params.fights["challenge_procedure"][
                 round.pf_number - 1
             ]
             and (params.enable_tactical_rejections or params.enable_eternal_rejections),
-            'display_problems_forbidden': params.fights['problems_forbidden'][
+            "display_problems_forbidden": params.fights["problems_forbidden"][
                 round.pf_number - 1
             ],
-            'physics_fight_name': params.fights['names'][round.pf_number - 1],
-            'sister_tournament_postfix': 'physics_fights',
+            "physics_fight_name": params.fights["names"][round.pf_number - 1],
+            "sister_tournament_postfix": "physics_fights",
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def physics_fight_detail(request, pfid):
     if float(pfid) not in range(1, npf_tot + 1):
         raise Http404()
     rounds = Round.objects.filter(pf_number=pfid)
-    rooms = Room.objects.all().order_by('name')
+    rooms = Room.objects.all().order_by("name")
 
     roomgrades = []
     for room in rooms:
-        roomrounds = rounds.filter(room=room).order_by('round_number')
+        roomrounds = rounds.filter(room=room).order_by("round_number")
 
         grades = JuryGrade.objects.filter(
             round__room=room, round__pf_number=pfid
-        ).order_by('round__round_number', 'jury__surname')
+        ).order_by("round__round_number", "jury__surname")
         gradesdico = {}
         for grade in grades:
             gradesdico[grade.jury] = []
@@ -887,8 +887,8 @@ def physics_fight_detail(request, pfid):
 
         juryallgrades = [
             {
-                'juryroundsgrades': gradesdico[jury],
-                'name': jury.name + " " + jury.surname,
+                "juryroundsgrades": gradesdico[jury],
+                "name": jury.name + " " + jury.surname,
             }
             for jury in gradesdico.keys()
         ]
@@ -924,14 +924,14 @@ def physics_fight_detail(request, pfid):
 
     return render(
         request,
-        '%s/physics_fight_detail.html' % params.instance_name,
+        "%s/physics_fight_detail.html" % params.instance_name,
         {
-            'params': params,
-            'roomgrades': roomgrades,
-            'ignore_rooms': int(pfid) > params.npf,
-            'fight_name': params.fights['names'][int(pfid) - 1],
-            'sister_tournament_postfix': 'physics_fights',
-            'no_round_played': rounds.count() == 0,
+            "params": params,
+            "roomgrades": roomgrades,
+            "ignore_rooms": int(pfid) > params.npf,
+            "fight_name": params.fights["names"][int(pfid) - 1],
+            "sister_tournament_postfix": "physics_fights",
+            "no_round_played": rounds.count() == 0,
         },
     )
 
@@ -983,13 +983,13 @@ def rank_ordinal(value):
     except ValueError:
         return value
     lang = get_language()
-    if lang in ('ru', 'ruttn'):
+    if lang in ("ru", "ruttn"):
         return "%dй" % (value)
     else:
-        t = ('th', 'st', 'nd', 'rd') + ('th',) * 6
+        t = ("th", "st", "nd", "rd") + ("th",) * 6
         if value % 100 in (11, 12, 13):
-            return u"%d%s" % (value, t[0])
-        return u'%d%s' % (value, t[value % 10])
+            return "%d%s" % (value, t[0])
+        return "%d%s" % (value, t[value % 10])
 
 
 def create_ranking(teams):
@@ -1014,7 +1014,7 @@ def create_ranking(teams):
 
 
 def create_final_ranking():
-    teams = Team.objects.filter(is_in_final=True).order_by('-final_points')
+    teams = Team.objects.filter(is_in_final=True).order_by("-final_points")
     if teams.count() == 0:
         return None
 
@@ -1022,7 +1022,7 @@ def create_final_ranking():
 
 
 def create_semi_ranking():
-    teams = Team.objects.filter(is_in_semi=True).order_by('-semi_points')
+    teams = Team.objects.filter(is_in_semi=True).order_by("-semi_points")
     if teams.count() == 0:
         return None
 
@@ -1030,11 +1030,11 @@ def create_semi_ranking():
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def ranking(request):
-    rankteams = create_ranking(Team.objects.order_by('-total_points'))
+    rankteams = create_ranking(Team.objects.order_by("-total_points"))
     if rankteams:
         rankteams[0].emphase = True
 
@@ -1047,29 +1047,29 @@ def ranking(request):
 
     return render(
         request,
-        '%s/ranking.html' % params.instance_name,
+        "%s/ranking.html" % params.instance_name,
         {
-            'params': params,
-            'final_fight_number': final_fight_number,
-            'finalrankteams': finalrankteams,
-            'rankteams': rankteams,
-            'semirankteams': semirankteams,
-            'sister_tournament_postfix': 'ranking',
+            "params": params,
+            "final_fight_number": final_fight_number,
+            "finalrankteams": finalrankteams,
+            "rankteams": rankteams,
+            "semirankteams": semirankteams,
+            "sister_tournament_postfix": "ranking",
         },
     )
 
 
 @user_passes_test(
-    ninja_test, redirect_field_name=None, login_url='/%s/soon' % params.instance_name
+    ninja_test, redirect_field_name=None, login_url="/%s/soon" % params.instance_name
 )
 @cache_page(cache_duration)
 def poolranking(request):
 
     # Pool A
-    rankteamsA = create_ranking(Team.objects.filter(pool="A").order_by('-total_points'))
+    rankteamsA = create_ranking(Team.objects.filter(pool="A").order_by("-total_points"))
 
     # Pool B
-    rankteamsB = create_ranking(Team.objects.filter(pool="B").order_by('-total_points'))
+    rankteamsB = create_ranking(Team.objects.filter(pool="B").order_by("-total_points"))
 
     semirankteams = create_semi_ranking()
 
@@ -1080,15 +1080,15 @@ def poolranking(request):
 
     return render(
         request,
-        '%s/poolranking.html' % params.instance_name,
+        "%s/poolranking.html" % params.instance_name,
         {
-            'params': params,
-            'final_fight_number': final_fight_number,
-            'finalrankteams': finalrankteams,
-            'rankteamsA': rankteamsA,
-            'rankteamsB': rankteamsB,
-            'sister_tournament_postfix': 'ranking',
-            'semirankteams': semirankteams,
+            "params": params,
+            "final_fight_number": final_fight_number,
+            "finalrankteams": finalrankteams,
+            "rankteamsA": rankteamsA,
+            "rankteamsB": rankteamsB,
+            "sister_tournament_postfix": "ranking",
+            "semirankteams": semirankteams,
         },
     )
 
@@ -1097,13 +1097,13 @@ def make_dict_from_csv_row(row):
     # This is just a map to control numbers of columns which are imported
     # No logic should be placed here!
     return {
-        'name': row[1],
-        'surname': row[3],
-        'affiliation': row[4],
-        'team': row[9],
-        'role': row[10],
-        'is_jury': row[11],
-        'email': row[19],
+        "name": row[1],
+        "surname": row[3],
+        "affiliation": row[4],
+        "team": row[9],
+        "role": row[10],
+        "is_jury": row[11],
+        "email": row[19],
     }
 
 
@@ -1111,30 +1111,30 @@ def make_row_importable(row):
     # All the logic needed to parse the row
     # Some edition-specific things are hardcoded here
 
-    if row['team'] == 'Organisational Registration (IOC, ExeCom, invited guest, etc.)':
+    if row["team"] == "Organisational Registration (IOC, ExeCom, invited guest, etc.)":
         # No team reference needed
-        row['team'] = None
+        row["team"] = None
     else:
         # This also holds automated creation of teams
-        row['team'], created = Team.objects.get_or_create(name=row['team'])
+        row["team"], created = Team.objects.get_or_create(name=row["team"])
 
-    row['is_jury'] = row['is_jury'] != '0'
+    row["is_jury"] = row["is_jury"] != "0"
 
-    if row['role'] == 'Team captain':
-        row['role'] = 'TC'
-    elif row['role'] == 'Team member':
-        row['role'] = 'TM'
+    if row["role"] == "Team captain":
+        row["role"] = "TC"
+    elif row["role"] == "Team member":
+        row["role"] = "TM"
     else:
-        row['role'] = None
+        row["role"] = None
 
 
-@user_passes_test(lambda u: u.is_superuser, login_url='/admin')
+@user_passes_test(lambda u: u.is_superuser, login_url="/admin")
 @cache_page(cache_duration)
 def upload_csv(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            csvfile = request.FILES['csvfile']
+            csvfile = request.FILES["csvfile"]
             reader = csv.reader(csvfile)
             next(reader)
             for row in reader:
@@ -1144,44 +1144,44 @@ def upload_csv(request):
 
                 # If a person is not a jury member and has a role,
                 # import him/her as a participant
-                if not row['is_jury'] and row['role']:
+                if not row["is_jury"] and row["role"]:
                     Participant.objects.get_or_create(
-                        name=row['name'],
-                        surname=row['surname'],
-                        affiliation=row['affiliation'],
-                        role=row['role'],
-                        team=row['team'],
+                        name=row["name"],
+                        surname=row["surname"],
+                        affiliation=row["affiliation"],
+                        role=row["role"],
+                        team=row["team"],
                     )
-                elif row['is_jury']:
+                elif row["is_jury"]:
                     Jury.objects.get_or_create(
-                        name=row['name'],
-                        surname=row['surname'],
-                        affiliation=row['affiliation'],
-                        team=row['team'],
+                        name=row["name"],
+                        surname=row["surname"],
+                        affiliation=row["affiliation"],
+                        team=row["team"],
                     )
     else:
         form = UploadForm()
 
     return render(
         request,
-        '%s/upload_csv.html' % params.instance_name,
-        {'form': form, 'params': params},
+        "%s/upload_csv.html" % params.instance_name,
+        {"form": form, "params": params},
     )
 
 
-@user_passes_test(lambda u: u.is_staff, login_url='/admin')
+@user_passes_test(lambda u: u.is_staff, login_url="/admin")
 def upload_problems(request):
-    if request.method == 'POST':
+    if request.method == "POST":
         form = UploadForm(request.POST, request.FILES)
         if form.is_valid():
-            csvfile = request.FILES['csvfile']
+            csvfile = request.FILES["csvfile"]
             reader = csv.reader(csvfile)
             # Uncomment to skip header
             # next(reader)
             for row in reader:
                 name = row[0]
-                text = row[1] if len(row) > 1 else ''
-                auth = row[2] if len(row) > 2 else ''
+                text = row[1] if len(row) > 1 else ""
+                auth = row[2] if len(row) > 2 else ""
                 Problem.objects.get_or_create(name=name, description=text, author=auth)
 
     else:
@@ -1189,6 +1189,6 @@ def upload_problems(request):
 
     return render(
         request,
-        '%s/upload_problems.html' % params.instance_name,
-        {'form': form, 'params': params},
+        "%s/upload_problems.html" % params.instance_name,
+        {"form": form, "params": params},
     )

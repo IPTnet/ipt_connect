@@ -24,8 +24,8 @@ NAME = {
 # Usually you should set it to None
 # This is useful only for development and first stages of Three Science Tournament
 sister_tournaments = (
-    ('IPT dev', '/IPT' + 'dev/'),
-    ('IPT dev (pf2)', '/IPT' + 'dev_pf2/'),
+    ("IPT dev", "/IPT" + "dev/"),
+    ("IPT dev (pf2)", "/IPT" + "dev_pf2/"),
 )
 
 poster_url = "https://hsto.org/webt/zu/4_/cw/zu4_cwveq1izw4jst5yugtxng5q.png"
@@ -153,7 +153,7 @@ fights = {
     # Bonus points multipliers
     # You can set it to 2 for semifinals or the last selective PFs to emphase the drama.
     # You can also set it to zero for the final with the same purpose!
-    'bonus_multipliers': [1, 1, 1, 1, 2, 2, 0],
+    "bonus_multipliers": [1, 1, 1, 1, 2, 2, 0],
     # Is there challenge procedure at the beginning of each round of the fight?
     # Some tournaments, such as Syberian IYPT, play the last selective PF without the challenge procedure
     # (i.e. like a Final: every team decides what to present)

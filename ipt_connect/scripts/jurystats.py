@@ -5,7 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 
-os.environ['DJANGO_SETTINGS_MODULE'] = "ipt_connect.settings"
+os.environ["DJANGO_SETTINGS_MODULE"] = "ipt_connect.settings"
 django.setup()
 
 from IPTdev.models import *
@@ -43,7 +43,7 @@ ax.set_xticklabels([team.name for team in teams])
 ax.set_yticks(np.arange(len(jurys)))
 ax.set_yticklabels([jury.name for jury in jurys])
 for i in np.arange(len(jurys)):
-    ax.axhline(i, ls='--', alpha=0.5, color='grey')
+    ax.axhline(i, ls="--", alpha=0.5, color="grey")
 
 
 for indt, team in enumerate(teams):
@@ -109,9 +109,9 @@ for indt, team in enumerate(teams):
 
         jury.gradscatters.append(np.mean(gradscatters))
         if np.mean(gradscatters) >= 0:
-            color = 'royalblue'
+            color = "royalblue"
         elif np.mean(gradscatters) < 0:
-            color = 'crimson'
+            color = "crimson"
         maxscatter = 1.0
         if len(grads) > 0:
             ax.scatter(
@@ -129,9 +129,9 @@ jcolors = []
 jalphas = []
 for jury in jurys:
     if np.nanmean(jury.gradscatters) >= 0:
-        color = 'royalblue'
+        color = "royalblue"
     elif np.nanmean(jury.gradscatters) < 0:
-        color = 'crimson'
+        color = "crimson"
     alpha = max(min(np.abs(np.nanmean(jury.gradscatters)) / maxscatter, 1), 0.6)
     jcolors.append(color)
     jalphas.append(alpha)
@@ -145,9 +145,9 @@ tvals = []
 maxscatter = 0.5
 for team in teams:
     if np.nanmean([np.nanmean(jury.gradscatters) for jury in team.jurys]) >= 0:
-        color = 'royalblue'
+        color = "royalblue"
     elif np.nanmean([np.nanmean(jury.gradscatters) for jury in team.jurys]) < 0:
-        color = 'crimson'
+        color = "crimson"
     val = np.nanmean([np.nanmean(jury.gradscatters) for jury in team.jurys])
     alpha = max(
         min(
@@ -162,7 +162,7 @@ for team in teams:
     tvals.append(val)
 
 ax.set_xticklabels(
-    [team.name + '\n' + str("%.2f" % tvals[ind]) for ind, team in enumerate(teams)]
+    [team.name + "\n" + str("%.2f" % tvals[ind]) for ind, team in enumerate(teams)]
 )
 [t.set_color(tcolors[ind]) for ind, t in enumerate(ax.xaxis.get_ticklabels())]
 [t.set_alpha(talphas[ind]) for ind, t in enumerate(ax.xaxis.get_ticklabels())]
@@ -217,20 +217,20 @@ if 0:
     title = "jury members with at least 12 PFs"
     plt.figure(figsize=(8, 10))
     plt.subplot(4, 1, 1)
-    plt.hist(meds_rep, bins=20, color="sage", label='reporter')
+    plt.hist(meds_rep, bins=20, color="sage", label="reporter")
     plt.legend()
     plt.ylabel("#", fontsize=14)
     plt.title(title, fontsize=18)
     plt.subplot(4, 1, 2)
-    plt.hist(meds_opp, bins=20, color="crimson", label='opponent')
+    plt.hist(meds_opp, bins=20, color="crimson", label="opponent")
     plt.ylabel("#", fontsize=14)
     plt.legend()
     plt.subplot(4, 1, 3)
-    plt.hist(meds_rev, bins=20, color="gray", label='reviewer')
+    plt.hist(meds_rev, bins=20, color="gray", label="reviewer")
     plt.ylabel("#", fontsize=14)
     plt.legend()
     plt.subplot(4, 1, 4)
-    plt.hist(meds_all, bins=20, color="royalblue", label='all grades')
+    plt.hist(meds_all, bins=20, color="royalblue", label="all grades")
     plt.xlabel("Median of jury member grades", fontsize=14)
     plt.ylabel("#", fontsize=14)
     plt.legend()
@@ -239,20 +239,20 @@ if 0:
     title = "jury members with at least 12 PFs"
     plt.figure(figsize=(8, 10))
     plt.subplot(4, 1, 1)
-    plt.hist(stds_rep, bins=20, color="sage", label='reporter')
+    plt.hist(stds_rep, bins=20, color="sage", label="reporter")
     plt.legend()
     plt.ylabel("#", fontsize=14)
     plt.title(title, fontsize=18)
     plt.subplot(4, 1, 2)
-    plt.hist(stds_opp, bins=20, color="crimson", label='opponent')
+    plt.hist(stds_opp, bins=20, color="crimson", label="opponent")
     plt.ylabel("#", fontsize=14)
     plt.legend()
     plt.subplot(4, 1, 3)
-    plt.hist(stds_rev, bins=20, color="gray", label='reviewer')
+    plt.hist(stds_rev, bins=20, color="gray", label="reviewer")
     plt.ylabel("#", fontsize=14)
     plt.legend()
     plt.subplot(4, 1, 4)
-    plt.hist(stds_all, bins=20, color="royalblue", label='all grades')
+    plt.hist(stds_all, bins=20, color="royalblue", label="all grades")
     plt.xlabel("Standard deviation of jury member grades ", fontsize=14)
     plt.ylabel("#", fontsize=14)
     plt.legend()
@@ -261,20 +261,20 @@ if 0:
     title = "jury members with at least 12 PFs"
     plt.figure(figsize=(8, 10))
     plt.subplot(4, 1, 1)
-    plt.scatter(meds_rep, stds_rep, s=60, color="sage", label='reporter')
+    plt.scatter(meds_rep, stds_rep, s=60, color="sage", label="reporter")
     plt.legend()
     plt.ylabel("Std", fontsize=14)
     plt.title(title, fontsize=18)
     plt.subplot(4, 1, 2)
-    plt.scatter(meds_opp, stds_opp, s=60, color="crimson", label='opponent')
+    plt.scatter(meds_opp, stds_opp, s=60, color="crimson", label="opponent")
     plt.ylabel("Std", fontsize=14)
     plt.legend()
     plt.subplot(4, 1, 3)
-    plt.scatter(meds_rev, stds_rev, s=60, color="grey", label='reviewer')
+    plt.scatter(meds_rev, stds_rev, s=60, color="grey", label="reviewer")
     plt.ylabel("Std", fontsize=14)
     plt.legend()
     plt.subplot(4, 1, 4)
-    plt.scatter(meds_all, stds_all, s=60, color="royalblue", label='all grades')
+    plt.scatter(meds_all, stds_all, s=60, color="royalblue", label="all grades")
     plt.xlabel("Median of jury member grades", fontsize=14)
     plt.ylabel("Std", fontsize=14)
     plt.legend()

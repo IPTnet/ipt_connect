@@ -40,21 +40,21 @@ class UploadToPathAndRename(object):
         self.sub_path = path
 
     def __call__(self, instance, filename):
-        ext = filename.split('-')[-1]
+        ext = filename.split("-")[-1]
         # get filename
         if instance.pk:
             filename = iri_to_uri(
                 replace(
-                    (u'{}_{}_{}.{}').format(
+                    ("{}_{}_{}.{}").format(
                         instance.team, instance.surname, instance.name, ext
                     ),
-                    ' ',
-                    '_',
+                    " ",
+                    "_",
                 )
             )
         else:
             # set filename as random string
-            filename = '{}.{}'.format(uuid4().hex, ext)
+            filename = "{}.{}".format(uuid4().hex, ext)
         # return the whole path to the file
         return os.path.join(self.sub_path, filename)
 
@@ -65,51 +65,51 @@ class Participant(models.Model):
     This class represent the basic model of our program, a participant.
     It can be a student competing, a team-leader, a jury member, an IOC or an external jury or even a staff, basically anyone taking part in the tournament."""
 
-    GENDER_CHOICES = (('M', 'Male'), ('F', 'Female'), ('D', 'Decline to report'))
+    GENDER_CHOICES = (("M", "Male"), ("F", "Female"), ("D", "Decline to report"))
 
     ROLE_CHOICES = (
-        ('TM', 'Team Member'),
-        ('TC', 'Team Captain'),
-        ('TL', 'Team Leader'),
-        ('ACC', 'Accompanying'),
+        ("TM", "Team Member"),
+        ("TC", "Team Captain"),
+        ("TL", "Team Leader"),
+        ("ACC", "Accompanying"),
     )
 
     DIET_CHOICES = (
-        ('NO', 'No specific diet'),
-        ('NOPORK', 'No pork'),
-        ('NOMEAT', 'No meat'),
-        ('NOFISH', 'No fish'),
-        ('NOMEAT_NOEGG', 'No meat, No eggs'),
-        ('OTHER', 'Other (see remarks)'),
+        ("NO", "No specific diet"),
+        ("NOPORK", "No pork"),
+        ("NOMEAT", "No meat"),
+        ("NOFISH", "No fish"),
+        ("NOMEAT_NOEGG", "No meat, No eggs"),
+        ("OTHER", "Other (see remarks)"),
     )
 
     SHIRT_SIZES = (
-        ('S', 'Small'),
-        ('M', 'Medium'),
-        ('L', 'Large'),
-        ('XL', 'Extra Large'),
+        ("S", "Small"),
+        ("M", "Medium"),
+        ("L", "Large"),
+        ("XL", "Extra Large"),
     )
 
     STATUS_CHOICES = (
-        ('B', 'Bachelor student'),
-        ('M', 'Master student'),
-        ('S', 'Specialist student'),
-        ('O', 'Other'),
+        ("B", "Bachelor student"),
+        ("M", "Master student"),
+        ("S", "Specialist student"),
+        ("O", "Other"),
     )
 
     # parameters
-    name = models.CharField(max_length=50, default=None, verbose_name='Name')
-    surname = models.CharField(max_length=50, default=None, verbose_name='Surname')
+    name = models.CharField(max_length=50, default=None, verbose_name="Name")
+    surname = models.CharField(max_length=50, default=None, verbose_name="Surname")
     gender = models.CharField(
-        blank=True, max_length=1, choices=GENDER_CHOICES, verbose_name='Gender'
+        blank=True, max_length=1, choices=GENDER_CHOICES, verbose_name="Gender"
     )
     email = models.EmailField(
         blank=True,
-        help_text='This address will be used to send the participant every important infos about the tournament.',
-        verbose_name='Email',
+        help_text="This address will be used to send the participant every important infos about the tournament.",
+        verbose_name="Email",
     )
     phone_regex = RegexValidator(
-        regex=r'^\+?1?\d{9,15}$',
+        regex=r"^\+?1?\d{9,15}$",
         message="Phone number must be entered in the format: '+999999999'. Up to 15 digits allowed.",
     )
     phone_number = models.CharField(
@@ -119,38 +119,38 @@ class Participant(models.Model):
         help_text="Compulsory for the Team Leaders.",
     )  # validators should be a list
     passport_number = models.CharField(blank=True, max_length=50)
-    birthdate = models.DateField(default='1900-01-31', verbose_name='Birthdate')
+    birthdate = models.DateField(default="1900-01-31", verbose_name="Birthdate")
     # photo = models.ImageField(upload_to=UploadToPathAndRename(params.instance_name+'/id_photo'),help_text="Please use a clear ID photo. This will be used for badges and transportation cards.", null=True)
-    team = models.ForeignKey('Team', null=True, verbose_name='Team')
+    team = models.ForeignKey("Team", null=True, verbose_name="Team")
     role = models.CharField(
         max_length=20,
         choices=ROLE_CHOICES,
         help_text="The team must consist of a Team Captain (student), between two and five Team Members (students), and between one and two Team Leaders (Prof., PhD, Postdoc in physics). Don't forget to register yourself!",
         default="TM",
-        verbose_name='Role',
+        verbose_name="Role",
     )
-    affiliation = models.CharField(blank=True, max_length=50, default='XXX University')
+    affiliation = models.CharField(blank=True, max_length=50, default="XXX University")
     status = models.CharField(
-        max_length=1, choices=STATUS_CHOICES, blank=True, verbose_name='Student status'
+        max_length=1, choices=STATUS_CHOICES, blank=True, verbose_name="Student status"
     )
     veteran = models.BooleanField(
         default=False,
         help_text="Has the participant already participated in the tournament? (informative only)",
-        verbose_name='Veteran',
+        verbose_name="Veteran",
     )
     diet = models.CharField(
         blank=True,
         max_length=20,
         choices=DIET_CHOICES,
-        help_text='Does the participant have a specific diet?',
+        help_text="Does the participant have a specific diet?",
     )
     mixed_gender_accommodation = models.BooleanField(
         default=True,
         help_text="Is it ok for the participant to be in a mixed gender hotel room?",
-        verbose_name='Mixed gender accommodation?',
+        verbose_name="Mixed gender accommodation?",
     )
     shirt_size = models.CharField(blank=True, max_length=2, choices=SHIRT_SIZES)
-    remark = models.TextField(blank=True, verbose_name='Remarks')
+    remark = models.TextField(blank=True, verbose_name="Remarks")
 
     total_points = models.FloatField(default=0.0, editable=False)
     mean_score_as_reporter = models.FloatField(default=0.0, editable=False)
@@ -165,7 +165,7 @@ class Participant(models.Model):
         """
         :return: return the full name of the participant
         """
-        return self.name + ' ' + self.surname
+        return self.name + " " + self.surname
 
     def __unicode__(self):
         """
@@ -212,31 +212,31 @@ class Participant(models.Model):
         pr = params.personal_ranking
         self.personal_score = 0
 
-        rounds = Round.objects.filter(pf_number__lte=pr['up_to_fight'])
+        rounds = Round.objects.filter(pf_number__lte=pr["up_to_fight"])
 
         for r in rounds.filter(reporter=self):
-            if r.score_reporter > pr['rep_threshold']:
-                self.personal_score += (r.score_reporter - pr['rep_threshold']) * pr[
-                    'rep_coeff'
+            if r.score_reporter > pr["rep_threshold"]:
+                self.personal_score += (r.score_reporter - pr["rep_threshold"]) * pr[
+                    "rep_coeff"
                 ]
 
         for r in rounds.filter(opponent=self):
-            if r.score_opponent > pr['opp_threshold']:
-                self.personal_score += (r.score_opponent - pr['opp_threshold']) * pr[
-                    'opp_coeff'
+            if r.score_opponent > pr["opp_threshold"]:
+                self.personal_score += (r.score_opponent - pr["opp_threshold"]) * pr[
+                    "opp_coeff"
                 ]
 
         for r in rounds.filter(reviewer=self):
-            if r.score_reviewer > pr['rev_threshold']:
-                self.personal_score += (r.score_reviewer - pr['rev_threshold']) * pr[
-                    'rev_coeff'
+            if r.score_reviewer > pr["rev_threshold"]:
+                self.personal_score += (r.score_reviewer - pr["rev_threshold"]) * pr[
+                    "rev_coeff"
                 ]
 
     @classmethod
     def fast_team_ranking(cls, team):
         participants = Participant.objects.filter(
-            role='TM', team=team
-        ) | Participant.objects.filter(role='TC', team=team)
+            role="TM", team=team
+        ) | Participant.objects.filter(role="TC", team=team)
         return sorted(participants, key=lambda x: x.total_points)[::-1]
 
 
@@ -247,7 +247,7 @@ class Problem(models.Model):
 
     name = models.CharField(max_length=50, default=None)
     description = models.TextField(max_length=4096, default=None)
-    author = models.CharField(blank=True, max_length=128, default='')
+    author = models.CharField(blank=True, max_length=128, default="")
 
     mean_score_of_reporters = models.FloatField(default=0.0, editable=False)
     mean_score_of_opponents = models.FloatField(default=0.0, editable=False)
@@ -367,7 +367,7 @@ class Team(models.Model):
     This model represent a team, to which all the participants belong to
     """
 
-    POOL_CHOICES = (('A', 'Pool A'), ('B', 'Pool B'), ('O', 'Not attributed'))
+    POOL_CHOICES = (("A", "Pool A"), ("B", "Pool B"), ("O", "Not attributed"))
 
     name = models.CharField(max_length=50)
     surname = models.CharField(max_length=50, null=True, blank=True, default=None)
@@ -376,11 +376,11 @@ class Team(models.Model):
         on_delete=models.SET_NULL,
         null=True,
         blank=True,
-        related_name='Team_' + params.instance_name,
+        related_name="Team_" + params.instance_name,
         verbose_name="Admin",
     )
     pool = models.CharField(
-        max_length=1, choices=POOL_CHOICES, verbose_name='Pool', null=True, blank=True
+        max_length=1, choices=POOL_CHOICES, verbose_name="Pool", null=True, blank=True
     )
 
     total_points = models.FloatField(default=0.0, editable=False)
@@ -600,7 +600,7 @@ class Team(models.Model):
 
 class Room(models.Model):
     name = models.CharField(max_length=50)
-    link = models.CharField(max_length=2083, blank=True, default='')
+    link = models.CharField(max_length=2083, blank=True, default="")
 
     def __unicode__(self):
         return self.name
@@ -617,37 +617,37 @@ class Room(models.Model):
 
 
 class Jury(models.Model):
-    name = models.CharField(max_length=50, verbose_name='Name')
-    surname = models.CharField(max_length=50, verbose_name='Surname')
+    name = models.CharField(max_length=50, verbose_name="Name")
+    surname = models.CharField(max_length=50, verbose_name="Surname")
 
     def fullname(self):
         """
         :return: return the full name of the jury member
         """
-        return self.name + ' ' + self.surname
+        return self.name + " " + self.surname
 
     def __unicode__(self):
         return self.fullname()
 
     email = models.EmailField(
-        help_text='This address will be used to send the participant every important infos about the tournament.',
-        verbose_name='Email',
+        help_text="This address will be used to send the participant every important infos about the tournament.",
+        verbose_name="Email",
         blank=True,
     )
     affiliation = models.CharField(
         max_length=100,
         blank=True,
-        verbose_name='Affiliation to display',
-        help_text='Will be used for export (badges and web).',
+        verbose_name="Affiliation to display",
+        help_text="Will be used for export (badges and web).",
     )
-    team = models.ForeignKey('Team', null=True, blank=True)
+    team = models.ForeignKey("Team", null=True, blank=True)
     # TODO: unhardcode PF number!
-    pf1 = models.BooleanField(default=False, verbose_name='PF 1')
-    pf2 = models.BooleanField(default=False, verbose_name='PF 2')
-    pf3 = models.BooleanField(default=False, verbose_name='PF 3')
-    pf4 = models.BooleanField(default=False, verbose_name='PF 4')
-    final = models.BooleanField(default=False, verbose_name='Final')
-    remark = models.TextField(blank=True, verbose_name='Remarks')
+    pf1 = models.BooleanField(default=False, verbose_name="PF 1")
+    pf2 = models.BooleanField(default=False, verbose_name="PF 2")
+    pf3 = models.BooleanField(default=False, verbose_name="PF 3")
+    pf4 = models.BooleanField(default=False, verbose_name="PF 4")
+    final = models.BooleanField(default=False, verbose_name="Final")
+    remark = models.TextField(blank=True, verbose_name="Remarks")
 
     class Meta:
         verbose_name = "Juror"
@@ -656,13 +656,13 @@ class Jury(models.Model):
 class Round(models.Model):
 
     pf_number = models.IntegerField(
-        choices=(((ind + 1, params.fights['names'][ind]) for ind in range(npf_tot))),
+        choices=(((ind + 1, params.fights["names"][ind]) for ind in range(npf_tot))),
         default=None,
     )
     round_number = models.IntegerField(
         choices=(
             (
-                (ind + 1, 'Round ' + str(ind + 1))
+                (ind + 1, "Round " + str(ind + 1))
                 for ind in range(params.max_rounds_in_pf)
             )
         ),
@@ -670,25 +670,25 @@ class Round(models.Model):
     )
     room = models.ForeignKey(Room)
     reporter_team = models.ForeignKey(
-        Team, related_name='reporterteam', blank=True, null=True
+        Team, related_name="reporterteam", blank=True, null=True
     )
     opponent_team = models.ForeignKey(
-        Team, related_name='opponentteam', blank=True, null=True
+        Team, related_name="opponentteam", blank=True, null=True
     )
     reviewer_team = models.ForeignKey(
-        Team, related_name='reviewerteam', blank=True, null=True
+        Team, related_name="reviewerteam", blank=True, null=True
     )
     reporter = models.ForeignKey(
-        Participant, related_name='reporter_name_1', blank=True, null=True
+        Participant, related_name="reporter_name_1", blank=True, null=True
     )
     reporter_2 = models.ForeignKey(
-        Participant, related_name='reporter_name_2', blank=True, null=True
+        Participant, related_name="reporter_name_2", blank=True, null=True
     )
     opponent = models.ForeignKey(
-        Participant, related_name='opponent_name', blank=True, null=True
+        Participant, related_name="opponent_name", blank=True, null=True
     )
     reviewer = models.ForeignKey(
-        Participant, related_name='reviewer_name', blank=True, null=True
+        Participant, related_name="reviewer_name", blank=True, null=True
     )
     problem_presented = models.ForeignKey(Problem, blank=True, null=True)
     submitted_date = models.DateTimeField(default=timezone.now, blank=True, null=True)
@@ -709,10 +709,10 @@ class Round(models.Model):
 
     def __unicode__(self):
         try:
-            fight_name = params.fights['names'][self.pf_number - 1]
+            fight_name = params.fights["names"][self.pf_number - 1]
         except:
             # TODO: send a report to the admins!
-            fight_name = 'Unknown Fight (possibly an error!)'
+            fight_name = "Unknown Fight (possibly an error!)"
 
         return (
             fight_name
@@ -892,7 +892,7 @@ class TacticalRejection(models.Model):
     problem = models.ForeignKey(Problem)
     extra_free = models.BooleanField(
         default=False,
-        verbose_name='Extra free rejection',
+        verbose_name="Extra free rejection",
         editable=params.enable_extra_free_tactical_rejections,
     )
 
@@ -906,7 +906,7 @@ class EternalRejection(models.Model):
     problem = models.ForeignKey(Problem)
     extra_free = models.BooleanField(
         default=False,
-        verbose_name='Extra free rejection',
+        verbose_name="Extra free rejection",
         editable=params.enable_extra_free_eternal_rejections,
     )
 
@@ -972,7 +972,7 @@ class SiteConfiguration(SingletonModel):
     image_repeat_count = models.IntegerField(default=6)
 
     def __unicode__(self):
-        return u"Site Configuration"
+        return "Site Configuration"
 
     class Meta:
         verbose_name = "Site Configuration"
@@ -1044,11 +1044,11 @@ def update_bonus_points():
                     if (
                         round_with_report.bonus_points_reporter
                         != bonuspts[team]
-                        * params.fights['bonus_multipliers'][round.pf_number - 1]
+                        * params.fights["bonus_multipliers"][round.pf_number - 1]
                     ):
                         round_with_report.bonus_points_reporter = (
                             bonuspts[team]
-                            * params.fights['bonus_multipliers'][round.pf_number - 1]
+                            * params.fights["bonus_multipliers"][round.pf_number - 1]
                         )
                         # TODO: get rid of save()
                         round_with_report.save()

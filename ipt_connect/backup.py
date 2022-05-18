@@ -11,8 +11,8 @@ class Backup(object):
 
     now = datetime.datetime.now()
     CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
-    BACKUPS_DIR = os.path.join(CURRENT_DIR, 'backups', str(now.year), str(now.month))
-    LOG_FILE = os.path.join(CURRENT_DIR, 'backups', 'log.txt')
+    BACKUPS_DIR = os.path.join(CURRENT_DIR, "backups", str(now.year), str(now.month))
+    LOG_FILE = os.path.join(CURRENT_DIR, "backups", "log.txt")
 
     def __init__(self):
         try:
@@ -22,15 +22,15 @@ class Backup(object):
         logging.basicConfig(
             filename=Backup.LOG_FILE,
             level=logging.INFO,
-            format='%(asctime)s %(message)s',
-            datefmt='%Y/%m/%d %H:%M:%S -',
+            format="%(asctime)s %(message)s",
+            datefmt="%Y/%m/%d %H:%M:%S -",
         )
-        self.db_path = os.path.join(Backup.CURRENT_DIR, 'db.sqlite3')
-        self.db_file = open(self.db_path, 'rb')
+        self.db_path = os.path.join(Backup.CURRENT_DIR, "db.sqlite3")
+        self.db_file = open(self.db_path, "rb")
         if self.is_db_changed():
-            logging.info('Starting backup...')
+            logging.info("Starting backup...")
             self.local_backup()
-            logging.info('Finished backup.\n')
+            logging.info("Finished backup.\n")
         else:
             logging.info("Database wasn't changed. Backup not necessary.\n")
 
@@ -40,7 +40,7 @@ class Backup(object):
         """
         dbs = []
         for x in os.listdir(Backup.BACKUPS_DIR):
-            if x.endswith('.sqlite3'):
+            if x.endswith(".sqlite3"):
                 dbs.append((x, os.path.getctime(os.path.join(Backup.BACKUPS_DIR, x))))
         if not len(dbs):
             return False
@@ -54,7 +54,7 @@ class Backup(object):
         last_db_path = self.get_last_db()
         if not last_db_path:
             return True  # If backups doesn't exist return True
-        last_db = open(last_db_path, 'rb').read()
+        last_db = open(last_db_path, "rb").read()
         return (
             not hashlib.md5(self.db_file.read()).hexdigest()
             == hashlib.md5(last_db).hexdigest()
@@ -65,14 +65,14 @@ class Backup(object):
         Backup database to local folder.
         """
         now = datetime.datetime.now()
-        new_name = 'db_{}.sqlite3'.format(now.strftime("%Y-%m-%d_%H-%M-%S"))
+        new_name = "db_{}.sqlite3".format(now.strftime("%Y-%m-%d_%H-%M-%S"))
         try:
             shutil.copyfile(self.db_path, os.path.join(Backup.BACKUPS_DIR, new_name))
         except:
             logging.info("Something wrong, file wasn't copied!")
             return
-        logging.info('File was successfully copied.')
+        logging.info("File was successfully copied.")
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     b = Backup()

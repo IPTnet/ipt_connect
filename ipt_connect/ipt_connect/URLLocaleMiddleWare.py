@@ -1,6 +1,6 @@
 from django.utils import translation
 
-url_locale = (('/FPT2017', 'fr'),)
+url_locale = (("/FPT2017", "fr"),)
 
 
 class URLLocaleMiddleware:

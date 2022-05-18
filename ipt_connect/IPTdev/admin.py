@@ -53,14 +53,14 @@ class AprioriRejectionInline(admin.TabularInline):
 
 class Roundadmin(admin.ModelAdmin):
 
-    list_display = ('pf_number', 'round_number', 'room')
-    list_filter = ('pf_number', 'round_number', 'room')
+    list_display = ("pf_number", "round_number", "room")
+    list_filter = ("pf_number", "round_number", "room")
     fieldsets = [
         (
-            'General Information',
+            "General Information",
             {
-                'fields': [
-                    ('pf_number', "round_number", "room"),
+                "fields": [
+                    ("pf_number", "round_number", "room"),
                     ("reporter_team", "opponent_team", "reviewer_team"),
                 ]
             },
@@ -68,16 +68,16 @@ class Roundadmin(admin.ModelAdmin):
         (
             None,
             {
-                'fields': [
+                "fields": [
                     ("reporter"),
                     ("reporter_2"),
-                    ('opponent'),
-                    ('reviewer'),
+                    ("opponent"),
+                    ("reviewer"),
                     # ('problem_presented'),
                     # TODO: do the same in python-ish way
-                    ('problem_presented', "bonus_points_reporter")
+                    ("problem_presented", "bonus_points_reporter")
                     if params.manual_bonus_points
-                    else ('problem_presented'),
+                    else ("problem_presented"),
                 ]
             },
         ),
@@ -120,8 +120,8 @@ class Roundadmin(admin.ModelAdmin):
 
     class Media:
         js = (
-            params.instance_name + '/js/admin/js/jquery.js',
-            params.instance_name + '/js/admin/js/participant_fill.js',
+            params.instance_name + "/js/admin/js/jquery.js",
+            params.instance_name + "/js/admin/js/participant_fill.js",
         )
 
     # TODO: Display the full name+surname of the reporter, opponent and reviewer in the admin view

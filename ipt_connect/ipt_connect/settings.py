@@ -20,73 +20,73 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'XXX'
+SECRET_KEY = "XXX"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-SERVER_EMAIL = 'XXX'
+SERVER_EMAIL = "XXX"
 
-ADMINS = (('XXX', 'XXX@XXX'),)
+ADMINS = (("XXX", "XXX@XXX"),)
 
-ALLOWED_HOSTS = [u"XXX", u"127.0.0.1", u"localhost"]
+ALLOWED_HOSTS = ["XXX", "127.0.0.1", "localhost"]
 
 
 # Place all the names of the tournaments here
 # Default tournament (i.e. the one displayed on the main page) should be the first
 
-INSTALLED_TOURNAMENTS = ('IPTdev', 'IPTdev_errors', 'IPTdev_pf2')
+INSTALLED_TOURNAMENTS = ("IPTdev", "IPTdev_errors", "IPTdev_pf2")
 
 # Application definition
 
 INSTALLED_APPS = (
-    'grappelli',
-    'solo.apps.SoloAppConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.humanize',
+    "grappelli",
+    "solo.apps.SoloAppConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
 ) + INSTALLED_TOURNAMENTS
 
 MIGRATION_MODULES = dict(
-    [(app, app + '.migrations.' + app) for app in INSTALLED_TOURNAMENTS]
+    [(app, app + ".migrations." + app) for app in INSTALLED_TOURNAMENTS]
 )
 
 MIDDLEWARE_CLASSES = (
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
     #    'django.middleware.security.SecurityMiddleware',
-    'ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware',
+    "ipt_connect.URLLocaleMiddleWare.URLLocaleMiddleware",
 )
 
-ROOT_URLCONF = 'ipt_connect.urls'
+ROOT_URLCONF = "ipt_connect.urls"
 
 TEMPLATES = [
     {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
         # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
         # Always use forward slashes, even on Windows.
         # Don't forget to use absolute paths, not relative paths.
-        'DIRS': [os.path.join(BASE_DIR, 'templates').replace('\\', '/')],
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
+        "DIRS": [os.path.join(BASE_DIR, "templates").replace("\\", "/")],
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
             ],
             # List of callables that know how to import templates from various sources.
-            'loaders': (
-                'django.template.loaders.filesystem.Loader',
-                'django.template.loaders.app_directories.Loader',
+            "loaders": (
+                "django.template.loaders.filesystem.Loader",
+                "django.template.loaders.app_directories.Loader",
                 # 'django.template.loaders.eggs.Loader',
             ),
         },
@@ -94,16 +94,16 @@ TEMPLATES = [
 ]
 
 
-WSGI_APPLICATION = 'ipt_connect.wsgi.application'
+WSGI_APPLICATION = "ipt_connect.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
@@ -111,11 +111,11 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = "en-us"
 
-LOCALE_PATHS = (os.path.join('locale'),)
+LOCALE_PATHS = (os.path.join("locale"),)
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = "UTC"
 
 USE_I18N = True
 
@@ -127,17 +127,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join('', 'static')
-MEDIA_ROOT = os.path.join(os.getcwd(), 'media/')
-MEDIA_URL = '/media/'
+STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join("", "static")
+MEDIA_ROOT = os.path.join(os.getcwd(), "media/")
+MEDIA_URL = "/media/"
 
 CACHES = {
-    'default': {
+    "default": {
         # 	'BACKEND': 'django.core.cache.backends.dummy.DummyCache', # Switch the cache off
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache'
+        "BACKEND": "django.core.cache.backends.locmem.LocMemCache"
     }
 }
 
-SOLO_CACHE = 'default'
+SOLO_CACHE = "default"
 SOLO_CACHE_TIMEOUT = 5 * 60
