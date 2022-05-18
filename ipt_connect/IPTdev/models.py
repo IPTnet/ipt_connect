@@ -1,24 +1,24 @@
 # coding: utf8
-from django.db import models
-from django.contrib.auth.models import User
-from django.utils import timezone
-import os, sys
+import os
 import time
-from uuid import uuid4
-from django.utils.encoding import iri_to_uri
 from string import replace
-from django.utils.deconstruct import deconstructible
-from django.db.models.signals import post_save, pre_save, post_delete
-from django.dispatch import receiver
-from django.db.models import Avg, Sum
+from uuid import uuid4
+
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
-from django.dispatch import Signal
+from django.db import models
 from django.db import transaction
-from func_bonus import distribute_bonus_points
+from django.db.models.signals import post_save, post_delete
+from django.dispatch import Signal
+from django.dispatch import receiver
+from django.utils import timezone
+from django.utils.deconstruct import deconstructible
+from django.utils.encoding import iri_to_uri
 from solo.models import SingletonModel
 
-import parameters as params
 import func_mean as means
+import parameters as params
+from func_bonus import distribute_bonus_points
 
 # Useful static variables
 selective_fights = [i + 1 for i in range(params.npf)]
@@ -841,9 +841,6 @@ class Round(models.Model):
 
     class Meta:
         permissions = (("update_all", "Can see and trigger update_all links"),)
-
-
-import model_SupplementaryMaterial
 
 
 class JuryGrade(models.Model):

@@ -1,17 +1,17 @@
 # coding: utf8
-from django.http import HttpResponse, Http404
-from django.core.exceptions import ObjectDoesNotExist
-from django.shortcuts import render
-from cache_per_user import cache_per_user as cache_page
-from models import *
-from model_SupplementaryMaterial import SupplementaryMaterial
+import csv
 
 from django.contrib.auth.decorators import user_passes_test
-from django.contrib.admin.views.decorators import staff_member_required
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponse, Http404
+from django.shortcuts import render
 from django.utils.translation import get_language
-from forms import UploadForm
-import csv
+
 import parameters as params
+from cache_per_user import cache_per_user as cache_page
+from forms import UploadForm
+from model_SupplementaryMaterial import SupplementaryMaterial
+from models import *
 
 
 def home(request):

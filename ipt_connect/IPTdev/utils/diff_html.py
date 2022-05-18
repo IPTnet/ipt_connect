@@ -1,9 +1,8 @@
 # NOT WORKING
 
-import git
+import difflib
 import os
 import sys
-import difflib
 
 hash_commit_1 = sys.argv[1]
 hash_commit_2 = sys.argv[2]

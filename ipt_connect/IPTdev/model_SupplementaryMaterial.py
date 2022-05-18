@@ -1,10 +1,8 @@
 # coding: utf8
 
-import models as ipt_connect_models
-
 from django.db import models
 
-import parameters as params
+import models as ipt_connect_models
 
 
 class SupplementaryMaterial(models.Model):

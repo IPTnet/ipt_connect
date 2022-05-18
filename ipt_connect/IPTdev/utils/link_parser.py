@@ -1,7 +1,6 @@
-from urllib2 import urlopen
-
 import lxml.html
 import requests
+from urllib2 import urlopen
 
 head = "http://127.0.0.1:8000"
 http = "http:"
