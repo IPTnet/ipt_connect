@@ -1091,3 +1091,13 @@ def upload_problems(request):
 			'params': params,
 		}
 	)
+
+@cache_page(cache_duration)
+def chairs_manual(request):
+	return render(
+		request,
+		'%s/chairs_manual.html' % params.instance_name,
+		{
+			'params': params,
+		}
+	)
