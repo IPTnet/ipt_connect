@@ -12,7 +12,13 @@
 </div>
 
 
-<div class="content container">
+<style>
+    #chairs_manual_container a {
+        text-decoration: underline;
+    }
+</style>
+
+<div class="content container" id="chairs_manual_container">
     <p>
         {% trans 'Chairs must have access to ipt-connect to fill it out with the information about each round.' %}
         {% trans 'Info includes all presenters, all jurors and their grades, problems presented and rejected.' %}
@@ -20,6 +26,10 @@
             {% trans 'ipt-connect is the main source of the fight info to be verified afterwards and used to resolve the issues.' %}
             {% trans 'So, pay attention to making all records in timely and accurate fashion.' %}
         </b>
+        {% trans 'Links in this Manual are underlined and usually lead to appropriate pages for ' %}
+        <b>
+            {{params.instance_name}}</b>.
+        {% trans 'If you are going to work with another tournament, switch to it somehow or don\'t lean onto the underlined links at all.' %}
     </p>
 
     <p>
