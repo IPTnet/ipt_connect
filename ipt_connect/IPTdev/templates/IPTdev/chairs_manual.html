@@ -3,6 +3,7 @@
 
 {% block content %}
 
+<base target="_blank">
 
 <div class="section">
     <h1>
@@ -10,5 +11,96 @@
     </h1>
 </div>
 
+
+<div class="content container">
+    <p>
+        {% trans 'Chairs must have access to ipt-connect to fill it out with the information about each round.' %}
+        {% trans 'Info includes all presenters, all jurors and their grades, problems presented and rejected.' %}
+        <b>
+            {% trans 'ipt-connect is the main source of the fight info to be verified afterwards and used to resolve the issues.' %}
+            {% trans 'So, pay attention to making all records in timely and accurate fashion.' %}
+        </b>
+    </p>
+
+    <p>
+        <i>
+            {% trans 'There probaly is no public link to this page (at least at the top menu), so you should have obtained the link somehow :)' %}
+        </i>
+    </p>
+
+
+    <h2>
+        {% trans 'Signing in' %}
+    </h2>
+    {% trans 'The login page is probably located' %}
+    <a href="/admin">
+        here</a>.
+    {% trans 'You should have obtained your credentials (the login and the password) from the Organizing Committee in advance.' %}
+    {% trans 'Probably, the ones from the previous year/tournament (if any) are OK.' %}
+    {% trans 'Also, you should be reminded to check the credentials.' %}
+    {% trans 'If you haven\'t checked the ability to log in and the visibility of the touranment, just do it right now!' %}
+
+
+    <h2>
+        {% trans 'Before every fight' %}
+    </h2>
+    <i>
+        {% trans '(including the first but probably not the Final)' %}
+    </i>
+    <ul>
+        <li>
+            <h3>
+                {% trans 'Introduce ipt_connect to the participants' %}
+            </h3>
+            {% trans 'You should probably emphasize that ipt_connect is a Free Software.' %}
+        </li>
+        <li>
+            <h3>
+                {% trans 'Show how to use' %}
+                <a href="{% url params.instance_name|add:':build_tactics'%}">
+                    {% trans 'the Tactics Builder' %}
+                </a>
+            </h3>
+            {% trans 'The link to it can be found' %}
+            <a href="{% url params.instance_name|add:':tournament_overview' %}">
+                {% trans 'on the main page' %}</a>.
+            {% trans 'It looks like a good idea to use the Tactics Builder on the stage to obtain the list of permitted Problems.' %}
+            {% trans 'It seems to make sense to present the Tactics Builder on the first fight, so that the participants will be able to use it between the first and the second fights.' %}
+            {% trans 'All in all, our Tournament is about scientific discussions, and not about striking out digits on a sheet of paper fastly and precisely!' %}
+        </li>
+        <li>
+            <h3>
+                {% trans 'Encourage participants, team-leaders and jurors to double-check the results and share bugs and ideas' %}
+            </h3>
+        </li>
+    </ul>
+    <h2>
+        {% trans 'After every fight' %}
+    </h2>
+    <i>
+        {% trans '(that is, after all scores have been submitted and all rounds have been filled out)' %}
+    </i>
+    <ul>
+        <li>
+            <h3>
+                {% trans 'Update all the scores, bonuses and ranks' %}
+            </h3>
+            <a href="{% url params.instance_name|add:':update_all'%}">
+                {% trans 'The link on it' %}
+            </a>
+            {% trans 'can be found on the bottom of' %}
+            <a href="{% url params.instance_name|add:':ranking'%}">
+                {% trans 'Ranking' %}
+            </a>
+            and
+            <a href="{% url params.instance_name|add:':poolranking'%}">
+                {% trans 'Pool Ranking' %}
+            </a>
+            {% trans '(the latter if the pools are enabled)' %}.
+            {% trans 'You should have appropriate rights to run this tool (obviously, any superuser has).' %}
+        </li>
+    </ul>
+
+</div>
 
 {% endblock content %}

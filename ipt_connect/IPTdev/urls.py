@@ -35,7 +35,7 @@ urlpatterns = [
         name="physics_fight_detail",
     ),
     url(r"^ranking$", ranking, name="ranking"),
-    url(r"^build_tactics$", build_tactics),
+    url(r"^build_tactics$", build_tactics, name="build_tactics"),
     url(r"^poolranking$", poolranking, name="poolranking"),
     url(r"^export_csv_ranking_timeline$", export_csv_ranking_timeline),
     url(r"^participants_export$", participants_export),
