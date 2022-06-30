@@ -106,8 +106,20 @@
             <a href="{% url params.instance_name|add:':poolranking'%}">
                 {% trans 'Pool Ranking' %}
             </a>
-            {% trans '(the latter if the pools are enabled)' %}.
+            {% trans 'pages (the latter if the pools are enabled)' %}.
             {% trans 'You should have appropriate rights to run this tool (obviously, any superuser has).' %}
+            {% trans 'Updating of the scores can take a few minutes, especially after the last fights.' %}
+        </li>
+        <li>
+            <h3>
+                {% trans 'Verify all the data' %}
+            </h3>
+            {% trans 'The verification report is located' %}
+            <a href="{% url params.instance_name|add:':verify_all'%}">
+                {% trans 'here' %}</a>.
+            {% trans 'You should have the same rights to run this tool.' %}
+            {% trans 'The tool covers many widespread errors (e.g. forgotten Problem presented), but don\'t lean onto it entirely; be careful!' %}
+            {% trans 'In case of having any ideas to improve the tool, contact us.' %}
         </li>
     </ul>
 
