@@ -123,6 +123,57 @@
         </li>
     </ul>
 
+    <h2>
+        {% trans 'After the Final' %}
+    </h2>
+    <ul>
+        <li>
+            <h3>
+                <a href="{% url params.instance_name|add:':update_all'%}">
+                    {% trans 'Update all the grades' %}
+                </a>
+                {% trans '(just in case)' %}
+            </h3>
+        </li>
+        <li>
+            <h3>
+                {% trans 'Double-check the Final grades' %}
+            </h3>
+        </li>
+        <li>
+            <h3>
+                <a href="{% url params.instance_name|add:':verify_all'%}">
+                    {% trans 'Verify all the grades' %}
+                </a>
+           </h3>
+        </li>
+        <li>
+            <h3>
+                {% trans 'If you want to hide the results, switch ipt_connect into maintenance mode via' %}
+                <a href="/admin/{{params.instance_name}}/siteconfiguration/">
+                    {% trans 'Site Configuration' %}</a>
+                {% trans '("Only staff access").' %}
+            </h3>
+            {% trans 'Be careful: anybody who has an ipt_connect credentials can see the grades!' %}
+            {% trans 'If ipt_connect is used for registration (which is not recommended),' %}
+            {% trans 'all the Team Leaders have credentials and can see through The Blue Balls.' %}
+            {% trans 'Then disable (probably without removal) the Team Leaders\' logins at' %}
+            <a href="/admin/auth/user/">
+                {% trans 'Users Admin Panel' %}</a>.
+            {% trans '(You need appropriate rights to change Users; a superuser has them.)' %}
+            <br/>
+            TODO: images! Site Config and the result
+        </li>
+        <li>
+            <h3>
+                {% trans 'Enable "Display link to final on ranking page" and "Display final ranking on ranking page" checkboxes in' %}
+                <a href="/admin/{{params.instance_name}}/siteconfiguration/">
+                        {% trans 'Site Configuration' %}</a>
+                {% trans 'if you wish.' %}
+            </h3>
+            TODO: images! Site Config and the result
+        </li>
+    </ul>
 </div>
 
 {% endblock content %}
