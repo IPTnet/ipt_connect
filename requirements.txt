@@ -1,6 +1,7 @@
 Django>=1.9
 Pillow>=4.0
 django-grappelli==2.8.1
+django-loginas==0.3.1
 django-solo-grappelli>=1.1.2
 gitpython
 gunicorn
