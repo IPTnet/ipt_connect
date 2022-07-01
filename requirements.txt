@@ -1,8 +1,8 @@
 Django>=1.9
 Pillow>=4.0
+django-solo-grappelli>=1.1.2
+gitpython
 gunicorn
 lxml
 requests
-django-solo-grappelli>=1.1.2
 unicodecsv
-gitpython
