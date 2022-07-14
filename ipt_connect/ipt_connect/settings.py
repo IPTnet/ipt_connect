@@ -15,7 +15,6 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
@@ -30,7 +29,6 @@ SERVER_EMAIL = 'XXX'
 ADMINS = (('XXX', 'XXX@XXX'),)
 
 ALLOWED_HOSTS = [u"XXX", u"127.0.0.1", u"localhost"]
-
 
 # Place all the names of the tournaments here
 # Default tournament (i.e. the one displayed on the main page) should be the first
@@ -98,9 +96,7 @@ TEMPLATES = [
     },
 ]
 
-
 WSGI_APPLICATION = 'ipt_connect.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
@@ -111,7 +107,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.8/topics/i18n/
@@ -127,7 +122,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/

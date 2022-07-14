@@ -1,6 +1,7 @@
 from django.test import TestCase
 from ..func_mean import *
 
+
 # Create your tests here.
 
 

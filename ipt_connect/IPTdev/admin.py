@@ -52,7 +52,6 @@ class AprioriRejectionInline(admin.TabularInline):
 
 
 class Roundadmin(admin.ModelAdmin):
-
     list_display = ('pf_number', 'round_number', 'room')
     list_filter = ('pf_number', 'round_number', 'room')
     fieldsets = [
