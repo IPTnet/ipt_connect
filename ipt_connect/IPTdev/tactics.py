@@ -1,8 +1,3 @@
-from django.shortcuts import render
-from django.views.decorators.cache import cache_page
-from models import *
-from django.contrib.auth.decorators import user_passes_test
-import parameters as params
 from views import *
 
 

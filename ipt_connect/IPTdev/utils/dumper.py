@@ -1,7 +1,9 @@
 import os
-import git
 import urllib
 from urllib2 import urlopen
+
+import git
+
 from find_links import unique_url
 
 dir_path_repo = str(os.getcwd())

@@ -1,9 +1,7 @@
 # coding=utf8
+import os
+
 import django
-import os, sys
-import numpy as np
-import matplotlib.pyplot as plt
-import math
 import names
 
 os.environ['DJANGO_SETTINGS_MODULE'] = "ipt_connect.settings"

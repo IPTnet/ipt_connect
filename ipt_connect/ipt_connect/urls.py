@@ -1,10 +1,8 @@
+import importlib
+
 from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
-from django.views.generic import TemplateView
-from ipt_connect.views import home
-
-import importlib
 
 tournament_overview = importlib.import_module(
     settings.INSTALLED_TOURNAMENTS[0] + '.views'
