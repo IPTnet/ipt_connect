@@ -19,7 +19,12 @@ class Backup(object):
             os.makedirs(Backup.BACKUPS_DIR)
         except OSError:
             pass
-        logging.basicConfig(filename=Backup.LOG_FILE, level=logging.INFO, format='%(asctime)s %(message)s', datefmt='%Y/%m/%d %H:%M:%S -')
+        logging.basicConfig(
+            filename=Backup.LOG_FILE,
+            level=logging.INFO,
+            format='%(asctime)s %(message)s',
+            datefmt='%Y/%m/%d %H:%M:%S -',
+        )
         self.db_path = os.path.join(Backup.CURRENT_DIR, 'db.sqlite3')
         self.db_file = open(self.db_path, 'rb')
         if self.is_db_changed():
@@ -50,7 +55,10 @@ class Backup(object):
         if not last_db_path:
             return True  # If backups doesn't exist return True
         last_db = open(last_db_path, 'rb').read()
-        return not hashlib.md5(self.db_file.read()).hexdigest() == hashlib.md5(last_db).hexdigest()
+        return (
+            not hashlib.md5(self.db_file.read()).hexdigest()
+            == hashlib.md5(last_db).hexdigest()
+        )
 
     def local_backup(self):
         """
@@ -64,6 +72,7 @@ class Backup(object):
             logging.info("Something wrong, file wasn't copied!")
             return
         logging.info('File was successfully copied.')
+
 
 if __name__ == '__main__':
     b = Backup()

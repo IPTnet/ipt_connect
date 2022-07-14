@@ -3,8 +3,8 @@ from ..func_mean import *
 
 # Create your tests here.
 
-class  Test(TestCase):
 
+class Test(TestCase):
     def test_ttn_mean(self):
 
         input_data = [

@@ -1,8 +1,8 @@
 from django.test import TestCase
 from ..func_bonus import *
 
-class  Test(TestCase):
 
+class Test(TestCase):
     def test_distribute_bonus(self):
         input_data = [
             [50, 50],
@@ -24,7 +24,7 @@ class  Test(TestCase):
             [50, 50, 50, 50, 50, 50],
             [50, 40, 40, 30, 30, 20],
             [50, 45, 40, 35, 30, 25],
-            [50+0.1+0.2, 50+0.3, 45],
+            [50 + 0.1 + 0.2, 50 + 0.3, 45],
         ]
         res_data = [
             [1.0, 1.0],
