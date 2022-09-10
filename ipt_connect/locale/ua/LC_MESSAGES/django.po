@@ -22,27 +22,27 @@ msgstr ""
 
 #: IPTdev/templates/IPTdev/bebacksoon.html:11
 msgid "A little bit of patience"
-msgstr ""
+msgstr "Трошки терпіння"
 
 #: IPTdev/templates/IPTdev/bebacksoon.html:16
 msgid "Processing the grades..."
-msgstr ""
+msgstr "Опрацювання оцінок..."
 
 #: IPTdev/templates/IPTdev/build_tactics.html:9
 msgid "This is beta feature, use it at your own risk!"
-msgstr ""
+msgstr "Цей функіонал у розробці, використовуйте на свій страх та ризик"
 
 #: IPTdev/templates/IPTdev/build_tactics.html:22
 msgid "Build tactics!"
-msgstr ""
+msgstr "Побудувати тактику"
 
 #: IPTdev/templates/IPTdev/build_tactics.html:30
 msgid "Problems available:"
-msgstr ""
+msgstr "Дозволені задачі:"
 
 #: IPTdev/templates/IPTdev/build_tactics.html:38
 msgid "Problems forbidden:"
-msgstr ""
+msgstr "Заборонені задачі:"
 
 #: IPTdev/templates/IPTdev/head.html:46
 msgid "Physics Fights"
@@ -70,44 +70,44 @@ msgstr "Журі"
 
 #: IPTdev/templates/IPTdev/includes/final_ranking_and_link.html:9
 msgid "Final Ranking"
-msgstr "Фінальні рейтинг"
+msgstr "Фінальній рейтинг"
 
 #: IPTdev/templates/IPTdev/includes/final_ranking_and_link.html:20
 msgid "Final Fight details..."
-msgstr ""
+msgstr "Подробиці фінального бою"
 
 #: IPTdev/templates/IPTdev/includes/link_update_all_for_superuser.html:6
 msgid "Update all the scores (may take few minutes)"
-msgstr ""
+msgstr "Перерахувати всі оцінки (може зайняти до декількох хвилин)"
 
 #: IPTdev/templates/IPTdev/includes/list_forbidden_problems.html:8
 msgid "has already been "
-msgstr ""
+msgstr "вже була"
 
 #: IPTdev/templates/IPTdev/includes/list_forbidden_problems.html:11
 msgid "No forbidden problems."
-msgstr ""
+msgstr "Немає заборонених задач."
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:7
 msgid "Problem"
-msgstr ""
+msgstr "Задача"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:10
 #: IPTdev/templates/IPTdev/participants_export.html:5
 msgid "Remarks"
-msgstr ""
+msgstr "Коментар"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:20
 msgid "just presented"
-msgstr ""
+msgstr "щойно доповідана"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:25
 msgid "apriori rejected by reporter"
-msgstr ""
+msgstr "відмова Доповідача за замовченням"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:30
 msgid "eternally rejected by reporter"
-msgstr ""
+msgstr "вічна відмова Доповідача"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:35
 msgid "reported by reporter"
@@ -120,7 +120,7 @@ msgstr "викладена Доповідачем"
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:69
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:76
 msgid "grade:"
-msgstr ""
+msgstr "оцінки:"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:42
 msgid "opposed by opponent"
@@ -128,27 +128,27 @@ msgstr "опонована Опонентом"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:49
 msgid "reported by opponent"
-msgstr "викладена Опонентом"
+msgstr "доповідана Опонентом"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:56
 msgid "tried by opponent"
-msgstr ""
+msgstr "викликана Опонентом"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:61
 msgid "reviewed by opponent"
-msgstr ""
+msgstr "рецензована Опонентом"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:68
 msgid "opposed by reporter"
-msgstr ""
+msgstr "опонована Доповідачем"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:75
 msgid "reviewed by reporter"
-msgstr ""
+msgstr "рецензована Доповідачем"
 
 #: IPTdev/templates/IPTdev/includes/list_problems_with_remarks.html:82
 msgid "tried by reporter"
-msgstr ""
+msgstr "викликана Доповідачем"
 
 #: IPTdev/templates/IPTdev/includes/list_rounds.html:7
 #: IPTdev/templates/IPTdev/includes/summary.html:11
@@ -158,7 +158,7 @@ msgstr "Дія"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:7
 msgid "Rank"
-msgstr ""
+msgstr "Місце за рейтингом"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:8
 #: IPTdev/templates/IPTdev/includes/summary.html:7
@@ -166,91 +166,91 @@ msgstr ""
 #: IPTdev/templates/IPTdev/participants_export.html:5
 #: IPTdev/templates/IPTdev/participants_overview.html:26
 msgid "Team"
-msgstr ""
+msgstr "Команда"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:9
 msgid "Points"
-msgstr ""
+msgstr "Бали"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:11
 msgid "Semifinal points"
-msgstr ""
+msgstr "Бали півфіналу"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:14
 msgid "Final points"
-msgstr ""
+msgstr "Бали фіналу"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:17
 msgid "Pool"
-msgstr ""
+msgstr "Кошик"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:20
 msgid "Physics Fights status"
-msgstr ""
+msgstr "Статус фізбою"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:53
 msgid "fight ongoing"
-msgstr ""
+msgstr "бій триває"
 
 #: IPTdev/templates/IPTdev/includes/ranking_table.html:56
 msgid "fight(s) ended"
-msgstr ""
+msgstr "бій/бої закінчені"
 
 #: IPTdev/templates/IPTdev/includes/semifinal_ranking.html:6
 msgid "Semifinal Ranking"
-msgstr "Півфінальні рейтинг"
+msgstr "Півфінальний рейтинг"
 
 #: IPTdev/templates/IPTdev/includes/summary.html:8
 msgid "Rep. mult."
-msgstr ""
+msgstr "Коефіцієнт Доповідача"
 
 #: IPTdev/templates/IPTdev/includes/summary.html:17
 msgid "Sum"
-msgstr ""
+msgstr "Сума"
 
 #: IPTdev/templates/IPTdev/includes/summary.html:19
 msgid "Bonus"
-msgstr ""
+msgstr "Бонус"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:12
 msgid "Team Leader of"
-msgstr ""
+msgstr "Керівник"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:15
 #: IPTdev/templates/IPTdev/jury_detail.html:17
 msgid "External jury member"
-msgstr ""
+msgstr "Незалежний член журі"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:27
 msgid "Problems graded"
-msgstr ""
+msgstr "Оцінені задачі"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:28
 msgid "Report grade"
-msgstr ""
+msgstr "Оцінки за доповідь"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:29
 msgid "Opposition grade"
-msgstr ""
+msgstr "Оцінки за опонування"
 
 #: IPTdev/templates/IPTdev/jury_detail.html:30
 msgid "Review grade"
-msgstr ""
+msgstr "Оцінки за рецензію"
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:9
 msgid "No jury member registered yet"
-msgstr ""
+msgstr "Члени журі ще не зареєстровані"
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:14
 msgid "Jury overview"
-msgstr ""
+msgstr "Огляд журі"
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:18
 #: IPTdev/templates/IPTdev/participants_overview.html:19
 msgid ""
 "Click on the names for detailed statistics. Click on the headers to sort the "
 "table."
-msgstr ""
+msgstr "Натицніть на ім'я для детальної статистики. Натицніть на назву колонки для сортування."
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:25
 #: IPTdev/templates/IPTdev/participants_all.html:9
@@ -258,218 +258,218 @@ msgstr ""
 #: IPTdev/templates/IPTdev/participants_overview.html:25
 #: IPTdev/templates/IPTdev/problems_overview.html:25
 msgid "Name"
-msgstr ""
+msgstr "Ім'я"
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:26
 #: IPTdev/templates/IPTdev/problems_overview.html:27
 msgid "Mean Report grade"
-msgstr ""
+msgstr "Середня оцінка за доповідь"
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:27
 #: IPTdev/templates/IPTdev/problems_overview.html:28
 msgid "Mean Opposition grade"
-msgstr ""
+msgstr "Середня оцінка за опонування"
 
 #: IPTdev/templates/IPTdev/jurys_overview.html:28
 #: IPTdev/templates/IPTdev/problems_overview.html:29
 msgid "Mean Review grade"
-msgstr ""
+msgstr "Середня оцінка за рецензію"
 
 #: IPTdev/templates/IPTdev/listing_jurys.html:9
 #: IPTdev/templates/IPTdev/listing_jurys_web.html:9
 msgid "There is no registered jury member"
-msgstr ""
+msgstr "Члени журі ще не зареєстровані"
 
 #: IPTdev/templates/IPTdev/listing_participants_web.html:2
 #: IPTdev/templates/IPTdev/participants_export.html:2
 #: IPTdev/templates/IPTdev/participants_trombinoscope.html:2
 msgid "Participants of"
-msgstr ""
+msgstr "Участник команди"
 
 #: IPTdev/templates/IPTdev/listing_participants_web.html:12
 #: IPTdev/templates/IPTdev/participants_export.html:13
 msgid "There is no registered participant"
-msgstr ""
+msgstr "Учасники ще не зареєстровані"
 
 #: IPTdev/templates/IPTdev/participant_detail.html:12
 msgid "Member of the team from"
-msgstr ""
+msgstr "Участник команди"
 
 #: IPTdev/templates/IPTdev/participant_detail.html:23
 msgid "Problem(s) presented"
-msgstr ""
+msgstr "Доповідані задачи"
 
 #: IPTdev/templates/IPTdev/participant_detail.html:24
 #: IPTdev/templates/IPTdev/team_detail.html:45
 msgid "Grade"
-msgstr ""
+msgstr "Оцінка"
 
 #: IPTdev/templates/IPTdev/participant_detail.html:25
 #: IPTdev/templates/IPTdev/participants_all.html:11
 #: IPTdev/templates/IPTdev/participants_export.html:5
 #: IPTdev/templates/IPTdev/team_detail.html:46
 msgid "Role"
-msgstr ""
+msgstr "Роль"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:10
 msgid "Participants are not yet registered"
-msgstr ""
+msgstr "Учасники ще не зареєстровані"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:15
 msgid "Participants overview"
-msgstr ""
+msgstr "Огляд участників"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:29
 msgid "Points (sum)"
-msgstr ""
+msgstr "Бали (сума)"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:34
 msgid "Mean grade"
-msgstr ""
+msgstr "Середня оцінка"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:38
 msgid "Mean Rep. grade"
-msgstr ""
+msgstr "Середня оцінка за доповідь"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:42
 msgid "Mean Opp. grade"
-msgstr ""
+msgstr "Середня оцінка за опонування"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:46
 msgid "Mean Rev. grade"
-msgstr ""
+msgstr "Середня оцінка за рецензію"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:51
 msgid "Best Rep. grade"
-msgstr ""
+msgstr "Краща оцінка за доповідь"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:55
 msgid "Best Opp. grade"
-msgstr ""
+msgstr "Краща оцінка за опонування"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:59
 msgid "Best Rev. grade"
-msgstr ""
+msgstr "Краща оцінка за рецензію"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:63
 msgid "Best grade"
-msgstr ""
+msgstr "Краща оцінка"
 
 #: IPTdev/templates/IPTdev/participants_overview.html:68
 msgid "Personal ranking"
-msgstr ""
+msgstr "Особистий рейтинг"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:14
 msgid "Room"
-msgstr ""
+msgstr "Кімната"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:38
 msgid "Jurés"
-msgstr ""
+msgstr "Журі"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:44
 msgid "Rep."
-msgstr ""
+msgstr "Д"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:47
 msgid "Opp."
-msgstr ""
+msgstr "О"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:51
 msgid "Rev."
-msgstr ""
+msgstr "Р"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:97
 #: IPTdev/templates/IPTdev/problem_detail.html:64
 #: IPTdev/templates/IPTdev/round_detail.html:144
 msgid "MEAN"
-msgstr ""
+msgstr "Середня"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:116
 #: IPTdev/templates/IPTdev/round_detail.html:157
 msgid ""
 "The lowest and highest grade(s) might be discarded according to the number "
 "of jury members."
-msgstr ""
+msgstr "Вищі та нижчі оцінка(и) відкидаються згідно з правилами залежно від кількості членів журі."
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:125
 msgid "No grade registered so far !"
-msgstr ""
+msgstr "Оцінки ще невідомі"
 
 #: IPTdev/templates/IPTdev/physics_fight_detail.html:133
 msgid "No round played so far !"
-msgstr ""
+msgstr "Дії ще не зіграно"
 
 #: IPTdev/templates/IPTdev/poolranking.html:9
 msgid "Teams are not registered or not distributed into pools"
-msgstr ""
+msgstr "Команди ще не зареєстровано або не розподілено до кошиків"
 
 #: IPTdev/templates/IPTdev/poolranking.html:18
 msgid "Pool A"
-msgstr ""
+msgstr "Кошик А"
 
 #: IPTdev/templates/IPTdev/poolranking.html:27
 msgid "Pool B"
-msgstr ""
+msgstr "Кошик В"
 
 #: IPTdev/templates/IPTdev/poolranking.html:36
 msgid "General Ranking"
-msgstr ""
+msgstr "Загальний рейтинг"
 
 #: IPTdev/templates/IPTdev/problem_detail.html:34
 msgid "Report"
-msgstr ""
+msgstr "Доповідь"
 
 #: IPTdev/templates/IPTdev/problem_detail.html:35
 msgid "Opposition"
-msgstr ""
+msgstr "Опонування"
 
 #: IPTdev/templates/IPTdev/problem_detail.html:36
 msgid "Review"
-msgstr ""
+msgstr "Рецензія"
 
 #: IPTdev/templates/IPTdev/problem_detail.html:76
 #: IPTdev/templates/IPTdev/team_detail.html:111
 msgid "Supplementary Materials"
-msgstr ""
+msgstr "Додаткові матеріали"
 
 #: IPTdev/templates/IPTdev/problems_overview.html:9
 msgid "No problem registered yet"
-msgstr ""
+msgstr "Задачі ще не зареєстровано"
 
 #: IPTdev/templates/IPTdev/problems_overview.html:15
 msgid "Problems overview"
-msgstr ""
+msgstr "Огляд задач"
 
 #: IPTdev/templates/IPTdev/problems_overview.html:19
 msgid ""
 "Click on the problem names for detailed statistics. Click on the headers to "
 "sort the table."
-msgstr ""
+msgstr "Натисніть на назву задачі для детальної статистики. Натисніть за назву колонки для сортування"
 
 #: IPTdev/templates/IPTdev/problems_overview.html:26
 msgid "# of presentations"
-msgstr ""
+msgstr "Кількість доповідей"
 
 #: IPTdev/templates/IPTdev/ranking.html:9
 msgid "No team registered yet"
-msgstr ""
+msgstr "Команди ще не зареєстровано"
 
 #: IPTdev/templates/IPTdev/ranking.html:18
 msgid "Selective Fights Ranking"
-msgstr ""
+msgstr "Рейтинг відбіркових боїв"
 
 #: IPTdev/templates/IPTdev/ranking.html:28
 msgid "Pools Ranking"
-msgstr ""
+msgstr "Рейтинг за кошиками"
 
 #: IPTdev/templates/IPTdev/round_detail.html:23
 msgid "Edit"
-msgstr ""
+msgstr "Редагувати"
 
 #: IPTdev/templates/IPTdev/round_detail.html:26
 msgid "Add next"
-msgstr ""
+msgstr "Додати нову дію"
 
 #: IPTdev/templates/IPTdev/round_detail.html:45
 msgid "Reporter"
@@ -485,19 +485,19 @@ msgstr "Рецензент"
 
 #: IPTdev/templates/IPTdev/round_detail.html:110
 msgid "Problem presented"
-msgstr ""
+msgstr "Задача"
 
 #: IPTdev/templates/IPTdev/round_detail.html:124
 msgid "Reporter grade"
-msgstr "Оцінка доповіді"
+msgstr "Оцінка за доповідь"
 
 #: IPTdev/templates/IPTdev/round_detail.html:125
 msgid "Opponent grade"
-msgstr "Оцінка опонування"
+msgstr "Оцінка за опонування"
 
 #: IPTdev/templates/IPTdev/round_detail.html:127
 msgid "Reviewer grade"
-msgstr "Оцінка рецензування"
+msgstr "Оцінка за рецензування"
 
 #: IPTdev/templates/IPTdev/round_detail.html:166
 msgid "Rejection(s)"
@@ -509,174 +509,174 @@ msgstr "Тактичні відмови"
 
 #: IPTdev/templates/IPTdev/round_detail.html:175
 msgid "No tactical rejections"
-msgstr ""
+msgstr "Немає тактичних відмов"
 
 #: IPTdev/templates/IPTdev/round_detail.html:180
 msgid "Tactical rejections are not displayed"
-msgstr ""
+msgstr "Тактичні відмови приховані"
 
 #: IPTdev/templates/IPTdev/round_detail.html:187
 #: IPTdev/templates/IPTdev/team_detail.html:95
 msgid "Eternal rejection(s)"
-msgstr ""
+msgstr "Вічні відмови"
 
 #: IPTdev/templates/IPTdev/round_detail.html:191
 #: IPTdev/templates/IPTdev/team_detail.html:103
 msgid "No eternal rejections"
-msgstr ""
+msgstr "Немає вічних відмов"
 
 #: IPTdev/templates/IPTdev/round_detail.html:202
 msgid "This round has not started yet !"
-msgstr ""
+msgstr "Ця дія ще не почалась"
 
 #: IPTdev/templates/IPTdev/rounds.html:9
 msgid "No round has been played yet"
-msgstr ""
+msgstr "Бої ще не почались"
 
 #: IPTdev/templates/IPTdev/rounds.html:14
 msgid "Rounds overview"
-msgstr ""
+msgstr "Огляд дій"
 
 #: IPTdev/templates/IPTdev/rounds.html:18
 msgid ""
 "Click on a Round to get a detailed summary. Click on a Physics Fight to get "
 "a summarized view of all the corresponding Rounds."
-msgstr ""
+msgstr "Натисніть на дію для детальної інформації. Натисніть на фізбій для огляду всіх дій цього бою."
 
 #: IPTdev/templates/IPTdev/rounds.html:96
 msgid "The Grand Finale"
-msgstr ""
+msgstr "Фінал"
 
 #: IPTdev/templates/IPTdev/team_detail.html:14
 msgid "with"
-msgstr ""
+msgstr "з"
 
 #: IPTdev/templates/IPTdev/team_detail.html:14
 #: IPTdev/templates/IPTdev/team_detail.html:22
 msgid "points"
-msgstr ""
+msgstr "бали"
 
 #: IPTdev/templates/IPTdev/team_detail.html:22
 msgid "gathered"
-msgstr ""
+msgstr "набрані"
 
 #: IPTdev/templates/IPTdev/team_detail.html:27
 msgid "Team-Leaders:"
-msgstr ""
+msgstr "Керівники:"
 
 #: IPTdev/templates/IPTdev/team_detail.html:35
 msgid "(jury member)"
-msgstr ""
+msgstr "(член журі)"
 
 #: IPTdev/templates/IPTdev/team_detail.html:44
 msgid "Problems presented"
-msgstr ""
+msgstr "Доповідана задача"
 
 #: IPTdev/templates/IPTdev/team_detail.html:63
 msgid "Penalties"
-msgstr ""
+msgstr "Штрафні бали"
 
 #: IPTdev/templates/IPTdev/team_detail.html:66
 msgid "Multiplicative coefficient of"
-msgstr ""
+msgstr "Коефіцієнт"
 
 #: IPTdev/templates/IPTdev/team_detail.html:66
 msgid "for the Reporter in the"
-msgstr ""
+msgstr "для Доповідача у"
 
 #: IPTdev/templates/IPTdev/team_detail.html:66
 msgid "Physics Fight"
-msgstr ""
+msgstr "фізбою"
 
 #: IPTdev/templates/IPTdev/team_detail.html:70
 msgid "Bonus points"
-msgstr ""
+msgstr "Бонусні бали"
 
 #: IPTdev/templates/IPTdev/team_detail.html:75
 msgid "None"
-msgstr ""
+msgstr "Немає"
 
 #: IPTdev/templates/IPTdev/team_detail.html:83
 msgid "Apriori rejection(s)"
-msgstr ""
+msgstr "Відмови за замовченням"
 
 #: IPTdev/templates/IPTdev/team_detail.html:87
 msgid "No apriori rejections"
-msgstr ""
+msgstr "Немає відмов за замовченням"
 
 #: IPTdev/templates/IPTdev/teams_overview.html:6
 msgid "Teams Overview"
-msgstr ""
+msgstr "Огляд команд"
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:7
 msgid "Welcome!"
-msgstr ""
+msgstr "Вітаємо!"
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:20
 msgid "This interface gathers the results of the "
-msgstr ""
+msgstr "На цій сторінці зібрано інформацію про "
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:24
 msgid ""
 "Most of the displayed elements can be clicked on. You can access teams, "
 "individual participant or jury member statistics, as well as details of each "
 "Round, Physics Fights and Problem."
-msgstr ""
+msgstr "Більшість елементів на сторінці інтерактивні. Ви можете переглянути інформацію про учасника, члена журі, дію, фізбій або задачу."
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:27
 msgid ""
 "The results are updated once after each round - you will be notified via "
 "email once the update has been made."
-msgstr ""
+msgstr "Результати перераховуються після кожної дії."
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:31
 msgid ""
 "In case you spot a bug or have any suggestion to improve the software, "
 "please don't hesitate to open an issue"
-msgstr ""
+msgstr "Якщо ви помітили помилку або маєте пропозиції для покращення програми, будь ласка, відправте запит"
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:32
 msgid "at our repository"
-msgstr ""
+msgstr "на нашому гітхабі"
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:33
 msgid "or to get in touch with us at webmaster (a) iptnet (dot) info."
-msgstr ""
+msgstr "або напишіть листа на webmaster (a) iptnet (dot) info."
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:37
 msgid "You can also try"
-msgstr ""
+msgstr "Також ви можете спробувати"
 
 #: IPTdev/templates/IPTdev/tournament_overview.html:38
 msgid "this beta tool to list forbidden problems."
-msgstr ""
+msgstr "наш тестовий функціонал для задач заборонених до виклику."
 
 #: IPTdev/templates/IPTdev/verify_all.html:7
 msgid ""
 "This interface reports about some situations that are not normal when a "
 "Fight has been just completed."
-msgstr ""
+msgstr "На цій строніці ви можете переглянути некоректні ситуації після закінчення фізбоїв."
 
 #: IPTdev/templates/IPTdev/verify_all.html:12
 msgid "Errors"
-msgstr ""
+msgstr "Помилки"
 
 #: IPTdev/templates/IPTdev/verify_all.html:28
 msgid "No errors encountered"
-msgstr ""
+msgstr "Немає помилок"
 
 #: IPTdev/templates/IPTdev/verify_all.html:34
 msgid "Warnings"
-msgstr ""
+msgstr "Застереження"
 
 #: IPTdev/templates/IPTdev/verify_all.html:50
 msgid "No warnings encountered"
-msgstr ""
+msgstr "Немає застережень"
 
 #: IPTdev/templates/IPTdev/verify_all.html:56
 msgid "Successful checks"
-msgstr ""
+msgstr "Перевірка закінчена без помилок"
 
 #: IPTdev/templates/IPTdev/verify_all.html:64
 msgid "No successful checks"
-msgstr ""
+msgstr "Перевірка закінчена з помилками"
